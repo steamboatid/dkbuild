@@ -18,14 +18,14 @@ do_hash() {
 }
 
 cat << EOF
-Origin: phideb
+Origin: phideb of ${RELNAME}
 Label: phideb
 Suite: ${RELNAME}
 Codename: ${RELNAME}
 Version: ${RELVER}
 Architectures: amd64
 Components: main
-Description: phideb custom packages
+Description: phideb custom packages for ${RELNAME}
 Date: $(date -Ru)
 EOF
 do_hash "MD5Sum" "md5sum"

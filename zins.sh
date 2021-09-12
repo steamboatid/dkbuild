@@ -89,12 +89,25 @@ apt update; apt full-upgrade -fy
 
 cd `mktemp -d`; apt remove php* -fy
 
+apt-cache search php8.0* | awk '{print $1}' | grep -v "apache\|embed" |\
+grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache" |\
+grep "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|common\|fpm\|cli" \
+> /tmp/pkg-php1.txt
 
-apt install -yf   --no-install-recommends --auto-remove --purge \
-php8.0-cli php8.0-fpm php8.0-common php8.0-curl php8.0-fpm php8.0-gd \
-php8.0-bcmath php8.0-bz2 php8.0-gmp php8.0-ldap php8.0-mbstring php8.0-mysql \
-php8.0-opcache php8.0-readline php8.0-soap php8.0-tidy php8.0-xdebug php8.0-xml php8.0-xsl php8.0-zip \
-php-memcached php-redis php-igbinary php-msgpack php-http php-raphf \
-autoconf curl dh-make dh-php gcc ghostscript gifsicle imagemagick jpegoptim keydb-server keydb-tools make \
-mariadb-client \
-mcrypt memcached optipng pdftk pkg-config pkg-php-tools pngquant qpdf wkhtmltopdf xfonts-75dpi xvfb zlib1g-dev
+cat /tmp/pkg-php1.txt > /tmp/pkg-php1.txt
+cat /tmp/pkg-php1.txt | sed "s/8.0//g" >> /tmp/pkg-php1.txt
+cat /tmp/pkg-php1.txt | tr "\n" " " | xargs apt install -fy
+
+php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis"
+NUMEXT=$(php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis" | wc -l)
+if [[ $NUMEXT -lt 8 ]]; then printf "\n\n\t php ext:NOT OK\n\n"; else printf "\n\n\t php ext: OK\n\n"; fi
+
+
+# apt install -yf   --no-install-recommends --auto-remove --purge \
+# php8.0-cli php8.0-fpm php8.0-common php8.0-curl php8.0-fpm php8.0-gd \
+# php8.0-bcmath php8.0-bz2 php8.0-gmp php8.0-ldap php8.0-mbstring php8.0-mysql \
+# php8.0-opcache php8.0-readline php8.0-soap php8.0-tidy php8.0-xdebug php8.0-xml php8.0-xsl php8.0-zip \
+# php-memcached php-redis php-igbinary php-msgpack php-http php-raphf \
+# autoconf curl dh-make dh-php gcc ghostscript gifsicle imagemagick jpegoptim keydb-server keydb-tools make \
+# mariadb-client \
+# mcrypt memcached optipng pdftk pkg-config pkg-php-tools pngquant qpdf wkhtmltopdf xfonts-75dpi xvfb zlib1g-dev
