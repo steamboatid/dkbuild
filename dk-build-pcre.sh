@@ -55,6 +55,8 @@ while read adir; do
 	fi
 	# backup changelog
 	cp debian/changelog debian/changelog.bak
+	ls -la debian/changelog.bak
+	exit 0;
 
 
 	dch -p -b "backport to $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
