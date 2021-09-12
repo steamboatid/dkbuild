@@ -16,4 +16,4 @@ git gc >/dev/null 2>&1
 git repack -ad >/dev/null 2>&1
 
 git commit -a -m "autoupdate dkbuild `date +%F-%T`"
-# git push -u origin master --progress -v
+git push -u origin master --progress -v

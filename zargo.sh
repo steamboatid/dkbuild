@@ -13,17 +13,12 @@ ssh argo "lxc-start -n tes >/dev/null 2>&1 &"
 ssh argo "lxc-start -n bus >/dev/null 2>&1 &"
 ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 
-# ssh argo -- lxc-attach -n bus -- "bash /tb2/build/travis-try.sh"
-
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-build-all.sh
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-net.sh
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-net.sh
 
-# ssh argo -- lxc-attach -n tes -- /bin/bash /tb2/build/dk-install-all.sh
 ssh argo -- lxc-attach -n tus -- /bin/bash /tb2/build/xrepo.sh
 ssh argo -- /bin/bash /tb2/build/xlast.sh
 ssh argo -- /bin/bash /root/cf-clear.sh
 
-ssh argo -- lxc-attach -n tus -- apt update
-
-# ssh argo -- lxc-attach -n tus -- /bin/bash /tb2/build/ztest.sh
+ssh argo -- lxc-attach -n tus -- /bin/bash /tb2/build/ztest.sh
