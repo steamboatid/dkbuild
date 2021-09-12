@@ -51,37 +51,14 @@ echo \
 'Archive: stable
 Origin: phideb
 Label: phideb
-Version: 10.0
+Version: 11.0
 Component: main
 Architecture: amd64
 '>Release
 
 
 cd /tb2/phideb/dists/buster
-echo \
-'Origin: phideb
-Label: phideb
-Suite: stable
-Version: 10.0
-Codename: buster
-No-Support-for-Architecture-all: Packages
-Architectures: all amd64
-Components: main
-Description: phideb custom packages
-'>Release
-apt-ftparchive release . >> Release
+/tb2/build/xrelease.sh
 
 cd /tb2/phideb/dists/bullseye
-echo \
-'Origin: phideb
-Label: phideb
-Suite: stable
-Version: 11.0
-Codename: bullseye
-No-Support-for-Architecture-all: Packages
-Architectures: all amd64
-Components: main
-Description: phideb custom packages
-'>Release
-apt-ftparchive release . >> Release
-
+/tb2/build/xrelease.sh
