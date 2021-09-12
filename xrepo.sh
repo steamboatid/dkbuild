@@ -34,10 +34,54 @@ cd /tb2/phideb; \
 apt-ftparchive --arch amd64 packages pool/bullseye/ > dists/bullseye/main/binary-amd64/Packages
 
 
-cd /tb2/phideb/dists/buster/main/binary-amd64;   gzip -kf Packages
-cd /tb2/phideb/dists/bullseye/main/binary-amd64; gzip -kf Packages
+cd /tb2/phideb/dists/buster/main/binary-amd64
+gzip -kf Packages
+echo \
+'Archive: stable
+Origin: phideb
+Label: phideb
+Version: 10.0
+Component: main
+Architecture: amd64
+'>Release
+
+cd /tb2/phideb/dists/bullseye/main/binary-amd64
+gzip -kf Packages
+echo \
+'Archive: stable
+Origin: phideb
+Label: phideb
+Version: 10.0
+Component: main
+Architecture: amd64
+'>Release
 
 
-cd /tb2/phideb/dists/buster; apt-ftparchive release . > Release
-cd /tb2/phideb/dists/bullseye; apt-ftparchive release . > Release
+cd /tb2/phideb/dists/buster
+echo \
+'Origin: phideb
+Label: phideb
+Suite: stable
+Version: 10.0
+Codename: buster
+No-Support-for-Architecture-all: Packages
+Architectures: all amd64
+Components: main
+Description: phideb custom packages
+'>Release
+apt-ftparchive release . >> Release
+
+cd /tb2/phideb/dists/bullseye
+echo \
+'Origin: phideb
+Label: phideb
+Suite: stable
+Version: 11.0
+Codename: bullseye
+No-Support-for-Architecture-all: Packages
+Architectures: all amd64
+Components: main
+Description: phideb custom packages
+'>Release
+apt-ftparchive release . >> Release
 
