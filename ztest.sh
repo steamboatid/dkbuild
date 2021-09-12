@@ -61,9 +61,9 @@ timedatectl set-timezone Asia/Jakarta
 
 
 echo \
-'deb [trusted=yes] http://repo.aisits.id/phideb ${RELNAME} main
+"deb [trusted=yes] http://repo.aisits.id/phideb ${RELNAME} main
 deb [trusted=yes] http://repo.aisits.id/phideb ${RELNAME} main
-'>/etc/apt/sources.list.d/phideb.list
+">/etc/apt/sources.list.d/phideb.list
 
 
 cd `mktemp -d`; \
