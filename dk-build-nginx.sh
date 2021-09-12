@@ -66,8 +66,8 @@ sleep 2
 #-------------------------------------------
 mkdir -p /root/src/nginx
 cd /root/src/nginx
-find /root/src/nginx/ -iname "*udeb" -delete
-find /root/src/nginx/ -iname "*dbgsym*deb" -delete
+find /root/src/nginx/ -type f -iname "*udeb" -delete
+find /root/src/nginx/ -type f -iname "*dbgsym*deb" -delete
 
 
 # upload to /tb2/build/{$RELNAME}-nginx

@@ -71,8 +71,8 @@ done
 #-------------------------------------------
 mkdir -p /root/src/pcre
 cd /root/src/pcre
-find /root/src/pcre -iname "*udeb" -delete
-find /root/src/pcre -iname "*dbgsym*deb" -delete
+find /root/src/pcre -type f -iname "*udeb" -delete
+find /root/src/pcre -type f -iname "*dbgsym*deb" -delete
 
 
 # upload to /tb2/build/{$RELNAME}-nginx

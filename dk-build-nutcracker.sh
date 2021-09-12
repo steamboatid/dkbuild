@@ -72,8 +72,8 @@ sleep 2
 # delete unneeded packages
 #-------------------------------------------
 cd /root/src/nutcracker
-find /root/src/nutcracker/ -iname "*udeb" -delete
-find /root/src/nutcracker/ -iname "*dbgsym*deb" -delete
+find /root/src/nutcracker/ -type f -iname "*udeb" -delete
+find /root/src/nutcracker/ -type f -iname "*dbgsym*deb" -delete
 
 
 # upload to /tb2/build/{$RELNAME}-nutcracker
