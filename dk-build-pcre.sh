@@ -66,6 +66,7 @@ while read adir; do
 	-v "$VERNEXT+$RELVER+$RELNAME+dk.aisits.id" -D buster -u high; \
 	head debian/changelog
 	sleep 2
+	exit 0;
 
 	/bin/bash /tb2/build/dk-build-full.sh
 done
