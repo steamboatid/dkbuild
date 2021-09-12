@@ -87,7 +87,18 @@ apt update; apt full-upgrade -fy
 
 
 
-cd `mktemp -d`; apt remove php* -fy
+cd `mktemp -d`; apt remove php* nginx* libnginx* lua-resty* -fy
+
+
+apt-cache search lua-resty | awk '{print $1}' > /tmp/pkg-nginx0.txt
+apt-cache search nginx | awk '{print $1}' | sort -u | \
+grep -v "nginx-light\|nginx-full\|nginx-core\|lua\|zabbix\|python\|prometheus" | \
+grep "libnginx\|nginx-" >> /tmp/pkg-nginx0.txt
+
+cat /tmp/pkg-nginx0.txt > /tmp/pkg-nginx1.txt
+cat /tmp/pkg-nginx1.txt | tr "\n" " " > /tmp/pkg-nginx2.txt
+cat /tmp/pkg-nginx2.txt | xargs apt install -fy
+
 
 apt-cache search php8.0* | awk '{print $1}' | grep -v "apache\|embed" |\
 grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache" |\
@@ -100,7 +111,6 @@ grep "bcmath\|bz2\|gmp\|mbstring\|mysql\|opcache\|readline\|xdebug\|zip" \
 >> /tmp/pkg-php0.txt
 
 cat /tmp/pkg-php0.txt > /tmp/pkg-php1.txt
-# cat /tmp/pkg-php0.txt | sed "s/8.0//g" >> /tmp/pkg-php1.txt
 cat /tmp/pkg-php1.txt | tr "\n" " " > /tmp/pkg-php2.txt
 cat /tmp/pkg-php2.txt | xargs apt install -fy
 
