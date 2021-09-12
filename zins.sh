@@ -95,7 +95,12 @@ grep "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|common\|f
 > /tmp/pkg-php1.txt
 
 cat /tmp/pkg-php1.txt > /tmp/pkg-php1.txt
-cat /tmp/pkg-php1.txt | tr "\n" " " | xargs apt install -fy
+cat /tmp/pkg-php1.txt | tr "\n" " " > /tmp/pkg-php2.txt
+cat /tmp/pkg-php2.txt | xargs apt install -fy
+
+printf "\n\napt install -fy "
+cat /tmp/pkg-php2.txt
+printf "\n\n"
 
 php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis"
 NUMEXT=$(php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis" | wc -l)
