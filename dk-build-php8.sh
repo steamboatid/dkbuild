@@ -17,7 +17,7 @@ doback(){
 }
 dofore(){
 	/bin/bash /tb2/build/dk-build-full.sh 2>&1 | tee phpbuild.log
-	NUMFAIL=$(grep "buildpackage" build.log | grep failed | wc -l)
+	NUMFAIL=$(grep "buildpackage" phpbuild.log | grep failed | wc -l)
 	printf "\n\n\n\tFAILS = $NUMFAIL\n\n"
 	if [[ $NUMFAIL -gt 0 ]]; then
 		cat build.log
@@ -93,7 +93,7 @@ while read adir; do
 	if [[ $NUMINS -lt 3 ]]; then
 		doback
 	else
-		dofore
+		if [[ $adir == *"phalcon"* ]]; then doback; else dofore; fi
 	fi
 done
 
