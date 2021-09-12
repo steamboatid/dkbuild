@@ -10,6 +10,10 @@ export EMAIL="steamboatid@gmail.com"
 export RELNAME=$(lsb_release -sc)
 export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
 
+# tweaks
+echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
+apt install -fy eatmydata
+
 
 echo \
 'Acquire::Queue-Mode "host";
@@ -76,7 +80,11 @@ apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys &&\
 apt update; apt full-upgrade -fy
 
 
-apt install -yfdu   --no-install-recommends --auto-remove --purge \
+
+cd `mktemp -d`; apt remove php* -fy
+
+
+apt install -yf   --no-install-recommends --auto-remove --purge \
 php8.0-cli php8.0-fpm php8.0-common php8.0-curl php8.0-fpm php8.0-gd \
 php8.0-bcmath php8.0-bz2 php8.0-gmp php8.0-ldap php8.0-mbstring php8.0-mysql \
 php8.0-opcache php8.0-readline php8.0-soap php8.0-tidy php8.0-xdebug php8.0-xml php8.0-xsl php8.0-zip \
