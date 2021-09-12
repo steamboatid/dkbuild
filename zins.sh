@@ -21,7 +21,7 @@ cd `mktemp -d`; apt remove php* -fy
 
 cd /tb2/build/$RELNAME-all; \
 find /tb2/build/$RELNAME-all -name "php*deb" | sort -u | \
-grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|smbclient\|ldap\|sybase\|interbase\|yac\|xcache" |\
+grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache" |\
 grep "_all\|bcmath\|bz2\|cli\|common\|fpm\|gd\|mbstring\|mysql\|opcache\|xdebug" \
 > /tmp/pkg-php0.txt
 

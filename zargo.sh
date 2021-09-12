@@ -20,4 +20,4 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-net.sh
 
 # ssh argo -- lxc-attach -n tes -- /bin/bash /tb2/build/dk-install-all.sh
-ssh argo -- lxc-attach -n tus -- /bin/bash /tb2/build/zins.sh
+# ssh argo -- lxc-attach -n tus -- /bin/bash /tb2/build/zins.sh
