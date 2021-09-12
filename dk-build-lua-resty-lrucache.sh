@@ -21,6 +21,8 @@ VEROVR="0.11.1"
 #-------------------------------------------
 mkdir -p /tb2/build/$RELNAME-lua-resty-lrucache
 rm -rf /tb2/build/$RELNAME-lua-resty-lrucache/*deb
+mkdir -p /root/src/lua-resty-lrucache
+rm -rf /root/src/lua-resty-lrucache/*deb
 
 
 # build

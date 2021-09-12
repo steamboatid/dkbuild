@@ -20,7 +20,8 @@ VEROVR="1.21.3.1"
 #-------------------------------------------
 mkdir -p /tb2/build/$RELNAME-nginx
 rm -rf /tb2/build/$RELNAME-nginx/*deb
-
+mkdir -p /root/src/nginx
+rm -rf /root/src/nginx/*deb
 
 # build
 #-------------------------------------------

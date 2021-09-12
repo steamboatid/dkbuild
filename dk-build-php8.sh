@@ -38,11 +38,6 @@ VEROVR=""
 #-------------------------------------------
 mkdir -p /tb2/build/$RELNAME-php8
 rm -rf /tb2/build/$RELNAME-php8/*deb
-
-
-
-#--- delete old debs
-#-------------------------------------------
 mkdir -p /root/src/php8
 rm -rf /root/src/php8/*deb
 

@@ -15,11 +15,12 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 #-------------------------------------------
 mkdir -p /tb2/build/$RELNAME-pcre
 rm -rf /tb2/build/$RELNAME-pcre/*deb
+mkdir -p /root/src/pcre
+rm -rf /root/src/pcre/*deb
 
 
 # get source
 #-------------------------------------------
-mkdir -p /root/src/pcre
 cd /root/src/pcre
 apt source -y libpcre3
 

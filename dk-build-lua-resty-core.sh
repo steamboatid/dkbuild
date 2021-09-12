@@ -21,6 +21,8 @@ VEROVR="0.1.22.1"
 #-------------------------------------------
 mkdir -p /tb2/build/$RELNAME-lua-resty-core
 rm -rf /tb2/build/$RELNAME-lua-resty-core/*deb
+mkdir -p /root/src/lua-resty-core
+rm -rf /root/src/lua-resty-core/*deb
 
 
 # build

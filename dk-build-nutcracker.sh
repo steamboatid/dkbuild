@@ -20,12 +20,7 @@ VEROVR="0.5.1"
 #-------------------------------------------
 mkdir -p /tb2/build/$RELNAME-nutcracker
 rm -rf /tb2/build/$RELNAME-nutcracker/*deb
-
-
-# delete old files + copy new one
-#-------------------------------------------
 mkdir -p /root/src/nutcracker
-cd /root/src/nutcracker
 rm -rf /root/src/nutcracker/*deb
 
 

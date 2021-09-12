@@ -20,12 +20,7 @@ VEROVR="6.2.0.1"
 #-------------------------------------------
 mkdir -p /tb2/build/$RELNAME-keydb
 rm -rf /tb2/build/$RELNAME-keydb/*deb
-
-
-# delete old files + copy new one
-#-------------------------------------------
 mkdir -p /root/src/keydb
-cd /root/src/keydb
 rm -rf /root/src/keydb/*deb
 
 
