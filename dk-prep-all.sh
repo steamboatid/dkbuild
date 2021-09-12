@@ -41,7 +41,6 @@ alias aptold='apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--for
 
 # prepare basic need: apt configs, sources list, etc
 #-------------------------------------------
-/bin/bash /tb2/build/dk-prep-gen.sh
 /bin/bash /tb2/build/dk-prep-basic.sh
 /bin/bash /tb2/build/dk-prep-net.sh
 
