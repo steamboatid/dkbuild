@@ -34,11 +34,11 @@ rm -rf /root/src/keydb/*deb
 cd /root/src/keydb/git-keydb
 
 # revert backup if exists
-if [ -e "debian/changelog.bak" ]; then
-	cp debian/changelog.bak debian/changelog
+if [ -e "debian/changelog.1" ]; then
+	cp debian/changelog.1 debian/changelog
 fi
 # backup changelog
-cp debian/changelog debian/changelog.bak -fa
+cp debian/changelog debian/changelog.1 -fa
 
 
 VERNUM=$(basename "$PWD" | tr "-" " " | awk '{print $NF}' | cut -f1 -d"+")
