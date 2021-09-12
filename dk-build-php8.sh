@@ -64,12 +64,9 @@ while read adir; do
 	sleep 1
 
 	if [ -e "debian/changelog" ]; then
-		AISITS=$(cat debian/changelog | head -n1 | grep "aisits" | wc -l)
-		if [[ $AISITS -lt 1 ]]; then
-			VERNUM=$(dpkg-parsechangelog --show-field Version | sed "s/[+~-]/ /g"| cut -f1 -d" ")
-			VERNEXT=$(echo ${VERNUM} | awk -F. -v OFS=. '{$NF=$NF+20;print}')
-			printf "\n by changelog \n--- VERNUM= $VERNUM NEXT= $VERNEXT---\n\n\n"
-		fi
+		VERNUM=$(dpkg-parsechangelog --show-field Version | sed "s/[+~-]/ /g"| cut -f1 -d" ")
+		VERNEXT=$(echo ${VERNUM} | awk -F. -v OFS=. '{$NF=$NF+20;print}')
+		printf "\n by changelog \n--- VERNUM= $VERNUM NEXT= $VERNEXT---\n\n\n"
 	fi
 
 	if [ -n "$VEROVR" ]; then
