@@ -35,6 +35,9 @@ while read adir; do
 	if [ -e "debian/changelog.bak" ]; then
 		cp debian/changelog.bak debian/changelog
 	fi
+	if [ ! -e "debian/changelog.org" ]; then
+		cp debian/changelog debian/changelog.org
+	fi
 	# backup changelog
 	cp debian/changelog debian/changelog.bak
 
