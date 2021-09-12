@@ -34,25 +34,10 @@ cd /tb2/phideb; \
 apt-ftparchive --arch amd64 packages pool/bullseye/ > dists/bullseye/main/binary-amd64/Packages
 
 
-cd /tb2/phideb/dists/buster/main/binary-amd64; \
-gzip -kf Packages; apt-ftparchive release . > Release
-
-cd /tb2/phideb/dists/bullseye/main/binary-amd64; \
-gzip -kf Packages; apt-ftparchive release . > Release
+cd /tb2/phideb/dists/buster/main/binary-amd64;   gzip -kf Packages
+cd /tb2/phideb/dists/bullseye/main/binary-amd64; gzip -kf Packages
 
 
-cd /tb2/phideb/dists/buster/main; \
-gzip -kf Packages; apt-ftparchive release . > Release
+cd /tb2/phideb/dists/buster; apt-ftparchive release . > Release
+cd /tb2/phideb/dists/bullseye; apt-ftparchive release . > Release
 
-cd /tb2/phideb/dists/bullseye/main; \
-gzip -kf Packages; apt-ftparchive release . > Release
-
-
-cd /tb2/phideb/dists/buster; \
-gzip -kf Packages; apt-ftparchive release . > Release
-
-cd /tb2/phideb/dists/bullseye; \
-gzip -kf Packages; apt-ftparchive release . > Release
-
-
-cd /tb2/phideb/dists; apt-ftparchive release . > Release
