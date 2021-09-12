@@ -7,6 +7,9 @@ rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 nohup /bin/bash /tb2/build/zgit-auto.sh >/dev/null 2>&1 &
 
 ssh argo "chmod +x /usr/local/sbin/* &"
+
+ssh argo "lxc-start -n tus >/dev/null 2>&1 &"
+ssh argo "lxc-start -n tes >/dev/null 2>&1 &"
 ssh argo "lxc-start -n bus >/dev/null 2>&1 &"
 ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 
