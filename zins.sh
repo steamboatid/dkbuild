@@ -95,7 +95,7 @@ grep "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|common\|f
 > /tmp/pkg-php0.txt
 
 cat /tmp/pkg-php0.txt > /tmp/pkg-php1.txt
-cat /tmp/pkg-php0.txt | sed "s/8.0//g" >> /tmp/pkg-php1.txt
+# cat /tmp/pkg-php0.txt | sed "s/8.0//g" >> /tmp/pkg-php1.txt
 cat /tmp/pkg-php1.txt | tr "\n" " " > /tmp/pkg-php2.txt
 cat /tmp/pkg-php2.txt | xargs apt install -fy
 
