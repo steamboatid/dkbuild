@@ -23,4 +23,7 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 ssh argo -- lxc-attach -n tus -- /bin/bash /tb2/build/xrepo.sh
 ssh argo -- /bin/bash /tb2/build/xlast.sh
 ssh argo -- /bin/bash /root/cf-clear.sh
+
+ssh argo -- lxc-attach -n tus -- apt uppdate
+
 # ssh argo -- lxc-attach -n tus -- /bin/bash /tb2/build/ztest.sh
