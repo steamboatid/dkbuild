@@ -92,9 +92,10 @@ cd `mktemp -d`; apt remove php* -fy
 apt-cache search php8.0* | awk '{print $1}' | grep -v "apache\|embed" |\
 grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache" |\
 grep "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|common\|fpm\|cli" \
-> /tmp/pkg-php1.txt
+> /tmp/pkg-php0.txt
 
-cat /tmp/pkg-php1.txt > /tmp/pkg-php1.txt
+cat /tmp/pkg-php0.txt > /tmp/pkg-php1.txt
+cat /tmp/pkg-php0.txt | sed "s/8.0//g" >> /tmp/pkg-php1.txt
 cat /tmp/pkg-php1.txt | tr "\n" " " > /tmp/pkg-php2.txt
 cat /tmp/pkg-php2.txt | xargs apt install -fy
 
