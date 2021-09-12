@@ -1,6 +1,8 @@
 #!/bin/bash
 
 
+mkdir -p /tb2/root/github/dkbuild/
+
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 /tb2/build/*sh /tb2/root/github/dkbuild/
 
