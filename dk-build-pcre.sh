@@ -31,6 +31,14 @@ while read adir; do
 	cd $adir
 	pwd
 
+	# revert backup if exists
+	if [ -e "debian/changelog.bak" ]; then
+		cp debian/changelog.bak debian/changelog
+	fi
+	# backup changelog
+	cp debian/changelog debian/changelog.bak
+
+
 	VERNUM=$(basename "$PWD" | tr "-" " " | awk '{print $NF}' | cut -f1 -d"+")
 	VERNEXT=$(echo ${VERNUM} | awk -F. -v OFS=. '{$NF=$NF+20;print}')
 	printf "\n\n$adir --- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
@@ -49,12 +57,6 @@ while read adir; do
 		printf "\n\n$adir --- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
 	fi
 
-	# revert backup if exists
-	if [ -e "debian/changelog.bak" ]; then
-		cp debian/changelog.bak debian/changelog
-	fi
-	# backup changelog
-	cp debian/changelog debian/changelog.bak
 	ls -la debian/changelog.bak
 	exit 0;
 
