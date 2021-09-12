@@ -57,9 +57,6 @@ while read adir; do
 		printf "\n\n$adir --- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
 	fi
 
-	ls -la debian/changelog.bak
-	exit 0;
-
 
 	dch -p -b "backport to $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
 	-v "$VERNEXT+$RELVER+$RELNAME+dk.aisits.id" -D buster -u high; \
