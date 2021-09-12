@@ -34,13 +34,9 @@ while read adir; do
 	# revert backup if exists
 	if [ -e "debian/changelog.bak" ]; then
 		cp debian/changelog.bak debian/changelog
-		cp debian/changelog.bak debian/changelog.1
-	fi
-	if [ ! -e "debian/changelog.org" ]; then
-		cp debian/changelog debian/changelog.org
 	fi
 	# backup changelog
-	cp debian/changelog debian/changelog.bak
+	cp debian/changelog debian/changelog.bak -fa
 
 
 	VERNUM=$(basename "$PWD" | tr "-" " " | awk '{print $NF}' | cut -f1 -d"+")
