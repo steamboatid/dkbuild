@@ -1,0 +1,40 @@
+# netbeans project
+nbproject
+nbproject/*
+*.bak
+*bak
+
+# debian packaging
+debian/.debhelper/*
+debian/.debhelper
+
+# https://github.com/phusion/debian-packaging-for-the-modern-developer/blob/master/.gitignore
+.DS_Store
+.debhelper
+*.debhelper
+*.cache
+*.cache/*
+*.deb
+*.dsc
+*.build
+*.buildinfo
+*.changes
+*.tar.gz
+*.log
+*.substvars
+*.gz
+*.zip
+*.xz
+*.bz2
+
+# Ignore generated files
+/*.deb
+/*.dsc
+/*.changes
+/*.build
+/*.buildinfo
+/*.tar.gz
+/*.gz
+/*.zip
+/*.xz
+/*.bz2
