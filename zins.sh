@@ -95,7 +95,6 @@ grep "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|common\|f
 > /tmp/pkg-php1.txt
 
 cat /tmp/pkg-php1.txt > /tmp/pkg-php1.txt
-cat /tmp/pkg-php1.txt | sed "s/8.0//g" >> /tmp/pkg-php1.txt
 cat /tmp/pkg-php1.txt | tr "\n" " " | xargs apt install -fy
 
 php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis"
