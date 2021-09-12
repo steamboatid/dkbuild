@@ -4,9 +4,7 @@
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 /tb2/build/*sh root@argo:/tb2/build/
 
-rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
-/tb2/build/*sh /tb2/root/github/dkbuild/
-
+bash /tb2/build/zgit-auto.sh
 
 ssh argo "chmod +x /usr/local/sbin/* &"
 ssh argo "lxc-start -n bus >/dev/null 2>&1 &"
