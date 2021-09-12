@@ -58,7 +58,7 @@ Architecture: amd64
 
 
 cd /tb2/phideb/dists/buster
-/bin/bash /tb2/build/xrelease.sh
+/bin/bash /tb2/build/xrelease.sh > Release
 
 cd /tb2/phideb/dists/bullseye
-/bin/bash /tb2/build/xrelease.sh
+/bin/bash /tb2/build/xrelease.sh > Release
