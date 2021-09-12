@@ -66,8 +66,14 @@ timedatectl set-timezone Asia/Jakarta
 
 echo \
 "deb [trusted=yes] http://repo.aisits.id/phideb ${RELNAME} main
-deb-src [trusted=yes] http://repo.aisits.id/phideb ${RELNAME} main
+#deb-src [trusted=yes] http://repo.aisits.id/phideb ${RELNAME} main
 ">/etc/apt/sources.list.d/phideb.list
+
+>/etc/apt/sources.list.d/nginx-ppa-devel.list
+>/etc/apt/sources.list.d/nginx-devel-aisits.list
+>/etc/apt/sources.list.d/php-sury.list
+>/etc/apt/sources.list.d/php-aisits.list
+>/etc/apt/sources.list.d/keydb-ppa.list
 
 
 cd `mktemp -d`; \
