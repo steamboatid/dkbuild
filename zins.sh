@@ -13,6 +13,10 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 
 source ~/.bashrc
 
+# tweaks
+echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
+apt install -fy eatmydata
+
 cd `mktemp -d`; apt remove php* -fy
 
 cd /tb2/build/$RELNAME-all; \
