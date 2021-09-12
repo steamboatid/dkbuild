@@ -1,5 +1,16 @@
 #!/bin/bash
 
+
+export DEBIAN_FRONTEND="noninteractive"
+
+export DEBFULLNAME="Dwi Kristianto"
+export DEBEMAIL="steamboatid@gmail.com"
+export EMAIL="steamboatid@gmail.com"
+
+export RELNAME=$(lsb_release -sc)
+export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
+
+
 source ~/.bashrc
 
 cd `mktemp -d`; apt remove php* -fy
@@ -7,20 +18,29 @@ cd `mktemp -d`; apt remove php* -fy
 cd /tb2/build/$RELNAME-all; \
 find /tb2/build/$RELNAME-all -name "php*deb" | sort -u | \
 grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|smbclient\|ldap\|sybase\|interbase\|yac\|xcache" |\
-grep "_all\|apcu\|bcmath\|bz2\|cli\|common\|curl\|fpm\|gd\|gmp\|http\|igbinary\|imagick\|ldap\|mbstring\|memcached\|msgpack\|mysql\|opcache\|raphf\|readline\|redis\|soap\|tidy\|xdebug\|xml\|xsl\|zip" \
-> /tmp/pkg-php.txt
+grep "_all\|bcmath\|bz2\|cli\|common\|fpm\|gd\|mbstring\|mysql\|opcache\|xdebug" \
+> /tmp/pkg-php0.txt
 
-cat /tmp/pkg-php.txt | tr "\n" " " | xargs dpkg -i || dpkg --configure -a || \
+cat /tmp/pkg-php0.txt | tr "\n" " " | xargs dpkg -i || dpkg --configure -a || \
 apt install -fy --fix-broken --fix-missing --allow-downgrades --allow-change-held-packages
 
+# cd /tb2/build/$RELNAME-all; \
+# find /tb2/build/$RELNAME-all -name "php*deb" | sort -u | \
+# grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|smbclient\|ldap\|sybase\|interbase\|yac\|xcache" |\
+# grep "_all\|apcu\|bcmath\|bz2\|cli\|common\|curl\|fpm\|gd\|gmp\|http\|igbinary\|imagick\|ldap\|mbstring\|memcached\|msgpack\|mysql\|opcache\|raphf\|readline\|redis\|soap\|tidy\|xdebug\|xml\|xsl\|zip" \
+# > /tmp/pkg-php.txt
 
-find /tb2/build/$RELNAME-all -name "php*deb" | sort -u | \
-grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|smbclient\|ldap\|sybase\|interbase\|yac\|xcache" |\
-grep "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis" \
-> /tmp/pkg-php2.txt
+# cat /tmp/pkg-php.txt | tr "\n" " " | xargs dpkg -i || dpkg --configure -a || \
+# apt install -fy --fix-broken --fix-missing --allow-downgrades --allow-change-held-packages
 
-cat /tmp/pkg-php2.txt | tr "\n" " " | xargs dpkg -i || dpkg --configure -a || \
-apt install -fy --fix-broken --fix-missing --allow-downgrades --allow-change-held-packages
+
+# find /tb2/build/$RELNAME-all -name "php*deb" | sort -u | \
+# grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|smbclient\|ldap\|sybase\|interbase\|yac\|xcache" |\
+# grep "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|common\|fpm\|cli" \
+# > /tmp/pkg-php2.txt
+
+# cat /tmp/pkg-php2.txt | tr "\n" " " | xargs dpkg -i || dpkg --configure -a || \
+# apt install -fy --fix-broken --fix-missing --allow-downgrades --allow-change-held-packages
 
 php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis"
 NUMEXT=$(php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis" | wc -l)
