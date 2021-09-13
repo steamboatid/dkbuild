@@ -87,7 +87,9 @@ apt update; apt full-upgrade -fy
 
 
 
-cd `mktemp -d`; apt remove php* nginx* libnginx* lua-resty* -fy
+cd `mktemp -d`; apt remove php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy
+
+apt install -fy keydb-server keydb-tools nutcracker
 
 
 apt-cache search lua-resty | awk '{print $1}' > /tmp/pkg-nginx0.txt
