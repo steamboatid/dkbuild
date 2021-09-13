@@ -87,9 +87,30 @@ apt update; apt full-upgrade -fy
 
 
 
-cd `mktemp -d`; apt remove php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy
+# cd `mktemp -d`; apt remove php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy
 
 apt install -fy keydb-server keydb-tools nutcracker
+
+cd `mktemp -d`; \
+systemctl stop redis-server; systemctl disable redis-server; systemctl mask redis-server; \
+systemctl daemon-reload; apt remove -y redis-server
+mkdir -p /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
+chown keydb.keydb -Rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
+find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type d -exec chmod 775 {} \; ; \
+find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type d -exec chmod 664 {} \;
+sed -i "s/^bind 127.0.0.1 \:\:1/\#-- bind 127.0.0.1 \:\:1\nbind 127.0.0.1/g" /etc/keydb/keydb.conf
+sed -i "s/^logfile \/var/#--logfile \/var/g" /etc/keydb/keydb.conf
+
+killall -9 keydb-server; \
+systemctl stop keydb-server; killall -9 keydb-server >/dev/null 2>&1; \
+systemctl stop keydb-server; killall -9 keydb-server >/dev/null 2>&1
+KEYCHECK=$(keydb-server /etc/keydb/keydb.conf --loglevel verbose 2>&1 | grep -i "loaded" | wc -l)
+if [[ $KEYCHECK -gt 0 ]]; then
+	printf "\n\n keydb: OK \n\n"
+else
+	printf "\n\n keydb: FAILED \n\n"
+fi
+exit 0;
 
 
 apt-cache search lua-resty | awk '{print $1}' > /tmp/pkg-nginx0.txt

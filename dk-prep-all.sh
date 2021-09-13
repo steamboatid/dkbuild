@@ -195,7 +195,7 @@ sed -i "s/^logfile \/var/#--logfile \/var/g" /etc/keydb/keydb.conf
 killall -9 keydb-server; \
 systemctl stop keydb-server; killall -9 keydb-server >/dev/null 2>&1; \
 systemctl stop keydb-server; killall -9 keydb-server >/dev/null 2>&1
-KEYCHECK=$(keydb-server /etc/keydb/keydb.conf --loglevel verbose | grep -i "loaded" | wc -l)
+KEYCHECK=$(keydb-server /etc/keydb/keydb.conf --loglevel verbose 2>&1 | grep -i "loaded" | wc -l)
 if [[ $KEYCHECK -gt 0 ]]; then
 	printf "\n\n keydb: OK \n\n"
 else
