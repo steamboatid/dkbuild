@@ -116,7 +116,8 @@ rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb /usr/lib/php \
 /lib/systemd/system/nginx* /etc/init.d/nginx* \
 /lib/systemd/system/php* /etc/init.d/php*
 
-apt install --reinstall -fy keydb-server keydb-tools nutcracker nginx-extras php8.0-fpm php8.0-cli; \
+apt install --no-install-recommends --fix-missing --reinstall -fy \
+nutcracker keydb-server keydb-tools nginx-extras php8.0-fpm php8.0-cli; \
 apt install -fy; \
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 exit 0;
@@ -128,7 +129,7 @@ grep "libnginx\|nginx-" >> /tmp/pkg-nginx0.txt
 
 cat /tmp/pkg-nginx0.txt > /tmp/pkg-nginx1.txt
 cat /tmp/pkg-nginx1.txt | tr "\n" " " > /tmp/pkg-nginx2.txt
-cat /tmp/pkg-nginx2.txt | xargs apt install -fy
+cat /tmp/pkg-nginx2.txt | xargs apt install -fy --no-install-recommends --fix-missing
 
 
 apt-cache search php8.0* | awk '{print $1}' | grep -v "apache\|embed" |\
@@ -143,7 +144,7 @@ grep "bcmath\|bz2\|gmp\|mbstring\|mysql\|opcache\|readline\|xdebug\|zip" \
 
 cat /tmp/pkg-php0.txt > /tmp/pkg-php1.txt
 cat /tmp/pkg-php1.txt | tr "\n" " " > /tmp/pkg-php2.txt
-cat /tmp/pkg-php2.txt | xargs apt install -fy
+cat /tmp/pkg-php2.txt | xargs apt install -fy --no-install-recommends --fix-missing
 
 printf "\n\napt install -fy "
 cat /tmp/pkg-php2.txt
