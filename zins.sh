@@ -94,8 +94,9 @@ fi
 
 # cd `mktemp -d`; apt remove php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy
 cd `mktemp -d`; apt remove --auto-remove --purge keydb* nutcracker* -fy
+rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb
 
-apt install --auto-remove --purge -fy keydb-server keydb-tools nutcracker
+apt install --auto-remove --purge -fy keydb-server keydb-tools
 
 cd `mktemp -d`; \
 systemctl stop redis-server; systemctl disable redis-server; systemctl mask redis-server; \
@@ -116,6 +117,8 @@ if [[ $KEYCHECK -gt 0 ]]; then
 else
 	printf "\n\n keydb: FAILED \n\n"
 fi
+
+apt install -fy
 exit 0;
 
 
