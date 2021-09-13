@@ -117,6 +117,8 @@ apt install -fy
 
 apt install --auto-remove --purge -fy keydb-server keydb-tools nutcracker
 apt install -fy
+
+sleep 1; netstat -nlpat | grep --color "nginx\|keydb\|nutcracker\|php"
 exit 0;
 
 apt-cache search lua-resty | awk '{print $1}' > /tmp/pkg-nginx0.txt
