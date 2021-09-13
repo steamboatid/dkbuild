@@ -113,6 +113,7 @@ rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb /usr/lib/php \
 /lib/systemd/system/nutcracker* /etc/init.d/nutcracker* \
 /lib/systemd/system/nginx* /etc/init.d/nginx* \
 /lib/systemd/system/php* /etc/init.d/php*
+apt install -fy
 
 apt install --auto-remove --purge -fy keydb-server keydb-tools nutcracker
 apt install -fy
