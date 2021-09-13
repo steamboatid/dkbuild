@@ -91,6 +91,19 @@ export LANGUAGE=en_US.UTF-8
 fi
 
 
+find /var/lib/apt/lists/ -type f -delete; \
+find /var/cache/apt/ -type f -delete; \
+rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
+/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/ \
+/etc/apt/preferences.d/00-revert-stable \
+/var/cache/debconf/ /var/lib/apt/lists/* \
+/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/; \
+mkdir -p /root/.local/share/nano/ /root/.config/procps/; \
+dpkg --configure -a; \
+apt autoclean; apt clean; apt update
+apt full-upgrade --auto-remove --purge -fydu
+
+
 
 # cd `mktemp -d`; apt remove php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy
 cd `mktemp -d`; apt remove --auto-remove --purge keydb* nutcracker* -fy
@@ -98,25 +111,25 @@ rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb
 
 apt install --auto-remove --purge -fy keydb-server keydb-tools
 
-cd `mktemp -d`; \
-systemctl stop redis-server; systemctl disable redis-server; systemctl mask redis-server; \
-systemctl daemon-reload; apt remove -y redis-server
-mkdir -p /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
-chown keydb.keydb -Rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
-find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type d -exec chmod 775 {} \; ; \
-find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type f -exec chmod 664 {} \;
-sed -i "s/^bind 127.0.0.1 \:\:1/\#-- bind 127.0.0.1 \:\:1\nbind 127.0.0.1/g" /etc/keydb/keydb.conf
-# sed -i "s/^logfile \/var/#--logfile \/var/g" /etc/keydb/keydb.conf
+# cd `mktemp -d`; \
+# systemctl stop redis-server; systemctl disable redis-server; systemctl mask redis-server; \
+# systemctl daemon-reload; apt remove -y redis-server
+# mkdir -p /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
+# chown keydb.keydb -Rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
+# find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type d -exec chmod 775 {} \; ; \
+# find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type f -exec chmod 664 {} \;
+# sed -i "s/^bind 127.0.0.1 \:\:1/\#-- bind 127.0.0.1 \:\:1\nbind 127.0.0.1/g" /etc/keydb/keydb.conf
+# # sed -i "s/^logfile \/var/#--logfile \/var/g" /etc/keydb/keydb.conf
 
-killall -9 keydb-server; \
-systemctl stop keydb-server; killall -9 keydb-server >/dev/null 2>&1; \
-systemctl stop keydb-server; killall -9 keydb-server >/dev/null 2>&1
-KEYCHECK=$(keydb-server /etc/keydb/keydb.conf --loglevel verbose 2>&1 | grep -i "loaded" | wc -l)
-if [[ $KEYCHECK -gt 0 ]]; then
-	printf "\n\n keydb: OK \n\n"
-else
-	printf "\n\n keydb: FAILED \n\n"
-fi
+# killall -9 keydb-server; \
+# systemctl stop keydb-server; killall -9 keydb-server >/dev/null 2>&1; \
+# systemctl stop keydb-server; killall -9 keydb-server >/dev/null 2>&1
+# KEYCHECK=$(keydb-server /etc/keydb/keydb.conf --loglevel verbose 2>&1 | grep -i "loaded" | wc -l)
+# if [[ $KEYCHECK -gt 0 ]]; then
+# 	printf "\n\n keydb: OK \n\n"
+# else
+# 	printf "\n\n keydb: FAILED \n\n"
+# fi
 
 apt install -fy
 exit 0;
