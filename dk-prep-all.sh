@@ -19,7 +19,9 @@ update_old_git() {
 	git pull --update-shallow --ff-only
 	git pull --depth=1 --ff-only
 	git pull --ff-only
+	git pull --allow-unrelated-histories
 	git pull origin $(git rev-parse --abbrev-ref HEAD) --ff-only
+	git pull origin $(git rev-parse --abbrev-ref HEAD) --allow-unrelated-histories
 	cd ..
 }
 
