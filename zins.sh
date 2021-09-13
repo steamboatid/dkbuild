@@ -101,24 +101,24 @@ rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
 mkdir -p /root/.local/share/nano/ /root/.config/procps/; \
 dpkg --configure -a; \
 apt autoclean; apt clean; apt update
-apt full-upgrade --auto-remove --purge -fydu
+apt full-upgrade --auto-remove --purge -fy
 
 
 
 cd `mktemp -d`; \
-apt remove php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy; \
+apt purge --auto-remove --purge \
+php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy
+
 rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb /usr/lib/php \
 /etc/keydb /etc/nutcracker /etc/php /etc/nginx \
 /lib/systemd/system/keydb* /etc/init.d/keydb* \
 /lib/systemd/system/nutcracker* /etc/init.d/nutcracker* \
 /lib/systemd/system/nginx* /etc/init.d/nginx* \
 /lib/systemd/system/php* /etc/init.d/php*
-apt install -fy
 
-apt install --auto-remove --purge -fy keydb-server keydb-tools nutcracker
-apt install -fy
-
-sleep 1; netstat -nlpat | grep --color "nginx\|keydb\|nutcracker\|php"
+apt install --reinstall -fy keydb-server keydb-tools nutcracker nginx-extras php8.0-fpm php8.0-cli; \
+apt install -fy; \
+netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 exit 0;
 
 apt-cache search lua-resty | awk '{print $1}' > /tmp/pkg-nginx0.txt
