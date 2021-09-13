@@ -94,7 +94,7 @@ fi
 
 # cd `mktemp -d`; apt remove php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy
 
-apt install -fy keydb-server keydb-tools nutcracker
+apt install --auto-remove --purge -fy keydb-server keydb-tools nutcracker
 
 cd `mktemp -d`; \
 systemctl stop redis-server; systemctl disable redis-server; systemctl mask redis-server; \
