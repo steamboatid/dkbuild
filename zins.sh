@@ -132,6 +132,18 @@ apt install --auto-remove --purge -fy keydb-server keydb-tools
 # fi
 
 apt install -fy
+
+
+>/var/log/keydb/keydb-server.log;\
+systemctl daemon-reload; \
+ps auxw | grep keydb-server | awk '{print $2}' | xargs kill -9; \
+systemctl stop keydb-server; \
+ps auxw | grep keydb-server | awk '{print $2}' | xargs kill -9; \
+/etc/init.d/keydb-server restart; systemctl status keydb-server; \
+sleep 1; cat /var/log/keydb/keydb-server.log; \
+netstat -nlpat | grep --color keydb
+
+
 exit 0;
 
 
