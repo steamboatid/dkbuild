@@ -105,8 +105,6 @@ done
 cd /root/src/php8
 find /root/src/php8/ -type f -iname "*udeb" -delete
 find /root/src/php8/ -type f -iname "*dbgsym*deb" -delete
-# find /root/src/php8/ -type f -iname "php5*deb" -delete
-# find /root/src/php8/ -type f -iname "php7*deb" -delete
 
 
 # test install

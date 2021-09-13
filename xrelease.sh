@@ -1,8 +1,8 @@
 #!/bin/sh
 set -e
 
-export RELNAME=$(lsb_release -sc)
-export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
+export RELNAME=$1
+export RELVER="0.1"
 
 do_hash() {
 	HASH_NAME=$1

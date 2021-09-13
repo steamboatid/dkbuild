@@ -37,8 +37,6 @@ sleep 1
 
 find /root/src -type f -iname "*udeb" -delete
 find /root/src -type f -iname "*dbgsym*deb" -delete
-# find /root/src -type f -iname "php5*deb" -delete
-# find /root/src -type f -iname "php7*deb" -delete
 
 
 #--- delete old debs

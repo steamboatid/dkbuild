@@ -40,7 +40,7 @@ echo \
 'Archive: stable
 Origin: phideb
 Label: phideb
-Version: 10.0
+Version: 0.1
 Component: main
 Architecture: amd64
 '>Release
@@ -51,14 +51,14 @@ echo \
 'Archive: stable
 Origin: phideb
 Label: phideb
-Version: 11.0
+Version: 0.1
 Component: main
 Architecture: amd64
 '>Release
 
 
 cd /tb2/phideb/dists/buster
-/bin/bash /tb2/build/xrelease.sh > Release
+/bin/bash /tb2/build/xrelease.sh buster > Release
 
 cd /tb2/phideb/dists/bullseye
-/bin/bash /tb2/build/xrelease.sh > Release
+/bin/bash /tb2/build/xrelease.sh bullseye > Release
