@@ -93,6 +93,7 @@ fi
 
 
 # cd `mktemp -d`; apt remove php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy
+cd `mktemp -d`; apt remove --auto-remove --purge keydb* nutcracker* -fy
 
 apt install --auto-remove --purge -fy keydb-server keydb-tools nutcracker
 
