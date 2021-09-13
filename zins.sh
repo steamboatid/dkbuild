@@ -116,12 +116,14 @@ rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb /usr/lib/php \
 /lib/systemd/system/nginx* /etc/init.d/nginx* \
 /lib/systemd/system/php* /etc/init.d/php*
 
+# short install
 apt install --no-install-recommends --fix-missing --reinstall -fy \
 nutcracker keydb-server keydb-tools nginx-extras php8.0-fpm php8.0-cli; \
 apt install -fy; \
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
-exit 0;
 
+
+# complete install NGINX
 apt-cache search lua-resty | awk '{print $1}' > /tmp/pkg-nginx0.txt
 apt-cache search nginx | awk '{print $1}' | sort -u | \
 grep -v "nginx-light\|nginx-full\|nginx-core\|lua\|zabbix\|python\|prometheus" | \
@@ -132,6 +134,7 @@ cat /tmp/pkg-nginx1.txt | tr "\n" " " > /tmp/pkg-nginx2.txt
 cat /tmp/pkg-nginx2.txt | xargs apt install -fy --no-install-recommends --fix-missing
 
 
+# complete install PHP8.0
 apt-cache search php8.0* | awk '{print $1}' | grep -v "apache\|embed" |\
 grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache" |\
 grep "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|common\|fpm\|cli" \
@@ -150,16 +153,7 @@ printf "\n\napt install -fy "
 cat /tmp/pkg-php2.txt
 printf "\n\n"
 
+# check PHP install
 php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis"
 NUMEXT=$(php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis" | wc -l)
 if [[ $NUMEXT -lt 8 ]]; then printf "\n\n\t php ext:NOT OK\n\n"; else printf "\n\n\t php ext: OK\n\n"; fi
-
-
-# apt install -yf   --no-install-recommends --auto-remove --purge \
-# php8.0-cli php8.0-fpm php8.0-common php8.0-curl php8.0-fpm php8.0-gd \
-# php8.0-bcmath php8.0-bz2 php8.0-gmp php8.0-ldap php8.0-mbstring php8.0-mysql \
-# php8.0-opcache php8.0-readline php8.0-soap php8.0-tidy php8.0-xdebug php8.0-xml php8.0-xsl php8.0-zip \
-# php-memcached php-redis php-igbinary php-msgpack php-http php-raphf \
-# autoconf curl dh-make dh-php gcc ghostscript gifsicle imagemagick jpegoptim keydb-server keydb-tools make \
-# mariadb-client \
-# mcrypt memcached optipng pdftk pkg-config pkg-php-tools pngquant qpdf wkhtmltopdf xfonts-75dpi xvfb zlib1g-dev
