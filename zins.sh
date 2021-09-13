@@ -107,7 +107,7 @@ apt full-upgrade --auto-remove --purge -fydu
 
 # cd `mktemp -d`; apt remove php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy
 cd `mktemp -d`; apt remove --auto-remove --purge keydb* nutcracker* -fy
-rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb
+rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb /lib/systemd/system/keydb*
 
 apt install --auto-remove --purge -fy keydb-server keydb-tools
 
