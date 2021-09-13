@@ -97,7 +97,7 @@ systemctl daemon-reload; apt remove -y redis-server
 mkdir -p /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
 chown keydb.keydb -Rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
 find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type d -exec chmod 775 {} \; ; \
-find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type d -exec chmod 664 {} \;
+find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type f -exec chmod 664 {} \;
 sed -i "s/^bind 127.0.0.1 \:\:1/\#-- bind 127.0.0.1 \:\:1\nbind 127.0.0.1/g" /etc/keydb/keydb.conf
 sed -i "s/^logfile \/var/#--logfile \/var/g" /etc/keydb/keydb.conf
 
