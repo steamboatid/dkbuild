@@ -21,4 +21,4 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 # ssh argo -- /bin/bash /tb2/build/xlast.sh
 # ssh argo -- /bin/bash /root/cf-clear.sh
 
-ssh argo -- lxc-attach -n tes -- /bin/bash /tb2/build/zins.sh
+# ssh argo -- lxc-attach -n tes -- /bin/bash /tb2/build/zins.sh
