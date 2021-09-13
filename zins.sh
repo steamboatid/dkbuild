@@ -10,12 +10,14 @@ export EMAIL="steamboatid@gmail.com"
 export RELNAME=$(lsb_release -sc)
 export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
 
-# tweaks
-echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
-apt install -fy eatmydata
+if [[ ! -e /run/done.init.dkbuild.txt ]]; then
+
+	# tweaks
+	echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
+	apt install -fy eatmydata
 
 
-echo \
+	echo \
 'Acquire::Queue-Mode "host";
 Acquire::Languages "none";
 Acquire::http { Pipeline-Depth "200"; };
@@ -23,7 +25,7 @@ Acquire::https { Verify-Peer false; };
 '>/etc/apt/apt.conf.d/99translations
 
 
-echo \
+	echo \
 'APT::Get::AllowUnauthenticated "true";
 Acquire::Check-Valid-Until "false";
 Acquire::AllowDowngradeToInsecureRepositories "true";
@@ -50,7 +52,7 @@ APT::FTPArchive::AlwaysStat "false";
 APT::Cache-Limit "100000000";
 '>/etc/apt/apt.conf.d/98more
 
-echo \
+	echo \
 'export HISTFILESIZE=100000
 export HISTSIZE=100000
 
@@ -60,30 +62,33 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 '>/etc/environment && cat /etc/environment
 
-export PATH=$PATH:/usr/sbin
-timedatectl set-timezone Asia/Jakarta
+	export PATH=$PATH:/usr/sbin
+	timedatectl set-timezone Asia/Jakarta
 
 
-echo \
+	echo \
 "deb [trusted=yes] http://repo.aisits.id/phideb ${RELNAME} main
 #deb-src [trusted=yes] http://repo.aisits.id/phideb ${RELNAME} main
 ">/etc/apt/sources.list.d/phideb.list
 
->/etc/apt/sources.list.d/nginx-ppa-devel.list
->/etc/apt/sources.list.d/nginx-devel-aisits.list
->/etc/apt/sources.list.d/php-sury.list
->/etc/apt/sources.list.d/php-aisits.list
->/etc/apt/sources.list.d/keydb-ppa.list
+	>/etc/apt/sources.list.d/nginx-ppa-devel.list
+	>/etc/apt/sources.list.d/nginx-devel-aisits.list
+	>/etc/apt/sources.list.d/php-sury.list
+	>/etc/apt/sources.list.d/php-aisits.list
+	>/etc/apt/sources.list.d/keydb-ppa.list
 
 
-cd `mktemp -d`; \
-apt update;\
-dpkg --configure -a; \
-apt install -yf locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
-gnupg2 apt-utils tzdata curl && \
-echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen &&\
-apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys &&\
-apt update; apt full-upgrade -fy
+	cd `mktemp -d`; \
+	apt update;\
+	dpkg --configure -a; \
+	apt install -yf locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
+	gnupg2 apt-utils tzdata curl && \
+	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen &&\
+	apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys &&\
+	apt update; apt full-upgrade -fy
+
+	echo "1" > /run/done.init.dkbuild.txt
+fi
 
 
 
@@ -99,7 +104,7 @@ chown keydb.keydb -Rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
 find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type d -exec chmod 775 {} \; ; \
 find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type f -exec chmod 664 {} \;
 sed -i "s/^bind 127.0.0.1 \:\:1/\#-- bind 127.0.0.1 \:\:1\nbind 127.0.0.1/g" /etc/keydb/keydb.conf
-sed -i "s/^logfile \/var/#--logfile \/var/g" /etc/keydb/keydb.conf
+# sed -i "s/^logfile \/var/#--logfile \/var/g" /etc/keydb/keydb.conf
 
 killall -9 keydb-server; \
 systemctl stop keydb-server; killall -9 keydb-server >/dev/null 2>&1; \
