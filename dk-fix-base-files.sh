@@ -42,6 +42,7 @@ Pin-Priority: 1100
 	dpkg --configure -a
 	apt full-upgrade --auto-remove --purge --allow-downgrades -fy
 
+	rm -rf /etc/apt/preferences.d/pinning-${RELNAME}
 	sleep 1
 }
 
