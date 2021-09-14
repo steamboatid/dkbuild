@@ -81,9 +81,9 @@ get_package_file $URL $FDST2
 cat $FDST1 >> $FDST
 cat $FDST2 >> $FDST
 
-cat $FDST | grep "Package:" | sed "s/Package\: //g" | \
-grep -v "libapache2\|libpcre2-posix2\|symbols\|dbgsym\|php5\|php7\|php8.1" | \
-tr "\n" " " > $FNOW
+cat $FDST | grep "Package:" | sed "s/Package\: //g" |
+grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1" |
+grep -v "Auto-Built" | sort -u | sort | tr "\n" " " > $FNOW
 exit 0;
 
 cd /root/org.src/php8
