@@ -47,6 +47,8 @@ if [[ $NUMDIR -lt 1 ]]; then
 	apt source libpcre3
 fi
 
+
+#-- sync to src
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 /root/org.src/nginx/* /root/src/nginx/
 

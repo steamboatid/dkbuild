@@ -132,6 +132,8 @@ mkdir -p /root/org.src/pcre /root/src/pcre
 cd /root/org.src/pcre
 apt source -y libpcre3
 
+
+#-- sync to src
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 /root/org.src/pcre/* /root/src/pcre/
 
@@ -216,6 +218,8 @@ php8.0-sqlite3 php8.0-sybase php8.0-tidy php8.0-xdebug php8.0-xml \
 php8.0-xsl php8.0-zip \
 php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu
 
+
+#-- sync to src
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 /root/org.src/php8/* /root/src/php8/
 

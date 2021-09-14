@@ -69,25 +69,43 @@ FDST="/tb2/tmp/php8-pkg-org.txt"
 
 URL="https://packages.sury.org/php/dists/bullseye/main/binary-amd64/Packages"
 FDST1="/tb2/tmp/php8-pkg-org-1.txt"
-FNOW="/tb2/tmp/php8-pkg-now.txt"
 get_package_file $URL $FDST1
 
 URL="https://packages.sury.org/php/dists/buster/main/binary-amd64/Packages"
 FDST2="/tb2/tmp/php8-pkg-org-2.txt"
-FNOW="/tb2/tmp/php8-pkg-now.txt"
 get_package_file $URL $FDST2
 
 >$FDST
 cat $FDST1 >> $FDST
 cat $FDST2 >> $FDST
 
+FNOW1="/tb2/tmp/php8-pkg-now-1.txt"
+FNOW2="/tb2/tmp/php8-pkg-now-2.txt"
+
+# search package from "Package:"
 cat $FDST | grep "Package:" | sed "s/Package\: //g" |
 grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1" |
-grep -v "Auto-Built" | sort -u | sort | tr "\n" " " > $FNOW
+grep -v "Auto-Built" | sort -u | sort > $FNOW1
 
-cd /root/org.src/php8
-cat $FNOW | xargs apt build-dep -fy
-cat $FNOW | xargs apt source -y
+cat $FNOW1 |
+while read apgk; do apt build-dep -fy $apgk; done
 
+cat $FNOW1 |
+while read apgk; do apt source -y $apgk; done
+
+
+# search package from "Source:"
+cat $FDST | grep "Source:" | sed "s/Source\: //g" |
+grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1" |
+sed -E 's/\(([^()]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort > $FNOW2
+
+cat $FNOW2 |
+while read apgk; do apt build-dep -fy $apgk; done
+
+cat $FNOW2 |
+while read apgk; do apt source -y $apgk; done
+
+
+#-- sync to src
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 /root/org.src/php8/* /root/src/php8/
