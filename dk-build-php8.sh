@@ -98,6 +98,11 @@ while read adir; do
 done
 
 
+# wait all background jobs
+#-------------------------------------------
+wait
+
+
 
 # delete unneeded packages
 #-------------------------------------------

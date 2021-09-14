@@ -20,12 +20,20 @@ doback(){
 	sleep 1
 }
 
+
+
+
+# some job at background
+#-------------------------------------------
 doback /tb2/build/dk-build-nutcracker.sh &
 doback /tb2/build/dk-build-keydb.sh &
 doback /tb2/build/dk-build-pcre.sh &
 doback /tb2/build/dk-build-lua-resty-lrucache.sh &
 doback /tb2/build/dk-build-lua-resty-core.sh &
 
+
+# some job at foreground
+#-------------------------------------------
 /tb2/build/dk-build-nginx.sh
 printf "\n\n\n"
 sleep 1
@@ -33,6 +41,11 @@ sleep 1
 /tb2/build/dk-build-php8.sh
 printf "\n\n\n"
 sleep 1
+
+
+# wait all background jobs
+#-------------------------------------------
+wait
 
 
 find /root/src -type f -iname "*udeb" -delete
