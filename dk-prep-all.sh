@@ -16,6 +16,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 update_old_git() {
 	cd $1
 	printf "\n---updating $PWD \n"
+	git config  --global pull.ff only
 	git rm -r --cached . >/dev/null 2>&1
 	git submodule update --init --recursive -f
 	git fetch --all
@@ -85,9 +86,11 @@ get_update_new_git "steamboatid/nginx" "/root/src/nginx/git-nginx"
 get_update_new_git "steamboatid/lua-resty-lrucache" "/root/src/lua-resty-lrucache/git-lua-resty-lrucache"
 get_update_new_git "steamboatid/lua-resty-core" "/root/src/lua-resty-core/git-lua-resty-core"
 
-mkdir -p /root/src/pcre
-cd /root/src/pcre
+mkdir -p /root/org.src/pcre /root/src/pcre
+cd /root/org.src/pcre
 apt source -y libpcre3
+
+cp /root/org.src/pcre/* /root/src/pcre/ -Rfa
 
 
 # PHP8, source via default + git
@@ -157,12 +160,12 @@ php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu
 
 #--- recreate dir, delete debs
 #-------------------------------------------
-mkdir -p /root/src/php8
+mkdir -p /root/org.src/php8 /root/src/php8
 rm -rf /root/src/php8/*deb
 
 #--- fetch default source package
 #-------------------------------------------
-cd /root/src/php8
+cd /root/org.src/php8
 apt source -y php-defaults \
 php8.0 php8.0-apcu php8.0-ast php8.0-bcmath php8.0-bz2 php8.0-cli php8.0-common \
 php8.0-curl php8.0-dba php8.0-dev php8.0-enchant php8.0-fpm php8.0-gd php8.0-gmp \
@@ -173,6 +176,8 @@ php8.0-raphf php8.0-readline php8.0-redis php8.0-snmp php8.0-soap \
 php8.0-sqlite3 php8.0-sybase php8.0-tidy php8.0-xdebug php8.0-xml \
 php8.0-xsl php8.0-zip \
 php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu
+
+cp /root/org.src/php8/* /root/src/php8/ -Rfa
 
 #--- update phpredis from git
 #-------------------------------------------

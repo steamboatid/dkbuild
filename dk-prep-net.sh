@@ -57,16 +57,13 @@ tr "\n" " " > $FNOW
 
 cd /root/src/nginx
 cat $FNOW | xargs apt build-dep -fy
-# cat $FNOW | xargs apt source -y
 
-cd /root/src/nginx
-rm -rf *asc *xz *gz *bz2
 
 
 # PHP
 #-------------------------------------------
 rm -rf /tmp/php8
-mkdir -p /tb2/tmp /root/src/php8 /tmp/php8
+mkdir -p /tb2/tmp /root/src/php8 /root/org.src/php8 /tmp/php8
 
 URL="https://packages.sury.org/php/dists/bullseye/main/binary-amd64/Packages"
 FDST="/tb2/tmp/php8-pkg-org.txt"
@@ -77,9 +74,8 @@ cat $FDST | grep "Package:" | sed "s/Package\: //g" | \
 grep -v "libapache2\|libpcre2-posix2\|symbols\|dbgsym\|php5\|php7\|php8.1" | \
 tr "\n" " " > $FNOW
 
-cd /root/src/php8
+cd /root/org.src/php8
 cat $FNOW | xargs apt build-dep -fy
 cat $FNOW | xargs apt source -y
 
-cd /root/src/php8
-rm -rf *asc *xz *gz *bz2
+cp /root/org.src/php8/* /root/src/php8/ -Rfa

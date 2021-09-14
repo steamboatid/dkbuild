@@ -23,8 +23,11 @@ rm -rf /root/src/pcre/*deb
 
 # get source
 #-------------------------------------------
-cd /root/src/pcre
+mkdir -p /root/org.src/pcre /root/src/pcre
+cd /root/org.src/pcre
 apt source -y libpcre3
+
+cp /root/org.src/pcre/* /root/src/pcre/ -Rfa
 
 
 # build

@@ -22,29 +22,35 @@ deb-src http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu bionic main
 
 apt update
 
-mkdir -p /root/src/nginx
-cd /root/src/nginx
+mkdir -p /root/org.src/nginx /root/src/nginx
+cd /root/org.src/nginx
 rm -rf /root/src/nginx/*deb
 
-NUMDIR=$(find /root/src/nginx -mindepth 1 -maxdepth 1 -type d -iname "nginx*" | head -n1 | xargs basename 2>&1 | wc -l)
+NUMDIR=$(find /root/org.src/nginx -mindepth 1 -maxdepth 1 -type d -iname "nginx*" | head -n1 | xargs basename 2>&1 | wc -l)
 if [[ $NUMDIR -lt 1 ]]; then
+	cd /root/org.src/nginx
 	# assume no other sources
 	apt source nginx libpcre3
 	apt source lua-resty-core lua-resty-lrucache
+	cp /root/org.src/nginx/* /root/src/nginx/ -Rfa
 fi
 
 # NGINX-LUA
 #-------------------------------------------
-NUMDIR=$(find /root/src/nginx -mindepth 1 -maxdepth 1 -type d -iname "lua*" | wc -l)
+NUMDIR=$(find /root/org.src/nginx -mindepth 1 -maxdepth 1 -type d -iname "lua*" | wc -l)
 if [[ $NUMDIR -lt 1 ]]; then
+	cd /root/org.src/nginx
 	apt source lua-resty-core lua-resty-lrucache
+	cp /root/org.src/nginx/* /root/src/nginx/ -Rfa
 fi
 
 # NGINX-PCRE
 #-------------------------------------------
-NUMDIR=$(find /root/src/nginx -mindepth 1 -maxdepth 1 -type d -iname "pcre*" | wc -l)
+NUMDIR=$(find /root/org.src/nginx -mindepth 1 -maxdepth 1 -type d -iname "pcre*" | wc -l)
 if [[ $NUMDIR -lt 1 ]]; then
+	cd /root/org.src/nginx
 	apt source libpcre3
+	cp /root/org.src/nginx/* /root/src/nginx/ -Rfa
 fi
 
 
