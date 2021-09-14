@@ -153,7 +153,7 @@ grep "bcmath\|bz2\|gmp\|mbstring\|mysql\|opcache\|readline\|xdebug\|zip" \
 >> /tmp/pkg-php0.txt
 
 cat /tmp/pkg-php0.txt > /tmp/pkg-php1.txt
-cat /tmp/pkg-php1.txt | tr "\n" " " > /tmp/pkg-php2.txt
+cat /tmp/pkg-php1.txt | grep -v "php8.1" | tr "\n" " " > /tmp/pkg-php2.txt
 cat /tmp/pkg-php2.txt | xargs apt install -fy --no-install-recommends --fix-missing
 
 printf "\n\napt install -fy "
