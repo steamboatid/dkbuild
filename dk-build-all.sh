@@ -45,11 +45,11 @@ doback /tb2/build/dk-build-lua-resty-core.sh &
 
 # some job at foreground
 #-------------------------------------------
-/tb2/build/dk-build-nginx.sh
+/bin/bash /tb2/build/dk-build-nginx.sh
 printf "\n\n\n"
 sleep 1
 
-/tb2/build/dk-build-php8.sh
+/bin/bash /tb2/build/dk-build-php8.sh
 printf "\n\n\n"
 sleep 1
 
@@ -85,9 +85,10 @@ mkdir -p /tb2/build/$RELNAME-all
 rm -rf /tb2/build/$RELNAME-all/*deb
 
 
+#--- COPY to $RELNAME-all
 printf "\n\n\n-- copying files to /tb2/build/$RELNAME-all/ \n\n"
 
-find /root/src -type f -name "*deb" |
+find /root/src -type f -name "*deb" | sort -u | sort |
 while read afile; do
 	printf "\n $afile "
 	cp $afile /tb2/build/$RELNAME-all/ -f
@@ -95,4 +96,14 @@ done
 printf "\n\n"
 
 NUMDEBS=$(find /root/src -type f -name "*deb" | wc -l)
-printf "\n NUMDEBS= $NUMDEBS \n\n"
+printf "\n NUMDEBS= $NUMDEBS \n"
+
+
+#--- save all git for future used
+>/root/src/all.git
+find /root/src -type f -name "*dsc" | sort -u | sort |
+while read afile; do
+	printf "\n $afile "
+	cat $afile | grep -i vcs | awk '{print $NF}' | sort -u >>/tmp/all.git
+done
+cat /tmp/all.git | sort -u | sort >/root/src/all.git

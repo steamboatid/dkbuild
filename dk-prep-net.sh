@@ -60,7 +60,7 @@ cat $FNOW | xargs apt build-dep -fy
 # cat $FNOW | xargs apt source -y
 
 cd /root/src/nginx
-rm -rf *asc *dsc *xz *gz *bz2
+rm -rf *asc *xz *gz *bz2
 
 
 # PHP
@@ -82,4 +82,4 @@ cat $FNOW | xargs apt build-dep -fy
 cat $FNOW | xargs apt source -y
 
 cd /root/src/php8
-rm -rf *asc *dsc *xz *gz *bz2
+rm -rf *asc *xz *gz *bz2
