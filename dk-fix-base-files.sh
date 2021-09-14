@@ -88,7 +88,7 @@ reinstall_base() {
 remove_non_base
 clean_apt_cache
 
-# remove_non_base
-# remove_non_base
+remove_non_base
+remove_non_base
 
-# reinstall_base
+reinstall_base
