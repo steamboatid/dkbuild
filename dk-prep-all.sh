@@ -90,7 +90,8 @@ mkdir -p /root/org.src/pcre /root/src/pcre
 cd /root/org.src/pcre
 apt source -y libpcre3
 
-cp /root/org.src/pcre/* /root/src/pcre/ -Rfa
+rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
+/root/org.src/pcre/* /root/src/pcre/
 
 
 # PHP8, source via default + git
@@ -177,7 +178,8 @@ php8.0-sqlite3 php8.0-sybase php8.0-tidy php8.0-xdebug php8.0-xml \
 php8.0-xsl php8.0-zip \
 php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu
 
-cp /root/org.src/php8/* /root/src/php8/ -Rfa
+rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
+/root/org.src/php8/* /root/src/php8/
 
 #--- update phpredis from git
 #-------------------------------------------

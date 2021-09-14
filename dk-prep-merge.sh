@@ -28,30 +28,27 @@ rm -rf /root/src/nginx/*deb
 
 NUMDIR=$(find /root/org.src/nginx -mindepth 1 -maxdepth 1 -type d -iname "nginx*" | head -n1 | xargs basename 2>&1 | wc -l)
 if [[ $NUMDIR -lt 1 ]]; then
-	cd /root/org.src/nginx
 	# assume no other sources
 	apt source nginx libpcre3
 	apt source lua-resty-core lua-resty-lrucache
-	cp /root/org.src/nginx/* /root/src/nginx/ -Rfa
 fi
 
 # NGINX-LUA
 #-------------------------------------------
 NUMDIR=$(find /root/org.src/nginx -mindepth 1 -maxdepth 1 -type d -iname "lua*" | wc -l)
 if [[ $NUMDIR -lt 1 ]]; then
-	cd /root/org.src/nginx
 	apt source lua-resty-core lua-resty-lrucache
-	cp /root/org.src/nginx/* /root/src/nginx/ -Rfa
 fi
 
 # NGINX-PCRE
 #-------------------------------------------
 NUMDIR=$(find /root/org.src/nginx -mindepth 1 -maxdepth 1 -type d -iname "pcre*" | wc -l)
 if [[ $NUMDIR -lt 1 ]]; then
-	cd /root/org.src/nginx
 	apt source libpcre3
-	cp /root/org.src/nginx/* /root/src/nginx/ -Rfa
 fi
+
+rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
+/root/org.src/nginx/* /root/src/nginx/
 
 
 # PHP8
