@@ -139,11 +139,7 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 # PHP8, source via default + git
 #-------------------------------------------
 aptold install -fy --fix-broken
-if [[ "${RELNAME}" == "bullseye" ]]; then
-	aptold install -fy libmagickwand-7-*
-else
-	apt-cache search libmagickwand  2>&1 | awk '{print $1}' | grep dev | xargs apt install -fy
-fi
+# apt-cache search libmagickwand  2>&1 | awk '{print $1}' | grep dev | xargs apt install -fy
 
 
 aptold install -fy pkg-config build-essential autoconf bison re2c \
