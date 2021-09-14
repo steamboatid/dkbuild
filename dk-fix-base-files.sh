@@ -84,6 +84,10 @@ reinstall_base() {
 }
 
 
+# gen config
+#-------------------------------------------
+/bin/bash /tb2/build/dk-config-gen.sh
+
 
 remove_non_base
 clean_apt_cache

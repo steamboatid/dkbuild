@@ -20,12 +20,11 @@ doback(){
 	sleep 1
 }
 
-#--- check .bashrc
-if [ `cat ~/.bashrc | grep alias | grep "find -L" | wc -l` -lt 1 ]; then
-	echo "find alias not found"
-	echo "alias find='find -L'" >> ~/.bashrc
-fi
-source ~/.bashrc
+
+# gen config
+#-------------------------------------------
+/bin/bash /tb2/build/dk-config-gen.sh
+
 
 
 #--- delete OLD files
