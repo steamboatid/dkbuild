@@ -60,12 +60,12 @@ fix_keydb_permission_problem() {
 	sed -i "s/^save 60 /#-- save 60 /g" /etc/keydb/keydb.conf
 }
 
-fix_pending_installs() {
+purge_pending_installs() {
 	dpkg -l | grep -v "^ii" | grep "^i" | sed -r "s/\s+/ /g" | cut -d" " -f2 > /tmp/pendings
 
 	# install it all
-	cat /tmp/pendings | tr "\n" " "| xargs apt install -fy
-	cat /tmp/pendings | while read aline; do apt install -fy $aline; done
+	cat /tmp/pendings | tr "\n" " "| xargs apt purge -fy
+	cat /tmp/pendings | while read aline; do apt purge -fy $aline; done
 }
 
 shopt -s expand_aliases
@@ -74,9 +74,8 @@ alias aptold='apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--for
 # fix keydb perm
 fix_keydb_permission_problem
 
-# fix pendings
-fix_pending_installs
-fix_pending_installs
+# purge pendings
+purge_pending_installs
 
 # prepare basic need: apt configs, sources list, etc
 #-------------------------------------------
