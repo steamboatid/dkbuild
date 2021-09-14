@@ -224,8 +224,8 @@ get_update_new_git "steamboatid/phpredis" "/root/src/php8/git-phpredis"
 # KEYDB, source via git
 #-------------------------------------------
 aptold install -fy build-essential nasm autotools-dev autoconf libjemalloc-dev tcl tcl-dev uuid-dev libcurl4-openssl-dev
-apt build-dep -fy keydb-sentinel keydb-server keydb-tools
-aptold install keydb-sentinel keydb-server keydb-tools
+apt build-dep -fy keydb-server keydb-tools
+aptold install keydb-server keydb-tools
 
 # fix keyd perm
 fix_keydb_permission_problem
