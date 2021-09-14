@@ -142,12 +142,12 @@ cat /tmp/pkg-nginx2.txt | xargs apt install -fy --no-install-recommends --fix-mi
 
 
 # complete install PHP8.0
-apt-cache search php8.0* | awk '{print $1}' | grep -v "apache\|embed" |\
+apt-cache search php8.0* | awk '{print $1}' | grep -v "apache\|embed\|php8.1" |\
 grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache" |\
 grep "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|common\|fpm\|cli" \
 > /tmp/pkg-php0.txt
 
-apt-cache search php8.0* | awk '{print $1}' | grep -v "apache\|embed" |\
+apt-cache search php8.0* | awk '{print $1}' | grep -v "apache\|embed\|php8.1" |\
 grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache" |\
 grep "bcmath\|bz2\|gmp\|mbstring\|mysql\|opcache\|readline\|xdebug\|zip" \
 >> /tmp/pkg-php0.txt
