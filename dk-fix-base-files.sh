@@ -23,8 +23,24 @@ clean_apt_cache() {
 	/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/; \
 	mkdir -p /root/.local/share/nano/ /root/.config/procps/
 	apt clean
+
+	echo \
+"Package: *
+Pin: release n=${RELNAME}
+Pin-Priority: 1100
+
+Package: *
+Pin: release n=${RELNAME}-updates
+Pin-Priority: 1100
+
+Package: *
+Pin: release n=${RELNAME}-proposed-updates
+Pin-Priority: 1100
+">/etc/apt/preferences.d/pinning-${RELNAME}
+
 	apt update
 	dpkg --configure -a
+	apt full-upgrade --auto-remove --purge --allow-downgrades -fy
 
 	sleep 1
 }
@@ -71,7 +87,7 @@ reinstall_base() {
 remove_non_base
 clean_apt_cache
 
-remove_non_base
-remove_non_base
+# remove_non_base
+# remove_non_base
 
-reinstall_base
+# reinstall_base
