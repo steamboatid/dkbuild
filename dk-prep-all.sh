@@ -43,7 +43,6 @@ shopt -s expand_aliases
 alias aptold='apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"'
 
 
-
 # prepare basic need: apt configs, sources list, etc
 #-------------------------------------------
 /bin/bash /tb2/build/dk-prep-basic.sh
