@@ -78,5 +78,5 @@ cd /root/org.src/php8
 cat $FNOW | xargs apt build-dep -fy
 cat $FNOW | xargs apt source -y
 
-rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 /root/org.src/php8/* /root/src/php8/

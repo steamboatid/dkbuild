@@ -27,7 +27,7 @@ mkdir -p /root/org.src/pcre /root/src/pcre
 cd /root/org.src/pcre
 apt source -y libpcre3
 
-rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 /root/org.src/pcre/* /root/src/pcre/
 
 

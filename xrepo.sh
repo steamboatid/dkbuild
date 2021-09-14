@@ -20,10 +20,10 @@ mkdir -p /tb2/phideb/{dists,pool}/{buster,bullseye}
 mkdir -p /tb2/phideb/dists/{buster,bullseye}/main/binary-amd64
 
 
-rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /tb2/build/buster-all/ /tb2/phideb/pool/buster/
 
-rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /tb2/build/bullseye-all/ /tb2/phideb/pool/bullseye/
 
 
