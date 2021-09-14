@@ -64,6 +64,7 @@ cat $FNOW | xargs apt build-dep -fy
 #-------------------------------------------
 rm -rf /tmp/php8
 mkdir -p /tb2/tmp /root/src/php8 /root/org.src/php8 /tmp/php8
+cd /root/org.src/php8
 
 FDST="/tb2/tmp/php8-pkg-org.txt"
 
@@ -90,6 +91,7 @@ grep -v "Auto-Built" | sort -u | sort > $FNOW1
 cat $FNOW1 |
 while read apgk; do apt build-dep -fy $apgk; done
 
+cd /root/org.src/php8
 cat $FNOW1 |
 while read apgk; do apt source -y $apgk; done
 
@@ -102,6 +104,7 @@ sed -E 's/\(([^()]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort > $FNOW2
 cat $FNOW2 |
 while read apgk; do apt build-dep -fy $apgk; done
 
+cd /root/org.src/php8
 cat $FNOW2 |
 while read apgk; do apt source -y $apgk; done
 
