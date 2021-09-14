@@ -16,7 +16,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 update_old_git() {
 	cd $1
 	printf "\n---updating $PWD \n"
-	git rm -r --cached .
+	git rm -r --cached . >/dev/null 2>&1
 	git submodule update --init --recursive -f
 	git fetch --all
 	git pull --update-shallow --ff-only
