@@ -42,7 +42,7 @@ get_update_new_git(){
 
 fix_keydb_permission_problem() {
 	# return if not installed yet
-	if [ `dpkg -l | grep keydb | wc -l` -lt 1 ]; then return 0; fi
+	if [ `dpkg -l | grep keydb | grep -v "^ii" | wc -l` -lt 1 ]; then return 0; fi
 
 	cd `mktemp -d`; \
 	systemctl stop redis-server; systemctl disable redis-server; systemctl mask redis-server; \
@@ -60,9 +60,23 @@ fix_keydb_permission_problem() {
 	sed -i "s/^save 60 /#-- save 60 /g" /etc/keydb/keydb.conf
 }
 
+fix_pending_installs() {
+	dpkg -l | grep -v "^ii" | grep "^i" | sed -r "s/\s+/ /g" | cut -d" " -f2 > /tmp/pendings
+
+	# install it all
+	cat /tmp/pendings | tr "\n" " "| xargs apt install -fy
+	cat /tmp/pendings | while read aline; do apt install -fy $aline; done
+}
+
 shopt -s expand_aliases
 alias aptold='apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"'
 
+# fix keydb perm
+fix_keydb_permission_problem
+
+# fix pendings
+fix_pending_installs
+fix_pending_installs
 
 # prepare basic need: apt configs, sources list, etc
 #-------------------------------------------
@@ -214,20 +228,8 @@ aptold install -fy build-essential nasm autotools-dev autoconf libjemalloc-dev t
 apt build-dep -fy keydb-sentinel keydb-server keydb-tools
 aptold install keydb-sentinel keydb-server keydb-tools
 
-cd `mktemp -d`; \
-systemctl stop redis-server; systemctl disable redis-server; systemctl mask redis-server; \
-systemctl daemon-reload; apt remove -y redis-server
-mkdir -p /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
-chown keydb.keydb -Rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
-find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type d -exec chmod 775 {} \; ; \
-find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type d -exec chmod 664 {} \;
-sed -i "s/^bind 127.0.0.1 \:\:1/\#-- bind 127.0.0.1 \:\:1\nbind 127.0.0.1/g" /etc/keydb/keydb.conf
-sed -i "s/^logfile \/var/#-- logfile \/var/g" /etc/keydb/keydb.conf
-sed -i "s/^dir \/var/#-- dir \/var/g" /etc/keydb/keydb.conf
-sed -i "s/^dbfilename /#-- dbfilename /g" /etc/keydb/keydb.conf
-sed -i "s/^save 900 /#-- save 900 /g" /etc/keydb/keydb.conf
-sed -i "s/^save 300 /#-- save 300 /g" /etc/keydb/keydb.conf
-sed -i "s/^save 60 /#-- save 60 /g" /etc/keydb/keydb.conf
+# fix keyd perm
+fix_keydb_permission_problem
 
 killall -9 keydb-server; \
 systemctl stop keydb-server; killall -9 keydb-server >/dev/null 2>&1; \
