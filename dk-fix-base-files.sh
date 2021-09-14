@@ -32,7 +32,7 @@ remove_non_base() {
 	apt purge --auto-remove --purge -fy \
 	nginx* keydb* nutcracker* php* apache2* rsyslog* unattended-upgrades apparmor \
 	anacron msttcorefonts ttf-mscorefonts-installer needrestart lua*dev php*dev \
-	xserver* xorg* x11* cups* tex* nvidia* gir1* font* *theme
+	xserver* xorg* x11* cups* tex* nvidia* gir1* font* *theme openjdk*
 
 	rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb /usr/lib/php \
 	/etc/keydb /etc/nutcracker /etc/php /etc/nginx \
