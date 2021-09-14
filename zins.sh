@@ -75,13 +75,10 @@ export LANGUAGE=en_US.UTF-8
 #deb-src [trusted=yes] http://repo.aisits.id/phideb ${RELNAME} main
 ">/etc/apt/sources.list.d/phideb.list
 
-echo \
-"deb https://packages.sury.org/php/ ${RELNAME} main
-">/etc/apt/sources.list.d/php-sury.list
-
 	>/etc/apt/sources.list.d/nginx-ppa-devel.list
 	>/etc/apt/sources.list.d/nginx-devel-aisits.list
 	>/etc/apt/sources.list.d/php-aisits.list
+	>/etc/apt/sources.list.d/php-sury.list
 	>/etc/apt/sources.list.d/keydb-ppa.list
 
 
