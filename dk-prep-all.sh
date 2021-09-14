@@ -207,12 +207,11 @@ sed -i "s/^dbfilename /#-- dbfilename /g" /etc/keydb/keydb.conf
 sed -i "s/^save 900 /#-- save 900 /g" /etc/keydb/keydb.conf
 sed -i "s/^save 300 /#-- save 300 /g" /etc/keydb/keydb.conf
 sed -i "s/^save 60 /#-- save 60 /g" /etc/keydb/keydb.conf
-sed -i "s/^daemonize yes/#-- daemonize yes\ndaemonize no/g" /etc/keydb/keydb.conf
 
 killall -9 keydb-server; \
 systemctl stop keydb-server; killall -9 keydb-server >/dev/null 2>&1; \
 systemctl stop keydb-server; killall -9 keydb-server >/dev/null 2>&1
-KEYCHECK=$(keydb-server /etc/keydb/keydb.conf --loglevel verbose 2>&1 | grep -i "loaded" | wc -l)
+KEYCHECK=$(keydb-server /etc/keydb/keydb.conf --loglevel verbose --daemonize yes 2>&1 | grep -i "loaded" | wc -l)
 if [[ $KEYCHECK -gt 0 ]]; then
 	printf "\n\n keydb: OK \n\n"
 else
