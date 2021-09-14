@@ -43,6 +43,9 @@ remove_non_base() {
 }
 
 reinstall_base() {
+	aptcheck=$(dpkg -l | grep aptitude | wc -l)
+	if [[ $aptcheck -lt 1 ]]; then apt install -fy aptitude; fi
+
 	dpkg-query -Wf '${Package;-40}${Essential}\n' | grep yes | awk '{print $1}' > /tmp/ess
 	dpkg-query -Wf '${Package;-40}${Priority}\n' | grep -E "required" | awk '{print $1}' >> /tmp/ess
 	aptitude search ~E 2>&1 | awk '{print $2}' >> /tmp/ess
