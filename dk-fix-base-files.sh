@@ -20,6 +20,6 @@ aptitude search ~E 2>&1 | awk '{print $2}' >> /tmp/ess
 aptitude search ~prequired -F"%p" >> /tmp/ess
 aptitude search ~pimportant -F"%p" >> /tmp/ess
 
-cat /tmp/ess | sort -u | sort | grep -v "apache2"  | tr '\n' ' ' | \
+cat /tmp/ess | sort -u | sort | grep -v "apache2\|rsyslog"  | tr '\n' ' ' | \
 xargs apt install --reinstall --fix-missing --install-suggests \
 --fix-broken  --allow-downgrades --allow-change-held-packages -fy
