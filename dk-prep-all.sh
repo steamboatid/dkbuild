@@ -14,6 +14,7 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 update_old_git() {
 	cd $1
 	printf "\n---updating $PWD \n"
+	git rm -r --cached .
 	git submodule update --init --recursive -f
 	git fetch --all
 	git pull --update-shallow --ff-only
