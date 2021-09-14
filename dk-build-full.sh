@@ -10,6 +10,8 @@ export EMAIL="steamboatid@gmail.com"
 export RELNAME=$(lsb_release -sc)
 export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
 
+export TODAY=$(date +%Y%m%d-%H%M)
+
 #--- PHP-ALL
 
 AAA=`dpkg-buildflags --get CFLAGS`
@@ -41,7 +43,7 @@ export CCACHE_SLOPPINESS=include_file_mtime
 export CC="ccache gcc"
 
 mkdir -p /tb2/tmp/ccache /root/.ccache
-rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times \
 /root/.ccache/ /tb2/tmp/ccache/
 export CCACHE_BASEDIR="/tb2/tmp/ccache"
 

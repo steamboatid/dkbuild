@@ -10,17 +10,19 @@ export EMAIL="steamboatid@gmail.com"
 export RELNAME=$(lsb_release -sc)
 export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
 
+export TODAY=$(date +%Y%m%d-%H%M)
+
 doback(){
-	/usr/bin/nohup /bin/bash /tb2/build/dk-build-full.sh 2>&1 | tee phpbuild.log >/dev/null 2>&1 &
+	/usr/bin/nohup /bin/bash /tb2/build/dk-build-full.sh 2>&1 | tee dkbuild.log >/dev/null 2>&1 &
 	printf "\n\n\n"
 	sleep 1
 }
 dofore(){
-	/bin/bash /tb2/build/dk-build-full.sh 2>&1 | tee phpbuild.log
-	NUMFAIL=$(grep "buildpackage" phpbuild.log | grep failed | wc -l)
+	/bin/bash /tb2/build/dk-build-full.sh 2>&1 | tee dkbuild.log
+	NUMFAIL=$(grep "buildpackage" dkbuild.log | grep failed | wc -l)
 	printf "\n\n\n\tFAILS = $NUMFAIL\n\n"
 	if [[ $NUMFAIL -gt 0 ]]; then
-		cat build.log
+		cat dkbuild.log
 		printf "\n\n\n\tFAILS = $NUMFAIL\n\n"
 		exit 0;
 	fi
@@ -76,7 +78,7 @@ while read adir; do
 
 
 	dch -p -b "backport to $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
-	-v "$VERNEXT+$RELVER+$RELNAME+dk.aisits.id" -D buster -u high; \
+	-v "$VERNEXT+$RELVER+$RELNAME+dk.aisits.id+$TODAY" -D buster -u high; \
 	head debian/changelog
 
 	if [[ $adir == *"redis"* ]]; then

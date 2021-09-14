@@ -1,17 +1,17 @@
 #!/bin/bash
 
 
-apt update
-apt install -fy lsb-release
-
 export DEBIAN_FRONTEND="noninteractive"
 
 export DEBFULLNAME="Dwi Kristianto"
 export DEBEMAIL="steamboatid@gmail.com"
 export EMAIL="steamboatid@gmail.com"
 
+apt install -fy lsb-release
 export RELNAME=$(lsb_release -sc)
 export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
+
+export TODAY=$(date +%Y%m%d-%H%M)
 
 
 doback(){
@@ -20,6 +20,17 @@ doback(){
 	sleep 1
 }
 
+#--- check .bashrc
+if [ `cat ~/.bashrc | grep alias | grep "find -L" | wc -l` -lt 1 ]; then
+	echo "find alias not found"
+	echo "alias find='find -L'" >> ~/.bashrc
+fi
+source ~/.bashrc
+
+
+#--- delete OLD files
+find /root/src -type f -iname "*deb" -delete
+find /tb2/build/$RELNAME-all/ -type f -iname "*deb" -delete
 
 
 
@@ -48,6 +59,23 @@ sleep 1
 wait
 
 
+# check if any fails
+#-------------------------------------------
+printf "\n\n\n"
+find /root/src -iname "dkbuild.log" | sort -u |
+while read alog; do
+	printf "\n check $alog \t"
+	NUMFAIL=$(grep "buildpackage" ${alog} | grep failed | wc -l)
+	printf "\n\n\n\tFAILS = $NUMFAIL\n\n"
+	if [[ $NUMFAIL -gt 0 ]]; then
+		grep "buildpackage" ${alog} | grep failed
+		printf "\n\n\n\tFAILS = $NUMFAIL\n\n"
+	fi
+done
+printf "\n\n\n"
+
+
+#--- delete unneeded files
 find /root/src -type f -iname "*udeb" -delete
 find /root/src -type f -iname "*dbgsym*deb" -delete
 
@@ -57,10 +85,11 @@ mkdir -p /tb2/build/$RELNAME-all
 rm -rf /tb2/build/$RELNAME-all/*deb
 
 
-printf "\n\n\n-- copying files \n"
+printf "\n\n\n-- copying files to /tb2/build/$RELNAME-all/ \n\n"
 
 find /root/src -type f -name "*deb" |
 while read afile; do
-	cp $afile /tb2/build/$RELNAME-all/ -fv
+	printf "\n $afile "
+	cp $afile /tb2/build/$RELNAME-all/ -f
 done
 printf "\n\n"

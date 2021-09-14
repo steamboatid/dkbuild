@@ -10,6 +10,7 @@ export EMAIL="steamboatid@gmail.com"
 export RELNAME=$(lsb_release -sc)
 export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
 
+export TODAY=$(date +%Y%m%d-%H%M)
 
 # special version
 #-------------------------------------------
@@ -53,7 +54,7 @@ fi
 
 
 dch -p -b "backport to $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
--v "$VERNEXT+$RELVER+$RELNAME+dk.aisits.id" -D buster -u high; \
+-v "$VERNEXT+$RELVER+$RELNAME+dk.aisits.id+$TODAY" -D buster -u high; \
 head debian/changelog
 sleep 2
 
