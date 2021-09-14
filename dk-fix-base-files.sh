@@ -12,7 +12,7 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 
 export TODAY=$(date +%Y%m%d-%H%M)
 
-ind /var/lib/apt/lists/ -type f -delete; \
+find /var/lib/apt/lists/ -type f -delete; \
 find /var/cache/apt/ -type f -delete; \
 rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
 /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/ \
@@ -27,7 +27,7 @@ dpkg --configure -a
 cd `mktemp -d`; \
 apt purge --auto-remove --purge -fy \
 nginx* keydb* nutcracker* php* apache2* rsyslog* unattended-upgrades apparmor \
-anacron msttcorefonts ttf-mscorefonts-installer needrestart
+anacron msttcorefonts ttf-mscorefonts-installer needrestart *dev
 
 dpkg-query -Wf '${Package;-40}${Essential}\n' | grep yes | awk '{print $1}' > /tmp/ess
 dpkg-query -Wf '${Package;-40}${Priority}\n' | grep -E "required" | awk '{print $1}' >> /tmp/ess
