@@ -84,7 +84,6 @@ cat $FDST2 >> $FDST
 cat $FDST | grep "Package:" | sed "s/Package\: //g" |
 grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1" |
 grep -v "Auto-Built" | sort -u | sort | tr "\n" " " > $FNOW
-exit 0;
 
 cd /root/org.src/php8
 cat $FNOW | xargs apt build-dep -fy
