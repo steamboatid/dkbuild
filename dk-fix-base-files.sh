@@ -12,8 +12,17 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 
 export TODAY=$(date +%Y%m%d-%H%M)
 
-
+ind /var/lib/apt/lists/ -type f -delete; \
+find /var/cache/apt/ -type f -delete; \
+rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
+/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/ \
+/etc/apt/preferences.d/00-revert-stable \
+/var/cache/debconf/ /var/lib/apt/lists/* \
+/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/; \
+mkdir -p /root/.local/share/nano/ /root/.config/procps/
+apt clean
 apt update
+
 dpkg-query -Wf '${Package;-40}${Essential}\n' | grep yes | awk '{print $1}' > /tmp/ess
 dpkg-query -Wf '${Package;-40}${Priority}\n' | grep -E "required" | awk '{print $1}' >> /tmp/ess
 aptitude search ~E 2>&1 | awk '{print $2}' >> /tmp/ess
