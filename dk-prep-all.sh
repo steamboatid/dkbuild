@@ -218,6 +218,7 @@ if [[ $KEYCHECK -gt 0 ]]; then
 else
 	printf "\n\n keydb: FAILED \n\n"
 fi
+apt install -fy
 
 
 #--- recreate dir, delete debs
