@@ -97,10 +97,6 @@ ulimit -HSi 1048576
 ulimit -HSl 1048576
 ulimit -HSq 67108864
 
-su keydb -s /bin/bash -c "ulimit -HSn 1048576; ulimit -HSu 524288; ulimit -HSi 1048576; ulimit -HSl 1048576; ulimit -HSq 6553600"
-su proxy -s /bin/bash -c "ulimit -HSn 1048576; ulimit -HSu 524288; ulimit -HSi 1048576; ulimit -HSl 1048576; ulimit -HSq 6553600"
-
-
 #--- apt tweaks
 systemctl enable apt-daily.timer  >/dev/null 2>&1
 systemctl enable apt-daily-upgrade.timer  >/dev/null 2>&1
