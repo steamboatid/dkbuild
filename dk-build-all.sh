@@ -16,7 +16,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 
 doback(){
 	/usr/bin/nohup /bin/bash $1 >/dev/null 2>&1 &
-	printf "\n\n\n"
+	printf "\n\n exec back: $1 \n\n\n"
 	sleep 1
 }
 
@@ -57,6 +57,7 @@ sleep 1
 # wait all background jobs
 #-------------------------------------------
 wait
+sleep 1
 
 
 # check if any fails
@@ -66,11 +67,10 @@ find /root/src -iname "dkbuild.log" | sort -u |
 while read alog; do
 	printf "\n check $alog \t"
 	NUMFAIL=$(grep "buildpackage" ${alog} | grep failed | wc -l)
-	printf "\n\n\n\tFAILS = $NUMFAIL\n\n"
 	if [[ $NUMFAIL -gt 0 ]]; then
 		grep "buildpackage" ${alog} | grep failed
-		printf "\n\n\n\tFAILS = $NUMFAIL\n\n"
 	fi
+	printf "\n\n\n\tFAILS = $NUMFAIL\n\n"
 done
 printf "\n\n\n"
 

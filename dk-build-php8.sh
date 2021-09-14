@@ -19,13 +19,7 @@ doback(){
 }
 dofore(){
 	/bin/bash /tb2/build/dk-build-full.sh 2>&1 | tee dkbuild.log
-	NUMFAIL=$(grep "buildpackage" dkbuild.log | grep failed | wc -l)
-	printf "\n\n\n\tFAILS = $NUMFAIL\n\n"
-	if [[ $NUMFAIL -gt 0 ]]; then
-		cat dkbuild.log
-		printf "\n\n\n\tFAILS = $NUMFAIL\n\n"
-		exit 0;
-	fi
+	printf "\n\n\n"
 	sleep 1
 }
 
