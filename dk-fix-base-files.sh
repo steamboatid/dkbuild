@@ -58,7 +58,8 @@ reinstall_base() {
 
 	cat /tmp/ess | sort -u | sort | grep -v "apache2\|rsyslog\|nginx\|php\|keydb\|nutcracker"  | tr '\n' ' ' | \
 	xargs apt install --reinstall --fix-missing --install-suggests \
-	--fix-broken  --allow-downgrades --allow-change-held-packages -fydu
+	--fix-broken  --allow-downgrades --allow-change-held-packages -fy
+	apt install -fy
 
 	sleep 1
 }
