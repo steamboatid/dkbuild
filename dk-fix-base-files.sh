@@ -22,6 +22,11 @@ rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
 mkdir -p /root/.local/share/nano/ /root/.config/procps/
 apt clean
 apt update
+dpkg --configure -a
+
+apt purge --auto-remove --purge -fy \
+nginx* keydb* nutcracker* php* apache2* rsyslog* unattended-upgrades apparmor \
+anacron msttcorefonts ttf-mscorefonts-installer needrestart
 
 dpkg-query -Wf '${Package;-40}${Essential}\n' | grep yes | awk '{print $1}' > /tmp/ess
 dpkg-query -Wf '${Package;-40}${Priority}\n' | grep -E "required" | awk '{print $1}' >> /tmp/ess
@@ -29,6 +34,6 @@ aptitude search ~E 2>&1 | awk '{print $2}' >> /tmp/ess
 aptitude search ~prequired -F"%p" >> /tmp/ess
 aptitude search ~pimportant -F"%p" >> /tmp/ess
 
-cat /tmp/ess | sort -u | sort | grep -v "apache2\|rsyslog"  | tr '\n' ' ' | \
+cat /tmp/ess | sort -u | sort | grep -v "apache2\|rsyslog\|nginx\|php\|keydb\|nutcracker"  | tr '\n' ' ' | \
 xargs apt install --reinstall --fix-missing --install-suggests \
 --fix-broken  --allow-downgrades --allow-change-held-packages -fy
