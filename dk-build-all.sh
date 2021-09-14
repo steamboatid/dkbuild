@@ -93,3 +93,6 @@ while read afile; do
 	cp $afile /tb2/build/$RELNAME-all/ -f
 done
 printf "\n\n"
+
+NUMDEBS=$(find /root/src -type f -name "*deb" | wc -l)
+printf "\n NUMDEBS= $NUMDEBS \n\n"
