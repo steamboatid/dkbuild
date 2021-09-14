@@ -42,7 +42,7 @@ remove_non_base() {
 	/lib/systemd/system/nutcracker* /etc/init.d/nutcracker* \
 	/lib/systemd/system/nginx* /etc/init.d/nginx* \
 	/lib/systemd/system/php* /etc/init.d/php*
-	
+
 	sleep 1
 }
 
@@ -59,7 +59,7 @@ reinstall_base() {
 	cat /tmp/ess | sort -u | sort | grep -v "apache2\|rsyslog\|nginx\|php\|keydb\|nutcracker"  | tr '\n' ' ' | \
 	xargs apt install --reinstall --fix-missing --install-suggests \
 	--fix-broken  --allow-downgrades --allow-change-held-packages -fydu
-	
+
 	sleep 1
 }
 
@@ -71,4 +71,4 @@ clean_apt_cache
 remove_non_base
 remove_non_base
 
-# reinstall_base
+reinstall_base
