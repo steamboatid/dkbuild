@@ -64,7 +64,7 @@ libmaxminddb-dev libexpat-dev libldap2-dev libedit-dev openssl clang \
 libpcre3 build-essential libpcre3 libpcre3-dev zlib1g-dev \
 webp libwebp-dev libgeoip-dev lua-geoip-dev \
 libluajit*dev luajit \
-webp libwebp-dev libgeoip-dev lua-geoip-dev
+webp libwebp-dev libgeoip-dev lua-geoip-dev libsodium-dev
 
 apt build-dep -fy nginx lua-resty-core lua-resty-lrucache libpcre3 libsodium-dev
 aptold install -fy --fix-broken  --allow-downgrades --allow-change-held-packages

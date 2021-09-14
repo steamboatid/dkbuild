@@ -1,0 +1,25 @@
+#!/bin/bash
+
+
+export DEBIAN_FRONTEND="noninteractive"
+
+export DEBFULLNAME="Dwi Kristianto"
+export DEBEMAIL="steamboatid@gmail.com"
+export EMAIL="steamboatid@gmail.com"
+
+export RELNAME=$(lsb_release -sc)
+export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
+
+export TODAY=$(date +%Y%m%d-%H%M)
+
+
+apt update
+dpkg-query -Wf '${Package;-40}${Essential}\n' | grep yes | awk '{print $1}' > /tmp/ess
+dpkg-query -Wf '${Package;-40}${Priority}\n' | grep -E "required" | awk '{print $1}' >> /tmp/ess
+aptitude search ~E 2>&1 | awk '{print $2}' >> /tmp/ess
+aptitude search ~prequired -F"%p" >> /tmp/ess
+aptitude search ~pimportant -F"%p" >> /tmp/ess
+
+cat /tmp/ess | sort -u | sort | grep -v "apache2"  | tr '\n' ' ' | \
+xargs apt install --reinstall --fix-missing --install-suggests \
+--fix-broken  --allow-downgrades --allow-change-held-packages -fy
