@@ -43,6 +43,8 @@ remove_non_base() {
 	/lib/systemd/system/nginx* /etc/init.d/nginx* \
 	/lib/systemd/system/php* /etc/init.d/php*
 
+	apt update; apt clean
+
 	sleep 1
 }
 
@@ -57,7 +59,7 @@ reinstall_base() {
 	aptitude search ~pimportant -F"%p" >> /tmp/ess
 
 	cat /tmp/ess | sort -u | sort | grep -v "apache2\|rsyslog\|nginx\|php\|keydb\|nutcracker"  | tr '\n' ' ' | \
-	xargs apt install --reinstall --fix-missing --install-suggests \
+	xargs apt install --reinstall --fix-missing --no-install-recommends \
 	--fix-broken  --allow-downgrades --allow-change-held-packages -fy
 	apt install -fy
 
