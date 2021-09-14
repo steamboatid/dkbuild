@@ -201,9 +201,13 @@ chown keydb.keydb -Rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
 find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type d -exec chmod 775 {} \; ; \
 find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type d -exec chmod 664 {} \;
 sed -i "s/^bind 127.0.0.1 \:\:1/\#-- bind 127.0.0.1 \:\:1\nbind 127.0.0.1/g" /etc/keydb/keydb.conf
-sed -i "s/^logfile \/var/#--logfile \/var/g" /etc/keydb/keydb.conf
-sed -i "s/^dir \/var/#--dir \/var/g" /etc/keydb/keydb.conf
-sed -i "s/^dbfilename /#--dbfilename /g" /etc/keydb/keydb.conf
+sed -i "s/^logfile \/var/#-- logfile \/var/g" /etc/keydb/keydb.conf
+sed -i "s/^dir \/var/#-- dir \/var/g" /etc/keydb/keydb.conf
+sed -i "s/^dbfilename /#-- dbfilename /g" /etc/keydb/keydb.conf
+sed -i "s/^save 900 /#-- save 900 /g" /etc/keydb/keydb.conf
+sed -i "s/^save 300 /#-- save 300 /g" /etc/keydb/keydb.conf
+sed -i "s/^save 60 /#-- save 60 /g" /etc/keydb/keydb.conf
+sed -i "s/^daemonize yes/#-- daemonize yes\ndaemonize no/g" /etc/keydb/keydb.conf
 
 killall -9 keydb-server; \
 systemctl stop keydb-server; killall -9 keydb-server >/dev/null 2>&1; \
