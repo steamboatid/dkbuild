@@ -24,6 +24,7 @@ apt clean
 apt update
 dpkg --configure -a
 
+cd `mktemp -d`; \
 apt purge --auto-remove --purge -fy \
 nginx* keydb* nutcracker* php* apache2* rsyslog* unattended-upgrades apparmor \
 anacron msttcorefonts ttf-mscorefonts-installer needrestart
