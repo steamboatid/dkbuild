@@ -65,14 +65,26 @@ cat $FNOW | xargs apt build-dep -fy
 rm -rf /tmp/php8
 mkdir -p /tb2/tmp /root/src/php8 /root/org.src/php8 /tmp/php8
 
-URL="https://packages.sury.org/php/dists/bullseye/main/binary-amd64/Packages"
 FDST="/tb2/tmp/php8-pkg-org.txt"
+
+URL="https://packages.sury.org/php/dists/bullseye/main/binary-amd64/Packages"
+FDST1="/tb2/tmp/php8-pkg-org-1.txt"
 FNOW="/tb2/tmp/php8-pkg-now.txt"
-get_package_file $URL $FDST
+get_package_file $URL $FDST1
+
+URL="https://packages.sury.org/php/dists/buster/main/binary-amd64/Packages"
+FDST2="/tb2/tmp/php8-pkg-org-2.txt"
+FNOW="/tb2/tmp/php8-pkg-now.txt"
+get_package_file $URL $FDST2
+
+>$FDST
+cat $FDST1 >> $FDST
+cat $FDST2 >> $FDST
 
 cat $FDST | grep "Package:" | sed "s/Package\: //g" | \
 grep -v "libapache2\|libpcre2-posix2\|symbols\|dbgsym\|php5\|php7\|php8.1" | \
 tr "\n" " " > $FNOW
+exit 0;
 
 cd /root/org.src/php8
 cat $FNOW | xargs apt build-dep -fy
