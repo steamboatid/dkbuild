@@ -97,6 +97,18 @@ printf "\n\n"
 NUMDEBS=$(find /root/src -type f -name "*deb" | wc -l)
 printf "\n NUMDEBS= $NUMDEBS \n"
 
+# debs nums
+numNGINX=$(find /tb2/build/bullseye-all -iname "*deb" | grep -v "dbg\|udeb" | grep "nginx" | wc -l)
+numPHP=$(find /tb2/build/bullseye-all -iname "*deb" | grep -v "dbg\|udeb" | grep "php" | wc -l)
+numPHP8=$(find /tb2/build/bullseye-all -iname "*deb" | grep -v "dbg\|udeb" | grep "php8" | wc -l)
+numKEYDB=$(find /tb2/build/bullseye-all -iname "*deb" | grep -v "dbg\|udeb" | grep "keydb" | wc -l)
+numNUTC=$(find /tb2/build/bullseye-all -iname "*deb" | grep -v "dbg\|udeb" | grep "nutcracker" | wc -l)
+printf "\n nginx:  $numNGINX"
+printf "\n php:    $numPHP"
+printf "\n php8:   $numPHP8"
+printf "\n keydb:  $numKEYDB"
+printf "\n nutc:   $numNUTC"
+
 
 #--- save all git for future used
 >/root/src/all.git
