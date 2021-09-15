@@ -103,3 +103,8 @@ export RELNAME=$(lsb_release -sc)
 mkdir -p /tb2/build/$RELNAME-lua-resty-lrucache
 cp *.deb /tb2/build/$RELNAME-lua-resty-lrucache/ -Rfa
 ls -la /tb2/build/$RELNAME-lua-resty-lrucache/
+
+
+# rebuild the repo
+#-------------------------------------------
+ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &"

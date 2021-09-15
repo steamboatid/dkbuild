@@ -101,3 +101,8 @@ export RELNAME=$(lsb_release -sc)
 mkdir -p /tb2/build/$RELNAME-nginx
 cp *.deb /tb2/build/$RELNAME-nginx/ -Rfa
 ls -la /tb2/build/$RELNAME-nginx/
+
+
+# rebuild the repo
+#-------------------------------------------
+ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &"

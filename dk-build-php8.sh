@@ -130,21 +130,9 @@ wait
 
 # delete unneeded packages
 #-------------------------------------------
-
 cd /root/src/php8
 find /root/src/php8/ -type f -iname "*udeb" -delete
 find /root/src/php8/ -type f -iname "*dbgsym*deb" -delete
-
-
-# test install
-#-------------------------------------------
-
-# dpkg --force-all -i php8*deb php-common*deb || apt install -fy --allow-downgrades
-# apt install -fy --fix-broken  --allow-downgrades --allow-change-held-packages
-
-
-# NONCUS=$(dpkg -l | grep php8 | grep -v aisits | wc -l)
-# printf "\n\n NON custom packages: $NONCUS \n\n"
 
 
 # upload to /tb2/build/{$RELNAME}-php8
@@ -153,3 +141,8 @@ export RELNAME=$(lsb_release -sc)
 mkdir -p /tb2/build/$RELNAME-php8
 cp *.deb /tb2/build/$RELNAME-php8/ -Rfa
 ls -la /tb2/build/$RELNAME-php8/
+
+
+# rebuild the repo
+#-------------------------------------------
+ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &"

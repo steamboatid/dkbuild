@@ -100,3 +100,8 @@ export RELNAME=$(lsb_release -sc)
 mkdir -p /tb2/build/$RELNAME-keydb
 cp keydb*.deb /tb2/build/$RELNAME-keydb/ -Rfa
 ls -la /tb2/build/$RELNAME-keydb/
+
+
+# rebuild the repo
+#-------------------------------------------
+ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &"

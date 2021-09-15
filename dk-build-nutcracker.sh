@@ -103,3 +103,8 @@ export RELNAME=$(lsb_release -sc)
 mkdir -p /tb2/build/$RELNAME-nutcracker
 cp nutcracker*.deb /tb2/build/$RELNAME-nutcracker/ -Rfa
 ls -la /tb2/build/$RELNAME-nutcracker/
+
+
+# rebuild the repo
+#-------------------------------------------
+ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &"
