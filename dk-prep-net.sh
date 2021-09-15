@@ -89,6 +89,9 @@ cat $FDST | grep "Package:" | sed "s/Package\: //g" |
 grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1" |
 grep -v "Auto-Built" | sort -u | sort > $FNOW1
 
+cat $FNOW1 | tr "\n" " " | xargs apt source -y --ignore-missing --fix-missing
+exit 0;
+
 # 2 separate while to avoid apt errors
 cat $FNOW1 |
 while read apgk; do apt build-dep -fy $apgk; done
