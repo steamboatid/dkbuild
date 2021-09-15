@@ -13,6 +13,7 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
+# bash colors
 red=$'\e[1;31m'
 grn=$'\e[1;32m'
 yel=$'\e[1;33m'
@@ -23,7 +24,10 @@ end=$'\e[0m'
 
 
 update_existing_git() {
-	cd $1
+	DST=$1
+	URL=$2
+
+	cd $DST
 	printf "\n---updating $PWD \n"
 	git config  --global pull.ff only
 	git rm -r --cached . >/dev/null 2>&1
@@ -43,8 +47,13 @@ update_existing_git() {
 			if ! git pull origin $(git rev-parse --abbrev-ref HEAD) --rebase; then
 				cd ..
 				rm -rf $1
-				printf "\n\n ${red} git update at $1 is failed. please re-execute $0 again ${end} \n\n"
-				exit 1; # exit as error
+				printf "\n\n ${red} git update at $1 is failed. please re-execute $0 again ${end}"
+				printf "\n Recloning: ${blue} https://github.com/${URL} ${end} \n\n"
+				# exit 1; # exit as error
+
+				# recloning
+				git clone https://github.com/${URL} $DST
+				printf "\n\n"
 			fi
 		fi
 	fi
@@ -58,7 +67,7 @@ get_update_new_git(){
 	if [ ! -d ${DST} ]; then
 		git clone https://github.com/${URL} $DST
 	else
-		update_existing_git $DST
+		update_existing_git $DST $URL
 	fi
 }
 
