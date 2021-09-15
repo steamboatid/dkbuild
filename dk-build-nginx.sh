@@ -15,7 +15,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 
 # special version
 #-------------------------------------------
-VEROVR="1.21.3.1"
+VEROVR="1.21.4.1"
 
 
 # delete old debs
@@ -35,6 +35,15 @@ if [ -e "debian/changelog.1" ]; then
 fi
 # backup changelog
 cp debian/changelog debian/changelog.1 -fa
+
+
+# override version from source
+#-------------------------------------------
+if [ -e src/core/nginx.h ]; then
+	VERSRC=$(cat src/core/nginx.h | grep "#define NGINX_VERSION" | sed -r "s/\s+/ /g" | sed "s/\"//g" | cut -d" " -f3)
+	VEROVR="${VERSRC}.1"
+	printf "\n\n VERSRC=$VERSRC ---> VEROVR=$VEROVR \n"
+fi
 
 
 VERNUM=$(basename "$PWD" | tr "-" " " | awk '{print $NF}' | cut -f1 -d"+")

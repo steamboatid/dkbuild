@@ -14,6 +14,12 @@ export TODAY=$(date +%Y%m%d-%H%M)
 
 
 
+# gen config
+#-------------------------------------------
+/bin/bash /tb2/build/dk-config-gen.sh
+
+
+
 if [[ ! -e /run/done.init.dkbuild.txt ]]; then
 
 	# tweaks

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# --repo
+# Directory structure
+# 
+# --phideb
 #     |--dists
 #          |-- buster
 #          |-- bullseye
@@ -8,12 +10,39 @@
 #          |-- buster
 #          |-- bullseye
 
-# 0. create keys (once)
-# 1. merge + inspect sources
-# 2. build sources
-# 3. copy files
-# 4. update Release, Release.gpg, InRelease, Packages (.xz,.bz2,.gz)
-# 5. publish
+
+do_hash() {
+	HASH_NAME=$1
+	HASH_CMD=$2
+	echo "${HASH_NAME}:"
+	for f in $(find -type f); do
+		f=$(echo $f | cut -c3-) # remove ./ prefix
+		if [ "$f" = "Release" ]; then
+			continue
+		fi
+		echo " $(${HASH_CMD} ${f}  | cut -d" " -f1) $(wc -c $f)"
+	done
+}
+
+create_release() {
+	RELNAME=$1
+	RELVER="0.1"
+
+	cat << EOF
+Origin: phideb of ${RELNAME}
+Label: phideb
+Suite: ${RELNAME}
+Codename: ${RELNAME}
+Version: ${RELVER}
+Architectures: amd64
+Components: main
+Description: phideb custom packages for ${RELNAME}
+Date: $(date -Ru)
+EOF
+	do_hash "MD5Sum" "md5sum"
+	do_hash "SHA1" "sha1sum"
+	do_hash "SHA256" "sha256sum"
+}
 
 
 mkdir -p /tb2/phideb/{dists,pool}/{buster,bullseye}
@@ -58,10 +87,10 @@ Architecture: amd64
 
 
 cd /tb2/phideb/dists/buster
-/bin/bash /tb2/build/xrelease.sh buster > Release
+create_release buster > Release
 
 cd /tb2/phideb/dists/bullseye
-/bin/bash /tb2/build/xrelease.sh bullseye > Release
+create_release bullseye > Release
 
 
 printf " chown folders \n"

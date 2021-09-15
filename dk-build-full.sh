@@ -25,7 +25,7 @@ export CFLAGS
 export DEB_CFLAGS_SET=$CFLAGS
 
 LD=gcc
-LDFLAGS="${CFLAGS} ${LDFLAGS}"
+LDFLAGS="-Wl,-s ${CFLAGS} ${LDFLAGS}"
 export LDFLAGS
 export DEB_LDFLAGS_SET=$LDFLAGS
 
@@ -36,6 +36,9 @@ echo $LDFLAGS
 
 dpkg-buildflags --get CFLAGS
 dpkg-buildflags --get LDFLAGS
+
+export DEB_CFLAGS_STRIP="-g -O2"
+export DEB_LDFLAGS_STRIP="-g -O2"
 
 
 alias cd="cd -P"
