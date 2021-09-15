@@ -48,12 +48,16 @@ EOF
 mkdir -p /tb2/phideb/{dists,pool}/{buster,bullseye}
 mkdir -p /tb2/phideb/dists/{buster,bullseye}/main/binary-amd64
 
+folders=(php8 nginx nutcracker keydb)
+for afolder in "${folders[@]}"; do
+	# buster
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+	/tb2/build/buster-$afolder /tb2/phideb/pool/buster/
 
-rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
-/tb2/build/buster-all/ /tb2/phideb/pool/buster/
-
-rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
-/tb2/build/bullseye-all/ /tb2/phideb/pool/bullseye/
+	# bullseye
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+	/tb2/build/bullseye-$afolder /tb2/phideb/pool/bullseye/
+done
 
 
 cd /tb2/phideb; \
