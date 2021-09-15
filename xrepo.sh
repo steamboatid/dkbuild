@@ -62,6 +62,7 @@ for afolder in "${folders[@]}"; do
 done
 
 
+printf "\n\n create Packages files"
 cd /tb2/phideb; \
 apt-ftparchive --arch amd64 packages pool/buster/ > dists/buster/main/binary-amd64/Packages
 
@@ -69,6 +70,7 @@ cd /tb2/phideb; \
 apt-ftparchive --arch amd64 packages pool/bullseye/ > dists/bullseye/main/binary-amd64/Packages
 
 
+printf "\n\n create Release files at binary-amd64 folder"
 cd /tb2/phideb/dists/buster/main/binary-amd64
 gzip -kf Packages
 echo \
@@ -92,6 +94,7 @@ Architecture: amd64
 '>Release
 
 
+printf "\n\n create Release files at distribution folder"
 cd /tb2/phideb/dists/buster
 create_release buster > Release
 
@@ -99,6 +102,7 @@ cd /tb2/phideb/dists/bullseye
 create_release bullseye > Release
 
 
+printf "\n"
 printf " chown folders \n"
 find -L /w3repo/phideb -type d -group root  -exec chown webme:webme {} \;
 find -L /w3repo/phideb -type d -user root  -exec chown webme:webme {} \;
