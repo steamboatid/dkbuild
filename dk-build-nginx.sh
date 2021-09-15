@@ -99,7 +99,7 @@ find /root/src/nginx/ -type f -iname "*dbgsym*deb" -delete
 #-------------------------------------------
 export RELNAME=$(lsb_release -sc)
 mkdir -p /tb2/build/$RELNAME-nginx
-cp *.deb /tb2/build/$RELNAME-nginx/ -Rfa
+cp *.deb /tb2/build/$RELNAME-nginx/ -Rfav
 ls -la /tb2/build/$RELNAME-nginx/
 
 

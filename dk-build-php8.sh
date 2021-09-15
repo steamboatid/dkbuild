@@ -139,7 +139,7 @@ find /root/src/php8/ -type f -iname "*dbgsym*deb" -delete
 #-------------------------------------------
 export RELNAME=$(lsb_release -sc)
 mkdir -p /tb2/build/$RELNAME-php8
-cp *.deb /tb2/build/$RELNAME-php8/ -Rfa
+cp *.deb /tb2/build/$RELNAME-php8/ -Rfav
 ls -la /tb2/build/$RELNAME-php8/
 
 

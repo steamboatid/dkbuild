@@ -101,7 +101,7 @@ find /root/src/lua-resty-lrucache -type f -iname "*dbgsym*deb" -delete
 #-------------------------------------------
 export RELNAME=$(lsb_release -sc)
 mkdir -p /tb2/build/$RELNAME-lua-resty-lrucache
-cp *.deb /tb2/build/$RELNAME-lua-resty-lrucache/ -Rfa
+cp *.deb /tb2/build/$RELNAME-lua-resty-lrucache/ -Rfav
 ls -la /tb2/build/$RELNAME-lua-resty-lrucache/
 
 

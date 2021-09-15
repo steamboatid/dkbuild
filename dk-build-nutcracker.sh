@@ -101,7 +101,7 @@ find /root/src/nutcracker/ -type f -iname "*dbgsym*deb" -delete
 #-------------------------------------------
 export RELNAME=$(lsb_release -sc)
 mkdir -p /tb2/build/$RELNAME-nutcracker
-cp nutcracker*.deb /tb2/build/$RELNAME-nutcracker/ -Rfa
+cp nutcracker*.deb /tb2/build/$RELNAME-nutcracker/ -Rfav
 ls -la /tb2/build/$RELNAME-nutcracker/
 
 

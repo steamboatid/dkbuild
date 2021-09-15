@@ -101,7 +101,7 @@ find /root/src/lua-resty-core -type f -iname "*dbgsym*deb" -delete
 #-------------------------------------------
 export RELNAME=$(lsb_release -sc)
 mkdir -p /tb2/build/$RELNAME-lua-resty-core
-cp *.deb /tb2/build/$RELNAME-lua-resty-core/ -Rfa
+cp *.deb /tb2/build/$RELNAME-lua-resty-core/ -Rfav
 ls -la /tb2/build/$RELNAME-lua-resty-core/
 
 

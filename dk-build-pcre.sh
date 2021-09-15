@@ -99,7 +99,7 @@ find /root/src/pcre -type f -iname "*dbgsym*deb" -delete
 #-------------------------------------------
 export RELNAME=$(lsb_release -sc)
 mkdir -p /tb2/build/$RELNAME-pcre
-cp *.deb /tb2/build/$RELNAME-pcre/ -Rfa
+cp *.deb /tb2/build/$RELNAME-pcre/ -Rfav
 ls -la /tb2/build/$RELNAME-pcre/
 
 

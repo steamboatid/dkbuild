@@ -98,7 +98,7 @@ find /root/src/keydb/ -type f -iname "*dbgsym*deb" -delete
 #-------------------------------------------
 export RELNAME=$(lsb_release -sc)
 mkdir -p /tb2/build/$RELNAME-keydb
-cp keydb*.deb /tb2/build/$RELNAME-keydb/ -Rfa
+cp keydb*.deb /tb2/build/$RELNAME-keydb/ -Rfav
 ls -la /tb2/build/$RELNAME-keydb/
 
 
