@@ -92,15 +92,6 @@ grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | sort -
 cd /root/org.src/php8
 cat $FNOW1 | tr "\n" " " | xargs apt build-dep -y --ignore-missing
 cat $FNOW1 | tr "\n" " " | xargs apt source -y --ignore-missing
-exit 0;
-
-# 2 separate while to avoid apt errors
-cat $FNOW1 |
-while read apgk; do apt build-dep -fy $apgk; done
-
-cd /root/org.src/php8
-cat $FNOW1 |
-while read apgk; do apt source -y $apgk; done
 
 
 # search package from "Source:"
@@ -108,13 +99,9 @@ cat $FDST | grep "Source:" | sed "s/Source\: //g" |
 grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1" |
 sed -E 's/\(([^()]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort > $FNOW2
 
-# 2 separate while to avoid apt errors
-cat $FNOW2 |
-while read apgk; do apt build-dep -fy $apgk; done
-
 cd /root/org.src/php8
-cat $FNOW2 |
-while read apgk; do apt source -y $apgk; done
+cat $FNOW2 | tr "\n" " " | xargs apt build-dep -y --ignore-missing
+cat $FNOW2 | tr "\n" " " | xargs apt source -y --ignore-missing
 
 
 #-- sync to src
