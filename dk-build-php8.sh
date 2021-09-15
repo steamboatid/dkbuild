@@ -11,6 +11,7 @@ export RELNAME=$(lsb_release -sc)
 export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
 
 export TODAY=$(date +%Y%m%d-%H%M)
+export TODATE=$(date +%Y%m%d)
 
 doback(){
 	/usr/bin/nohup /bin/bash /tb2/build/dk-build-full.sh 2>&1 | tee dkbuild.log >/dev/null 2>&1 &
