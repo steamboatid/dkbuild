@@ -89,6 +89,7 @@ cat $FDST | grep "Package:" | sed "s/Package\: //g" |
 grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1" |
 grep -v "Auto-Built" | sort -u | sort > $FNOW1
 
+# 2 separate while to avoid apt errors
 cat $FNOW1 |
 while read apgk; do apt build-dep -fy $apgk; done
 
@@ -102,6 +103,7 @@ cat $FDST | grep "Source:" | sed "s/Source\: //g" |
 grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1" |
 sed -E 's/\(([^()]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort > $FNOW2
 
+# 2 separate while to avoid apt errors
 cat $FNOW2 |
 while read apgk; do apt build-dep -fy $apgk; done
 

@@ -14,19 +14,32 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-update_old_git() {
+update_existing_git() {
 	cd $1
 	printf "\n---updating $PWD \n"
 	git config  --global pull.ff only
 	git rm -r --cached . >/dev/null 2>&1
 	git submodule update --init --recursive -f
 	git fetch --all
+
 	git pull --update-shallow --ff-only
 	git pull --depth=1 --ff-only
 	git pull --ff-only
-	git pull --allow-unrelated-histories
-	git pull origin $(git rev-parse --abbrev-ref HEAD) --ff-only
-	git pull origin $(git rev-parse --abbrev-ref HEAD) --allow-unrelated-histories
+
+	if [ git pull origin $(git rev-parse --abbrev-ref HEAD) --ff-only ]; then
+		printf " --- pull OK "
+	else
+		if [ git pull origin $(git rev-parse --abbrev-ref HEAD) --allow-unrelated-histories ]; then
+			printf " --- pull OK:  allow-unrelated-histories "
+		else
+			if [ ! git pull origin $(git rev-parse --abbrev-ref HEAD) --rebase ]; then
+				cd ..
+				rm -rf $1
+				printf "\n\n git update at $1 is failed. please re-execute $0 again"
+				exit 1; # exit as error
+			fi
+		fi
+	fi
 	cd ..
 }
 
@@ -36,9 +49,9 @@ get_update_new_git(){
 
 	if [ ! -d ${DST} ]; then
 		git clone https://github.com/${URL} $DST
+	else
+		update_existing_git $DST
 	fi
-
-	update_old_git $DST
 }
 
 fix_keydb_permission_problem() {
