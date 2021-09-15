@@ -120,7 +120,7 @@ purge_pending_installs
 #-------------------------------------------
 /bin/bash /tb2/build/dk-config-gen.sh
 /bin/bash /tb2/build/dk-prep-basic.sh
-# /bin/bash /tb2/build/dk-prep-net.sh
+/bin/bash /tb2/build/dk-prep-net.sh
 
 
 # NGINX, source via git
