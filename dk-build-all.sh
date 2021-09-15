@@ -21,6 +21,20 @@ doback(){
 }
 
 
+# reset default build flags
+#-------------------------------------------
+echo \
+"STRIP CFLAGS -g -O2
+STRIP CXXFLAGS -g -O2
+STRIP LDFLAGS -g -O2
+
+PREPEND CFLAGS -O3
+PREPEND CXXFLAGS -O3
+PREPEND LDFLAGS -Wl,-s
+">/etc/dpkg/buildflags.conf
+
+
+
 # gen config
 #-------------------------------------------
 /bin/bash /tb2/build/dk-config-gen.sh

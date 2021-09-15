@@ -21,6 +21,19 @@ mkdir -p /root/src/pcre
 rm -rf /root/src/pcre/*deb
 
 
+# reset default build flags
+#-------------------------------------------
+echo \
+"STRIP CFLAGS -g -O2
+STRIP CXXFLAGS -g -O2
+STRIP LDFLAGS -g -O2
+
+PREPEND CFLAGS -O3
+PREPEND CXXFLAGS -O3
+PREPEND LDFLAGS -Wl,-s
+">/etc/dpkg/buildflags.conf
+
+
 # get source
 #-------------------------------------------
 mkdir -p /root/org.src/pcre /root/src/pcre
@@ -65,7 +78,7 @@ while read adir; do
 
 
 	dch -p -b "backport to $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
-	-v "$VERNEXT+$RELVER+$RELNAME+dk.aisits.id+$TODAY" -D buster -u high; \
+	-v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.aisits.id" -D buster -u high; \
 	head debian/changelog
 	sleep 2
 

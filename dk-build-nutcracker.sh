@@ -18,6 +18,19 @@ export TODAY=$(date +%Y%m%d-%H%M)
 VEROVR="0.5.1"
 
 
+# reset default build flags
+#-------------------------------------------
+echo \
+"STRIP CFLAGS -g -O2
+STRIP CXXFLAGS -g -O2
+STRIP LDFLAGS -g -O2
+
+PREPEND CFLAGS -O3
+PREPEND CXXFLAGS -O3
+PREPEND LDFLAGS -Wl,-s
+">/etc/dpkg/buildflags.conf
+
+
 # delete old debs
 #-------------------------------------------
 mkdir -p /tb2/build/$RELNAME-nutcracker
@@ -38,6 +51,19 @@ fi
 cp debian/changelog debian/changelog.1 -fa
 
 
+
+# override version from source
+#-------------------------------------------
+if [ -e configure.ac ]; then
+	VMAJOR=$(cat configure.ac | grep "NC_MAJOR" | grep define | sed -r "s/\)//g" | cut -d" " -f2)
+	VMINOR=$(cat configure.ac | grep "NC_MINOR" | grep define | sed -r "s/\)//g" | cut -d" " -f2)
+	VPATCH=$(cat configure.ac | grep "NC_PATCH" | grep define | sed -r "s/\)//g" | cut -d" " -f2)
+	VEROVR="${VMAJOR}.${VMINOR}.${VPATCH}.1"
+	printf "\n\n VERSRC=$VERSRC ---> VEROVR=$VEROVR \n"
+fi
+
+
+
 VERNUM=$(basename "$PWD" | tr "-" " " | awk '{print $NF}' | cut -f1 -d"+")
 VERNEXT=$(echo ${VERNUM} | awk -F. -v OFS=. '{$NF=$NF+20;print}')
 printf "\n\n$adir --- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
@@ -55,7 +81,7 @@ fi
 
 
 dch -p -b "backport to $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
--v "$VERNEXT+$RELVER+$RELNAME+dk.aisits.id+$TODAY" -D buster -u high; \
+-v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.aisits.id" -D buster -u high; \
 head debian/changelog
 sleep 2
 
