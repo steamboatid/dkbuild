@@ -160,6 +160,10 @@ cat /tmp/pkg-php0.txt > /tmp/pkg-php1.txt
 cat /tmp/pkg-php1.txt | grep -v "php8.1" | tr "\n" " " > /tmp/pkg-php2.txt
 cat /tmp/pkg-php2.txt | xargs apt install -fy --no-install-recommends --fix-missing
 
+# install all
+apt-cache search php8.0 | grep -v "apache\|debug\|dbg\|cgi\|embed\|gmagick\|yac\|-dev" |\
+cut -d" " -f1 | tr "\n" " " | xargs apt install -fy --no-install-recommends
+
 printf "\n\napt install -fy "
 cat /tmp/pkg-php2.txt
 printf "\n\n"
@@ -168,7 +172,13 @@ printf "\n\n"
 php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis"
 NUMEXT=$(php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis" | wc -l)
 if [[ $NUMEXT -lt 8 ]]; then printf "\n\n\t php ext:NOT OK\n\n"; else printf "\n\n\t php ext: OK\n\n"; fi
+php -v
 
 
 # check netstat
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
+
+# check php custom
+NUMNON=$(dpkg -l | grep "^ii" | grep php8 | grep -v aisits | wc -l)
+NUMCUS=$(dpkg -l | grep "^ii" | grep php8 | grep aisits | wc -l)
+printf "\n\n--- default=$NUMNON  CUSTOM=$NUMCUS \n"
