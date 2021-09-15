@@ -56,8 +56,8 @@ get_package_file_gz $URL $FDST $FGZ
 cat $FDST | grep "Package:" | sed "s/Package\: //g" | \
 tr "\n" " " > $FNOW
 
-# cd /root/src/nginx
-# cat $FNOW | xargs apt build-dep -fy
+cd /root/src/nginx
+cat $FNOW | xargs apt build-dep -fy
 
 
 
@@ -91,7 +91,7 @@ grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | sort -
 
 # search package from "Source:"
 cat $FDST | grep "Source:" | sed "s/Source\: //g" |
-grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1" |
+grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1\|recode" |
 sed -E 's/\(([^()]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort >> $FNOW1
 
 cd /root/org.src/php8
