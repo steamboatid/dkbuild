@@ -86,7 +86,7 @@ FNOW2="/tb2/tmp/php8-pkg-now-2.txt"
 
 # search package from "Package:"
 cat $FDST | grep "Package:" | sed "s/Package\: //g" |
-grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1" |
+grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1\|recode" |
 grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort > $FNOW1
 
 cat $FNOW1 | tr "\n" " " | xargs apt build-dep -y --ignore-missing
