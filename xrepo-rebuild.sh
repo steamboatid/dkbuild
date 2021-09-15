@@ -48,7 +48,7 @@ EOF
 mkdir -p /tb2/phideb/{dists,pool}/{buster,bullseye}
 mkdir -p /tb2/phideb/dists/{buster,bullseye}/main/binary-amd64
 
-folders=(php8 nginx nutcracker keydb)
+folders=(php8 nginx nutcracker lua-resty-core lua-resty-lrucache)
 for afolder in "${folders[@]}"; do
 	printf " copy folder: $afolder \n"
 
