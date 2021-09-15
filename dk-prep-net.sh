@@ -89,19 +89,16 @@ cat $FDST | grep "Package:" | sed "s/Package\: //g" |
 grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1\|recode" |
 grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort > $FNOW1
 
-cd /root/org.src/php8
-cat $FNOW1 | tr "\n" " " | xargs apt build-dep -y --ignore-missing
-cat $FNOW1 | tr "\n" " " | xargs apt source -y --ignore-missing
-
-
 # search package from "Source:"
 cat $FDST | grep "Source:" | sed "s/Source\: //g" |
 grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1" |
-sed -E 's/\(([^()]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort > $FNOW2
+sed -E 's/\(([^()]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort >> $FNOW1
 
 cd /root/org.src/php8
+cat $FNOW1 | sort -u | sort >> $FNOW2
 cat $FNOW2 | tr "\n" " " | xargs apt build-dep -y --ignore-missing
 cat $FNOW2 | tr "\n" " " | xargs apt source -y --ignore-missing
+
 
 
 #-- sync to src
