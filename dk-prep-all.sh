@@ -47,8 +47,8 @@ update_existing_git() {
 			if ! git pull origin $(git rev-parse --abbrev-ref HEAD) --rebase; then
 				cd ..
 				rm -rf $1
-				printf "\n\n ${red} git update at $1 is failed. please re-execute $0 again ${end}"
-				printf "\n Recloning: ${blue} https://github.com/${URL} ${end} \n\n"
+				printf "\n\n ${red}git update at $1 is failed. please re-execute $0 again ${end}"
+				printf "\n Recloning: ${blu} https://github.com/${URL} ${end} \n\n"
 				# exit 1; # exit as error
 
 				# recloning
