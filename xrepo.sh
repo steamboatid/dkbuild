@@ -50,7 +50,7 @@ mkdir -p /tb2/phideb/dists/{buster,bullseye}/main/binary-amd64
 
 folders=(php8 nginx nutcracker keydb)
 for afolder in "${folders[@]}"; do
-	printf "copy folder: $afolder \n"
+	printf " copy folder: $afolder \n"
 
 	# buster
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
