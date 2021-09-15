@@ -56,8 +56,8 @@ get_package_file_gz $URL $FDST $FGZ
 cat $FDST | grep "Package:" | sed "s/Package\: //g" | \
 tr "\n" " " > $FNOW
 
-cd /root/src/nginx
-cat $FNOW | xargs apt build-dep -fy
+# cd /root/src/nginx
+# cat $FNOW | xargs apt build-dep -fy
 
 
 
@@ -89,7 +89,8 @@ cat $FDST | grep "Package:" | sed "s/Package\: //g" |
 grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1" |
 grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort > $FNOW1
 
-cat $FNOW1 | tr "\n" " " | xargs apt source -y --ignore-missing --fix-missing
+cat $FNOW1 | tr "\n" " "
+# cat $FNOW1 | tr "\n" " " | xargs apt source -y --ignore-missing --fix-missing
 exit 0;
 
 # 2 separate while to avoid apt errors
