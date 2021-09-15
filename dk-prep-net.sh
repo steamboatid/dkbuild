@@ -89,7 +89,7 @@ cat $FDST | grep "Package:" | sed "s/Package\: //g" |
 grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1" |
 grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort > $FNOW1
 
-cat $FNOW1 | tr "\n" " " | xargs apt source -y --ignore-missing
+cat $FNOW1 | tr "\n" " " | xargs apt build-dep -y --ignore-missing
 exit 0;
 
 # 2 separate while to avoid apt errors
