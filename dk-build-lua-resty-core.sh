@@ -61,7 +61,6 @@ if [ -e lib/resty/core/base.lua ]; then
 	VEROVR="${VERSRC}.1"
 	printf "\n\n VERSRC=$VERSRC ---> VEROVR=$VEROVR \n"
 fi
-exit 0;
 
 
 
