@@ -13,6 +13,14 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
+red=$'\e[1;31m'
+grn=$'\e[1;32m'
+yel=$'\e[1;33m'
+blu=$'\e[1;34m'
+mag=$'\e[1;35m'
+cyn=$'\e[1;36m'
+end=$'\e[0m'
+
 
 update_existing_git() {
 	cd $1
@@ -35,7 +43,7 @@ update_existing_git() {
 			if ! git pull origin $(git rev-parse --abbrev-ref HEAD) --rebase; then
 				cd ..
 				rm -rf $1
-				printf "\n\n git update at $1 is failed. please re-execute $0 again"
+				printf "\n\n ${red} git update at $1 is failed. please re-execute $0 again ${end} \n\n"
 				exit 1; # exit as error
 			fi
 		fi
