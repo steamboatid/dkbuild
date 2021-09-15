@@ -26,13 +26,13 @@ update_existing_git() {
 	git pull --depth=1 --ff-only
 	git pull --ff-only
 
-	if [ git pull origin $(git rev-parse --abbrev-ref HEAD) --ff-only ]; then
+	if git pull origin $(git rev-parse --abbrev-ref HEAD) --ff-only; then
 		printf " --- pull OK "
 	else
-		if [ git pull origin $(git rev-parse --abbrev-ref HEAD) --allow-unrelated-histories ]; then
+		if git pull origin $(git rev-parse --abbrev-ref HEAD) --allow-unrelated-histories; then
 			printf " --- pull OK:  allow-unrelated-histories "
 		else
-			if [ ! git pull origin $(git rev-parse --abbrev-ref HEAD) --rebase ]; then
+			if ! git pull origin $(git rev-parse --abbrev-ref HEAD) --rebase; then
 				cd ..
 				rm -rf $1
 				printf "\n\n git update at $1 is failed. please re-execute $0 again"
@@ -103,7 +103,7 @@ purge_pending_installs
 #-------------------------------------------
 /bin/bash /tb2/build/dk-config-gen.sh
 /bin/bash /tb2/build/dk-prep-basic.sh
-/bin/bash /tb2/build/dk-prep-net.sh
+# /bin/bash /tb2/build/dk-prep-net.sh
 
 
 # NGINX, source via git
@@ -149,7 +149,7 @@ apt source -y libpcre3
 
 #-- sync to src
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-/root/org.src/pcre/* /root/src/pcre/
+/root/org.src/pcre/ /root/src/pcre/
 
 
 # PHP8, source via default + git
@@ -235,7 +235,7 @@ php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu
 
 #-- sync to src
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-/root/org.src/php8/* /root/src/php8/
+/root/org.src/php8/ /root/src/php8/
 
 #--- update phpredis from git
 #-------------------------------------------

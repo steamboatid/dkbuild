@@ -114,4 +114,4 @@ while read apgk; do apt source -y $apgk; done
 
 #-- sync to src
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-/root/org.src/php8/* /root/src/php8/
+/root/org.src/php8/ /root/src/php8/

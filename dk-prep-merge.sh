@@ -51,7 +51,7 @@ fi
 
 #-- sync to src
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-/root/org.src/nginx/* /root/src/nginx/
+/root/org.src/nginx/ /root/src/nginx/
 
 
 # PHP8
