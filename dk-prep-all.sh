@@ -39,10 +39,10 @@ update_existing_git() {
 	git pull --ff-only
 
 	if git pull origin $(git rev-parse --abbrev-ref HEAD) --ff-only; then
-		printf " --- pull OK "
+		printf " --- pull OK \n"
 	else
 		if git pull origin $(git rev-parse --abbrev-ref HEAD) --allow-unrelated-histories; then
-			printf " --- pull OK:  allow-unrelated-histories "
+			printf " --- pull OK:  allow-unrelated-histories \n"
 		else
 			if ! git pull origin $(git rev-parse --abbrev-ref HEAD) --rebase; then
 				cd ..
@@ -53,11 +53,11 @@ update_existing_git() {
 
 				# recloning
 				git clone https://github.com/${URL} $DST
-				printf "\n\n"
 			fi
 		fi
 	fi
 	cd ..
+	printf "\n\n"
 }
 
 get_update_new_git(){
