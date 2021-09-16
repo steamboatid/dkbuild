@@ -43,8 +43,8 @@ get_package_file_gz(){
 
 
 #--- chown apt
-chown -Rv _apt:root /var/cache/apt/archives/partial/
-chmod -Rv 700 /var/cache/apt/archives/partial/
+chown -Rf _apt:root /var/cache/apt/archives/partial/
+chmod -f 700 /var/cache/apt/archives/partial/
 
 
 # NGINX

@@ -66,4 +66,14 @@ export DEB_BUILD_OPTIONS="noddebs nocheck notest terse parallel=${nproc2}"; \
 time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 --no-lintian --no-tgz-check --no-sign -b -uc -us -D 2>&1 | tee dkbuild.log
 
+isclang=$(cat dkbuild.log | grep -i clang | grep -i conflict | wc -l)
+isfail=$(cat dkbuild.log | grep -i failed)
+if [[ $isfail -gt 0 ]] && [[ $isclang -gt 0 ]]; then
+	# fakeroot debian/rules clean; \
+	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
+	export DEB_BUILD_OPTIONS="noddebs nocheck notest terse parallel=${nproc2}"; \
+	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
+	--no-lintian --no-tgz-check --no-sign -b -uc -us -d 2>&1 | tee dkbuild.log
+fi
+
 #was --no-lintian --no-tgz-check --no-sign -B -uc -us -D
