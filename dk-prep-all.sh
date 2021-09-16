@@ -65,6 +65,7 @@ get_update_new_git(){
 	DST=$2
 
 	if [ ! -d ${DST} ]; then
+		printf "\n---new clone to: $DST \n---from: https://github.com/${URL} \n"
 		git clone https://github.com/${URL} $DST
 	else
 		update_existing_git $DST $URL
