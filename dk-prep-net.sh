@@ -109,6 +109,6 @@ done
 
 
 #-- sync to src
-printf "\n-- sync to src"
+printf "\n-- sync to src \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/php8/ /root/src/php8/
