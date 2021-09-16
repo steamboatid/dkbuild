@@ -25,15 +25,7 @@ VEROVR="0.5.1"
 
 # reset default build flags
 #-------------------------------------------
-echo \
-"STRIP CFLAGS -g -O2
-STRIP CXXFLAGS -g -O2
-STRIP LDFLAGS -g -O2
-
-PREPEND CFLAGS -O3
-PREPEND CXXFLAGS -O3
-PREPEND LDFLAGS -Wl,-s
-">/etc/dpkg/buildflags.conf
+reset_build_flags
 
 
 # delete old debs
