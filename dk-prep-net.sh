@@ -100,7 +100,7 @@ grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1\|recode\|phalcon" |
 sed -E 's/\(([^()]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort >> $FNOW1
 
 cd /root/org.src/php8
-cat $FNOW1 | grep -v "recode\|phalcon\|package" | sort -u | sort > $FNOW2
+cat $FNOW1 | sort -u | sort > $FNOW2
 
 echo "php-phalcon3" >> $FNOW2
 cat $FNOW2 | tr "\n" " " | xargs apt build-dep -y --ignore-missing | tee $FSRC
