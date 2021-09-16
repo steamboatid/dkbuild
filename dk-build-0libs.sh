@@ -16,13 +16,14 @@ end=$'\e[0m'
 #-------------------------------------------
 reset_build_flags() {
 	echo \
-"STRIP CFLAGS -O2
-STRIP CXXFLAGS -O2
-STRIP LDFLAGS -O2
+"STRIP CFLAGS -O2 -g
+STRIP CXXFLAGS -O2 -g
+STRIP LDFLAGS -O2 -g
 
 PREPEND CFLAGS -O3
-PREPEND CPPFLAGS -O3 -g
+PREPEND CPPFLAGS -O3
 PREPEND CXXFLAGS -O3
+PREPEND LDFLAGS -Wl,-s
 ">/etc/dpkg/buildflags.conf
 }
 
