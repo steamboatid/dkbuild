@@ -117,6 +117,9 @@ fix_keydb_permission_problem
 # purge pendings
 purge_pending_installs
 
+# delete unpacked folders
+find /root/org.src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
+
 # prepare basic need: apt configs, sources list, etc
 #-------------------------------------------
 /bin/bash /tb2/build/dk-config-gen.sh

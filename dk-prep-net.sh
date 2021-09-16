@@ -97,7 +97,7 @@ sed -E 's/\(([^()]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort >> $FNOW1
 cd /root/org.src/php8
 cat $FNOW1 | sort -u | sort >> $FNOW2
 cat $FNOW2 | tr "\n" " " | xargs apt build-dep -y --ignore-missing
-cat $FNOW2 | tr "\n" " " | xargs apt source -y --ignore-missing
+cat $FNOW2 | tr "\n" " " | xargs apt source -y --ignore-missing --download-only | tee php-source.txt
 
 
 
