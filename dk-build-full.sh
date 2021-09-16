@@ -47,7 +47,7 @@ export CCACHE_SLOPPINESS=include_file_mtime
 export CC="ccache gcc"
 
 mkdir -p /tb2/tmp/ccache /root/.ccache
-rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times \
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 /root/.ccache/ /tb2/tmp/ccache/
 export CCACHE_BASEDIR="/tb2/tmp/ccache"
 

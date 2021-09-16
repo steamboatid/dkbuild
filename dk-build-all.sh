@@ -76,12 +76,14 @@ sleep 1
 
 # check if any fails
 #-------------------------------------------
+# dpkg-buildpackage: info: binary-only upload (no source included)
 printf "\n\n\n"
 export TOTFAIL=0
 for alog in $(find /root/src -iname "dkbuild.log" | sort -u); do
 	printf "\n check $alog \t"
 	NUMFAIL=$(grep "buildpackage" ${alog} | grep failed | wc -l)
-	if [[ $NUMFAIL -gt 0 ]]; then
+	NUMSUCC=$(grep "buildpackage" ${alog} | grep "binary-only upload" | wc -l)
+	if [[ $NUMSUCC -lt 1 ]] || [[ $NUMFAIL -gt 0 ]]; then
 		grep "buildpackage" ${alog} | grep failed
 		TOTFAIL=$((TOTFAIL+1))
 	fi
