@@ -79,16 +79,11 @@ cd /root/org.src/php8
 FDST="/tb2/tmp/php8-pkg-org.txt"
 
 URL="https://packages.sury.org/php/dists/bullseye/main/binary-amd64/Packages"
-FDST1="/tb2/tmp/php8-pkg-org-1.txt"
-get_package_file $URL $FDST1
-
 URL="https://packages.sury.org/php/dists/buster/main/binary-amd64/Packages"
-FDST2="/tb2/tmp/php8-pkg-org-2.txt"
-get_package_file $URL $FDST2
 
->$FDST
-cat $FDST1 >> $FDST
-cat $FDST2 >> $FDST
+URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
+FDST1="/tb2/tmp/php8-pkg-org-1.txt"
+get_package_file $URL $FDST
 
 FNOW1="/tb2/tmp/php8-pkg-now-1.txt"
 FNOW2="/tb2/tmp/php8-pkg-now-2.txt"
@@ -105,9 +100,9 @@ grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1\|recode\|phalcon" |
 sed -E 's/\(([^()]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort >> $FNOW1
 
 cd /root/org.src/php8
-cat $FNOW1 | grep -v "recode\|phalcon" | sort -u | sort >> $FNOW2
+cat $FNOW1 | sort -u | sort >> $FNOW2
 
-echo "php-phalcon3" >> $FNOW2
+# echo "php-phalcon3" >> $FNOW2
 cat $FNOW2 | tr "\n" " " | xargs apt build-dep -y --ignore-missing | tee $FSRC
 
 for apkg in $(cat $FSRC | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort); do
