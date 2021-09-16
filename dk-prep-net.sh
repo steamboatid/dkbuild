@@ -103,7 +103,7 @@ echo "php-phalcon3" >> $FNOW
 echo "libicu-dev" >> $FNOW
 apt-cache search php8.0 | awk '{print $1}' | grep -v "dbgsym\|dbg" >> $FNOW
 apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | grep -v "dbgsym\|dbg" >> $FNOW
-cat $FNOW | tr "\n" " " | xargs apt build-dep -y --ignore-missing | tee $FSRC
+cat $FNOW | sort -u | sort | tr "\n" " " | xargs apt build-dep -y --ignore-missing | tee $FSRC
 
 for apkg in $(cat $FSRC | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort); do
 	apt source -y --ignore-missing $apkg || echo "failed for $apkg"
