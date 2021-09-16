@@ -42,6 +42,11 @@ get_package_file_gz(){
 # cd `mktemp -d` && apt remove -fy --fix-missing --fix-broken php* nginx*
 
 
+#--- chown apt
+chown -Rv _apt:root /var/cache/apt/archives/partial/
+chmod -Rv 700 /var/cache/apt/archives/partial/
+
+
 # NGINX
 #-------------------------------------------
 rm -rf /tmp/nginx
