@@ -165,8 +165,11 @@ apt source -y libpcre3
 
 
 #-- sync to src
-rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/pcre/ /root/src/pcre/
+
+#-- nginx source bug, nchan
+rm -rf /root/src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
 
 
 # PHP8, source via default + git
@@ -251,7 +254,7 @@ php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu
 
 
 #-- sync to src
-rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/php8/ /root/src/php8/
 
 #--- update phpredis from git

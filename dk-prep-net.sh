@@ -102,5 +102,5 @@ cat $FNOW2 | tr "\n" " " | xargs apt source -y --ignore-missing
 
 
 #-- sync to src
-rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/php8/ /root/src/php8/

@@ -77,15 +77,21 @@ sleep 1
 # check if any fails
 #-------------------------------------------
 printf "\n\n\n"
-find /root/src -iname "dkbuild.log" | sort -u |
-while read alog; do
+export TOTFAIL=0
+for alog in $(find /root/src -iname "dkbuild.log" | sort -u); do
 	printf "\n check $alog \t"
 	NUMFAIL=$(grep "buildpackage" ${alog} | grep failed | wc -l)
 	if [[ $NUMFAIL -gt 0 ]]; then
 		grep "buildpackage" ${alog} | grep failed
+		TOTFAIL=$((TOTFAIL+1))
 	fi
-	printf "\n\n\n\tFAILS = $NUMFAIL\n\n"
+	printf "\n\n\n\tFAILS = $NUMFAIL --- TOTAL = $TOTFAIL \n\n"
 done
+sleep 0.1
+if [[ ${TOTFAIL} -gt 0 ]]; then
+	printf "\n\n\n\t TOTAL FAILS = $TOTFAIL\n\n"
+	exit $TOTFAIL; # exit as error
+fi
 printf "\n\n\n"
 
 

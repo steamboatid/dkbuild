@@ -50,7 +50,7 @@ fi
 
 
 #-- sync to src
-rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/nginx/ /root/src/nginx/
 
 
