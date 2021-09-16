@@ -133,6 +133,9 @@ nutcracker keydb-server keydb-tools nginx-extras php8.0-fpm php8.0-cli; \
 apt install -fy; \
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 
+# fix arginfo on uploadprogress
+sed -i "s/^extension/\; extension/g" /etc/php/8.0/mods-available/uploadprogress.ini
+
 
 # complete install NGINX
 apt-cache search lua-resty | awk '{print $1}' > /tmp/pkg-nginx0.txt
@@ -163,6 +166,9 @@ cat /tmp/pkg-php2.txt | xargs apt install -fy --no-install-recommends --fix-miss
 # install all
 apt-cache search php8.0 | grep -v "apache\|debug\|dbg\|cgi\|embed\|gmagick\|yac\|-dev" |\
 cut -d" " -f1 | tr "\n" " " | xargs apt install -fy --no-install-recommends
+
+# fix arginfo on uploadprogress
+sed -i "s/^extension/\; extension/g" /etc/php/8.0/mods-available/uploadprogress.ini
 
 printf "\n\napt install -fy "
 cat /tmp/pkg-php2.txt
