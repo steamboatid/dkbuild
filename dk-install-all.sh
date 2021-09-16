@@ -16,6 +16,10 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
+source /tb2/build/dk-build-0libs.sh
+
+
+
 #-- killing first
 killall -9 php php8.0-fpm nginx keydb-server nutcracker >/dev/null 2>&1
 killall -9 php php8.0-fpm nginx keydb-server nutcracker >/dev/null 2>&1

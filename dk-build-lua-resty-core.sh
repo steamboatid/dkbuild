@@ -14,6 +14,10 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
+source /tb2/build/dk-build-0libs.sh
+
+
+
 # special version
 #-------------------------------------------
 #--- file: lib/resty/core/base.lua --- looking for: _M.version

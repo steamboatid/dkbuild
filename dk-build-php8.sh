@@ -13,6 +13,10 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
+
+source /tb2/build/dk-build-0libs.sh
+
+
 doback(){
 	/usr/bin/nohup /bin/bash /tb2/build/dk-build-full.sh 2>&1 | tee dkbuild.log >/dev/null 2>&1 &
 	printf "\n\n\n"

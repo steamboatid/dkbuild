@@ -13,8 +13,17 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
-#--- PHP-ALL
 
+source /tb2/build/dk-build-0libs.sh
+
+
+# reset default build flags
+#-------------------------------------------
+reset_build_flags
+
+
+
+#--- BUILD-ALL
 AAA=`dpkg-buildflags --get CFLAGS`
 GO2="-g -O2"
 OPT3="-O3"
@@ -62,16 +71,16 @@ nproc2=$(( 2*`nproc` ))
 
 # fakeroot debian/rules clean; \
 export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
-export DEB_BUILD_OPTIONS="noddebs nocheck notest terse parallel=${nproc2}"; \
+export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest terse parallel=${nproc2}"; \
 time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 --no-lintian --no-tgz-check --no-sign -b -uc -us -D 2>&1 | tee dkbuild.log
 
-isclang=$(cat dkbuild.log | grep -i clang | grep -i conflict | wc -l)
+isflict=$(cat dkbuild.log | grep -i conflict | wc -l)
 isfail=$(cat dkbuild.log | grep -i failed | wc -l)
-if [[ $isfail -gt 0 ]] && [[ $isclang -gt 0 ]]; then
+if [[ $isfail -gt 0 ]] && [[ $isflict -gt 0 ]]; then
 	# fakeroot debian/rules clean; \
 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
-	export DEB_BUILD_OPTIONS="noddebs nocheck notest terse parallel=${nproc2}"; \
+	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest terse parallel=${nproc2}"; \
 	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 	--no-lintian --no-tgz-check --no-sign -b -uc -us -d 2>&1 | tee dkbuild.log
 fi

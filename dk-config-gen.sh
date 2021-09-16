@@ -14,6 +14,10 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
+source /tb2/build/dk-build-0libs.sh
+
+
+
 
 #--- check .bashrc
 if [ `cat ~/.bashrc | grep alias | grep "find -L" | wc -l` -lt 1 ]; then

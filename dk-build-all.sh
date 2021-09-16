@@ -15,6 +15,10 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
+source /tb2/build/dk-build-0libs.sh
+
+
+
 doback(){
 	/usr/bin/nohup /bin/bash $1 >/dev/null 2>&1 &
 	printf "\n\n exec back: $1 \n\n\n"
@@ -24,15 +28,7 @@ doback(){
 
 # reset default build flags
 #-------------------------------------------
-echo \
-"STRIP CFLAGS -g -O2
-STRIP CXXFLAGS -g -O2
-STRIP LDFLAGS -g -O2
-
-PREPEND CFLAGS -O3
-PREPEND CXXFLAGS -O3
-PREPEND LDFLAGS -Wl,-s
-">/etc/dpkg/buildflags.conf
+reset_build_flags
 
 
 
@@ -50,11 +46,11 @@ find /tb2/build/$RELNAME-all/ -type f -iname "*deb" -delete
 
 # some job at background
 #-------------------------------------------
-doback /tb2/build/dk-build-nutcracker.sh &
-doback /tb2/build/dk-build-keydb.sh &
-doback /tb2/build/dk-build-pcre.sh &
-doback /tb2/build/dk-build-lua-resty-lrucache.sh &
-doback /tb2/build/dk-build-lua-resty-core.sh &
+doback_bash /tb2/build/dk-build-nutcracker.sh &
+doback_bash /tb2/build/dk-build-keydb.sh &
+doback_bash /tb2/build/dk-build-pcre.sh &
+doback_bash /tb2/build/dk-build-lua-resty-lrucache.sh &
+doback_bash /tb2/build/dk-build-lua-resty-core.sh &
 
 
 # some job at foreground
