@@ -80,18 +80,11 @@ FDST="/tb2/tmp/php8-pkg-org.txt"
 FDST1="/tb2/tmp/php8-pkg-org-1.txt"
 FDST2="/tb2/tmp/php8-pkg-org-2.txt"
 
-URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
-
 URL="https://packages.sury.org/php/dists/bullseye/main/binary-amd64/Packages"
-FDST1="/tb2/tmp/php8-pkg-org-1.txt"
-get_package_file $URL $FDST1
-
 URL="https://packages.sury.org/php/dists/buster/main/binary-amd64/Packages"
-FDST1="/tb2/tmp/php8-pkg-org-1.txt"
-get_package_file $URL $FDST2
 
-cat $FDST1 >  $FDST
-cat $FDST2 >> $FDST
+URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
+get_package_file $URL $FDST
 
 FNOW="/tb2/tmp/php8-pkg-now.txt"
 FNOW1="/tb2/tmp/php8-pkg-now-1.txt"
