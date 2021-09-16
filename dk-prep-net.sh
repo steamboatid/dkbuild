@@ -96,21 +96,19 @@ FSRC="/tb2/tmp/php8-pkg-src.txt"
 
 # search package from "Package:"
 cat $FDST | grep "Package:" | sed "s/Package\: //g" |
-grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1\|recode" |
+grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1\|recode\|phalcon" |
 grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort > $FNOW1
 
 # search package from "Source:"
 cat $FDST | grep "Source:" | sed "s/Source\: //g" |
-grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1\|recode" |
+grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1\|recode\|phalcon" |
 sed -E 's/\(([^()]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort >> $FNOW1
 
 cd /root/org.src/php8
 cat $FNOW1 | sort -u | sort >> $FNOW2
 
->$FSRC
-for apkg in $(cat $FNOW2 | sort -u | sort); do
-	apt build-dep -y --ignore-missing $apkg | tee -a $FSRC
-done
+echo "php-phalcon3" >> $FNOW2
+cat $FNOW2 | tr "\n" " " | xargs apt build-dep -y --ignore-missing | tee $FSRC
 
 for apkg in $(cat $FSRC | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort); do
 	apt source -y --ignore-missing $apkg || echo "failed for $apkg"
