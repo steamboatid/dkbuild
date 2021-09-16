@@ -109,7 +109,7 @@ cat $FNOW1 | sort -u | sort >> $FNOW2
 
 >$FSRC
 for apkg in $(cat $FNOW2 | sort -u | sort); do
-	apt build-dep -y --ignore-missing | tee -a $FSRC
+	apt build-dep -y --ignore-missing $apkg | tee -a $FSRC
 done
 
 for apkg in $(cat $FSRC | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort); do
