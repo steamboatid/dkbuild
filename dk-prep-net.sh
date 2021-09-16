@@ -83,6 +83,7 @@ cat $FDST2 >> $FDST
 
 FNOW1="/tb2/tmp/php8-pkg-now-1.txt"
 FNOW2="/tb2/tmp/php8-pkg-now-2.txt"
+FSRC="/tb2/tmp/php8-pkg-src.txt"
 
 # search package from "Package:"
 cat $FDST | grep "Package:" | sed "s/Package\: //g" |
@@ -96,10 +97,9 @@ sed -E 's/\(([^()]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort >> $FNOW1
 
 cd /root/org.src/php8
 cat $FNOW1 | sort -u | sort >> $FNOW2
-cat $FNOW2 | tr "\n" " " | xargs apt build-dep -y --ignore-missing | tee php-source.txt
-cat php-source.txt
-exit 0;
-cat $FNOW2 | tr "\n" " " | xargs apt source -y --ignore-missing --download-only | tee php-source.txt
+cat $FNOW2 | tr "\n" " " | xargs apt build-dep -y --ignore-missing | tee $FSRC
+cat $FSRC | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort | tr "\n" " " | \
+xargs apt source -y --ignore-missing
 
 
 
