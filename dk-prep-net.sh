@@ -98,8 +98,9 @@ sed -E 's/\(([^()]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort >> $FNOW1
 cd /root/org.src/php8
 cat $FNOW1 | sort -u | sort >> $FNOW2
 cat $FNOW2 | tr "\n" " " | xargs apt build-dep -y --ignore-missing | tee $FSRC
-cat $FSRC | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort | tr "\n" " " | \
-xargs apt source -y --ignore-missing
+for apkg in $(cat $FSRC | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort); do
+	apt source -y --ignore-missing $apkg
+done
 
 
 
