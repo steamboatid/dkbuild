@@ -77,33 +77,38 @@ mkdir -p /tb2/tmp /root/src/php8 /root/org.src/php8 /tmp/php8
 cd /root/org.src/php8
 
 FDST="/tb2/tmp/php8-pkg-org.txt"
-
-URL="https://packages.sury.org/php/dists/bullseye/main/binary-amd64/Packages"
-URL="https://packages.sury.org/php/dists/buster/main/binary-amd64/Packages"
+FDST1="/tb2/tmp/php8-pkg-org-1.txt"
+FDST2="/tb2/tmp/php8-pkg-org-2.txt"
 
 URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
-FDST1="/tb2/tmp/php8-pkg-org-1.txt"
-get_package_file $URL $FDST
 
+URL="https://packages.sury.org/php/dists/bullseye/main/binary-amd64/Packages"
+FDST1="/tb2/tmp/php8-pkg-org-1.txt"
+get_package_file $URL $FDST1
+
+URL="https://packages.sury.org/php/dists/buster/main/binary-amd64/Packages"
+FDST1="/tb2/tmp/php8-pkg-org-1.txt"
+get_package_file $URL $FDST2
+
+cat $FDST1 >  $FDST
+cat $FDST2 >> $FDST
+
+FNOW="/tb2/tmp/php8-pkg-now.txt"
 FNOW1="/tb2/tmp/php8-pkg-now-1.txt"
 FNOW2="/tb2/tmp/php8-pkg-now-2.txt"
 FSRC="/tb2/tmp/php8-pkg-src.txt"
 
 # search package from "Package:"
-cat $FDST | grep "Package:" | sed "s/Package\: //g" |
-grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1\|recode\|phalcon" |
-grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort > $FNOW1
-
-# search package from "Source:"
-cat $FDST | grep "Source:" | sed "s/Source\: //g" |
-grep -v "\-embed\|\-dbg\|dbgsym\|\-dev\|php5\|php7\|php8.1\|recode\|phalcon" |
-sed -E 's/\(([^()]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort >> $FNOW1
+cat $FDST | grep "Package:\|Source:" | \
+sed "s/Package\: //g" | sed "s/Source\: //g" |
+grep -v "\-embed\|\-dbg\|dbgsym\|php5\|php7\|php8.1\|recode\|phalcon" |
+grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | sort -u | sort > $FNOW
 
 cd /root/org.src/php8
-cat $FNOW1 | sort -u | sort > $FNOW2
 
-echo "php-phalcon3" >> $FNOW2
-cat $FNOW2 | tr "\n" " " | xargs apt build-dep -y --ignore-missing | tee $FSRC
+echo "php-phalcon3" >> $FNOW
+echo "libicu-dev" >> $FNOW
+cat $FNOW | tr "\n" " " | xargs apt build-dep -y --ignore-missing | tee $FSRC
 
 for apkg in $(cat $FSRC | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort); do
 	apt source -y --ignore-missing $apkg || echo "failed for $apkg"
