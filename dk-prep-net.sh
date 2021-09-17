@@ -89,6 +89,10 @@ grep -iv "dictionary\|mysqlnd\|tmpfiles\|php-curl-all-dev\|\-ps\|\-json\|Pre-php
 grep -iv "php5\|php7\|php8.1\|yac\|gmagick\|xcache\|solr\|swoole\|libtiff-dev\|posix0" |
 cut -d":" -f1 | xargs apt install --ignore-missing -y
 
+apt-cache search php | grep "\-dev" | \
+grep -v "php5\|php7\|php8.1\|yac\|gmagick\|xcache\|solr\|swoole" | cut -d" " -f1 >  /tmp/deps.pkgs
+cat /tmp/deps.pkgs | tr "\n" " " | xargs apt install -fy
+
 
 FDST="/tb2/tmp/php8-pkg-org.txt"
 FDST1="/tb2/tmp/php8-pkg-org-1.txt"

@@ -203,7 +203,5 @@ echo "libclang-dev" >>  /tmp/deps.pkgs
 echo "cmake cmake-extras extra-cmake-modules" >>  /tmp/deps.pkgs
 echo "libgearman-dev" >>  /tmp/deps.pkgs
 echo "d-shlibs help2man liblz4-dev" >>  /tmp/deps.pkgs
-apt-cache search php | grep "\-dev" | \
-grep -v "php5\|php7\|php8.1\|yac\|gmagick\|xcache\|solr\|swoole" | cut -d" " -f1 >>  /tmp/deps.pkgs
 cat /tmp/deps.pkgs | tr "\n" " " | xargs apt install -fy
 
