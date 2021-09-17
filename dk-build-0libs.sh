@@ -63,8 +63,8 @@ check_build_log() {
 	done
 	sleep 0.1
 
-	cat $DEPS | tr -d "\n" > /tmp/deps.tmp
-	mv /tmp/deps.tmp $DEPS
+	# cat $DEPS | tr -d "\n" > /tmp/deps.tmp
+	# mv /tmp/deps.tmp $DEPS
 	cat $DEPS
 
 	if [[ ${TOTFAIL} -gt 0 ]]; then
