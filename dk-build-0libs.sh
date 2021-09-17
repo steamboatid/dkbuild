@@ -1,6 +1,19 @@
 #!/bin/bash
 
 
+export DEBIAN_FRONTEND="noninteractive"
+
+export DEBFULLNAME="Dwi Kristianto"
+export DEBEMAIL="steamboatid@gmail.com"
+export EMAIL="steamboatid@gmail.com"
+
+export RELNAME=$(lsb_release -sc)
+export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
+
+export TODAY=$(date +%Y%m%d-%H%M)
+export TODATE=$(date +%Y%m%d)
+
+
 # bash colors
 export red=$'\e[1;31m'
 export grn=$'\e[1;32m'
@@ -14,8 +27,6 @@ export cyn=$'\e[1;36m'
 export cyan=$'\e[1;36m'
 export end=$'\e[0m'
 
-# shopt -s expand_aliases
-# alias aptold='apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"'
 
 if [ ! -e /usr/local/sbin/aptold ]; then
 	echo \
@@ -62,10 +73,10 @@ check_build_log() {
 	for alog in $(find /root/src -maxdepth 3 -type f -iname "dkbuild.log" | sort -u); do
 		NUMFAIL=$(tail -n100 ${alog} | grep "buildpackage" | grep failed | wc -l)
 		NUMSUCC=$(tail -n100 ${alog} | grep "buildpackage" | grep "binary-only upload" | wc -l)
-		if [[ $NUMSUCC -lt 1 ]] || [[ $NUMFAIL -gt 0 ]]; then
+		if [[ $NUMSUCC -lt 1 ]] && [[ $NUMFAIL -gt 0 ]]; then
 			printf "\n\n check $alog --- FAILS = $NUMFAIL TOTAL = $TOTFAIL \n"
 			grep "buildpackage" ${alog} | grep failed
-			TOTFAIL=$((TOTFAIL+1))
+			TOTFAIL=$((TOTFAIL + NUMFAIL))
 			printf "\n"
 		fi
 
