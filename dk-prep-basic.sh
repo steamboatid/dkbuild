@@ -208,6 +208,7 @@ echo "libgearman-dev" >>  /tmp/deps.pkgs
 echo "d-shlibs help2man liblz4-dev" >>  /tmp/deps.pkgs
 
 echo "libgraphicsmagick*dev" >>  /tmp/deps.pkgs
+echo "libmagickwand-dev" >>  /tmp/deps.pkgs
 echo "libzmq*-dev" >>  /tmp/deps.pkgs
 echo "libvips*dev" >>  /tmp/deps.pkgs
 echo "libssh2*dev" >>  /tmp/deps.pkgs
