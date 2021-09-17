@@ -115,10 +115,11 @@ printf "\n nutc:   $numNUTC"
 
 
 #--- save all git for future used
+>/tmp/all.git
 >/root/src/all.git
 find /root/src -type f -name "*dsc" | sort -u | sort |
 while read afile; do
 	printf "\n $afile "
 	cat $afile | grep -i vcs | awk '{print $NF}' | sort -u >>/tmp/all.git
 done
-cat /tmp/all.git | sort -u | sort >/root/src/all.git
+cat /tmp/all.git | grep "http" | sort -u | sort >/root/src/all.git

@@ -206,5 +206,8 @@ echo "libclang-dev" >>  /tmp/deps.pkgs
 echo "cmake cmake-extras extra-cmake-modules" >>  /tmp/deps.pkgs
 echo "libgearman-dev" >>  /tmp/deps.pkgs
 echo "d-shlibs help2man liblz4-dev" >>  /tmp/deps.pkgs
+echo "graphicsmagick*" >>  /tmp/deps.pkgs
+echo "libzmq*-dev" >>  /tmp/deps.pkgs
+echo "libvips*dev" >>  /tmp/deps.pkgs
 cat /tmp/deps.pkgs | tr "\n" " " | xargs aptold install -y
 

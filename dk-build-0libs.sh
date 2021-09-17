@@ -68,17 +68,16 @@ check_build_log() {
 			TOTFAIL=$((TOTFAIL+1))
 			printf " FAILS = $NUMFAIL TOTAL = $TOTFAIL "
 		fi
-		# printf "\n\n\n\tFAILS = $NUMFAIL --- TOTAL = $TOTFAIL \n\n"
 
-		NUMDEPS=$(grep -i "unmet" ${alog} | grep -i "dependencies" | wc -l)
+		NUMDEPS=$(grep -i "unmet build dependencies" ${alog} | wc -l)
 		if [[ $NUMDEPS -gt 0 ]]; then
-			grep -i "unmet" ${alog} | grep -i "dependencies" >> $DEPS
+			grep -i "unmet build dependencies" ${alog} >> $DEPS
 		fi
 	done
 	sleep 0.1
 
-	# cat $DEPS | tr -d "\n" > /tmp/deps.tmp
-	# mv /tmp/deps.tmp $DEPS
+	# delete empty lines
+	sed -ir 's/^ *//; s/ *$//; /^$/d' $DEPS
 	cat $DEPS
 
 	if [[ ${TOTFAIL} -gt 0 ]]; then
