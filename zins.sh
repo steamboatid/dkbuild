@@ -132,7 +132,7 @@ rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb /usr/lib/php \
 /lib/systemd/system/php* /etc/init.d/php*
 
 # short install
-apt --no-install-recommends --fix-missing --reinstall -fy \
+apt install --no-install-recommends --fix-missing --reinstall -fy \
 libzip4 nutcracker keydb-server keydb-tools nginx-extras php8.0-fpm php8.0-cli php8.0-zip; \
 apt install -y; \
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
