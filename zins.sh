@@ -120,9 +120,9 @@ apt full-upgrade --auto-remove --purge -fy
 
 
 
-# cd `mktemp -d`; \
-# apt purge --auto-remove --purge \
-# php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy
+cd `mktemp -d`; \
+apt purge --auto-remove --purge \
+php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy
 
 rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb /usr/lib/php \
 /etc/keydb /etc/nutcracker /etc/php /etc/nginx \
