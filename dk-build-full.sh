@@ -72,8 +72,9 @@ rm -rf debian/.debhelper
 nproc2=$(( 2*`nproc` ))
 
 # dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
+export DH_VERBOSE=1; \
 export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
-export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest terse parallel=${nproc2}"; \
+export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
 time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 --no-lintian --no-tgz-check --no-sign -b -uc -us -D 2>&1 | tee dkbuild.log
 
@@ -89,8 +90,9 @@ fi
 isfail=$(cat dkbuild.log | grep -i failed | wc -l)
 if [[ $isfail -gt 0 ]]; then
 	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
+	export DH_VERBOSE=1; \
 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
-	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest terse parallel=${nproc2}"; \
+	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
 	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 	--no-lintian --no-tgz-check --no-sign -b -uc -us -D 2>&1 | tee dkbuild.log
 fi
@@ -99,8 +101,9 @@ isflict=$(cat dkbuild.log | grep -i conflict | wc -l)
 isfail=$(cat dkbuild.log | grep -i failed | wc -l)
 if [[ $isfail -gt 0 ]] && [[ $isflict -gt 0 ]]; then
 	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
+	export DH_VERBOSE=1; \
 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
-	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest terse parallel=${nproc2}"; \
+	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
 	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 	--no-lintian --no-tgz-check --no-sign -b -uc -us -d 2>&1 | tee dkbuild.log
 fi
