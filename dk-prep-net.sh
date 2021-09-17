@@ -16,6 +16,9 @@ export TODATE=$(date +%Y%m%d)
 
 source /tb2/build/dk-build-0libs.sh
 
+#--- chown apt
+chown_apt
+
 
 
 get_package_file(){

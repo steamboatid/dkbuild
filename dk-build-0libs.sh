@@ -2,14 +2,17 @@
 
 
 # bash colors
-red=$'\e[1;31m'
-grn=$'\e[1;32m'
-yel=$'\e[1;33m'
-blu=$'\e[1;34m'
-blue=$'\e[1;34m'
-mag=$'\e[1;35m'
-cyn=$'\e[1;36m'
-end=$'\e[0m'
+export red=$'\e[1;31m'
+export grn=$'\e[1;32m'
+export green=$'\e[1;32m'
+export yel=$'\e[1;33m'
+export blu=$'\e[1;34m'
+export blue=$'\e[1;34m'
+export mag=$'\e[1;35m'
+export magenta=$'\e[1;35m'
+export cyn=$'\e[1;36m'
+export cyan=$'\e[1;36m'
+export end=$'\e[0m'
 
 # shopt -s expand_aliases
 # alias aptold='apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"'
