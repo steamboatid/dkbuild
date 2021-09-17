@@ -18,12 +18,12 @@ source /tb2/build/dk-build-0libs.sh
 
 
 doback(){
-	/usr/bin/nohup /bin/bash /tb2/build/dk-build-full.sh 2>&1 | tee dkbuild.log >/dev/null 2>&1 &
+	/usr/bin/nohup /bin/bash /tb2/build/dk-build-full.sh 2>&1 >/dev/null 2>&1 &
 	printf "\n\n\n"
 	sleep 1
 }
 dofore(){
-	/bin/bash /tb2/build/dk-build-full.sh 2>&1 | tee dkbuild.log
+	/bin/bash /tb2/build/dk-build-full.sh
 	printf "\n\n\n"
 	sleep 1
 }
@@ -51,7 +51,7 @@ rm -rf /root/src/php8/*deb
 # Compiling all packages
 #-------------------------------------------
 cd /root/src/php8
-find /root/src/php8 -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis" |
+find /root/src/php8 -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" |
 while read adir; do
 	cd $adir
 	pwd
@@ -106,8 +106,6 @@ while read adir; do
 		pwd
 		printf "\n\n\n"
 	fi
-
-	# free -g; sleep 1
 
 	NUMINS=$(ps -e -o command | grep -v grep | grep "dk-build-full" | awk '{print $NF}' | wc -l)
 	if [[ $NUMINS -lt 3 ]]; then

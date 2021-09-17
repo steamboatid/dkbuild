@@ -223,3 +223,19 @@ rm -rf /root/src/nutcracker/*deb
 # get source if not exists via github
 #-------------------------------------------
 get_update_new_git "steamboatid/nutcracker" "/root/src/nutcracker/git-nutcracker"
+
+
+
+# libzip, source via git
+#-------------------------------------------
+aptold install -fy build-essential fakeroot devscripts liblzma*dev zlib1g*dev bzip2 libzip-dev libzip-dev
+apt build-dep -fy libzip4
+
+#--- recreate dir, delete debs
+#-------------------------------------------
+mkdir -p /root/src/libzip
+rm -rf /root/src/libzip/*deb
+
+# get source if not exists via github
+#-------------------------------------------
+get_update_new_git "steamboatid/libzip" "/root/src/libzip/git-libzip"

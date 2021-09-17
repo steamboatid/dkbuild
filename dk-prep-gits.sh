@@ -24,3 +24,4 @@ get_update_new_git "steamboatid/lua-resty-core" "/root/src/lua-resty-core/git-lu
 get_update_new_git "steamboatid/phpredis" "/root/src/php8/git-phpredis"
 get_update_new_git "steamboatid/keydb" "/root/src/keydb/git-keydb"
 get_update_new_git "steamboatid/nutcracker" "/root/src/nutcracker/git-nutcracker"
+get_update_new_git "steamboatid/libzip" "/root/src/libzip/git-libzip"

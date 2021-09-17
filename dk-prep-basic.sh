@@ -222,6 +222,7 @@ echo "librabbitmq*dev" >>  /tmp/deps.pkgs
 echo "libxml*dev" >>  /tmp/deps.pkgs
 echo "dh-python libpython3*dev python3*dev rename" >>  /tmp/deps.pkgs
 echo "hspell libdbus*dev libhunspell*dev libvoikko*dev" >>  /tmp/deps.pkgs
+echo "liblzma*dev zlib1g*dev" >>  /tmp/deps.pkgs
 
 cat ~/build.deps | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | \
 sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g"  >>  /tmp/deps.pkgs

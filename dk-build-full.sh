@@ -53,7 +53,7 @@ export DEB_LDFLAGS_STRIP="-g -O2"
 
 alias cd="cd -P"
 export CCACHE_SLOPPINESS=include_file_mtime
-export CC="ccache gcc"
+export CC="/usr/bin/ccache gcc"
 
 mkdir -p /tb2/tmp/ccache /root/.ccache
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
