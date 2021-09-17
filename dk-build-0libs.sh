@@ -159,16 +159,20 @@ fix_keydb_permission_problem() {
 	find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type f -exec chmod 664 {} \;
 
 	# force modify config file
-	sed -i "s/^bind 127.0.0.1 \:\:1/\#-- bind 127.0.0.1 \:\:1\nbind 127.0.0.1/g" /etc/keydb/keydb.conf
-	sed -i "s/^logfile \/var/#-- logfile \/var/g" /etc/keydb/keydb.conf
-	sed -i "s/^dbfilename /#-- dbfilename /g" /etc/keydb/keydb.conf
-	sed -i "s/^save 900 /#-- save 900 /g" /etc/keydb/keydb.conf
-	sed -i "s/^save 300 /#-- save 300 /g" /etc/keydb/keydb.conf
-	sed -i "s/^save 60 /#-- save 60 /g" /etc/keydb/keydb.conf
+	if [ -e /etc/keydb/keydb.conf ]; then
+		sed -i "s/^bind 127.0.0.1 \:\:1/\#-- bind 127.0.0.1 \:\:1\nbind 127.0.0.1/g" /etc/keydb/keydb.conf
+		sed -i "s/^logfile \/var/#-- logfile \/var/g" /etc/keydb/keydb.conf
+		sed -i "s/^dbfilename /#-- dbfilename /g" /etc/keydb/keydb.conf
+		sed -i "s/^save 900 /#-- save 900 /g" /etc/keydb/keydb.conf
+		sed -i "s/^save 300 /#-- save 300 /g" /etc/keydb/keydb.conf
+		sed -i "s/^save 60 /#-- save 60 /g" /etc/keydb/keydb.conf
+	fi
 
 	# force modify config file
-	sed -i "s/^logfile \/var/#-- logfile \/var/g" /etc/keydb/sentinel.conf
-	sed -i "s/^dir \/var/#-- dir \/var/g" /etc/keydb/sentinel.conf
+	if [ -e /etc/keydb/sentinel.conf ]; then
+		sed -i "s/^logfile \/var/#-- logfile \/var/g" /etc/keydb/sentinel.conf
+		sed -i "s/^dir \/var/#-- dir \/var/g" /etc/keydb/sentinel.conf
+	fi
 }
 
 purge_pending_installs() {
