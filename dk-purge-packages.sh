@@ -11,7 +11,8 @@ for apkg in $nowpkgs; do
 	exists=$(grep -i "$apkg" /tb2/build/basic.pkgs | wc -l)
 	if [[ $exists -lt 1 ]]; then
 		pkgs="${apkg} ${pkgs}"
-		printf " $apkg"
+		# printf " $apkg"
+		apt purge --auto-remove --purge $apkg
 	fi
 done
 
