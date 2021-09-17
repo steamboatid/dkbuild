@@ -69,6 +69,19 @@ fi
 
 rm -rf debian/.debhelper
 
+#--- prepend verbose
+dkverb=$(grep dkverbose debian/rules | wc-l)
+if [[ $dkverb -lt 1 ]]; then
+	ATMP=$(mktemp)
+	echo "\n\n#---dkverbose\n" >> $ATMP
+	echo "DH_VERBOSE=1" > $ATMP
+	echo "export DH_VERBOSE" >> $ATMP
+	echo "\n----\n\n" >> $ATMP
+	cat debian/rules >> $ATMP
+	cp $ATMP debian/rules
+fi
+chmod +x debian/rules
+
 nproc2=$(( 2*`nproc` ))
 
 # dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
