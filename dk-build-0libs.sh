@@ -69,8 +69,8 @@ check_build_log() {
 	export TOTFAIL=0
 	for alog in $(find /root/src -maxdepth 3 -type f -iname "dkbuild.log" | sort -u); do
 		printf " --- $alog ---\n"
-		NUMFAIL=$(tail -n100 ${alog} | grep -v grep | grep "buildpackage" | grep failed | wc -l)
-		NUMSUCC=$(tail -n100 ${alog} | grep -v grep | grep "buildpackage" | grep "binary-only upload" | wc -l)
+		NUMFAIL=$(tail -n100 ${alog} | grep -a "buildpackage" | grep -a "failed" | wc -l)
+		NUMSUCC=$(tail -n100 ${alog} | grep -a "buildpackage" | grep -a "binary-only upload" | wc -l)
 		if [[ $NUMSUCC -lt 1 ]] && [[ $NUMFAIL -gt 0 ]]; then
 			printf "\n\n check $alog --- FAILS = $NUMFAIL TOTAL = $TOTFAIL \n"
 			grep "buildpackage" ${alog} | grep failed
