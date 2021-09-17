@@ -77,18 +77,16 @@ export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest terse parallel=${nproc2
 time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 --no-lintian --no-tgz-check --no-sign -b -uc -us -D 2>&1 | tee dkbuild.log
 
-isfail=$(cat dkbuild.log | grep -i failed | wc -l)
 isdeps=$(cat dkbuild.log | grep -i "unmet build dependencies" | wc -l)
 if [[ $isdeps -gt 0 ]]; then
-	printf "\n\n"
 	cat dkbuild.log | grep -i "unmet build dependencies" | \
 	sed "s/dpkg-checkbuilddeps: //g" |
 	sed "s/error: //g" |
-	sed "s/Unmet build dependencies: //g" | sed "s/|//g"
-	printf "\n\n"
-	exit 1;
+	sed "s/Unmet build dependencies: //g" | sed "s/|//g" >> ~/build.deps
+	cat ~/build.deps
 fi
 
+isfail=$(cat dkbuild.log | grep -i failed | wc -l)
 if [[ $isfail -gt 0 ]]; then
 	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
@@ -105,6 +103,12 @@ if [[ $isfail -gt 0 ]] && [[ $isflict -gt 0 ]]; then
 	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest terse parallel=${nproc2}"; \
 	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 	--no-lintian --no-tgz-check --no-sign -b -uc -us -d 2>&1 | tee dkbuild.log
+fi
+
+if [[ $isdeps -gt 0 ]]; then
+	printf "\n\n"
+	cat ~/build.deps
+	printf "\n\n"
 fi
 
 #was --no-lintian --no-tgz-check --no-sign -B -uc -us -D

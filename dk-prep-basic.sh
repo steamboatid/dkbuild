@@ -213,5 +213,6 @@ echo "libssh2*dev" >>  /tmp/deps.pkgs
 echo "libsmb*dev" >>  /tmp/deps.pkgs
 echo "librrd*dev" >>  /tmp/deps.pkgs
 echo "libmcrypt*dev" >>  /tmp/deps.pkgs
+echo "ibgpgme*dev" >>  /tmp/deps.pkgs
 cat /tmp/deps.pkgs | tr "\n" " " | xargs aptold install -y
 
