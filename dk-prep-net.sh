@@ -76,12 +76,23 @@ rm -rf /tmp/php8
 mkdir -p /tb2/tmp /root/src/php8 /root/org.src/php8 /tmp/php8
 cd /root/org.src/php8
 
+URL="https://packages.sury.org/php/dists/bullseye/main/binary-amd64/Packages"
+URL="https://packages.sury.org/php/dists/buster/main/binary-amd64/Packages"
+
+URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
+get_package_file $URL /tmp/pgp8.pkgs
+
+cat /tmp/pgp8.pkgs | grep "Depends:" | sed -r "s/Depends: //g"| \
+sed "s/\,//g" | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | sed "s/\s/\n/g" | sed '/^$/d' |
+grep -iv "\-embed\|\-dbg\|dbgsym\|php5\|php7\|php8.1\|recode\|phalcon\||\|apache2-api" | \
+grep -iv "dictionary\|mysqlnd\|tmpfiles\|php-curl-all-dev\|\-ps\|\-json\|Pre-php-common\|yac" |
+grep -iv "php5\|php7\|php8.1\|yac\|gmagick\|xcache\|solr\|swoole\|libtiff-dev\|posix0" |
+cut -d":" -f1 | xargs apt install --ignore-missing -y
+
+
 FDST="/tb2/tmp/php8-pkg-org.txt"
 FDST1="/tb2/tmp/php8-pkg-org-1.txt"
 FDST2="/tb2/tmp/php8-pkg-org-2.txt"
-
-URL="https://packages.sury.org/php/dists/bullseye/main/binary-amd64/Packages"
-URL="https://packages.sury.org/php/dists/buster/main/binary-amd64/Packages"
 
 URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
 get_package_file $URL $FDST
@@ -114,3 +125,4 @@ done
 printf "\n-- sync to src \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/php8/ /root/src/php8/
+
