@@ -37,6 +37,15 @@ fi
 chmod +x /usr/local/sbin/aptold
 
 
+if [ ! -e /usr/local/sbin/aptnew ]; then
+	echo \
+'#!/bin/sh
+apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@"
+'>/usr/local/sbin/aptnew
+fi
+chmod +x /usr/local/sbin/aptnew
+
+
 # reset default build flags
 #-------------------------------------------
 reset_build_flags() {

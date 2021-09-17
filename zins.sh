@@ -120,9 +120,9 @@ apt full-upgrade --auto-remove --purge -fy
 
 
 
-cd `mktemp -d`; \
-apt purge --auto-remove --purge \
-php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy
+# cd `mktemp -d`; \
+# apt purge --auto-remove --purge \
+# php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy
 
 rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb /usr/lib/php \
 /etc/keydb /etc/nutcracker /etc/php /etc/nginx \
@@ -132,9 +132,9 @@ rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb /usr/lib/php \
 /lib/systemd/system/php* /etc/init.d/php*
 
 # short install
-aptold --no-install-recommends --fix-missing --reinstall -fy \
-libzip4 nutcracker keydb-server keydb-tools nginx-extras php8.0-fpm php8.0-cli; \
-aptold install -y; \
+aptnew --no-install-recommends --fix-missing --reinstall -fy \
+libzip4 nutcracker keydb-server keydb-tools nginx-extras php8.0-fpm php8.0-cli php8.0-zip; \
+aptnew install -y; \
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 
 # fix arginfo on uploadprogress
@@ -149,7 +149,7 @@ grep "libnginx\|nginx-" >> /tmp/pkg-nginx0.txt
 
 cat /tmp/pkg-nginx0.txt > /tmp/pkg-nginx1.txt
 cat /tmp/pkg-nginx1.txt | tr "\n" " " > /tmp/pkg-nginx2.txt
-cat /tmp/pkg-nginx2.txt | xargs aptold install -y --no-install-recommends --fix-missing
+cat /tmp/pkg-nginx2.txt | xargs aptnew install -y --no-install-recommends --fix-missing
 
 
 # complete install PHP8.0
@@ -165,16 +165,16 @@ grep "bcmath\|bz2\|gmp\|mbstring\|mysql\|opcache\|readline\|xdebug\|zip" \
 
 cat /tmp/pkg-php0.txt > /tmp/pkg-php1.txt
 cat /tmp/pkg-php1.txt | grep -v "php8.1" | tr "\n" " " > /tmp/pkg-php2.txt
-cat /tmp/pkg-php2.txt | xargs aptold install -y --no-install-recommends --fix-missing
+cat /tmp/pkg-php2.txt | xargs aptnew install -y --no-install-recommends --fix-missing
 
 # install all
 apt-cache search php8.0 | grep -v "apache\|debug\|dbg\|cgi\|embed\|gmagick\|yac\|-dev" |\
-cut -d" " -f1 | tr "\n" " " | xargs aptold install -y --no-install-recommends
+cut -d" " -f1 | tr "\n" " " | xargs aptnew install -y --no-install-recommends
 
 # fix arginfo on uploadprogress
 sed -i "s/^extension/\; extension/g" /etc/php/8.0/mods-available/uploadprogress.ini
 
-printf "\n\naptold install -y "
+printf "\n\naptnew install -y "
 cat /tmp/pkg-php2.txt
 printf "\n\n"
 
