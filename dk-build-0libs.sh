@@ -65,10 +65,7 @@ doback_bash(){
 # check if any fails
 #-------------------------------------------
 check_build_log() {
-	DEPS="/tmp/dependencies.log"
-	>$DEPS
-
-	printf "\n\n"
+	printf "\n\n---check dkbuild.log \n"
 	export TOTFAIL=0
 	for alog in $(find /root/src -maxdepth 3 -type f -iname "dkbuild.log" | sort -u); do
 		NUMFAIL=$(tail -n100 ${alog} | grep "buildpackage" | grep failed | wc -l)
@@ -79,17 +76,8 @@ check_build_log() {
 			TOTFAIL=$((TOTFAIL + NUMFAIL))
 			printf "\n"
 		fi
-
-		NUMDEPS=$(grep -i "unmet build dependencies" ${alog} | wc -l)
-		if [[ $NUMDEPS -gt 0 ]]; then
-			grep -i "unmet build dependencies" ${alog} >> $DEPS
-		fi
 	done
 	sleep 0.1
-
-	# delete empty lines
-	sed -ir 's/^ *//; s/ *$//; /^$/d' $DEPS
-	cat $DEPS
 
 	if [[ ${TOTFAIL} -gt 0 ]]; then
 		printf "\n\n\n\t TOTAL FAILS = $TOTFAIL\n\n"
