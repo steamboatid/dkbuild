@@ -206,16 +206,19 @@ echo "libclang-dev" >>  /tmp/deps.pkgs
 echo "cmake cmake-extras extra-cmake-modules" >>  /tmp/deps.pkgs
 echo "libgearman-dev" >>  /tmp/deps.pkgs
 echo "d-shlibs help2man liblz4-dev" >>  /tmp/deps.pkgs
-echo "graphicsmagick*" >>  /tmp/deps.pkgs
+
+echo "graphicsmagick* libgraphicsmagick*dev" >>  /tmp/deps.pkgs
 echo "libzmq*-dev" >>  /tmp/deps.pkgs
 echo "libvips*dev" >>  /tmp/deps.pkgs
 echo "libssh2*dev" >>  /tmp/deps.pkgs
 echo "libsmb*dev" >>  /tmp/deps.pkgs
+echo "libsmbclient-dev" >>  /tmp/deps.pkgs
 echo "librrd*dev" >>  /tmp/deps.pkgs
 echo "libmcrypt*dev" >>  /tmp/deps.pkgs
 echo "libgpgme*dev" >>  /tmp/deps.pkgs
 echo "libmpdec*dev" >>  /tmp/deps.pkgs
 echo "librabbitmq*dev" >>  /tmp/deps.pkgs
+echo "libxml*dev" >>  /tmp/deps.pkgs
 echo "dh-python libpython3*dev python3*dev rename" >>  /tmp/deps.pkgs
 echo "hspell libdbus*dev libhunspell*dev libvoikko*dev" >>  /tmp/deps.pkgs
 cat /tmp/deps.pkgs | tr "\n" " " | xargs aptold install -y
