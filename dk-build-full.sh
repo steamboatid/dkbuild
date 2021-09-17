@@ -70,7 +70,7 @@ fi
 rm -rf debian/.debhelper
 
 #--- prepend verbose
-dkverb=$(grep dkverbosev2 debian/rules | wc-l)
+dkverb=$(grep dkverbosev2 debian/rules | wc -l)
 if [[ $dkverb -lt 1 ]]; then
 	ATMP=$(mktemp)
 	echo \
