@@ -242,3 +242,7 @@ rm -rf /root/src/libzip/*deb
 # get source if not exists via github
 #-------------------------------------------
 get_update_new_git "steamboatid/libzip" "/root/src/libzip/git-libzip"
+
+
+#--- last
+apt install -fy --auto-remove --purge
