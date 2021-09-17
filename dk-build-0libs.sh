@@ -56,9 +56,9 @@ check_build_log() {
 		fi
 		# printf "\n\n\n\tFAILS = $NUMFAIL --- TOTAL = $TOTFAIL \n\n"
 
-		NUMDEPS=$(grep "unmet" ${alog} | grep "dependencies" | wc -l)
+		NUMDEPS=$(grep -i "unmet" ${alog} | grep -i "dependencies" | wc -l)
 		if [[ $NUMDEPS -gt 0 ]]; then
-			grep "unmet" ${alog} | grep "dependencies" >> $DEPS
+			grep -i "unmet" ${alog} | grep -i "dependencies" >> $DEPS
 		fi
 	done
 	sleep 0.1
