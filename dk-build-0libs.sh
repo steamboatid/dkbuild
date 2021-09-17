@@ -147,6 +147,7 @@ fix_keydb_permission_problem() {
 	# return if not installed yet
 	if [ `dpkg -l | grep keydb | grep -v "^ii" | wc -l` -lt 1 ]; then return 0; fi
 
+	killall -9 keydb-server 2>&1 >/dev/null
 	>/var/log/keydb/keydb-sentinel.log
 	>/var/log/keydb/keydb-server.log
 

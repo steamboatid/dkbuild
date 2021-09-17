@@ -180,6 +180,7 @@ get_update_new_git "steamboatid/phpredis" "/root/src/php8/git-phpredis"
 
 # KEYDB, source via git
 #-------------------------------------------
+killall -9 keydb-server 2>&1 >/dev/null
 aptold install -fy build-essential nasm autotools-dev autoconf libjemalloc-dev tcl tcl-dev uuid-dev libcurl4-openssl-dev
 apt build-dep -fy keydb-server keydb-tools
 aptold install -fy keydb-server keydb-tools
@@ -187,7 +188,7 @@ aptold install -fy keydb-server keydb-tools
 # fix keyd perm
 fix_keydb_permission_problem
 
-killall -9 keydb-server; \
+killall -9 keydb-server 2>&1 >/dev/null; \
 systemctl stop keydb-server; killall -9 keydb-server >/dev/null 2>&1; \
 systemctl stop keydb-server; killall -9 keydb-server >/dev/null 2>&1
 KEYCHECK=$(keydb-server /etc/keydb/keydb.conf --loglevel verbose --daemonize yes 2>&1 | grep -i "loaded" | wc -l)
