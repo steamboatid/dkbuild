@@ -73,12 +73,17 @@ rm -rf debian/.debhelper
 dkverb=$(grep dkverbose debian/rules | wc-l)
 if [[ $dkverb -lt 1 ]]; then
 	ATMP=$(mktemp)
-	printf "#!/usr/bin/make -f \n" >> $ATMP
-	printf "# -*- makefile -*-" >> $ATMP
-	printf "\n\n#---dkverbose\n" >> $ATMP
-	printf "DH_VERBOSE=1" > $ATMP
-	printf "export DH_VERBOSE" >> $ATMP
-	printf "\n#----\n\n" >> $ATMP
+	echo \
+"#!/usr/bin/make -f
+# -*- makefile -*-
+
+#--- dkverbose:start
+
+DH_VERBOSE=1
+export DH_VERBOSE
+
+#--- dkverbose:start
+">$ATMP
 	cat debian/rules >> $ATMP
 	cp $ATMP debian/rules
 fi
