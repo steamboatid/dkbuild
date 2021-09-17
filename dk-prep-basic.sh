@@ -178,7 +178,7 @@ cd `mktemp -d`; \
 apt update;\
 dpkg --configure -a; \
 aptold install -y locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
-gnupg2 apt-utils tzdata curl ssh rsync && \
+gnupg2 apt-utils tzdata curl ssh rsync libxmlrpc* && \
 echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen &&\
 
 apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys &&\
