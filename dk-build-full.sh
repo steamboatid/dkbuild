@@ -82,7 +82,7 @@ if [[ $dkverb -lt 1 ]]; then
 DH_VERBOSE=1
 export DH_VERBOSE
 
-#--- dkverbose:start
+#--- dkverbose:end
 ">$ATMP
 	cat debian/rules >> $ATMP
 	cp $ATMP debian/rules
