@@ -197,6 +197,8 @@ if [[ $KEYCHECK -gt 0 ]]; then
 else
 	printf "\n\n keydb: FAILED \n\n"
 fi
+
+killall -9 keydb-server 2>&1 >/dev/null
 aptold install -y
 
 
