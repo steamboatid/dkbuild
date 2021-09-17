@@ -13,6 +13,8 @@ ssh argo "lxc-start -n tes >/dev/null 2>&1 &"
 ssh argo "lxc-start -n bus >/dev/null 2>&1 &"
 ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 
+ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-purge-packages.sh
+
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-check-log.sh
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-check-log.sh
 
