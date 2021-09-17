@@ -207,7 +207,7 @@ echo "cmake cmake-extras extra-cmake-modules" >>  /tmp/deps.pkgs
 echo "libgearman-dev" >>  /tmp/deps.pkgs
 echo "d-shlibs help2man liblz4-dev" >>  /tmp/deps.pkgs
 
-echo "graphicsmagick* libgraphicsmagick*dev" >>  /tmp/deps.pkgs
+echo "libgraphicsmagick*dev" >>  /tmp/deps.pkgs
 echo "libzmq*-dev" >>  /tmp/deps.pkgs
 echo "libvips*dev" >>  /tmp/deps.pkgs
 echo "libssh2*dev" >>  /tmp/deps.pkgs
