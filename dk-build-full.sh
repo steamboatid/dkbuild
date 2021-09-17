@@ -80,10 +80,12 @@ time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 isfail=$(cat dkbuild.log | grep -i failed | wc -l)
 isdeps=$(cat dkbuild.log | grep -i "unmet build dependencies" | wc -l)
 if [[ $isdeps -gt 0 ]]; then
+	printf "\n\n"
 	cat dkbuild.log | grep -i "unmet build dependencies" | \
 	sed "s/dpkg-checkbuilddeps: //g" |
 	sed "s/error: //g" |
 	sed "s/Unmet build dependencies: //g" | sed "s/|//g"
+	printf "\n\n"
 	exit 1;
 fi
 
