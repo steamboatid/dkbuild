@@ -29,7 +29,7 @@ if [[ ! -e /run/done.init.dkbuild.txt ]]; then
 
 	# tweaks
 	echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
-	aptold install -y eatmydata
+	aptold install -y eatmydata lsb_release
 
 
 	echo \
@@ -133,7 +133,7 @@ rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb /usr/lib/php \
 
 # short install
 aptold --no-install-recommends --fix-missing --reinstall -fy \
-nutcracker keydb-server keydb-tools nginx-extras php8.0-fpm php8.0-cli; \
+libzip4 nutcracker keydb-server keydb-tools nginx-extras php8.0-fpm php8.0-cli; \
 aptold install -y; \
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 
