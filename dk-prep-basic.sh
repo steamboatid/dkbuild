@@ -194,3 +194,7 @@ rm -rf /var/log/unattended-upgrades /var/cache/apparmor /etc/apparmor.d
 
 dpkg --configure -a; \
 apt install -fy
+
+
+#--- install clang
+apt-cache search clang|grep 11|awk '{print $1}'|tr "\n" " " | xargs apt install -fy
