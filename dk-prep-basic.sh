@@ -16,6 +16,9 @@ export TODATE=$(date +%Y%m%d)
 
 source /tb2/build/dk-build-0libs.sh
 
+#--- chown apt
+chown_apt
+
 
 
 
@@ -33,12 +36,12 @@ dpkg --configure -a; \
 apt update
 
 dpkg --configure -a; \
-apt install -fy
+aptold install -y
 
 
 # preparing screen
 #-------------------------------------------
-apt install -fy screen
+aptold install -y screen
 # screen -rR
 
 cat <<\EOT >~/.screenrc
@@ -58,7 +61,7 @@ EOT
 
 # preparing ccache
 #-------------------------------------------
-apt install -fy ccache
+aptold install -y ccache
 export CCACHE_DIR=/tb2/tmp/ccache
 mkdir -p $CCACHE_DIR ~/.ccache
 echo \
@@ -82,7 +85,7 @@ max_size = 100.0G
 ping 1.1.1.1 -c3
 
 echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
-apt install -fy eatmydata
+aptold install -y eatmydata
 
 echo \
 'Acquire::Queue-Mode "host";
@@ -166,7 +169,7 @@ deb-src http://repo.aisits.id/keydb-server/ubuntu bionic main
 
 # apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys B9316A7BC7917B12
 # apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
-# apt install -fy wget curl; apt-key del 95BD4743; \
+# aptold install -y wget curl; apt-key del 95BD4743; \
 # /usr/bin/curl -sS "https://packages.sury.org/php/apt.gpg" | apt-key add -
 # /usr/bin/wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 
@@ -174,7 +177,7 @@ deb-src http://repo.aisits.id/keydb-server/ubuntu bionic main
 cd `mktemp -d`; \
 apt update;\
 dpkg --configure -a; \
-apt install -yf locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
+aptold install -y locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
 gnupg2 apt-utils tzdata curl && \
 echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen &&\
 
@@ -184,7 +187,7 @@ apt update; apt full-upgrade -fy
 
 #--- just incase needed
 dpkg --configure -a; \
-apt install -fy linux-image-amd64 linux-headers-amd64
+aptold install -y linux-image-amd64 linux-headers-amd64
 
 #--- remove unneeded packages
 dpkg --configure -a; \
@@ -193,7 +196,7 @@ anacron msttcorefonts ttf-mscorefonts-installer needrestart redis*; \
 rm -rf /var/log/unattended-upgrades /var/cache/apparmor /etc/apparmor.d
 
 dpkg --configure -a; \
-apt install -fy
+aptold install -y
 
 
 #--- install build dependencies:
@@ -203,5 +206,5 @@ echo "libclang-dev" >>  /tmp/deps.pkgs
 echo "cmake cmake-extras extra-cmake-modules" >>  /tmp/deps.pkgs
 echo "libgearman-dev" >>  /tmp/deps.pkgs
 echo "d-shlibs help2man liblz4-dev" >>  /tmp/deps.pkgs
-cat /tmp/deps.pkgs | tr "\n" " " | xargs apt install -fy
+cat /tmp/deps.pkgs | tr "\n" " " | xargs aptold install -y
 

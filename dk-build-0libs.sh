@@ -11,6 +11,17 @@ mag=$'\e[1;35m'
 cyn=$'\e[1;36m'
 end=$'\e[0m'
 
+# shopt -s expand_aliases
+# alias aptold='apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"'
+
+if [ ! -e /usr/local/sbin/aptold ]; then
+	echo \
+'#!/bin/sh
+apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@"
+'>/usr/local/sbin/aptold
+fi
+chmod +x /usr/local/sbin/aptold
+
 
 # reset default build flags
 #-------------------------------------------
@@ -72,4 +83,10 @@ check_build_log() {
 		exit $TOTFAIL; # exit as error
 	fi
 	printf "\n\n"
+}
+
+
+chown_apt() {
+	chown -Rf _apt:root /var/cache/apt/archives/partial/
+	chmod -f 700 /var/cache/apt/archives/partial/
 }

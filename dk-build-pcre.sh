@@ -35,6 +35,7 @@ reset_build_flags
 #-------------------------------------------
 mkdir -p /root/org.src/pcre /root/src/pcre
 cd /root/org.src/pcre
+chown_apt
 apt source -y libpcre3
 
 

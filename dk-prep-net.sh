@@ -47,8 +47,7 @@ get_package_file_gz(){
 
 
 #--- chown apt
-chown -Rf _apt:root /var/cache/apt/archives/partial/
-chmod -f 700 /var/cache/apt/archives/partial/
+chown_apt
 
 
 # NGINX
@@ -68,6 +67,14 @@ tr "\n" " " > $FNOW
 cd /root/src/nginx
 cat $FNOW | xargs apt build-dep -fy
 
+cat /tb2/tmp/nginx-pkg-org.txt | grep "Depends:" | sed -r "s/Depends: //g"| \
+sed "s/\,//g" | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | sed "s/\s/\n/g" | sed '/^$/d' |
+grep -iv "api\|perl\|debconf\|nginx-full\|nginx-light\|nginx-core\|nginx-extras" |
+grep -iv "|" | cut -d":" -f1  >  /tmp/deps.pkgs
+
+echo "perl-base"  >> /tmp/deps.pkgs
+cat /tmp/deps.pkgs | tr "\n" " " | xargs aptold install -my
+# exit 0;
 
 
 # PHP
@@ -80,9 +87,9 @@ URL="https://packages.sury.org/php/dists/bullseye/main/binary-amd64/Packages"
 URL="https://packages.sury.org/php/dists/buster/main/binary-amd64/Packages"
 
 URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
-get_package_file $URL /tmp/pgp8.pkgs
+get_package_file $URL /tmp/php8.pkgs
 
-cat /tmp/pgp8.pkgs | grep "Depends:" | sed -r "s/Depends: //g"| \
+cat /tmp/php8.pkgs | grep "Depends:" | sed -r "s/Depends: //g"| \
 sed "s/\,//g" | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | sed "s/\s/\n/g" | sed '/^$/d' |
 grep -iv "\-embed\|\-dbg\|dbgsym\|php5\|php7\|php8.1\|recode\|phalcon\||\|apache2-api" | \
 grep -iv "dictionary\|mysqlnd\|tmpfiles\|php-curl-all-dev\|\-ps\|\-json\|Pre-php-common\|yac" |
@@ -91,7 +98,7 @@ cut -d":" -f1  >  /tmp/deps.pkgs
 
 apt-cache search php | grep "\-dev" | \
 grep -v "php5\|php7\|php8.1\|yac\|gmagick\|xcache\|solr\|swoole" | cut -d" " -f1 >>  /tmp/deps.pkgs
-cat /tmp/deps.pkgs | tr "\n" " " | xargs apt install -my
+cat /tmp/deps.pkgs | tr "\n" " " | xargs aptold install -my
 
 
 FDST="/tb2/tmp/php8-pkg-org.txt"
@@ -121,6 +128,7 @@ apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | grep -v 
 cat $FNOW | sort -u | sort | tr "\n" " " | xargs apt build-dep -y --ignore-missing | tee $FSRC
 
 for apkg in $(cat $FSRC | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort); do
+	chown_apt
 	apt source -y --ignore-missing $apkg || echo "failed for $apkg"
 done
 

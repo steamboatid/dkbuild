@@ -16,6 +16,9 @@ export TODATE=$(date +%Y%m%d)
 
 source /tb2/build/dk-build-0libs.sh
 
+#--- chown apt
+chown_apt
+
 
 update_existing_git() {
 	DST=$1
@@ -112,6 +115,7 @@ fix_keydb_permission_problem
 purge_pending_installs
 
 # delete unpacked folders
+mkdir -p /root/org.src
 find /root/org.src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
 
 # prepare basic need: apt configs, sources list, etc
@@ -159,6 +163,7 @@ get_update_new_git "steamboatid/lua-resty-core" "/root/src/lua-resty-core/git-lu
 
 mkdir -p /root/org.src/pcre /root/src/pcre
 cd /root/org.src/pcre
+chown_apt
 apt source -y libpcre3
 
 
@@ -173,7 +178,7 @@ rm -rf /root/src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
 # PHP8, source via default + git
 #-------------------------------------------
 aptold install -fy --fix-broken
-# apt-cache search libmagickwand  2>&1 | awk '{print $1}' | grep dev | xargs apt install -fy
+# apt-cache search libmagickwand  2>&1 | awk '{print $1}' | grep dev | xargs aptold install -y
 
 
 aptold install -fy pkg-config build-essential autoconf bison re2c \
@@ -238,6 +243,7 @@ rm -rf /root/src/php8/*deb
 
 #--- fetch default source package
 #-------------------------------------------
+chown_apt
 cd /root/org.src/php8
 apt source -y php-defaults \
 php8.0 php8.0-apcu php8.0-ast php8.0-bcmath php8.0-bz2 php8.0-cli php8.0-common \
@@ -279,7 +285,7 @@ if [[ $KEYCHECK -gt 0 ]]; then
 else
 	printf "\n\n keydb: FAILED \n\n"
 fi
-apt install -fy
+aptold install -y
 
 
 #--- recreate dir, delete debs

@@ -29,7 +29,7 @@ if [[ ! -e /run/done.init.dkbuild.txt ]]; then
 
 	# tweaks
 	echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
-	apt install -fy eatmydata
+	aptold install -y eatmydata
 
 
 	echo \
@@ -96,7 +96,7 @@ export LANGUAGE=en_US.UTF-8
 	cd `mktemp -d`; \
 	apt update;\
 	dpkg --configure -a; \
-	apt install -yf locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
+	aptold install -y locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
 	gnupg2 apt-utils tzdata curl && \
 	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen &&\
 	apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys &&\
@@ -132,9 +132,9 @@ rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb /usr/lib/php \
 /lib/systemd/system/php* /etc/init.d/php*
 
 # short install
-apt install --no-install-recommends --fix-missing --reinstall -fy \
+aptold --no-install-recommends --fix-missing --reinstall -fy \
 nutcracker keydb-server keydb-tools nginx-extras php8.0-fpm php8.0-cli; \
-apt install -fy; \
+aptold install -y; \
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 
 # fix arginfo on uploadprogress
@@ -149,7 +149,7 @@ grep "libnginx\|nginx-" >> /tmp/pkg-nginx0.txt
 
 cat /tmp/pkg-nginx0.txt > /tmp/pkg-nginx1.txt
 cat /tmp/pkg-nginx1.txt | tr "\n" " " > /tmp/pkg-nginx2.txt
-cat /tmp/pkg-nginx2.txt | xargs apt install -fy --no-install-recommends --fix-missing
+cat /tmp/pkg-nginx2.txt | xargs aptold install -y --no-install-recommends --fix-missing
 
 
 # complete install PHP8.0
@@ -165,16 +165,16 @@ grep "bcmath\|bz2\|gmp\|mbstring\|mysql\|opcache\|readline\|xdebug\|zip" \
 
 cat /tmp/pkg-php0.txt > /tmp/pkg-php1.txt
 cat /tmp/pkg-php1.txt | grep -v "php8.1" | tr "\n" " " > /tmp/pkg-php2.txt
-cat /tmp/pkg-php2.txt | xargs apt install -fy --no-install-recommends --fix-missing
+cat /tmp/pkg-php2.txt | xargs aptold install -y --no-install-recommends --fix-missing
 
 # install all
 apt-cache search php8.0 | grep -v "apache\|debug\|dbg\|cgi\|embed\|gmagick\|yac\|-dev" |\
-cut -d" " -f1 | tr "\n" " " | xargs apt install -fy --no-install-recommends
+cut -d" " -f1 | tr "\n" " " | xargs aptold install -y --no-install-recommends
 
 # fix arginfo on uploadprogress
 sed -i "s/^extension/\; extension/g" /etc/php/8.0/mods-available/uploadprogress.ini
 
-printf "\n\napt install -fy "
+printf "\n\naptold install -y "
 cat /tmp/pkg-php2.txt
 printf "\n\n"
 
