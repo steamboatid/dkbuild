@@ -68,7 +68,7 @@ check_build_log() {
 	printf "\n\n---check dkbuild.log \n"
 	export TOTFAIL=0
 	for alog in $(find /root/src -maxdepth 3 -type f -iname "dkbuild.log" | sort -u); do
-		printf "--- $alog ---\n"
+		printf " --- $alog ---\n"
 		NUMFAIL=$(tail -n100 ${alog} | grep "buildpackage" | grep failed | wc -l)
 		NUMSUCC=$(tail -n100 ${alog} | grep "buildpackage" | grep "binary-only upload" | wc -l)
 		if [[ $NUMSUCC -lt 1 ]] && [[ $NUMFAIL -gt 0 ]]; then
