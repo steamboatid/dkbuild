@@ -63,10 +63,10 @@ check_build_log() {
 		NUMFAIL=$(tail -n100 ${alog} | grep "buildpackage" | grep failed | wc -l)
 		NUMSUCC=$(tail -n100 ${alog} | grep "buildpackage" | grep "binary-only upload" | wc -l)
 		if [[ $NUMSUCC -lt 1 ]] || [[ $NUMFAIL -gt 0 ]]; then
-			printf "\n check $alog \n"
+			printf "\n\n check $alog --- FAILS = $NUMFAIL TOTAL = $TOTFAIL \n"
 			grep "buildpackage" ${alog} | grep failed
 			TOTFAIL=$((TOTFAIL+1))
-			printf "\n FAILS = $NUMFAIL TOTAL = $TOTFAIL \n"
+			printf "\n"
 		fi
 
 		NUMDEPS=$(grep -i "unmet build dependencies" ${alog} | wc -l)
