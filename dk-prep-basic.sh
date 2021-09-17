@@ -183,7 +183,7 @@ echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen &&\
 
 apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys &&\
 
-apt update; apt full-upgrade -fy
+apt update; apt full-upgrade --auto-remove --purge -fy
 
 #--- just incase needed
 dpkg --configure -a; \
