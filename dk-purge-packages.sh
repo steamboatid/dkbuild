@@ -4,7 +4,7 @@
 source /tb2/build/dk-build-0libs.sh
 printf "\n\n"
 
-nowpkgs=$(dpkg -l|grep "^ii"|sed -r "s/\s+/ /g"|cut -d" " -f2|sed -r "s/\:amd64//g"|grep -v "linux\|ccache\|wget\|curl\|apt\|udev")
+nowpkgs=$(dpkg -l|grep "^ii"|sed -r "s/\s+/ /g"|cut -d" " -f2|sed -r "s/\:amd64//g"|grep -v "linux\|ccache\|wget\|curl\|apt\|udev\|init")
 
 pkgs=""
 for apkg in $nowpkgs; do
