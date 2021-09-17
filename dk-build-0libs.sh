@@ -60,14 +60,13 @@ check_build_log() {
 	printf "\n\n"
 	export TOTFAIL=0
 	for alog in $(find /root/src -maxdepth 3 -type f -iname "dkbuild.log" | sort -u); do
-		printf "\n check $alog \t"
 		NUMFAIL=$(tail -n100 ${alog} | grep "buildpackage" | grep failed | wc -l)
 		NUMSUCC=$(tail -n100 ${alog} | grep "buildpackage" | grep "binary-only upload" | wc -l)
 		if [[ $NUMSUCC -lt 1 ]] || [[ $NUMFAIL -gt 0 ]]; then
-			printf "\n check $alog \t"
+			printf "\n check $alog \n"
 			grep "buildpackage" ${alog} | grep failed
 			TOTFAIL=$((TOTFAIL+1))
-			printf " FAILS = $NUMFAIL TOTAL = $TOTFAIL "
+			printf "\n FAILS = $NUMFAIL TOTAL = $TOTFAIL \n"
 		fi
 
 		NUMDEPS=$(grep -i "unmet build dependencies" ${alog} | wc -l)
