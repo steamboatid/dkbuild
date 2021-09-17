@@ -72,9 +72,9 @@ check_build_log() {
 		NUMFAIL=$(tail -n100 ${alog} | tr -d '\000' | grep -a "buildpackage" | grep -a "failed" | wc -l)
 		NUMSUCC=$(tail -n100 ${alog} | tr -d '\000' | grep -a "buildpackage" | grep -a "binary-only upload" | wc -l)
 		if [[ $NUMSUCC -lt 1 ]] && [[ $NUMFAIL -gt 0 ]]; then
-			printf "\n\n check $alog --- FAILS = $NUMFAIL TOTAL = $TOTFAIL \n"
-			grep "buildpackage" ${alog} | grep failed
 			TOTFAIL=$((TOTFAIL + NUMFAIL))
+			printf "\n\n check $alog --- FAILS = $NUMFAIL TOTAL = $TOTFAIL \n"
+			tail -n100 ${alog} | tr -d '\000' | grep -a "buildpackage" | grep -a "failed"
 			printf "\n"
 		fi
 	done
