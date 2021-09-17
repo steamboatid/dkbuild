@@ -73,24 +73,7 @@ sleep 1
 # check if any fails
 #-------------------------------------------
 # dpkg-buildpackage: info: binary-only upload (no source included)
-printf "\n\n\n"
-export TOTFAIL=0
-for alog in $(find /root/src -iname "dkbuild.log" | sort -u); do
-	printf "\n check $alog \t"
-	NUMFAIL=$(grep "buildpackage" ${alog} | grep failed | wc -l)
-	NUMSUCC=$(grep "buildpackage" ${alog} | grep "binary-only upload" | wc -l)
-	if [[ $NUMSUCC -lt 1 ]] || [[ $NUMFAIL -gt 0 ]]; then
-		grep "buildpackage" ${alog} | grep failed
-		TOTFAIL=$((TOTFAIL+1))
-	fi
-	printf "\n\n\n\tFAILS = $NUMFAIL --- TOTAL = $TOTFAIL \n\n"
-done
-sleep 0.1
-if [[ ${TOTFAIL} -gt 0 ]]; then
-	printf "\n\n\n\t TOTAL FAILS = $TOTFAIL\n\n"
-	exit $TOTFAIL; # exit as error
-fi
-printf "\n\n\n"
+check_build_log
 
 
 #--- delete unneeded files

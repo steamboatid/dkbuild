@@ -36,3 +36,38 @@ doback_bash(){
 	sleep 1
 }
 
+
+# check if any fails
+#-------------------------------------------
+check_build_log() {
+	DEPS="/tmp/dependencies.log"
+	>$DEPS
+
+	printf "\n\n"
+	export TOTFAIL=0
+	for alog in $(find /root/src -iname "dkbuild.log" | sort -u); do
+		printf "\n check $alog \t"
+		NUMFAIL=$(grep "buildpackage" ${alog} | grep failed | wc -l)
+		NUMSUCC=$(grep "buildpackage" ${alog} | grep "binary-only upload" | wc -l)
+		if [[ $NUMSUCC -lt 1 ]] || [[ $NUMFAIL -gt 0 ]]; then
+			grep "buildpackage" ${alog} | grep failed
+			TOTFAIL=$((TOTFAIL+1))
+			printf " FAILS = $NUMFAIL TOTAL = $TOTFAIL "
+		fi
+		# printf "\n\n\n\tFAILS = $NUMFAIL --- TOTAL = $TOTFAIL \n\n"
+
+		NUMDEPS=$(grep "unmet" ${alog} | grep "dependencies" | wc -l)
+		if [[ $NUMDEPS -gt 0 ]]; then
+			grep "unmet" ${alog} | grep "dependencies" >> $DEPS
+		fi
+	done
+	sleep 0.1
+
+	cat $DEPS | tr -
+
+	if [[ ${TOTFAIL} -gt 0 ]]; then
+		printf "\n\n\n\t TOTAL FAILS = $TOTFAIL\n\n"
+		exit $TOTFAIL; # exit as error
+	fi
+	printf "\n\n"
+}
