@@ -106,7 +106,7 @@ if [[ $isfail -gt 0 ]] && [[ $isflict -gt 0 ]]; then
 fi
 
 if [[ $isdeps -gt 0 ]]; then
-	printf "\n\n"
+	printf "\n\n ${red}unmet build dependencies: ${end}"
 	cat ~/build.deps
 	printf "\n\n"
 fi
