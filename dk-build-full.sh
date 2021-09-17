@@ -78,7 +78,7 @@ if [[ $dkverb -lt 1 ]]; then
 	printf "\n\n#---dkverbose\n" >> $ATMP
 	printf "DH_VERBOSE=1" > $ATMP
 	printf "export DH_VERBOSE" >> $ATMP
-	printf "\n----\n\n" >> $ATMP
+	printf "\n#----\n\n" >> $ATMP
 	cat debian/rules >> $ATMP
 	cp $ATMP debian/rules
 fi
