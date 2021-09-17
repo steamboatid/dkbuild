@@ -78,6 +78,15 @@ time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 --no-lintian --no-tgz-check --no-sign -b -uc -us -D 2>&1 | tee dkbuild.log
 
 isfail=$(cat dkbuild.log | grep -i failed | wc -l)
+isdeps=$(cat dkbuild.log | grep -i "unmet build dependencies" | wc -l)
+if [[ $isdeps -gt 0 ]]; then
+	cat dkbuild.log | grep -i "unmet build dependencies" | \
+	sed "s/dpkg-checkbuilddeps: //g" |
+	sed "s/error: //g" |
+	sed "s/Unmet build dependencies: //g" | sed "s/|//g"
+	exit 1;
+fi
+
 if [[ $isfail -gt 0 ]]; then
 	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
