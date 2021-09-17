@@ -70,16 +70,23 @@ fi
 rm -rf debian/.debhelper
 
 #--- prepend verbose
-dkverb=$(grep dkverbose debian/rules | wc-l)
+dkverb=$(grep dkverbosev2 debian/rules | wc-l)
 if [[ $dkverb -lt 1 ]]; then
 	ATMP=$(mktemp)
 	echo \
 "#!/usr/bin/make -f
 # -*- makefile -*-
 
-#----------------- dkverbose
+#----------------- dkverbosev2
 DH_VERBOSE=1
 export DH_VERBOSE
+export DH_OPTIONS
+export DEB_BUILD_OPTIONS
+export DEB_BUILD_PROFILES
+export DPKG_EXPORT_BUILDFLAGS
+export SHELL
+export DEB_CFLAGS_MAINT_APPEND
+export DEB_LDFLAGS_MAINT_APPEND
 #----------------- end
 ">$ATMP
 	cat debian/rules >> $ATMP
@@ -105,7 +112,7 @@ if [[ $isdeps -gt 0 ]]; then
 	cat ~/build.deps
 fi
 
-isfail=$(cat dkbuild.log | grep -i failed | wc -l)
+isfail=$(tail -n100 dkbuild.log | grep -i failed | wc -l)
 if [[ $isfail -gt 0 ]]; then
 	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
 	export DH_VERBOSE=1; \
@@ -115,8 +122,8 @@ if [[ $isfail -gt 0 ]]; then
 	--no-lintian --no-tgz-check --no-sign -b -uc -us -D 2>&1 | tee dkbuild.log
 fi
 
-isflict=$(cat dkbuild.log | grep -i conflict | wc -l)
-isfail=$(cat dkbuild.log | grep -i failed | wc -l)
+isflict=$(tail -n100 dkbuild.log | grep -i conflict | wc -l)
+isfail=$(tail -n100 dkbuild.log | grep -i failed | wc -l)
 if [[ $isfail -gt 0 ]] && [[ $isflict -gt 0 ]]; then
 	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
 	export DH_VERBOSE=1; \
@@ -128,6 +135,10 @@ fi
 
 if [[ $isdeps -gt 0 ]]; then
 	printf "\n\n ${red}unmet build dependencies: ${end}"
+	ATMP=$(mktemp)
+	cat ~/build.deps | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | \
+	sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g" > $ATMP
+	mv $ATMP ~/build.deps
 	cat ~/build.deps
 	printf "\n\n"
 fi
