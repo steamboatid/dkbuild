@@ -48,6 +48,11 @@ mkdir -p /root/src/php8
 rm -rf /root/src/php8/*deb
 
 
+# BUGGY libzip
+#-------------------------------------------
+rm -rf /root/src/php8/libzip*
+
+
 # Compiling all packages
 #-------------------------------------------
 cd /root/src/php8
