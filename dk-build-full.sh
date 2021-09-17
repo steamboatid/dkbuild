@@ -77,12 +77,10 @@ if [[ $dkverb -lt 1 ]]; then
 "#!/usr/bin/make -f
 # -*- makefile -*-
 
-#--- dkverbose:start
-
+#----------------- dkverbose
 DH_VERBOSE=1
 export DH_VERBOSE
-
-#--- dkverbose:end
+#----------------- end
 ">$ATMP
 	cat debian/rules >> $ATMP
 	cp $ATMP debian/rules
