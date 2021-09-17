@@ -87,11 +87,11 @@ sed "s/\,//g" | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | sed "s/\s/\n/g" | se
 grep -iv "\-embed\|\-dbg\|dbgsym\|php5\|php7\|php8.1\|recode\|phalcon\||\|apache2-api" | \
 grep -iv "dictionary\|mysqlnd\|tmpfiles\|php-curl-all-dev\|\-ps\|\-json\|Pre-php-common\|yac" |
 grep -iv "php5\|php7\|php8.1\|yac\|gmagick\|xcache\|solr\|swoole\|libtiff-dev\|posix0" |
-cut -d":" -f1 | xargs apt install --ignore-missing -y
+cut -d":" -f1  >  /tmp/deps.pkgs
 
 apt-cache search php | grep "\-dev" | \
-grep -v "php5\|php7\|php8.1\|yac\|gmagick\|xcache\|solr\|swoole" | cut -d" " -f1 >  /tmp/deps.pkgs
-cat /tmp/deps.pkgs | tr "\n" " " | xargs apt install -fy
+grep -v "php5\|php7\|php8.1\|yac\|gmagick\|xcache\|solr\|swoole" | cut -d" " -f1 >>  /tmp/deps.pkgs
+cat /tmp/deps.pkgs | tr "\n" " " | xargs apt install -my
 
 
 FDST="/tb2/tmp/php8-pkg-org.txt"
