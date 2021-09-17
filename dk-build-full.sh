@@ -78,7 +78,7 @@ time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 --no-lintian --no-tgz-check --no-sign -b -uc -us -D 2>&1 | tee dkbuild.log
 
 isfail=$(cat dkbuild.log | grep -i failed | wc -l)
-if [[ $isfail -gt 0 ]];
+if [[ $isfail -gt 0 ]]; then
 	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
 	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest terse parallel=${nproc2}"; \
