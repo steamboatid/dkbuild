@@ -13,7 +13,7 @@ ssh argo "lxc-start -n tes >/dev/null 2>&1 &"
 ssh argo "lxc-start -n bus >/dev/null 2>&1 &"
 ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 
-ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-check.sh
+ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-check-log.sh
 
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-build-all.sh
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-net.sh
