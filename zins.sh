@@ -190,14 +190,22 @@ printf "\n\n"
 # check PHP install
 php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis"
 NUMEXT=$(php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis" | wc -l)
-if [[ $NUMEXT -lt 8 ]]; then printf "\n\n\t php ext:NOT OK\n\n"; else printf "\n\n\t php ext: OK\n\n"; fi
+if [[ $NUMEXT -lt 8 ]]; then
+	printf "\n\n\t--- ${red}php ext:NOT OK ${end}\n"
+else
+	printf "\n\n\t--- ${blu}php ext: OK ${end}\n"
+fi
+
+# check php version
+printf "\n--- Output of ${yel}php -v${end}"
 php -v
 
 
 # check netstat
+printf "\n--- Output of ${yel}netstat${end}"
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 
 # check php custom
 NUMNON=$(dpkg -l | grep "^ii" | grep php8 | grep -v aisits | wc -l)
 NUMCUS=$(dpkg -l | grep "^ii" | grep php8 | grep aisits | wc -l)
-printf "\n\n--- default=$NUMNON  CUSTOM=$NUMCUS \n"
+printf "\n\n--- ${yel}default=$NUMNON  ${blu}CUSTOM=$NUMCUS ${end}\n"
