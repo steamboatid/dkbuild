@@ -197,12 +197,12 @@ else
 fi
 
 # check php version
-printf "\n--- Output of ${yel}php -v${end}"
+printf "\n--- Output of ${yel}php -v${end} \n"
 php -v
 
 
 # check netstat
-printf "\n--- Output of ${yel}netstat${end}"
+printf "\n--- Output of ${yel}netstat${end} \n"
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 
 # check php custom
