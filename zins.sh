@@ -120,6 +120,15 @@ apt full-upgrade --auto-remove --purge -fy
 
 
 
+# special steps for keydb only
+cd `mktemp -d`; \
+rm -rf /etc/keydb /etc/systemd /lib/systemd/system/keydb*; \
+systemctl daemon-reload; apt purge --auto-remove --purge  -fy keydb*; \
+apt update; aptnew full-upgrade --auto-remove --purge -fy; \
+aptnew install --reinstall -fy keydb-server keydb-tools; \
+netstat -nlpat |grep --color keydb-server
+
+
 # cd `mktemp -d`; \
 # apt purge --auto-remove --purge \
 # php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy

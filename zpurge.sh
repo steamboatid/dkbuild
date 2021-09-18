@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#
+# this script will delete ALL non-essential packages
+#
 
 source /tb2/build/dk-build-0libs.sh
 
@@ -42,7 +45,7 @@ libsmb* libxml* libboost* libclang* libcpp* libldap* libqt* lib*perl libx11*
 
 apt purge --auto-remove --purge *-dev
 apt purge --auto-remove --purge *dbg
- 
+
 apt purge --auto-remove --purge php* nginx* keydb* nutc* *java pdf* java* *jre* \
 *dbg font* *font golang* lua* gir* xz-utils xxd xorriso whois wdiff vlan \
 vim-runtime vim usbutils unzip unrar-free traceroute tcpdump vim* shtool \
