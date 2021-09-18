@@ -103,16 +103,18 @@ printf "\n NUMDEBS= $NUMDEBS \n"
 # debs nums
 numLUA=$(find /tb2/build/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "lua" | wc -l)
 numNGINX=$(find /tb2/build/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "nginx" | wc -l)
-numPHP=$(find /tb2/build/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "php" | wc -l)
+numPHPA=$(find /tb2/build/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "php" | wc -l)
 numPHP8=$(find /tb2/build/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "php8" | wc -l)
 numKEYDB=$(find /tb2/build/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "keydb" | wc -l)
 numNUTC=$(find /tb2/build/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "nutcracker" | wc -l)
+numLZIP=$(find /tb2/build/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "zip" | wc -l)
 printf "\n lua:    $numLUA"
 printf "\n nginx:  $numNGINX"
-printf "\n php:    $numPHP"
+printf "\n phpAll: $numPHPA"
 printf "\n php8:   $numPHP8"
 printf "\n keydb:  $numKEYDB"
 printf "\n nutc:   $numNUTC"
+printf "\n lzip:   $numLZIP"
 
 
 #--- save all git for future used
