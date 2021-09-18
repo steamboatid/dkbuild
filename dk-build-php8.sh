@@ -50,7 +50,7 @@ rm -rf /root/src/php8/*deb
 
 # BUGGY libzip
 #-------------------------------------------
-rm -rf /root/src/php8/libzip*
+# rm -rf /root/src/php8/libzip*
 
 
 # Compiling all packages
