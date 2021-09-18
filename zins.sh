@@ -191,9 +191,9 @@ printf "\n\n"
 php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis"
 NUMEXT=$(php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis" | wc -l)
 if [[ $NUMEXT -lt 8 ]]; then
-	printf "\n\n\t--- ${red}php ext:NOT OK ${end}\n"
+	printf "\n--- ${red}php ext:NOT OK ${end}\n"
 else
-	printf "\n\n\t--- ${blu}php ext: OK ${end}\n"
+	printf "\n--- ${blu}php ext: OK ${end}\n"
 fi
 
 # check php version
@@ -208,4 +208,4 @@ netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 # check php custom
 NUMNON=$(dpkg -l | grep "^ii" | grep php8 | grep -v aisits | wc -l)
 NUMCUS=$(dpkg -l | grep "^ii" | grep php8 | grep aisits | wc -l)
-printf "\n\n--- ${yel}default=$NUMNON  ${blu}CUSTOM=$NUMCUS ${end}\n"
+printf "\n\n--- PHP packages: ${yel}default=$NUMNON  ${blu}CUSTOM=$NUMCUS ${end}\n"
