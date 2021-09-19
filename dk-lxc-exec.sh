@@ -51,7 +51,7 @@ deb http://repo.aisits.id/debian-security buster/updates main contrib non-free \
 deb http://repo.aisits.id/debian buster-updates main contrib non-free \n\
 deb http://repo.aisits.id/debian buster-proposed-updates main contrib non-free \n\
 '>/etc/apt/sources.list; \
-apt update; apt install -fy locales apt-utils; \
+apt update; apt install -fy locales apt-utils libterm-readline-gnu-perl; \
 apt install -fy git net-tools dnsutils"
 
 # runt "git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
