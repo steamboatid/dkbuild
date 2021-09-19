@@ -73,6 +73,17 @@ deb http://repo.aisits.id/zabbix/5.5/debian bullseye main
 '>/etc/apt/sources.list
 }
 
+init_resolver() {
+	sed -i "s/\#DNS=/DNS=172.16.251.1 10.0.2.1 10.0.3.1/g" /etc/systemd/resolved.conf
+	sed -i "s/\#FallbackDNS=/FallbackDNS=1.1.1.1 8.8.8.8/g" /etc/systemd/resolved.conf
+	sed -i "s/\#Cache=yes/Cache=yes/g" /etc/systemd/resolved.conf
+	cat /etc/systemd/resolved.conf | grep "DNS="
+
+	systemctl enable systemd-resolved.service
+	systemctl restart systemd-resolved.service
+	systemd-resolve --status
+}
+
 init_apt_keys() {
 	echo \
 'Acquire::Queue-Mode "host";
@@ -167,6 +178,7 @@ elif [[ "${RELNAME}" = "bullseye" ]]; then
 fi
 cat /etc/apt/sources.list
 
+init_resolver
 init_apt_keys
 init_ssh
 init_basic_packages
