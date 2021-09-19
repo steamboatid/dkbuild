@@ -54,6 +54,7 @@ cd $DOCBASE
 >Dockerfile
 echo \
 "FROM debian:${RELNAME}
+ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /tb2
 RUN mkdir -p /tb2
 RUN cd /tb2
@@ -63,7 +64,7 @@ RUN echo "nameserver 1.1.1.1" > /etc/resolv.conf
 # RUN ping 1.1.1.1 -c3
 
 RUN apt update; apt install -fy curl
-RUN curl -sS https://raw.githubusercontent.com/steamboatid/dkbuild/master/dk-init-debian.sh | sudo bash
+RUN curl -sS https://raw.githubusercontent.com/steamboatid/dkbuild/master/dk-init-debian.sh | bash
 
 # RUN git clone https://github.com/steamboatid/dkbuild /tb2/build
 # RUN /bin/bash /tb2/build/dk-init-debian.sh
