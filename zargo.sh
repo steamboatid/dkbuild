@@ -11,8 +11,8 @@ exit 0;
 
 ssh argo "nohup chmod +x /usr/local/sbin/* /tb2/build/*sh 2>&1 >/dev/null &"
 
-ssh argo "lxc-start -n tus >/dev/null 2>&1 &"
-ssh argo "lxc-start -n tes >/dev/null 2>&1 &"
+ssh argo "lxc-start -n tbus >/dev/null 2>&1 &"
+ssh argo "lxc-start -n teye >/dev/null 2>&1 &"
 ssh argo "lxc-start -n bus >/dev/null 2>&1 &"
 ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 
@@ -31,8 +31,9 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-net.sh
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-net.sh
 
-# ssh argo -- lxc-attach -n tus -- /bin/bash /tb2/build/xrepo.sh
+# ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/xrepo.sh
 # ssh argo -- /bin/bash /tb2/build/xlast.sh
 # ssh argo -- /bin/bash /root/cf-clear.sh
 
-# ssh argo -- lxc-attach -n tus -- /bin/bash /tb2/build/zins.sh
+# ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/zins.sh
+ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/dk-docker-install.sh

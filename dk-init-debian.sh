@@ -148,6 +148,11 @@ init_ssh() {
 	fi
 }
 
+init_basic_packages() {
+	pkgs=(eatmydata nano rsync libterm-readline-gnu-perl apt-utils lsb-release locales net-tools)
+	install_old $pkgs
+}
+
 
 
 
@@ -164,3 +169,4 @@ cat /etc/apt/sources.list
 
 init_apt_keys
 init_ssh
+init_basic_packages

@@ -147,7 +147,9 @@ aptnew install -y; \
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 
 # fix arginfo on uploadprogress
-sed -i "s/^extension/\; extension/g" /etc/php/8.0/mods-available/uploadprogress.ini
+if [ -e /etc/php/8.0/mods-available/uploadprogress.ini ];
+	sed -i "s/^extension/\; extension/g" /etc/php/8.0/mods-available/uploadprogress.ini
+then
 
 
 # complete install NGINX
@@ -181,7 +183,9 @@ apt-cache search php8.0 | grep -v "apache\|debug\|dbg\|cgi\|embed\|gmagick\|yac\
 cut -d" " -f1 | tr "\n" " " | xargs aptnew install -y --no-install-recommends
 
 # fix arginfo on uploadprogress
-sed -i "s/^extension/\; extension/g" /etc/php/8.0/mods-available/uploadprogress.ini
+if [ -e /etc/php/8.0/mods-available/uploadprogress.ini ];
+	sed -i "s/^extension/\; extension/g" /etc/php/8.0/mods-available/uploadprogress.ini
+fi
 
 printf "\n\naptnew install -y "
 cat /tmp/pkg-php2.txt
