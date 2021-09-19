@@ -73,7 +73,8 @@ deb http://repo.aisits.id/debian-security buster/updates main contrib non-free \
 deb http://repo.aisits.id/debian buster-updates main contrib non-free \n\
 deb http://repo.aisits.id/debian buster-proposed-updates main contrib non-free \n\
 '>/etc/apt/sources.list; \
-apt update; apt install -fy locales apt-utils; apt install -fy git net-tools dnsutils
+apt update; apt install -fy locales apt-utils; dpkg-reconfigure locales; \
+apt install -fy git net-tools dnsutils
 
 ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UTF-8'
 RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
