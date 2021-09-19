@@ -54,5 +54,5 @@ deb http://repo.aisits.id/debian buster-proposed-updates main contrib non-free \
 apt update; apt install -fy locales apt-utils libterm-readline-gnu-perl; \
 apt install -fy git net-tools dnsutils"
 
-# runt "git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
-# /bin/bash /tb2/build/dk-init-debian.sh && /bin/bash /tb2/build/zins.sh"
+lxcrun "git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
+/bin/bash /tb2/build/dk-init-debian.sh && /bin/bash /tb2/build/zins.sh"
