@@ -43,6 +43,7 @@ fi
 #-------------------------------------------
 pkgs=(dnsutils)
 install_old $pkgs
+dhclient -v
 
 
 # create Dockerfile
