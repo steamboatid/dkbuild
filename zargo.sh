@@ -6,6 +6,8 @@ rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 
 # nohup /bin/bash /tb2/build/zgit-auto.sh >/dev/null 2>&1 &
 /bin/bash /tb2/build/zgit-auto.sh
+lxc-attach -n tbus -- /bin/bash /tb2/build/dk-docker-install.sh
+exit 0;
 
 ssh argo "nohup chmod +x /usr/local/sbin/* /tb2/build/*sh 2>&1 >/dev/null &"
 
