@@ -20,7 +20,7 @@ if [ -z "${adist}" ] || [ -z "${aname}" ]; then
   usage
 fi
 
-run () {
+lxcrun () {
 	$acom=$1
 	lxc-attach -n $aname -- sh -c "${acom}"
 }
@@ -34,7 +34,7 @@ lxc-create -n $aname -t download \
 --keyserver hkp://p80.pool.sks-keyservers.net:80
 
 sleep 0.5
-run "mkdir -p /tb2"
+lxcrun "mkdir -p /tb2"
 # echo 'nameserver 1.1.1.1' > /etc/resolv.conf; \
 # cat /etc/resolv.conf; \
 # ip a; ip r; ping 1.1.1.1 -c3; ping yahoo.com -c3"
