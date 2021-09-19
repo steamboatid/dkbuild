@@ -149,7 +149,7 @@ netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 # fix arginfo on uploadprogress
 if [ -e /etc/php/8.0/mods-available/uploadprogress.ini ]; then
 	sed -i "s/^extension/\; extension/g" /etc/php/8.0/mods-available/uploadprogress.ini
-then
+fi
 
 
 # complete install NGINX
