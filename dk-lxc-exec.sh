@@ -40,7 +40,7 @@ sleep 0.5
 lxcrun "mkdir -p /tb2; \
 echo 'nameserver 1.1.1.1' > /etc/resolv.conf; \
 cat /etc/resolv.conf; \
-ip a; ip r; ping 1.1.1.1 -c3; ping yahoo.com -c3"
+ip a; ip r; ping 1.1.1.1 -c3; ping yahoo.com -c3; dhclient -v"
 
 
 lxcrun "printf '\
