@@ -43,7 +43,10 @@ fi
 #-------------------------------------------
 pkgs=(net-tools dnsutils)
 install_old $pkgs
+
 dhclient -v
+cat /etc/resolv.conf
+exit 0;
 
 
 # create Dockerfile
@@ -60,7 +63,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UTF-8'
 
 WORKDIR /tb2
-RUN mkdir -p /tb2; printf 'nameserver 1.1.1.1' > /etc/resolv.conf; cat /etc/resolv.conf
+RUN mkdir -p /tb2; echo 'nameserver 1.1.1.1' > /etc/resolv.conf; cat /etc/resolv.conf
 RUN ip a; ip r; ping 1.1.1.1 -c3; ping yahoo.com -c3
 
 RUN printf '\
