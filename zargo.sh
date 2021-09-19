@@ -38,6 +38,8 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 # ssh argo "lxc-del aaa; lxc-new aaa buster"
 
 ssh argo "lxc-del aaa && lxc-new aaa buster &&\
+lxc-attach -n aaa -- apt update &&\
+lxc-attach -n aaa -- apt install -fy git &&\
 lxc-attach -n aaa -- git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 lxc-attach -n aaa -- /bin/bash /tb2/build/dk-init-debian.sh &&\
 lxc-attach -n aaa -- /bin/bash /tb2/build/zins"
