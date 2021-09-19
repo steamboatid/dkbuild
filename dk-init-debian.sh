@@ -160,6 +160,8 @@ if [[ "${RELNAME}" = "buster" ]]; then
 elif [[ "${RELNAME}" = "bullseye" ]]; then
 	init_bullseye
 fi
+cat /etc/apt/sources.list
+exit 0;
 
 init_apt_keys
 init_ssh
