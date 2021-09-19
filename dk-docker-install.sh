@@ -41,7 +41,7 @@ fi
 
 # basic package
 #-------------------------------------------
-pkgs=(dnsutils)
+pkgs=(net-tools dnsutils)
 install_old $pkgs
 dhclient -v
 
@@ -61,7 +61,7 @@ ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UT
 
 WORKDIR /tb2
 RUN mkdir -p /tb2; echo "nameserver 1.1.1.1" > /etc/resolv.conf
-RUN ip a; ip r; ping 1.1.1.1 -c3
+RUN ip a; ip r; ping 1.1.1.1 -c3; ping yahoo.com -c3
 
 RUN printf '\
 deb http://repo.aisits.id/debian buster main contrib non-free \n\
@@ -71,7 +71,7 @@ deb http://repo.aisits.id/debian buster-proposed-updates main contrib non-free \
 '>/etc/apt/sources.list
 
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt update; apt install -fy apt-utils; apt install -fy git locales systemd
+RUN apt update; apt install -fy apt-utils; apt install -fy git locales systemd net-tools dnsutils
 
 RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 /bin/bash /tb2/build/dk-init-debian.sh && /bin/bash /tb2/build/zins.sh
