@@ -58,8 +58,6 @@ echo \
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UTF-8'
 
-RUN --security=insecure cat /proc/self/status | grep CapEff
-
 WORKDIR /tb2
 RUN mkdir -p /tb2; echo "nameserver 1.1.1.1" > /etc/resolv.conf
 

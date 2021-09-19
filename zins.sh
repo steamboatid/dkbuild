@@ -127,6 +127,7 @@ systemctl daemon-reload; apt purge --auto-remove --purge  -fy keydb*; \
 apt update; aptnew full-upgrade --auto-remove --purge -fy; \
 aptnew install --reinstall -fy keydb-server keydb-tools; \
 netstat -nlpat |grep --color keydb-server
+exit 0;
 
 
 # cd `mktemp -d`; \
