@@ -41,7 +41,7 @@ nameserver 8.8.8.8
 		sed -i "s/\#DNS=/DNS=1.1.1.1 8.8.8.8/g" /etc/systemd/resolved.conf
 		sed -i "s/\#FallbackDNS=/FallbackDNS=1.1.1.1 8.8.8.8/g" /etc/systemd/resolved.conf
 		sed -i "s/\#Cache=yes/Cache=yes/g" /etc/systemd/resolved.conf
-		cat /etc/systemd/resolved.conf | grep "DNS="
+		# cat /etc/systemd/resolved.conf | grep "DNS="
 
 		systemctl enable systemd-resolved.service
 		systemctl restart systemd-resolved.service
