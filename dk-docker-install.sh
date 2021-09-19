@@ -81,6 +81,9 @@ RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 
 # --privileged=true \
 # --volume /run/dbus/system_bus_socket:/run/dbus/system_bus_socket:ro \
-docker buildx build --allow security.insecure \
---no-cache --network host --force-rm \
+# docker buildx build --allow security.insecure \
+# --no-cache --network host --force-rm \
+# -t thedoc:latest -f ./Dockerfile  .
+
+docker build --no-cache --network host --force-rm \
 -t thedoc:latest -f ./Dockerfile  .
