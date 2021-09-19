@@ -34,6 +34,9 @@ lxc-create -n $aname -t download \
 --keyserver hkp://p80.pool.sks-keyservers.net:80
 
 sleep 0.5
+lxc-start -n $aname
+
+sleep 0.5
 lxcrun "mkdir -p /tb2"
 # echo 'nameserver 1.1.1.1' > /etc/resolv.conf; \
 # cat /etc/resolv.conf; \
