@@ -77,6 +77,7 @@ deb http://repo.aisits.id/debian buster-proposed-updates main contrib non-free \
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update; apt install -fy apt-utils; apt install -fy git locales systemd net-tools dnsutils
 
+ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UTF-8'
 RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 /bin/bash /tb2/build/dk-init-debian.sh && /bin/bash /tb2/build/zins.sh
 

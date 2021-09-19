@@ -130,7 +130,7 @@ export HISTSIZE=100000
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
-'>/etc/environment && cat /etc/environment
+'>/etc/environment && source /etc/environment
 
 export PATH=$PATH:/usr/sbin
 timedatectl set-timezone Asia/Jakarta
