@@ -5,7 +5,7 @@ rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 /tb2/build/*sh root@argo:/tb2/build/
 
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
-/tb2/build/*sh root@abdi:/tb2/build/
+/tb2/build/*sh root@atan:/tb2/build/
 
 # nohup /bin/bash /tb2/build/zgit-auto.sh >/dev/null 2>&1 &
 /bin/bash /tb2/build/zgit-auto.sh
