@@ -77,7 +77,7 @@ RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 
 ">Dockerfile
 
+# --privileged=true \
 docker build --no-cache --network host \
---privileged=true \
 --volume /run/dbus/system_bus_socket:/run/dbus/system_bus_socket:ro \
 -t thedoc:latest -f ./Dockerfile  .
