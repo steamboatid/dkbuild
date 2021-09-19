@@ -89,5 +89,4 @@ RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 # -t thedoc:latest -f ./Dockerfile  .
 
 docker build --no-cache --network host --force-rm \
---dns 1.1.1.1 \
 -t thedoc:latest -f ./Dockerfile  .
