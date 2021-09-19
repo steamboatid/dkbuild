@@ -37,10 +37,10 @@ sleep 0.5
 lxc-start -n $aname
 
 sleep 0.5
-lxcrun "mkdir -p /tb2"
-# echo 'nameserver 1.1.1.1' > /etc/resolv.conf; \
-# cat /etc/resolv.conf; \
-# ip a; ip r; ping 1.1.1.1 -c3; ping yahoo.com -c3"
+lxcrun "mkdir -p /tb2; \
+echo 'nameserver 1.1.1.1' > /etc/resolv.conf; \
+cat /etc/resolv.conf; \
+ip a; ip r; ping 1.1.1.1 -c3; ping yahoo.com -c3"
 
 
 # run "printf '\
