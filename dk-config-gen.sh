@@ -108,4 +108,5 @@ systemctl enable apt-daily.timer  >/dev/null 2>&1
 systemctl enable apt-daily-upgrade.timer  >/dev/null 2>&1
 
 echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
-apt install -fy eatmydata nano rsync
+pkgs=(eatmydata nano rsync)
+install_old $pkgs

@@ -116,27 +116,32 @@ export HISTSIZE=100000
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
-'>/etc/environment && cat /etc/environment
+'>/etc/environment
 
 	export PATH=$PATH:/usr/sbin
 	timedatectl set-timezone Asia/Jakarta
 
 
-	apt update;\
-	aptold install -fy locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
-	gnupg2 apt-utils tzdata curl rsync lsb-release eatmydata nano && \
-	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen &&\
-	apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys &&\
+	pkgs=(locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
+	gnupg2 apt-utils tzdata curl rsync lsb-release eatmydata nano)
+	install_old $pkgs && \
 
-	apt update; aptold full-upgrade --auto-remove --purge -fydu;
-	apt update; aptold full-upgrade --auto-remove --purge -fy
+	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen &&\
+	apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys 2>&1 | grep --color "processed" &&\
+
+	apt update >/dev/null 2>&1
+	aptold full-upgrade --auto-remove --purge -fy >/dev/null 2>&1
 }
 
 init_ssh() {
-	aptnew install -fy ssh openssh-*
-	sed -i "s/\#PermitRootLogin prohibit-password/PermitRootLogin yes\n#PermitRootLogin prohibit-password/g" /etc/ssh/sshd_config
-	# cat /etc/ssh/sshd_config | grep -i permitroot
-	/etc/init.d/ssh restart
+	pkgs=(ssh openssh-server)
+	install_new $pkgs
+
+	if [[ $(grep "^PermitRootLogin" /etc/ssh/sshd_config | wc -l) -lt 1 ]]; then
+		sed -i "s/\#PermitRootLogin prohibit-password/PermitRootLogin yes\n#PermitRootLogin prohibit-password/g" /etc/ssh/sshd_config
+		cat /etc/ssh/sshd_config | grep -i permitroot
+		/etc/init.d/ssh restart
+	fi
 
 	if [ ! -e "$HOME/.ssh/id_rsa" ]; then
 		ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""

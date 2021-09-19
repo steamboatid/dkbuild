@@ -193,3 +193,27 @@ purge_pending_installs() {
 	cat /tmp/pendings | tr "\n" " "| xargs apt purge -fy
 	cat /tmp/pendings | while read aline; do apt purge -fy $aline; done
 }
+
+install_old() {
+	pkgs=$1
+	dopkg=""
+	for apkg in "${pkgs[@]}"; do
+		exists=$(dpkg -l | grep "^ii" | grep "${apkg}" | wc -l)
+		if [[ $exists -lt 1 ]]; then
+			dopkg="${dopkg} ${apkg}"
+		fi
+	done
+	aptold install -fy $dopkg
+}
+
+install_new() {
+	pkgs=$1
+	dopkg=""
+	for apkg in "${pkgs[@]}"; do
+		exists=$(dpkg -l | grep "^ii" | grep "${apkg}" | wc -l)
+		if [[ $exists -lt 1 ]]; then
+			dopkg="${dopkg} ${apkg}"
+		fi
+	done
+	aptnew install -fy $dopkg
+}

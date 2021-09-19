@@ -24,22 +24,26 @@ source /tb2/build/dk-build-0libs.sh
 
 # prepare install docker packages
 #-------------------------------------------
-aptnew install -fy apt-transport-https ca-certificates curl gnupg lsb-release
-curl -sS https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-curl -sS https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+if [[ $(dpkg -l | grep "^ii" | grep "containerd\.io" | wc -l) -lt 1 ]]; then
+	aptnew install -fy apt-transport-https ca-certificates curl gnupg lsb-release
+	curl -sS https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+	curl -sS https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 
-echo \
-"deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable
-">/etc/apt/sources.list.d/docker.list
+	echo \
+	"deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable
+	">/etc/apt/sources.list.d/docker.list
 
-apt install -fy docker-ce docker-ce-cli containerd.io
+	apt update
+	pkgs=(docker-ce docker-ce-cli containerd.io)
+	install_old $pkgs
+fi
 
 
 # create Dockerfile
 #-------------------------------------------
 >Dockerfile
 echo \
-"FROM debian:buster
+"FROM debian:${RELNAME}
 RUN mkdir -p /tb2
 RUN git clone https://github.com/steamboatid/dkbuild /tb2/build
 RUN /bin/bash /tb2/build/dk-init-debian.sh
