@@ -43,6 +43,7 @@ echo 'nameserver 8.8.8.8' >> /etc/resolv.conf; \
 cat /etc/resolv.conf; \
 ip a; ip r; ping 1.1.1.1 -c3; ping yahoo.com -c3; dhclient -v"
 
+lxcrun "apt update"
 
 # lxcrun "printf '\
 # deb http://repo.aisits.id/debian buster main contrib non-free \n\
