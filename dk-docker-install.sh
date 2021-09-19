@@ -55,7 +55,7 @@ cd $DOCBASE
 echo \
 "FROM debian:${RELNAME}
 
-SHELL ["/bin/bash", "-c"]
+SHELL ["/bin/bash", "-c"]]
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UTF-8'
 
