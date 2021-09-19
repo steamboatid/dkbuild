@@ -7,6 +7,7 @@ export DEBFULLNAME="Dwi Kristianto"
 export DEBEMAIL="steamboatid@gmail.com"
 export EMAIL="steamboatid@gmail.com"
 
+if [[ $(dpkg -l | grep "^ii" | grep "lsb\-release" | wc -l) -lt 1 ]]; then apt update; apt install -fy lsb-release; fi
 export RELNAME=$(lsb_release -sc)
 export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
 
@@ -107,5 +108,4 @@ systemctl enable apt-daily.timer  >/dev/null 2>&1
 systemctl enable apt-daily-upgrade.timer  >/dev/null 2>&1
 
 echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
-apt install -fy eatmydata
-
+apt install -fy eatmydata nano rsync

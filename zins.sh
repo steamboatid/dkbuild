@@ -29,7 +29,7 @@ if [[ ! -e /run/done.init.dkbuild.txt ]]; then
 
 	# tweaks
 	echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
-	aptold install -y eatmydata lsb_release
+	aptold install -y eatmydata lsb-release nano rsync
 
 
 	echo \
