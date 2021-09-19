@@ -140,12 +140,11 @@ export LANGUAGE=en_US.UTF-8
 	export PATH=$PATH:/usr/sbin
 	timedatectl set-timezone Asia/Jakarta
 
-
 	pkgs=(locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
 	gnupg2 apt-utils tzdata curl rsync lsb-release eatmydata nano)
 	install_old $pkgs && \
 
-	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen && dpkg-reconfigure locales &&\
+	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && dpkg-reconfigure locales &&\
 	apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys 2>&1 | grep --color "processed" &&\
 
 	apt update >/dev/null 2>&1
