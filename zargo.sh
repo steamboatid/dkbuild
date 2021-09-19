@@ -44,7 +44,7 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 # lxc-attach -n aaa -- /bin/bash /tb2/build/dk-init-debian.sh &&\
 # lxc-attach -n aaa -- /bin/bash /tb2/build/zins"
 
-ssh argo "/bin/bash /tb2/build/dk-lxc-exec.sh -n aaa -d buster"
+ssh argo "/bin/bash /tb2/build/dk-lxc-exec.sh -naaa -dbuster"
 
 # ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/dk-init-debian.sh
 # ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/zins.sh
