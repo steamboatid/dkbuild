@@ -203,7 +203,7 @@ install_old() {
 			dopkg="${dopkg} ${apkg}"
 		fi
 	done
-	aptold install -fy $dopkg
+	aptold install -fy $dopkg 2>&1
 }
 
 install_new() {
@@ -215,5 +215,5 @@ install_new() {
 			dopkg="${dopkg} ${apkg}"
 		fi
 	done
-	aptnew install -fy $dopkg
+	aptnew install -fy $dopkg 2>&1
 }
