@@ -5,7 +5,7 @@ usage() {
 	exit 1;
 }
 
-while getopts d:y: flag
+while getopts d:n: flag
 do
 	case "${flag}" in
 		d) adist=${OPTARG};;
