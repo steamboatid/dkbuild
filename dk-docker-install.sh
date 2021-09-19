@@ -72,7 +72,8 @@ RUN apt update; apt install -fy apt-utils; apt install -fy git
 # RUN curl -sS https://raw.githubusercontent.com/steamboatid/dkbuild/master/dk-init-debian.sh | bash
 
 RUN git clone https://github.com/steamboatid/dkbuild /tb2/build
-# RUN /bin/bash /tb2/build/dk-init-debian.sh
+RUN /bin/bash /tb2/build/dk-init-debian.sh
+
 # RUN /bin/bash /tb2/abuild/zins.sh
 ">Dockerfile
 
