@@ -56,8 +56,7 @@ echo \
 "FROM debian:${RELNAME}
 ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /tb2
-RUN mkdir -p /tb2; cd /tb2
-RUN echo "nameserver 1.1.1.1" > /etc/resolv.conf
+RUN mkdir -p /tb2; cd /tb2; echo "nameserver 1.1.1.1" > /etc/resolv.conf
 # RUN ip a 2>&1
 # RUN ip r 2>&1
 # RUN ping 1.1.1.1 -c3
@@ -69,7 +68,7 @@ deb http://repo.aisits.id/debian buster-updates main contrib non-free \n\
 deb http://repo.aisits.id/debian buster-proposed-updates main contrib non-free \n\
 '>/etc/apt/sources.list
 
-RUN apt update; apt install -fy curl git
+RUN apt update; apt install -fy apt-utils; apt install -fy git
 # RUN curl -sS https://raw.githubusercontent.com/steamboatid/dkbuild/master/dk-init-debian.sh | bash
 
 RUN git clone https://github.com/steamboatid/dkbuild /tb2/build
@@ -77,4 +76,4 @@ RUN git clone https://github.com/steamboatid/dkbuild /tb2/build
 # RUN /bin/bash /tb2/abuild/zins.sh
 ">Dockerfile
 
-docker build --no-cache --network host -t thedoc:latest -f ./Dockerfile  .
+docker build --no-cache --network host -t thedoc:latest
