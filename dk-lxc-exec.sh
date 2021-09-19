@@ -21,7 +21,7 @@ if [ -z "${adist}" ] || [ -z "${aname}" ]; then
 fi
 
 lxcrun () {
-	$acom=$1
+	acom=$1
 	lxc-attach -n $aname -- sh -c "${acom}"
 }
 
