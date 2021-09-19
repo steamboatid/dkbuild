@@ -77,4 +77,4 @@ RUN /bin/bash /tb2/build/dk-init-debian.sh
 # RUN /bin/bash /tb2/abuild/zins.sh
 ">Dockerfile
 
-docker build --no-cache --network host -t thedoc:latest
+docker build --no-cache --network host -t thedoc:latest -f ./Dockerfile  .
