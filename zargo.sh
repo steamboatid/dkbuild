@@ -36,7 +36,7 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 # ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/dk-docker-install.sh
 
 ssh argo "lxc-del aaa; lxc-new aaa"
-# ssh argo "lxc-del aaa; lxc-new aaa; lxc-attach -n aaa -- /bin/bash /tb2/build/dk-init-debian.sh"
+# ssh argo "lxc-del aaa; lxc-new aaa buster; lxc-attach -n aaa -- /bin/bash /tb2/build/dk-init-debian.sh"
 # ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/dk-init-debian.sh
 # ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/zins.sh
 
