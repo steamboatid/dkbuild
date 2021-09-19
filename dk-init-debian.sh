@@ -24,10 +24,29 @@ source /tb2/build/dk-build-0libs.sh
 
 
 init_prep() {
-	echo \
+	if [ -e /etc/resolv.conf ]; then
+		echo \
 "nameserver 1.1.1.1
 nameserver 8.8.8.8
 "> /etc/resolv.conf
+	elif [ -e /etc/init.d/resolvconf ] && [ -e /etc/resolvconf/resolv.conf.d/head ]; then
+		echo \
+"nameserver 1.1.1.1
+nameserver 8.8.8.8
+"> /etc/resolvconf/resolv.conf.d/head
+
+		chmod +x /etc/init.d/resolvconf
+		/etc/init.d/resolvconf restart
+	else
+		sed -i "s/\#DNS=/DNS=1.1.1.1 8.8.8.8/g" /etc/systemd/resolved.conf
+		sed -i "s/\#FallbackDNS=/FallbackDNS=1.1.1.1 8.8.8.8/g" /etc/systemd/resolved.conf
+		sed -i "s/\#Cache=yes/Cache=yes/g" /etc/systemd/resolved.conf
+		cat /etc/systemd/resolved.conf | grep "DNS="
+
+		systemctl enable systemd-resolved.service
+		systemctl restart systemd-resolved.service
+		systemd-resolve --status
+	fi
 }
 
 init_buster() {
