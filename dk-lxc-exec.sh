@@ -43,14 +43,14 @@ cat /etc/resolv.conf; \
 ip a; ip r; ping 1.1.1.1 -c3; ping yahoo.com -c3"
 
 
-# run "printf '\
-# deb http://repo.aisits.id/debian buster main contrib non-free \n\
-# deb http://repo.aisits.id/debian-security buster/updates main contrib non-free \n\
-# deb http://repo.aisits.id/debian buster-updates main contrib non-free \n\
-# deb http://repo.aisits.id/debian buster-proposed-updates main contrib non-free \n\
-# '>/etc/apt/sources.list; \
-# apt update; apt install -fy locales apt-utils; dpkg-reconfigure locales; \
-# apt install -fy git net-tools dnsutils"
+lxcrun "printf '\
+deb http://repo.aisits.id/debian buster main contrib non-free \n\
+deb http://repo.aisits.id/debian-security buster/updates main contrib non-free \n\
+deb http://repo.aisits.id/debian buster-updates main contrib non-free \n\
+deb http://repo.aisits.id/debian buster-proposed-updates main contrib non-free \n\
+'>/etc/apt/sources.list; \
+apt update; apt install -fy locales apt-utils; dpkg-reconfigure locales; \
+apt install -fy git net-tools dnsutils"
 
 # runt "git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 # /bin/bash /tb2/build/dk-init-debian.sh && /bin/bash /tb2/build/zins.sh"
