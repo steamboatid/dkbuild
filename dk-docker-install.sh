@@ -39,13 +39,34 @@ if [[ $(dpkg -l | grep "^ii" | grep "containerd\.io" | wc -l) -lt 1 ]]; then
 fi
 
 
+# basic package
+#-------------------------------------------
+pkgs=(dnsutils)
+install_old $pkgs
+
+
 # create Dockerfile
 #-------------------------------------------
+DOCBASE="${HOME}/docker-${RELNAME}"
+mkdir -p $DOCBASE
+cd $DOCBASE
+
 >Dockerfile
 echo \
 "FROM debian:${RELNAME}
+WORKDIR /tb2
 RUN mkdir -p /tb2
-RUN git clone https://github.com/steamboatid/dkbuild /tb2/build
-RUN /bin/bash /tb2/build/dk-init-debian.sh
-# RUN /bin/bash /tb2/build/zins.sh
+RUN cd /tb2
+RUN echo "nameserver 1.1.1.1" > /etc/resolv.conf
+RUN ip a 2>&1
+RUN ip r 2>&1
+RUN ping 1.1.1.1 -c3
+# RUN apt update; apt install -fy curl
+RUN apt install -fy curl
+RUN curl -sS https://raw.githubusercontent.com/steamboatid/dkbuild/master/dk-init-debian.sh | sudo bash
+# RUN git clone https://github.com/steamboatid/dkbuild /tb2/build
+# RUN /bin/bash /tb2/build/dk-init-debian.sh
+# RUN /bin/bash /tb2/abuild/zins.sh
 ">Dockerfile
+
+docker build --no-cache --network host -t thedoc:latest -f ./Dockerfile  .
