@@ -73,7 +73,7 @@ RUN apt update; apt install -fy apt-utils; apt install -fy git
 
 RUN git clone https://github.com/steamboatid/dkbuild /tb2/build
 RUN /bin/bash /tb2/build/dk-init-debian.sh
-RUN /bin/bash /tb2/abuild/zins.sh
+RUN /bin/bash /tb2/build/zins.sh
 ">Dockerfile
 
 docker build --no-cache --network host -t thedoc:latest -f ./Dockerfile  .
