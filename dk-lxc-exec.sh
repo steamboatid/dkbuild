@@ -26,7 +26,7 @@ lxcrun () {
 }
 
 
-# lxc-destroy -f -s -n $aname
+lxc-destroy -f -s -n $aname
 
 lxc-create -n $aname -t download \
 -- --dist debian --release $adist --arch amd64 \
