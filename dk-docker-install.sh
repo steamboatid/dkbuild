@@ -45,9 +45,9 @@ fi
 pkgs=(net-tools dnsutils)
 install_old $pkgs
 
-dhclient -v
-cat /etc/resolv.conf
-exit 0;
+dhclient >/dev/null 2>&1
+# cat /etc/resolv.conf
+# exit 0;
 
 
 # create Dockerfile
