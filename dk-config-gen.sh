@@ -108,5 +108,5 @@ systemctl enable apt-daily.timer  >/dev/null 2>&1
 systemctl enable apt-daily-upgrade.timer  >/dev/null 2>&1
 
 echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
-pkgs=(eatmydata nano rsync libterm-readline-gnu-perl apt-utils lsb-release)
+pkgs=(eatmydata nano rsync libterm-readline-gnu-perl apt-utils lsb-release locales)
 install_old $pkgs
