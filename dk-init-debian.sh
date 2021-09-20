@@ -167,7 +167,7 @@ init_ssh() {
 }
 
 init_basic_packages() {
-	pkgs=(eatmydata nano rsync libterm-readline-gnu-perl apt-utils lsb-release locales net-tools dnsutils)
+	pkgs=(eatmydata nano rsync libterm-readline-gnu-perl apt-utils lsb-release locales locales-all net-tools dnsutils)
 	install_old $pkgs
 }
 
