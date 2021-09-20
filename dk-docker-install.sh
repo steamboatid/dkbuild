@@ -82,12 +82,13 @@ deb http://repo.aisits.id/debian ${RELNAME}-backports main contrib non-free \n\
 '>/etc/apt/sources.list; \
 apt update; apt full-upgrade -fy; apt install -fy locales apt-utils
 RUN dpkg-reconfigure locales
-RUN apt install -fy git netbase init
+RUN apt install -fy git netbase init eatmydata nano rsync libterm-readline-gnu-perl \
+lsb-release net-tools dnsutils
 
-ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UTF-8'
-RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
-/bin/bash /tb2/build/dk-init-debian.sh &&\
-/bin/bash /tb2/build/zins.sh
+# ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UTF-8'
+# RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
+# /bin/bash /tb2/build/dk-init-debian.sh &&\
+# /bin/bash /tb2/build/zins.sh
 
 ">Dockerfile
 
@@ -110,6 +111,9 @@ RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 	sleep 1
 	printf "\n\n running docker \n"
 	docker run $DNAME \
+	--stop-signal=SIGRTMIN+3 \
+  --tmpfs /run:size=100M --tmpfs /run/lock:size=100M \
+  -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 	/bin/bash -c "echo 'nameserver 172.16.251.1'>/etc/resolv.conf; \
 	echo '172.16.251.23 repo.aisits.id argo'>>/etc/hosts; apt update; \
 	apt install git; rm -rf /tb2/build; \
