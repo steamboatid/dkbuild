@@ -97,9 +97,9 @@ lsb-release net-tools dnsutils
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US.UTF-8' LC_ALL='en_US.UTF-8'
 RUN export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8; export LANGUAGE=en_US.UTF-8; locale-gen en_US.UTF-8
 
-# RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
-# /bin/bash /tb2/build/dk-init-debian.sh &&\
-# /bin/bash /tb2/build/zins.sh
+RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
+/bin/bash /tb2/build/dk-init-debian.sh &&\
+/bin/bash /tb2/build/zins.sh
 
 ">Dockerfile
 
@@ -124,14 +124,14 @@ RUN export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8; export LANGUAGE=en_US.UT
   # --tmpfs /run:size=100M --tmpfs /run/lock:size=100M \
   # -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 
-	printf "\n\n running docker \n"
-	docker run $DNAME \
-	/bin/bash -c "echo 'nameserver 172.16.251.1'>/etc/resolv.conf; \
-	echo '172.16.251.23 repo.aisits.id argo'>>/etc/hosts; apt update; \
-	apt install git; rm -rf /tb2/build; \
-	git clone https://github.com/steamboatid/dkbuild /tb2/build; \
-	/bin/bash /tb2/build/dk-init-debian.sh &&\
-	/bin/bash /tb2/build/zins.sh"
+	# printf "\n\n running docker \n"
+	# docker run $DNAME \
+	# /bin/bash -c "echo 'nameserver 172.16.251.1'>/etc/resolv.conf; \
+	# echo '172.16.251.23 repo.aisits.id argo'>>/etc/hosts; apt update; \
+	# apt install git; rm -rf /tb2/build; \
+	# git clone https://github.com/steamboatid/dkbuild /tb2/build; \
+	# /bin/bash /tb2/build/dk-init-debian.sh &&\
+	# /bin/bash /tb2/build/zins.sh"
 }
 
 build_docker "buster"
