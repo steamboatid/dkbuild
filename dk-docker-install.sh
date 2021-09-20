@@ -107,6 +107,8 @@ RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 	docker build --no-cache --network host --force-rm \
 	-t $DNAME:latest -f ./Dockerfile .
 
+	sleep 1
+	printf "\n\n running docker "
 	docker run -it $DNAME \
 	/bin/bash -c "echo 'nameserver 172.16.251.1'>/etc/resolv.conf; \
 	echo '172.16.251.23 repo.aisits.id argo'>>/etc/hosts; apt update; \
