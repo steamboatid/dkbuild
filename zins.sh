@@ -146,6 +146,14 @@ libzip4 nutcracker keydb-server keydb-tools nginx-extras php8.0-fpm php8.0-cli p
 aptnew install -y; \
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 
+# workaround for keydb-server
+if [[ $(dpkg -l | grep "^ii" | grep "keydb\-server" | wc -l) -lt 1 ]]; then
+	rm /var/lib/dpkg/info/keydb-server.*
+	dpkg --configure -a
+	apt install -fy
+fi
+
+
 # fix arginfo on uploadprogress
 if [ -e /etc/php/8.0/mods-available/uploadprogress.ini ]; then
 	sed -i "s/^extension/\; extension/g" /etc/php/8.0/mods-available/uploadprogress.ini

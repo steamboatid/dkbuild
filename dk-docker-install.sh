@@ -78,9 +78,11 @@ apt install -fy git net-tools dnsutils
 
 ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UTF-8'
 RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
-/bin/bash /tb2/build/dk-init-debian.sh && /bin/bash /tb2/build/zins.sh
+/bin/bash /tb2/build/dk-init-debian.sh
 
 ">Dockerfile
 
+#  && /bin/bash /tb2/build/zins.sh
+
 docker build --no-cache --network host --force-rm \
--t thedoc:latest -f ./Dockerfile  .
+-t busdocker:latest -f ./Dockerfile  .

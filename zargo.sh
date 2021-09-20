@@ -4,9 +4,6 @@
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 /tb2/build/*sh root@argo:/tb2/build/
 
-rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
-/tb2/build/*sh root@atan:/tb2/build/
-
 # nohup /bin/bash /tb2/build/zgit-auto.sh >/dev/null 2>&1 &
 /bin/bash /tb2/build/zgit-auto.sh
 
@@ -47,7 +44,7 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 # lxc-attach -n aaa -- /bin/bash /tb2/build/dk-init-debian.sh &&\
 # lxc-attach -n aaa -- /bin/bash /tb2/build/zins"
 
-ssh argo "/bin/bash /tb2/build/dk-lxc-exec.sh -n aaa -d buster"
+# ssh argo "/bin/bash /tb2/build/dk-lxc-exec.sh -n aaa -d buster"
 
 # ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/dk-init-debian.sh
 # ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/zins.sh
