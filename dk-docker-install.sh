@@ -110,17 +110,16 @@ lsb-release net-tools dnsutils
 
 	sleep 1
 	# --stop-signal=SIGRTMIN+3 \
+  # --tmpfs /run:size=100M --tmpfs /run/lock:size=100M \
+  # -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 	printf "\n\n running docker \n"
 	docker run $DNAME \
-  --tmpfs /run:size=100M --tmpfs /run/lock:size=100M \
-  -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 	/bin/bash -c "echo 'nameserver 172.16.251.1'>/etc/resolv.conf; \
 	echo '172.16.251.23 repo.aisits.id argo'>>/etc/hosts; apt update; \
 	apt install git; rm -rf /tb2/build; \
 	git clone https://github.com/steamboatid/dkbuild /tb2/build; \
 	/bin/bash /tb2/build/dk-init-debian.sh &&\
 	/bin/bash /tb2/build/zins.sh"
-
 }
 
-build_docker "bullseye"
+build_docker "bookworm"
