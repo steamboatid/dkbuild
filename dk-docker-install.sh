@@ -74,7 +74,7 @@ deb http://repo.aisits.id/debian buster-updates main contrib non-free \n\
 deb http://repo.aisits.id/debian buster-proposed-updates main contrib non-free \n\
 '>/etc/apt/sources.list; \
 apt update; apt install -fy locales apt-utils; dpkg-reconfigure locales; \
-apt install -fy git net-tools dnsutils init
+apt install -fy git net-tools dnsutils
 
 ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UTF-8'
 ">Dockerfile
@@ -86,7 +86,7 @@ ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UT
 docker rm -f $(docker ps -aq)
 
 docker build --no-cache --network host --force-rm \
--t busterdocker:latest -f ./Dockerfile
+-t busterdocker:latest -f ./Dockerfile .
 
 # docker run -it -v /sys/fs/cgroup/:/sys/fs/cgroup:ro --cap-add SYS_ADMIN \
 # --name busdock busterdocker:latest /sbin/init
