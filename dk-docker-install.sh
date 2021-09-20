@@ -78,8 +78,9 @@ RUN mkdir -p /tb2
 RUN printf '\
 deb http://repo.aisits.id/debian ${RELNAME} main contrib non-free \n\
 '>/etc/apt/sources.list; \
-apt update; apt install -fy locales apt-utils netbase; dpkg-reconfigure locales; \
-apt install -fy git net-tools dnsutils
+apt update; apt install -fy locales apt-utils netbase
+RUN dpkg-reconfigure locales
+RUN apt install -fy git net-tools dnsutils
 
 ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UTF-8'
 RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
