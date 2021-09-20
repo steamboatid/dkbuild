@@ -74,15 +74,22 @@ deb http://repo.aisits.id/debian buster-updates main contrib non-free \n\
 deb http://repo.aisits.id/debian buster-proposed-updates main contrib non-free \n\
 '>/etc/apt/sources.list; \
 apt update; apt install -fy locales apt-utils; dpkg-reconfigure locales; \
-apt install -fy git net-tools dnsutils
+apt install -fy git net-tools dnsutils init systemd
 
 ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UTF-8'
-RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
-/bin/bash /tb2/build/dk-init-debian.sh
 
 ">Dockerfile
 
+# RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
+# /bin/bash /tb2/build/dk-init-debian.sh
 #  && /bin/bash /tb2/build/zins.sh
 
+docker rm -f $(docker ps -aq)
+
 docker build --no-cache --network host --force-rm \
--t busdocker:latest -f ./Dockerfile  .
+-t busterdocker:latest -f ./Dockerfile  .
+
+docker run -it -v /sys/fs/cgroup/:/sys/fs/cgroup:ro --cap-add SYS_ADMIN \
+--name busdock busterdocker:latest /sbin/init
+
+# docker exec -it --name busdock bash
