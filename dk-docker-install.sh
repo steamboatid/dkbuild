@@ -68,7 +68,7 @@ RUN mkdir -p /tb2; echo 'nameserver 1.1.1.1' > /etc/resolv.conf; cat /etc/resolv
 ip a; ip r; ping 1.1.1.1 -c3; ping yahoo.com -c3
 
 RUN printf '\
-deb http://repo.aisits.id/debian ${RELNAME} main contrib non-free
+deb http://repo.aisits.id/debian ${RELNAME} main contrib non-free \n\
 '>/etc/apt/sources.list; \
 apt update; apt install -fy locales apt-utils; dpkg-reconfigure locales; \
 apt install -fy git net-tools dnsutils
