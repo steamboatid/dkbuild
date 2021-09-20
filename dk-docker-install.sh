@@ -122,4 +122,4 @@ lsb-release net-tools dnsutils
 	/bin/bash /tb2/build/zins.sh"
 }
 
-build_docker "bookworm"
+build_docker "buster"
