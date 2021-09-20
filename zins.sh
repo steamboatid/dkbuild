@@ -148,7 +148,7 @@ netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 
 # workaround for keydb-server
 if [[ $(dpkg -l | grep "^ii" | grep "keydb\-server" | wc -l) -lt 1 ]]; then
-	rm /var/lib/dpkg/info/keydb-server.*
+	rm -rf /var/lib/dpkg/info/keydb-server.*
 	dpkg --configure -a
 	apt install -fy
 fi

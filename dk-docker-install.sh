@@ -71,7 +71,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UTF-8'
 
 WORKDIR /tb2
-RUN mkdir -p /tb2
+RUN mkdir -p /tb2; export RUNLEVEL=2; echo 'export RUNLEVEL=1' >> ~/.bashrc; source ~/.bashrc
 # RUN echo 'nameserver 1.1.1.1' > /etc/resolv.conf; cat /etc/resolv.conf; \
 # ip a; ip r; ping 1.1.1.1 -c3; ping yahoo.com -c3
 
@@ -80,7 +80,7 @@ deb http://repo.aisits.id/debian ${RELNAME} main contrib non-free \n\
 deb http://repo.aisits.id/debian ${RELNAME}-proposed-updates main contrib non-free \n\
 deb http://repo.aisits.id/debian ${RELNAME}-backports main contrib non-free \n\
 '>/etc/apt/sources.list; \
-apt update; apt install -fy locales apt-utils netbase git
+apt update; apt install -fy locales apt-utils netbase git init
 RUN dpkg-reconfigure locales
 # RUN apt install -fy git
 
@@ -91,7 +91,7 @@ RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 
 ">Dockerfile
 
-	docker rm -f $(docker ps -aq)
+	docker rm -f $(docker ps -aq) >/dev/null 2>&1
 
 	DIST="debian:${RELNAME}"
 	back_pull $DIST &
@@ -103,8 +103,18 @@ RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 
 	docker pull debian:${RELNAME}
 
+	DNAME="${RELNAME}docker"
 	docker build --no-cache --network host --force-rm \
-	-t busterdocker:latest -f ./Dockerfile .
+	-t $DNAME:latest -f ./Dockerfile .
+
+	docker run -it $DNAME \
+	/bin/bash -c "echo 'nameserver 172.16.251.1'>/etc/resolv.conf; \
+	echo '172.16.251.23 repo.aisits.id argo'>>/etc/hosts; apt update; \
+	apt install git; rm -rf /tb2/build; \
+	git clone https://github.com/steamboatid/dkbuild /tb2/build; \
+	/bin/bash /tb2/build/dk-init-debian.sh &&\
+	/bin/bash /tb2/build/zins.sh"
+
 }
 
 build_docker "bullseye"
