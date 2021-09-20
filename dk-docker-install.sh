@@ -52,12 +52,14 @@ sleep 0.5
 
 # create Dockerfile
 #-------------------------------------------
-DOCBASE="${HOME}/docker-${RELNAME}"
-mkdir -p $DOCBASE
-cd $DOCBASE
+build_docker() {
+	RELNAME=$1
+	DOCBASE="${HOME}/docker-${RELNAME}"
+	mkdir -p $DOCBASE
+	cd $DOCBASE
 
->Dockerfile
-echo \
+	>Dockerfile
+	echo \
 "FROM debian:${RELNAME}
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -80,9 +82,9 @@ RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 
 ">Dockerfile
 
-# deb http://repo.aisits.id/debian-security buster/updates main contrib non-free \n\
+	docker rm -f $(docker ps -aq)
+	docker build --no-cache --network host --force-rm \
+	-t busterdocker:latest -f ./Dockerfile .
+}
 
-
-docker rm -f $(docker ps -aq)
-docker build --no-cache --network host --force-rm \
--t busterdocker:latest -f ./Dockerfile .
+build_docker "bullseye"
