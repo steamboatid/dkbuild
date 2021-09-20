@@ -109,9 +109,9 @@ lsb-release net-tools dnsutils
 	-t $DNAME:latest -f ./Dockerfile .
 
 	sleep 1
+	# --stop-signal=SIGRTMIN+3 \
 	printf "\n\n running docker \n"
 	docker run $DNAME \
-	--stop-signal=SIGRTMIN+3 \
   --tmpfs /run:size=100M --tmpfs /run/lock:size=100M \
   -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
 	/bin/bash -c "echo 'nameserver 172.16.251.1'>/etc/resolv.conf; \
