@@ -103,9 +103,9 @@ RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 
 	docker pull debian:${RELNAME}
 
-	DNAME="${RELNAME}docker"
-	docker build --no-cache --network host --force-rm \
-	-t $DNAME:latest -f ./Dockerfile .
+	# DNAME="${RELNAME}docker"
+	# docker build --no-cache --network host --force-rm \
+	# -t $DNAME:latest -f ./Dockerfile .
 
 	sleep 1
 	printf "\n\n running docker \n"
