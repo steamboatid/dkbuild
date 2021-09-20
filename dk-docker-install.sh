@@ -52,6 +52,9 @@ sleep 0.5
 
 # create Dockerfile
 #-------------------------------------------
+back_pull() {
+	nohup docker pull $1 >/dev/null 2>&1 &
+}
 build_docker() {
 	RELNAME=$1
 	DOCBASE="${HOME}/docker-${RELNAME}"
@@ -84,8 +87,15 @@ RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 
 	docker rm -f $(docker ps -aq)
 
-	docker pull debian:${RELNAME} || docker pull debian:${RELNAME} || docker pull debian:${RELNAME} ||\
-	docker pull debian:${RELNAME} || docker pull debian:${RELNAME} || docker pull debian:${RELNAME}
+	DIST="debian:${RELNAME}"
+	back_pull $DIST &
+	back_pull $DIST &
+	back_pull $DIST &
+	back_pull $DIST &
+	back_pull $DIST &
+	wait
+
+	docker pull debian:${RELNAME}
 
 	docker build --no-cache --network host --force-rm \
 	-t busterdocker:latest -f ./Dockerfile .
