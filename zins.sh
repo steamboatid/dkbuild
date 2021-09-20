@@ -212,10 +212,19 @@ fi
 printf "\n--- Output of ${yel}php -v${end} \n"
 php -v
 
+# restart using rc
+[ -x /etc/init.d/nutcracker ] && /etc/init.d/nutcracker restart
+[ -x /etc/init.d/nginx ] && /etc/init.d/nginx restart
+[ -x /etc/init.d/keydb-server ] && /etc/init.d/keydb-server restart
+[ -x /etc/init.d/php8.0-fpm ] && mkdir -p /run/php && /etc/init.d/php8.0-fpm restart
 
 # check netstat
 printf "\n--- Output of ${yel}netstat${end} \n"
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
+
+# check netstat
+printf "\n--- Output of ${yel}ps${end} \n"
+ps -e -o command | grep -v "grep\|pool\|worker" | sort -u | grep --color "nginx\|keydb\|nutcracker\|php"
 
 # check php custom
 NUMNON=$(dpkg -l | grep "^ii" | grep php8 | grep -v aisits | wc -l)
