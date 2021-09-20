@@ -71,7 +71,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UTF-8'
 
 WORKDIR /tb2
-RUN mkdir -p /tb2; export RUNLEVEL=2; echo 'export RUNLEVEL=1' >> ~/.bashrc; source ~/.bashrc
+RUN mkdir -p /tb2; export RUNLEVEL=2; echo 'export RUNLEVEL=1' >> ~/.bashrc
 # RUN echo 'nameserver 1.1.1.1' > /etc/resolv.conf; cat /etc/resolv.conf; \
 # ip a; ip r; ping 1.1.1.1 -c3; ping yahoo.com -c3
 
