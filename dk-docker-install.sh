@@ -53,8 +53,10 @@ sleep 0.5
 # create Dockerfile
 #-------------------------------------------
 back_pull() {
+	HTTPS_PROXY="172.16.251.23:3128" HTTP_PROXY="172.16.251.23:3128" \
 	nohup docker pull $1 >/dev/null 2>&1 &
 }
+
 build_docker() {
 	RELNAME=$1
 	DOCBASE="${HOME}/docker-${RELNAME}"
