@@ -108,8 +108,8 @@ RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 	-t $DNAME:latest -f ./Dockerfile .
 
 	sleep 1
-	printf "\n\n running docker "
-	docker run -it $DNAME \
+	printf "\n\n running docker \n"
+	docker run $DNAME \
 	/bin/bash -c "echo 'nameserver 172.16.251.1'>/etc/resolv.conf; \
 	echo '172.16.251.23 repo.aisits.id argo'>>/etc/hosts; apt update; \
 	apt install git; rm -rf /tb2/build; \
