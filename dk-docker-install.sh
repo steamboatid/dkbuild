@@ -78,7 +78,7 @@ RUN mkdir -p /tb2
 RUN printf '\
 deb http://repo.aisits.id/debian ${RELNAME} main contrib non-free \n\
 '>/etc/apt/sources.list; \
-apt update; apt install -fy locales apt-utils; dpkg-reconfigure locales; \
+apt update; apt install -fy locales apt-utils perl-base; dpkg-reconfigure locales; \
 apt install -fy git net-tools dnsutils
 
 ENV LANG='en_US.UTF-8 UTF-8' LANGUAGE='en_US.UTF-8 UTF-8' LC_ALL='en_US.UTF-8 UTF-8'
