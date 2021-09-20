@@ -83,6 +83,10 @@ RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 ">Dockerfile
 
 	docker rm -f $(docker ps -aq)
+
+	docker pull debian:${RELNAME} || docker pull debian:${RELNAME} || docker pull debian:${RELNAME} ||\
+	docker pull debian:${RELNAME} || docker pull debian:${RELNAME} || docker pull debian:${RELNAME}
+
 	docker build --no-cache --network host --force-rm \
 	-t busterdocker:latest -f ./Dockerfile .
 }
