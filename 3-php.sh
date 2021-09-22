@@ -207,7 +207,7 @@ echo \
 --enable-tokenizer \
 --with-iconv \
 \
---enable-zts --enable-rtld-now --enable-sigchild \
+--enable-zts \
 --enable-opcache --enable-opcache-jit --enable-opcache-file --enable-huge-code-pages \
 \
 $(cat debops) \
@@ -215,6 +215,7 @@ $(cat moreops) \
 \
 2>&1 | tee dkconf.log
 
+# --enable-zts --enable-rtld-now --enable-sigchild \
 
 bads=$(cat dkconf.log | grep -iv "warning" | grep -i "mcrypt\|vips\|uuid\|gearman" | wc -l)
 if [[ $bads -lt 1 ]]; then
