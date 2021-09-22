@@ -98,46 +98,46 @@ copy_extra_mods
 --with-sodium \
 --enable-soap --with-libxml \
 \
---enable-posix=shared \
+--enable-posix \
 --disable-debug \
 --disable-phpdbg \
 --disable-rpath \
---enable-calendar=shared \
---enable-ctype=shared \
+--enable-calendar \
+--enable-ctype \
 --enable-dom \
---enable-exif=shared \
---enable-fileinfo=shared \
---enable-filter=shared \
---enable-ftp=shared \
---with-openssl=shared --with-openssl-dir=/usr \
---enable-hash=shared \
---enable-inotify=shared \
---enable-phar=shared \
---enable-session=shared \
---enable-shmop=shared \
---enable-sockets=shared \
---enable-sysvmsg=shared \
---enable-sysvsem=shared \
---enable-sysvshm=shared \
---enable-xml=shared \
+--enable-exif \
+--enable-fileinfo \
+--enable-filter \
+--enable-ftp \
+--with-openssl --with-openssl-dir=/usr \
+--enable-hash \
+--enable-inotify \
+--enable-phar \
+--enable-session \
+--enable-shmop \
+--enable-sockets \
+--enable-sysvmsg \
+--enable-sysvsem \
+--enable-sysvshm \
+--enable-xml \
 --localstatedir=/var \
 --mandir=/usr/share/man \
 \
 --with-external-pcre \
---with-ffi=shared \
---with-gettext=shared \
+--with-ffi \
+--with-gettext \
 --with-layout=GNU \
---with-libxml=shared \
---with-mhash=shared \
---with-password-argon2=shared \
---with-pear=shared \
---with-pic=shared \
---with-sodium=shared \
---with-system-tzdata=shared \
+--with-libxml \
+--with-mhash \
+--with-password-argon2 \
+--with-pear \
+--with-pic \
+--with-sodium \
+--with-system-tzdata \
 --with-zlib-dir=/usr \
---with-zlib=shared \
+--with-zlib \
 --enable-tokenizer \
---with-iconv=shared \
+--with-iconv \
 \
 --enable-opcache --enable-opcache-file --enable-huge-code-pages \
 \
