@@ -4,7 +4,7 @@
 BASE="/root/src/php8/php8.0-8.0.10"
 cd $BASE
 
-rm -rf configure*
+rm -rf configure* build debian
 
 
 printf "\ncopy from ~/org.src \n"
@@ -145,7 +145,7 @@ dh clean
 # autoreconf --force --install --verbose
 # libtoolize && aclocal && autoconf
 if ! dh_auto_configure; then printf "\n\n\n--- dh_auto_configure failed \n\n\n"; exit 0; fi
-if ! dh build; then printf "\n\n\n--- dh build failed \n\n\n"; exit 0; fi
+if ! dh binary; then printf "\n\n\n--- dh build failed \n\n\n"; exit 0; fi
 
 # bash /tb2/build/dk-build-full.sh
 
