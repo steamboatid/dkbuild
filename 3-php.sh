@@ -48,10 +48,12 @@ copy_extra_mods() {
 >debops
 for afile in $(find /root/src/php8/php8.0-8.0.10/debian/rules.d -type f | grep -v "prepare"); do
 	cat $afile | grep "with\|enable" | sed -r "s/\://g" | sed -r "s/\+//g" | sed -r "s/\s+/ /g" |\
-	sed -r "s/\\\//g" | sed "s/^\s//g" | sed -r "s/(.*)_config = //g" >> debops
+	sed -r "s/\\\//g" | sed "s/^\s//g" | sed -r "s/(.*)_config = //g" | \
+	sed -r "s/\=shared\,/\=/g" | sed -r "s/\=shared//g" >> debops
 done
 cat debops | tr "\n" " " | sed -r "s/\s+/ /g" | sed -r "s/ / \\\ \n/g" > debops.tmp
 mv debops.tmp debops
+# cat debops
 # exit 0;
 
 
