@@ -88,7 +88,7 @@ echo \
 --with-mcrypt=/usr
 --with-uuid=/usr
 --with-vips=/usr
-">extraops
+">moreops
 
 
 ./configure --enable-ftp --with-openssl --disable-cgi \
@@ -156,7 +156,7 @@ echo \
 --enable-opcache --enable-opcache-file --enable-huge-code-pages \
 \
 $(cat debops) \
-$(cat extraops) \
+$(cat moreops) \
 \
 2>&1 | tee dkconf.log
 
