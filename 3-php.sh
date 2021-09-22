@@ -45,6 +45,14 @@ copy_extra_mods() {
 	done
 }
 
+>debops
+for afile in $(find /root/src/php8/php8.0-8.0.10/debian/rules.d -type f | grep -v "prepare"); do
+	cat $afile | grep "with\|enable" | sed -r "s/\://g" | sed -r "s/\+//g" | sed -r "s/\s+/ /g" |\
+	sed -r "s/\\\//g" | sed "s/^\s//g" | sed -r "s/(.*)_config = //g" >> debops
+done
+cat debops | tr "\n" " " | sed -r "s/\s+/ /g" | sed -r "s/ / \\\ \n/g" > debops.tmp
+mv debops.tmp debops
+# exit 0;
 
 
 get_update_new_git "php/php-src" "/root/org.src/git-php"
@@ -83,7 +91,6 @@ copy_extra_mods
 --with-ldap \
 --enable-mbstring \
 --with-openssl \
---with-pdo-mysql \
 --with-pdo-mysql \
 --with-pspell \
 --with-readline \
@@ -131,6 +138,11 @@ copy_extra_mods
 --with-zlib=shared \
 --enable-tokenizer \
 --with-iconv=shared \
+\
+--enable-opcache --enable-opcache-file --enable-huge-code-pages \
+\
+$(cat debops) \
+\
 2>&1 | tee dkconf.log
 
 
@@ -166,3 +178,6 @@ else
 	printf "\n\n$doconf \n\n"
 	exit 0;
 fi
+
+
+sapi/cli/php -m
