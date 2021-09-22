@@ -93,33 +93,7 @@ echo \
 "
 
 # common_EXTENSIONS += mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary memcached redis dba
-common_EXTENSIONS += mcrypt vips uuid gearman apcu imagick msgpack igbinary memcached redis
-
-igbinary_config = --enable-igbinary=shared,/usr \
-	--enable-memcached-igbinary \
-	--enable-redis-igbinary
-
-msgpack_config = --with-msgpack=shared,/usr \
-	--enable-redis-msgpack \
-	--enable-memcached-msgpack
-
-memcached_config = --enable-memcached=shared,/usr \
-	--enable-memcached-json \
-	--enable-memcached-session \
-	--with-libmemcached-dir=/usr
-
-redis_config = --enable-redis=shared,/usr \
-	--enable-redis-zstd \
-	--enable-redis-session
-
-imagick_config = --with-imagick=shared,/usr
-
-apcu_config = --enable-apcu=shared,/usr \
-	--enable-apcu-mmap \
-	--enable-apcu-rwlocks \
-	--enable-redis-json \
-	--enable-apcu-clear-signal \
-	--enable-apcu-spinlocks
+common_EXTENSIONS += mcrypt vips uuid gearman
 
 mcrypt_config = --with-mcrypt=shared,/usr
 uuid_config = --with-uuid=shared,/usr
