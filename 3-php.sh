@@ -217,16 +217,17 @@ doconf="./configure \
 --with-iconv \
 \
 --enable-zts --enable-rtld-now --enable-sigchild \
---enable-opcache --enable-opcache-jit --enable-opcache-file --enable-huge-code-pages"
+--enable-opcache --enable-opcache-jit --enable-opcache-file --enable-huge-code-pages \
+"
 
 
 debops=$(cat debops)
 moreops=$(cat moreops)
 doconf="${doconf} ${debops} ${moreops}"
 printf "\n\n$doconf \n\n"
-exit 0;
+# exit 0;
 
-
+eval $doconf 2>&1 | tee dkconf.log
 
 bads=$(cat dkconf.log | grep -iv "warning" | grep -i "mcrypt\|vips\|uuid\|gearman" | wc -l)
 if [[ $bads -lt 1 ]]; then
