@@ -104,6 +104,27 @@ echo \
 --with-http=/usr \
 ">moreops
 
+echo \
+"--with-gearman \
+--with-mcrypt \
+--with-uuid \
+--with-vips \
+--enable-raphf \
+--enable-apcu \
+--enable-igbinary \
+--with-imagick \
+--enable-memcached \
+--with-libmemcached-dir \
+--enable-memcached-session \
+--enable-memcached-igbinary \
+--enable-memcached-json \
+--enable-memcached-msgpack \
+--with-msgpack \
+--with-http \
+">moreops
+
+
+
 ./buildconf -f
 ./configure --enable-ftp --with-openssl --disable-cgi \
 --enable-bcmath \
@@ -193,6 +214,9 @@ if [[ $bads -lt 1 ]]; then
 fi
 cat dkconf.log | grep -iv "warning" | grep -i --color "mcrypt\|vips\|uuid\|gearman"
 cat dkconf.log | grep -iv "warning" | grep -i --color "apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached\|redis"
+cat dkconf.log | grep -iv "warning" | \
+grep -i --color "apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached\|redis\|mcrypt\|vips\|uuid\|gearman" | \
+grep -i --color " no"
 exit 0;
 
 
