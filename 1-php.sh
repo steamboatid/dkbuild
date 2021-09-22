@@ -123,6 +123,7 @@ ln -sf /usr/lib /opt/dba/lib
 # debian/rules mods
 sed -i -r "s/apache2 phpdbg embed fpm cgi cli/fpm cli/g" debian/rules
 sed -i -r "s/amd64 i386 arm64/amd64/g" debian/rules
+sed -i -r "s/\-pedantic//g" debian/rules
 # sed -i -r "s/\.\/buildconf --force/autoreconf --force --install --verbose\n  \.\/buildconf --force/g" debian/rules
 # sed -i -r "s///g" debian/rules
 
@@ -158,4 +159,4 @@ rm -rf debian/libphp-embed* debian/libapache2-mod*
 printf "\n\n"
 
 bash /tb2/build/dk-build-full.sh
-
+# make -j6

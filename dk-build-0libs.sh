@@ -118,16 +118,56 @@ chmod +x /usr/local/sbin/aptnew
 #-------------------------------------------
 reset_build_flags() {
 	echo \
-"STRIP CFLAGS -O2 -g
-#STRIP CPPFLAGS -O2 -g
-#STRIP CXXFLAGS -O2 -g
-STRIP LDFLAGS -O2 -g
+"STRIP CFLAGS -O2 -g -pedantic
+STRIP CPPFLAGS -O2 -g -pedantic
+STRIP CXXFLAGS -O2 -g -pedantic
+STRIP LDFLAGS -O2 -g -pedantic
 
 PREPEND CFLAGS -O3
-#PREPEND CPPFLAGS -O3
-#PREPEND CXXFLAGS -O3
+PREPEND CPPFLAGS -O3
+PREPEND CXXFLAGS -O3
 PREPEND LDFLAGS -Wl,-s
 ">/etc/dpkg/buildflags.conf
+}
+
+prepare_build_flags() {
+	AAA=`dpkg-buildflags --get CFLAGS`
+	GO2="-g -O2"
+	OPT3="-O3"
+	AAA="${AAA/$GO2/$OPT3}"
+	GO2="-O2"
+	OPT3="-O3"
+	CFLAGS="${AAA/$GO2/$OPT3}"
+	export CFLAGS
+	export EXTRA_CFLAGS=$CFLAGS
+	export DEB_CFLAGS_SET=$CFLAGS
+
+	LD=gcc
+	LDFLAGS="-Wl,-s ${CFLAGS} ${LDFLAGS}"
+	export LDFLAGS
+	export EXTRA_LDFLAGS=$LDFLAGS
+	export DEB_LDFLAGS_SET=$LDFLAGS
+
+	AR=gcc-ar
+	RANLIB=gcc-ranlib
+	echo $CFLAGS
+	echo $LDFLAGS
+
+	dpkg-buildflags --get CFLAGS
+	dpkg-buildflags --get LDFLAGS
+
+	export DEB_CFLAGS_STRIP="-g -O2"
+	export DEB_LDFLAGS_STRIP="-g -O2"
+
+
+	alias cd="cd -P"
+	export CCACHE_SLOPPINESS=include_file_mtime
+	export CC="/usr/bin/ccache /usr/bin/gcc"
+
+	mkdir -p /tb2/tmp/ccache /root/.ccache
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	/root/.ccache/ /tb2/tmp/ccache/
+	export CCACHE_BASEDIR="/tb2/tmp/ccache"
 }
 
 
@@ -292,3 +332,4 @@ save_local_debs() {
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
 }
+
