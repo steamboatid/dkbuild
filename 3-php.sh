@@ -1,6 +1,9 @@
 #!/bin/bash
 
 
+BASE="/root/src/git-php"
+cd $BASE
+
 export DEBIAN_FRONTEND="noninteractive"
 
 export DEBFULLNAME="Dwi Kristianto"
@@ -17,6 +20,31 @@ export TODATE=$(date +%Y%m%d)
 source /tb2/build/dk-build-0libs.sh
 reset_build_flags
 prepare_build_flags
+
+copy_extra_mods() {
+	mods=(mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary memcached)
+	# singles=(memcached)
+
+	finds=$(find /root/org.src/php8 -mindepth 2 -maxdepth 2 -type d | grep -v "debian\|\.pc\|bc" | sed -r "s/\s/\n/g" | sort)
+
+	for adir in "${mods[@]}"; do
+		adir=$(basename $adir)
+		nums=$(printf "$finds" | grep $adir | wc -l)
+		printf "\n nums=$nums  $adir "
+
+		dst_dir="$BASE/ext/$adir"
+
+		if [[ $nums -eq 1 ]]; then
+			ori_dir=$(printf "$finds" | grep $adir | head -n1)
+		elif [[ $nums -gt 1 ]]; then
+			ori_dir=$(printf "$finds" | grep $adir | tail -n1)
+		fi
+
+		printf "\n copy from $ori_dir --to-- $dst_dir \n\n"
+		cp $ori_dir $dst_dir -Rfa
+	done
+}
+
 
 
 get_update_new_git "php/php-src" "/root/org.src/git-php"
@@ -36,6 +64,10 @@ cd /root/src/git-php
 
 [ -e Makefile ] && make clean
 ./buildconf -f
+
+# copy extra mods
+copy_extra_mods
+
 
 ./configure --enable-ftp --with-openssl --disable-cgi \
 --enable-bcmath \
