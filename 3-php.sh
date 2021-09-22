@@ -45,9 +45,9 @@ copy_extra_mods() {
 	done
 
 	printf "\n---copy redis \n"
-	dst_dir="$BASE/ext/redis"
+	dst_dir="$BASE/ext/redis/"
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
-	/root/org.src/php8/git-phpredis $dst_dir
+	/root/org.src/php8/git-phpredis/* $dst_dir
 }
 
 >debops
