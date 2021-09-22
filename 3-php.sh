@@ -84,10 +84,22 @@ cd /root/src/git-php
 copy_extra_mods
 
 echo \
-"--with-gearman=/usr
---with-mcrypt=/usr
---with-uuid=/usr
---with-vips=/usr
+"--with-gearman=/usr \
+--with-mcrypt=/usr \
+--with-uuid=/usr \
+--with-vips=/usr \
+--enable-raphf=/usr \
+--enable-apcu=/usr \
+--enable-igbinary=/usr \
+--with-imagick=/usr \
+--enable-memcached=/usr \
+--with-libmemcached-dir=/usr \
+--enable-memcached-session \
+--enable-memcached-igbinary \
+--enable-memcached-json \
+--enable-memcached-msgpack \
+--with-msgpack=/usr \
+--with-http=/usr \
 ">moreops
 
 ./buildconf -f
@@ -167,7 +179,13 @@ if [[ $bads -lt 1 ]]; then
 	printf "\n\n configure failed \n\n"
 	exit 0;
 fi
+bads=$(cat dkconf.log | grep -iv "warning" | grep -i "apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached\|redis" | wc -l)
+if [[ $bads -lt 1 ]]; then
+	printf "\n\n configure failed \n\n"
+	exit 0;
+fi
 cat dkconf.log | grep -iv "warning" | grep -i "mcrypt\|vips\|uuid\|gearman"
+cat dkconf.log | grep -iv "warning" | grep -i "apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached\|redis"
 exit 0;
 
 
