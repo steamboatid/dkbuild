@@ -34,7 +34,7 @@ libssl-dev libxml2-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-d
 
 cd /root/src/git-php
 
-make clean
+[ -e Makefile ] && make clean
 ./buildconf -f
 
 ./configure --enable-ftp --with-openssl --disable-cgi \
