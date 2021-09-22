@@ -118,15 +118,15 @@ chmod +x /usr/local/sbin/aptnew
 #-------------------------------------------
 reset_build_flags() {
 	echo \
-"STRIP CFLAGS -O2 -g -pedantic
-STRIP CPPFLAGS -O2 -g -pedantic
-STRIP CXXFLAGS -O2 -g -pedantic
-STRIP LDFLAGS -O2 -g -pedantic
+"STRIP CFLAGS -O2 -pedantic
+STRIP CPPFLAGS -O2 -pedantic
+STRIP CXXFLAGS -O2 -pedantic
+STRIP LDFLAGS -O2 -pedantic
 
 PREPEND CFLAGS -O3
 PREPEND CPPFLAGS -O3
 PREPEND CXXFLAGS -O3
-PREPEND LDFLAGS -Wl,-s
+# PREPEND LDFLAGS -Wl,-s
 ">/etc/dpkg/buildflags.conf
 }
 
@@ -144,7 +144,7 @@ prepare_build_flags() {
 
 	LD=gcc
 	# LDFLAGS="-Wl,-s -pthread ${CFLAGS} ${LDFLAGS}"
-	LDFLAGS="-pthread ${CFLAGS} ${LDFLAGS}"
+	LDFLAGS="${CFLAGS} ${LDFLAGS}"
 	export LDFLAGS
 	export EXTRA_LDFLAGS=$LDFLAGS
 	export DEB_LDFLAGS_SET=$LDFLAGS
