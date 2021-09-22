@@ -98,7 +98,19 @@ cd /root/src/git-php
 --with-zlib-dir=/usr \
 --with-zlib=shared \
 --enable-tokenizer \
+2>&1 | tee dkconf.log
 
+
+
+
+if [[ $(tail -n30 dkconf.log | grep "Thank you for using PHP" | wc -l) -gt 0 ]]; then
+	printf "\n\n configure OK \n\n"
+	printf "\n\n$doconf \n\n"
+else
+	printf "\n\n configure failed \n\n"
+	printf "\n\n$doconf \n\n"
+	exit 0;
+fi
 
 
 
@@ -110,4 +122,14 @@ sed -i "s/noeneration-date/no-generation-date/g" Makefile
 find /root/src/git-php/ -type d -name ".libs" -exec rm -rf {} \;  >/dev/null
 find /root/src/git-php/ -type d -name ".libs" -exec rm -rf {} \;  >/dev/null
 
-make -j6
+
+printf "\n\n exec make \n"
+make -j6 | tee dkbuild.log
+oknum=$(tail dkbuild.log | grep "Build complete" | wc -l)
+if [[ $oknum -gt 0 ]]; then
+	printf "\n\n make OK \n\n"
+else
+	printf "\n\n make failed \n\n"
+	printf "\n\n$doconf \n\n"
+	exit 0;
+fi
