@@ -126,20 +126,20 @@ sed -i -r "s/amd64 i386 arm64/amd64/g" debian/rules
 sed -i -r "s/\.\/buildconf --force/autoreconf --force --install --verbose\n  \.\/buildconf --force/g" debian/rules
 # sed -i -r "s///g" debian/rules
 
-# 
-echo \
-"m4_include([/usr/share/aclocal/libtool.m4])
-m4_include([/usr/share/aclocal/ltoptions.m4])
-m4_include([/usr/share/aclocal/ltsugar.m4])
-m4_include([/usr/share/aclocal/ltversion.m4])
-m4_include([/usr/share/aclocal/lt~obsolete.m4])
-">build/aclocal.m4
-echo \
-"m4_include([build/aclocal.m4])
-AC_CONFIG_MACRO_DIRS([m4])
+# configure.ac. mods
+# echo \
+# "m4_include([/usr/share/aclocal/libtool.m4])
+# m4_include([/usr/share/aclocal/ltoptions.m4])
+# m4_include([/usr/share/aclocal/ltsugar.m4])
+# m4_include([/usr/share/aclocal/ltversion.m4])
+# m4_include([/usr/share/aclocal/lt~obsolete.m4])
+# ">build/aclocal.m4
+# echo \
+# "m4_include([build/aclocal.m4])
+# AC_CONFIG_MACRO_DIRS([m4])
 
-">extras-m4
-sed -i '/m4_include(\[build\/ax_check/e cat extras-m4' configure.ac
+# ">extras-m4
+# sed -i '/m4_include(\[build\/ax_check/e cat extras-m4' configure.ac
 
 dh clean
 # autoreconf --force --install --verbose
