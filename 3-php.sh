@@ -226,6 +226,7 @@ doconf="./configure \
 debops=$(cat debops)
 moreops=$(cat moreops)
 doconf="${doconf} ${debops} ${moreops}"
+doconf=$(printf "$doconf" | tr "\\" "")
 printf "\n\n$doconf \n\n"
 exit 0;
 
