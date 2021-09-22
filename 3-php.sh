@@ -147,10 +147,9 @@ echo \
 ./buildconf -f
 ./configure --enable-ftp --with-openssl --disable-cgi \
 --enable-bcmath \
---enable-bcmath \
 --with-curl \
 --enable-exif \
---with-ffi=shared \
+--with-ffi \
 --enable-ftp \
 --enable-gd --with-webp --with-jpeg --with-webp --without-avif \
 --with-gmp \
