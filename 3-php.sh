@@ -264,7 +264,7 @@ find /root/src/git-php/ -type d -name ".libs" -exec rm -rf {} \;  >/dev/null
 
 
 printf "\n\n exec make \n"
-make -j6 | tee dkbuild.log
+LIBS=-ldl make -j6 | tee dkbuild.log
 oknum=$(tail dkbuild.log | grep "Build complete" | wc -l)
 if [[ $oknum -gt 0 ]]; then
 	printf "\n\n make OK \n\n"

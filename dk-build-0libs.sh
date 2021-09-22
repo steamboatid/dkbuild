@@ -143,7 +143,8 @@ prepare_build_flags() {
 	export DEB_CFLAGS_SET=$CFLAGS
 
 	LD=gcc
-	LDFLAGS="-Wl,-s ${CFLAGS} ${LDFLAGS}"
+	# LDFLAGS="-Wl,-s -pthread ${CFLAGS} ${LDFLAGS}"
+	LDFLAGS="-pthread ${CFLAGS} ${LDFLAGS}"
 	export LDFLAGS
 	export EXTRA_LDFLAGS=$LDFLAGS
 	export DEB_LDFLAGS_SET=$LDFLAGS
