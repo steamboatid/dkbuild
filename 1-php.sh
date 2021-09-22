@@ -141,7 +141,7 @@ AC_CONFIG_MACRO_DIRS([m4])
 ">extras-m4
 sed -i '/m4_include(\[build\/ax_check/e cat extras-m4' configure.ac
 
-# dh clean
+dh clean
 # autoreconf --force --install --verbose
 # libtoolize && aclocal && autoconf
 # if ! dh_auto_configure; then printf "\n\n\n--- dh_auto_configure failed \n\n\n"; exit 0; fi
