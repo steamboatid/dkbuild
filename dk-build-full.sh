@@ -24,6 +24,9 @@ prepare_build_flags
 
 echo $CFLAGS
 echo $LDFLAGS
+dpkg-buildflags --get CFLAGS
+dpkg-buildflags --get LDFLAGS
+
 
 
 [ -e debian/rules ] && chmod +x debian/rules

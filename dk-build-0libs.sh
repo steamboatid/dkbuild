@@ -151,9 +151,6 @@ prepare_build_flags() {
 	AR=gcc-ar
 	RANLIB=gcc-ranlib
 
-	dpkg-buildflags --get CFLAGS
-	dpkg-buildflags --get LDFLAGS
-
 	export DEB_CFLAGS_STRIP="-g -O2"
 	export DEB_LDFLAGS_STRIP="-g -O2"
 
