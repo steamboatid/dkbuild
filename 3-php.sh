@@ -114,16 +114,17 @@ echo \
 ">moreops
 
 
-# --with-gearman \
-# --enable-memcached-igbinary \
-# --enable-redis-igbinary \
-# --enable-igbinary \
-# --with-imagick \
 
 echo \
 "--with-mcrypt \
 --with-uuid \
 --with-vips \
+\
+--with-gearman \
+--enable-memcached-igbinary \
+--enable-redis-igbinary \
+--enable-igbinary \
+--with-imagick \
 \
 --enable-raphf \
 --enable-apcu \
@@ -206,7 +207,7 @@ echo \
 --enable-tokenizer \
 --with-iconv \
 \
---enable-zts --enable-rtld-now --enable-sigchild --enable-werror --with-gnu-ld \
+--enable-zts --enable-rtld-now --enable-sigchild --with-gnu-ld \
 --enable-opcache --enable-opcache-jit --enable-opcache-file --enable-huge-code-pages \
 \
 $(cat debops) \
