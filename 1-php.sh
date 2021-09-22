@@ -89,29 +89,29 @@ cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
 
 
 
-echo \
-"
+# echo \
+# "
 
-# common_EXTENSIONS += mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary memcached redis dba
-common_EXTENSIONS += mcrypt vips uuid gearman
+# # common_EXTENSIONS += mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary memcached redis dba
+# common_EXTENSIONS += mcrypt vips uuid gearman
 
-mcrypt_config = --with-mcrypt=shared,/usr
-uuid_config = --with-uuid=shared,/usr
-vips_config = --with-vips=shared,/usr
-gearman_config = --with-gearman=shared,/usr
+# mcrypt_config = --with-mcrypt=shared,/usr
+# uuid_config = --with-uuid=shared,/usr
+# vips_config = --with-vips=shared,/usr
+# gearman_config = --with-gearman=shared,/usr
 
-common_EXTENSIONS += dba opcache
-dba_config = --disable-dba
+# common_EXTENSIONS += dba opcache
+# dba_config = --disable-dba
 
-opcache_config = --enable-opcache --enable-opcache-file --enable-huge-code-pages
+# opcache_config = --enable-opcache --enable-opcache-file --enable-huge-code-pages
 
-export pdo_PRIORITY
-export common_EXTENSIONS
+# export pdo_PRIORITY
+# export common_EXTENSIONS
 
-">>$BASE/debian/rules.d/ext-common.mk
+# ">>$BASE/debian/rules.d/ext-common.mk
 
-cat $BASE/debian/rules.d/ext-common.mk
-rm -rf $BASE/debian/rules.d/ext-dba.mk
+# cat $BASE/debian/rules.d/ext-common.mk
+# rm -rf $BASE/debian/rules.d/ext-dba.mk
 
 
 # speacial for dba
@@ -141,10 +141,10 @@ AC_CONFIG_MACRO_DIRS([m4])
 ">extras-m4
 sed -i '/m4_include(\[build\/ax_check/e cat extras-m4' configure.ac
 
-dh clean
-autoreconf --force --install --verbose
-libtoolize && aclocal && autoconf
-if ! dh_auto_configure; then printf "\n\n\n--- dh_auto_configure failed \n\n\n"; exit 0; fi
+# dh clean
+# autoreconf --force --install --verbose
+# libtoolize && aclocal && autoconf
+# if ! dh_auto_configure; then printf "\n\n\n--- dh_auto_configure failed \n\n\n"; exit 0; fi
 # if ! dh build; then printf "\n\n\n--- dh build failed \n\n\n"; exit 0; fi
 
 bash /tb2/build/dk-build-full.sh
