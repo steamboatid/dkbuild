@@ -144,8 +144,8 @@ sed -i -r "s/amd64 i386 arm64/amd64/g" debian/rules
 dh clean
 # autoreconf --force --install --verbose
 # libtoolize && aclocal && autoconf
-# if ! dh_auto_configure; then printf "\n\n\n--- dh_auto_configure failed \n\n\n"; exit 0; fi
-# if ! dh build; then printf "\n\n\n--- dh build failed \n\n\n"; exit 0; fi
+if ! dh_auto_configure; then printf "\n\n\n--- dh_auto_configure failed \n\n\n"; exit 0; fi
+if ! dh build; then printf "\n\n\n--- dh build failed \n\n\n"; exit 0; fi
 
-bash /tb2/build/dk-build-full.sh
+# bash /tb2/build/dk-build-full.sh
 
