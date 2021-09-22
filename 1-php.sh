@@ -142,10 +142,20 @@ sed -i -r "s/amd64 i386 arm64/amd64/g" debian/rules
 # sed -i '/m4_include(\[build\/ax_check/e cat extras-m4' configure.ac
 
 dh clean
+fakeroot debian/rules clean
+
 # autoreconf --force --install --verbose
 # libtoolize && aclocal && autoconf
 # if ! dh_auto_configure; then printf "\n\n\n--- dh_auto_configure failed \n\n\n"; exit 0; fi
 # if ! dh binary; then printf "\n\n\n--- dh build failed \n\n\n"; exit 0; fi
 
-# bash /tb2/build/dk-build-full.sh
+types=(apache2 phpdbg embed cgi dev)
+for atype in "${types[@]}"; do
+	printf "\ndelete debian/php-$atype*"
+	rm -rf debian/php-$atype*
+done
+rm -rf debian/libphp-embed* debian/libapache2-mod*
+printf "\n\n"
+
+bash /tb2/build/dk-build-full.sh
 
