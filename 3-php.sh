@@ -184,8 +184,13 @@ if [[ $bads -lt 1 ]]; then
 	printf "\n\n configure failed \n\n"
 	exit 0;
 fi
-cat dkconf.log | grep -iv "warning" | grep -i "mcrypt\|vips\|uuid\|gearman"
-cat dkconf.log | grep -iv "warning" | grep -i "apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached\|redis"
+bads=$(cat dkconf.log | grep -iv "warning" | grep -i "redis" | wc -l)
+if [[ $bads -lt 1 ]]; then
+	printf "\n\n configure failed \n\n"
+	exit 0;
+fi
+cat dkconf.log | grep -iv "warning" | grep -i --color "mcrypt\|vips\|uuid\|gearman"
+cat dkconf.log | grep -iv "warning" | grep -i --color "apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached\|redis"
 exit 0;
 
 
