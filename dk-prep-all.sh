@@ -26,8 +26,9 @@ fix_keydb_permission_problem
 purge_pending_installs
 
 # delete unpacked folders
-mkdir -p /root/org.src
+mkdir -p /root/org.src /root/src
 find /root/org.src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
+find /root/src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
 
 # prepare basic need: apt configs, sources list, etc
 #-------------------------------------------
@@ -52,8 +53,9 @@ webp libwebp-dev libgeoip-dev lua-geoip-dev \
 libluajit*dev luajit \
 webp libwebp-dev libgeoip-dev lua-geoip-dev libsodium-dev
 
-apt build-dep -fy nginx lua-resty-core lua-resty-lrucache libpcre3 libsodium-dev
-aptold install -fy --fix-broken  --allow-downgrades --allow-change-held-packages
+aptold build-dep -fydu nginx lua-resty-core lua-resty-lrucache libpcre3 libsodium-dev
+aptold install -fydu --fix-broken  --allow-downgrades --allow-change-held-packages
+save_local_debs
 
 
 #--- recreate dir, delete debs
@@ -141,7 +143,7 @@ libpng*dev libdb5*-dev libfreetype*dev libxft*dev libgdchart-gd2-xpm-dev freetds
 libdb5*dev libdb4*dev libdn*dev libidn*dev libomp-dev
 
 
-apt build-dep -fy php8.0 php-defaults \
+aptold build-dep -fy php8.0 php-defaults \
 php8.0-cli php8.0-fpm php8.0-common php8.0-curl php8.0-fpm php8.0-gd \
 php8.0-bcmath php8.0-bz2 php8.0-gmp php8.0-ldap php8.0-mbstring php8.0-mysql \
 php8.0-opcache php8.0-readline php8.0-soap php8.0-tidy php8.0-xdebug php8.0-xml php8.0-xsl php8.0-zip \
@@ -182,7 +184,7 @@ get_update_new_git "steamboatid/phpredis" "/root/src/php8/git-phpredis"
 #-------------------------------------------
 killall -9 keydb-server 2>&1 >/dev/null
 aptold install -fy build-essential nasm autotools-dev autoconf libjemalloc-dev tcl tcl-dev uuid-dev libcurl4-openssl-dev
-apt build-dep -fy keydb-server keydb-tools
+aptold build-dep -fy keydb-server keydb-tools
 aptold install -fy keydb-server keydb-tools
 
 # fix keyd perm
@@ -216,7 +218,7 @@ get_update_new_git "steamboatid/keydb" "/root/src/keydb/git-keydb"
 # NUTCRACKER, source via git
 #-------------------------------------------
 aptold install -fy build-essential fakeroot devscripts libyaml-dev libyaml-0* doxygen nutcracker
-apt build-dep -fy nutcracker
+aptold build-dep -fy nutcracker
 
 #--- recreate dir, delete debs
 #-------------------------------------------
@@ -232,7 +234,7 @@ get_update_new_git "steamboatid/nutcracker" "/root/src/nutcracker/git-nutcracker
 # libzip, source via git
 #-------------------------------------------
 aptold install -fy build-essential fakeroot devscripts liblzma*dev zlib1g*dev bzip2 libzip-dev libzip-dev
-apt build-dep -fy libzip4
+aptold build-dep -fy libzip4
 
 #--- recreate dir, delete debs
 #-------------------------------------------
@@ -245,4 +247,5 @@ get_update_new_git "steamboatid/libzip" "/root/src/libzip/git-libzip"
 
 
 #--- last
+save_local_debs
 apt install -fy --auto-remove --purge

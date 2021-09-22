@@ -28,22 +28,90 @@ export cyan=$'\e[1;36m'
 export end=$'\e[0m'
 
 
-if [ ! -e /usr/local/sbin/aptold ]; then
+
+# aptold create and check (version3)
+#-------------------------------------------
+create_aptold() {
 	echo \
-'#!/bin/sh
-apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@"
+'#!/bin/bash
+# version3
+
+save_local_debs() {
+	mkdir -p /tb2/tmp/cachedebs/
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
+}
+
+str="$*"
+exs=0
+if [[ $str == *"du "* ]]; then exs=1; fi
+if [[ $str == *"fydu"* ]]; then exs=1; fi
+if [[ $str == *"yfdu"* ]]; then exs=1; fi
+if [[ $str == *"dufy"* ]]; then exs=1; fi
+if [[ $str == *"duyf"* ]]; then exs=1; fi
+# printf "\n $str \n$exs \n"
+
+if [[ $exs -lt 1 ]]; then
+	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@" -du
+	save_local_debs
+	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@"
+else
+	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@"
+	save_local_debs
+fi
 '>/usr/local/sbin/aptold
+}
+
+if [ ! -e /usr/local/sbin/aptold ]; then
+	create_aptold
+elif [[ $(grep "version3" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
+	create_aptold
 fi
 chmod +x /usr/local/sbin/aptold
 
 
-if [ ! -e /usr/local/sbin/aptnew ]; then
+
+# aptnew create and check (version3)
+#-------------------------------------------
+create_aptnew() {
 	echo \
-'#!/bin/sh
-apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@"
+'#!/bin/bash
+# version3
+
+save_local_debs() {
+	mkdir -p /tb2/tmp/cachedebs/
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
+}
+
+str="$*"
+exs=0
+if [[ $str == *"du "* ]]; then exs=1; fi
+if [[ $str == *"fydu"* ]]; then exs=1; fi
+if [[ $str == *"yfdu"* ]]; then exs=1; fi
+if [[ $str == *"dufy"* ]]; then exs=1; fi
+if [[ $str == *"duyf"* ]]; then exs=1; fi
+# printf "\n $str \n$exs \n"
+
+if [[ $exs -lt 1 ]]; then
+	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@" -du
+	save_local_debs
+	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@"
+else
+	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@"
+	save_local_debs
+fi
 '>/usr/local/sbin/aptnew
+}
+
+if [ ! -e /usr/local/sbin/aptnew ]; then
+	create_aptnew
+elif [[ $(grep "version3" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
+	create_aptnew
 fi
 chmod +x /usr/local/sbin/aptnew
+
+
 
 
 # reset default build flags
@@ -216,4 +284,11 @@ install_new() {
 		fi
 	done
 	aptnew install -fy $dopkg 2>&1
+}
+
+
+save_local_debs() {
+	mkdir -p /tb2/tmp/cachedebs/
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
 }

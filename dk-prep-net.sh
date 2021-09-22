@@ -68,7 +68,7 @@ cat $FDST | grep "Package:" | sed "s/Package\: //g" | \
 tr "\n" " " > $FNOW
 
 cd /root/src/nginx
-cat $FNOW | xargs apt build-dep -fy
+cat $FNOW | xargs aptold build-dep -fy
 
 cat /tb2/tmp/nginx-pkg-org.txt | grep "Depends:" | sed -r "s/Depends: //g"| \
 sed "s/\,//g" | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | sed "s/\s/\n/g" | sed '/^$/d' |
@@ -128,7 +128,7 @@ echo "php-phalcon3" >> $FNOW
 echo "libicu-dev" >> $FNOW
 apt-cache search php8.0 | awk '{print $1}' | grep -v "dbgsym\|dbg" >> $FNOW
 apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | grep -v "dbgsym\|dbg" >> $FNOW
-cat $FNOW | sort -u | sort | tr "\n" " " | xargs apt build-dep -y --ignore-missing | tee $FSRC
+cat $FNOW | sort -u | sort | tr "\n" " " | xargs aptold build-dep -y --ignore-missing | tee $FSRC
 
 for apkg in $(cat $FSRC | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort); do
 	chown_apt
@@ -141,3 +141,8 @@ printf "\n-- sync to src \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/php8/ /root/src/php8/
 
+
+
+#--- last
+save_local_debs
+apt install -fy --auto-remove --purge

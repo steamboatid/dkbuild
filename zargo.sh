@@ -41,5 +41,7 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 # ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/zins.sh
 # ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/dk-docker-install.sh
 
-ssh argo "/bin/bash /tb2/build/dk-lxc-exec.sh -n aaa -d buster"
+# ssh argo "/bin/bash /tb2/build/dk-lxc-exec.sh -n aaa -d buster"
+
+ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/1-php.sh
 

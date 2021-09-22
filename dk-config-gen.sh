@@ -22,8 +22,13 @@ source /tb2/build/dk-build-0libs.sh
 
 #--- check .bashrc
 if [ `cat ~/.bashrc | grep alias | grep "find -L" | wc -l` -lt 1 ]; then
-	echo "find alias not found"
+	# echo "find alias not found"
 	echo "alias find='find -L'" >> ~/.bashrc
+fi
+
+if [ `cat ~/.bashrc | grep alias | grep "grep --color" | wc -l` -lt 1 ]; then
+	# echo "grep alias not found"
+	echo "alias grep='grep --color'" >> ~/.bashrc
 fi
 
 #--- colorfull shell

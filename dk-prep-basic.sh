@@ -228,3 +228,8 @@ cat ~/build.deps | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | \
 sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g"  >>  /tmp/deps.pkgs
 
 cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | xargs aptold install -y --ignore-missing
+
+
+#--- last
+save_local_debs
+apt install -fy --auto-remove --purge
