@@ -78,7 +78,7 @@ copy_extra_mods() {
 
 
 cd /root/src/git-php
-# prepare_source
+prepare_source
 
 
 >debops
