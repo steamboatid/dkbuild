@@ -225,7 +225,7 @@ debops=$(cat debops)
 moreops=$(cat moreops)
 doconf="${doconf} ${debops} ${moreops}"
 printf "\n\n$doconf \n\n"
-# exit 0;
+exit 0;
 
 eval $doconf 2>&1 | tee dkconf.log
 
