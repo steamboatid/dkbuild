@@ -24,6 +24,25 @@ reset_build_flags
 prepare_build_flags
 
 
+
+prepare_source() {
+	if [ ! -e /root/org.src/git-php ]; then
+		get_update_new_git "php/php-src" "/root/org.src/git-php"
+	fi
+
+	mkdir -p /root/src/git-php
+	rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times \
+	--delete --exclude '.git' \
+	/root/org.src/git-php/ /root/src/git-php/
+
+
+	aptold install -fy \
+	libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
+	libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev \
+	libssl-dev libxml2-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev
+}
+
+
 copy_extra_mods() {
 	mods=(mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary memcached)
 	# singles=(memcached)
@@ -53,6 +72,13 @@ copy_extra_mods() {
 	/root/org.src/php8/git-phpredis/* $dst_dir
 }
 
+
+
+
+cd /root/src/git-php
+prepare_source
+
+
 >debops
 for afile in $(find /root/src/php8/php8.0-8.0.10/debian/rules.d -type f | grep -v "prepare"); do
 	cat $afile | grep "with\|enable" | sed -r "s/\://g" | sed -r "s/\+//g" | sed -r "s/\s+/ /g" |\
@@ -64,23 +90,6 @@ mv debops.tmp debops
 # cat debops
 # exit 0;
 
-
-if [ ! -e /root/org.src/git-php ]; then
-	get_update_new_git "php/php-src" "/root/org.src/git-php"
-fi
-
-mkdir -p /root/src/git-php
-rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times \
---delete --exclude '.git' \
-/root/org.src/git-php/ /root/src/git-php/
-
-
-aptold install -fy \
-libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
-libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev \
-libssl-dev libxml2-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev
-
-cd /root/src/git-php
 
 [ -e Makefile ] && make clean
 ./buildconf -f
