@@ -107,4 +107,7 @@ sed -i "s/\-g//g" Makefile
 sed -i "s/-O2/-O3/g" Makefile
 sed -i "s/noeneration-date/no-generation-date/g" Makefile
 
+find /root/src/git-php/ -type d -name ".libs" -exec rm -rf {} \;  >/dev/null
+find /root/src/git-php/ -type d -name ".libs" -exec rm -rf {} \;  >/dev/null
+
 make -j6
