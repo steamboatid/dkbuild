@@ -121,7 +121,7 @@ ln -sf /usr/lib /opt/dba/lib
 
 
 # debian/rules mods
-sed -i -r "s/apache2 phpdbg embed fpm cgi cli/fpm cli/g" debian/rules
+sed -i -r "s/apache2 phpdbg embed fpm cgi cli/cli/g" debian/rules
 sed -i -r "s/amd64 i386 arm64/amd64/g" debian/rules
 sed -i -r "s/\.\/buildconf --force/autoreconf --force --install --verbose\n  \.\/buildconf --force/g" debian/rules
 # sed -i -r "s///g" debian/rules
@@ -145,4 +145,7 @@ dh clean
 autoreconf --force --install --verbose
 libtoolize && aclocal && autoconf
 if ! dh_auto_configure; then printf "\n\n\n--- dh_auto_configure failed \n\n\n"; exit 0; fi
-if ! dh build; then printf "\n\n\n--- dh build failed \n\n\n"; exit 0; fi
+# if ! dh build; then printf "\n\n\n--- dh build failed \n\n\n"; exit 0; fi
+
+bash /tb2/build/dk-build-full.sh
+
