@@ -150,7 +150,7 @@ echo \
 --enable-bcmath \
 --with-curl \
 --enable-exif \
---with-ffi \
+--with-ffi=shared \
 --enable-ftp \
 --enable-gd --with-webp --with-jpeg --with-webp --without-avif \
 --with-gmp \
@@ -192,7 +192,6 @@ echo \
 --mandir=/usr/share/man \
 \
 --with-external-pcre \
---with-ffi \
 --with-gettext \
 --with-layout=GNU \
 --with-libxml \
@@ -207,7 +206,7 @@ echo \
 --enable-tokenizer \
 --with-iconv \
 \
---enable-zts \
+--enable-zts --enable-rtld-now --enable-sigchild \
 --enable-opcache --enable-opcache-jit --enable-opcache-file --enable-huge-code-pages \
 \
 $(cat debops) \
@@ -215,7 +214,6 @@ $(cat moreops) \
 \
 2>&1 | tee dkconf.log
 
-# --enable-zts --enable-rtld-now --enable-sigchild \
 
 bads=$(cat dkconf.log | grep -iv "warning" | grep -i "mcrypt\|vips\|uuid\|gearman" | wc -l)
 if [[ $bads -lt 1 ]]; then
