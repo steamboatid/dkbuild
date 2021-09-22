@@ -251,9 +251,12 @@ fi
 
 
 sleep 0.1
-sed -i "s/\-g//g" Makefile
+sed -i "s/\-g //g" Makefile
 sed -i "s/-O2/-O3/g" Makefile
 sed -i "s/noeneration-date/no-generation-date/g" Makefile
+sed -i "s/large-functionrowth/large-function-growth/g" Makefile
+sed -i "s/inline-unitrowth/inline-unit-growth/g" Makefile
+# sed -i "s///g" Makefile
 
 find /root/src/git-php/ -type d -name ".libs" -exec rm -rf {} \;  >/dev/null
 find /root/src/git-php/ -type d -name ".libs" -exec rm -rf {} \;  >/dev/null
@@ -269,6 +272,5 @@ else
 	printf "\n\n$doconf \n\n"
 	exit 0;
 fi
-
 
 sapi/cli/php -m
