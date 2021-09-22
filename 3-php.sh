@@ -62,7 +62,9 @@ mv debops.tmp debops
 # exit 0;
 
 
-get_update_new_git "php/php-src" "/root/org.src/git-php"
+if [ ! -e /root/org.src/git-php ]; then
+	get_update_new_git "php/php-src" "/root/org.src/git-php"
+fi
 
 mkdir -p /root/src/git-php
 rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times \
@@ -176,17 +178,17 @@ $(cat moreops) \
 
 bads=$(cat dkconf.log | grep -iv "warning" | grep -i "mcrypt\|vips\|uuid\|gearman" | wc -l)
 if [[ $bads -lt 1 ]]; then
-	printf "\n\n configure failed \n\n"
+	printf "\n\n configure failed: first \n\n"
 	exit 0;
 fi
 bads=$(cat dkconf.log | grep -iv "warning" | grep -i "apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached\|redis" | wc -l)
 if [[ $bads -lt 1 ]]; then
-	printf "\n\n configure failed \n\n"
+	printf "\n\n configure failed: more \n\n"
 	exit 0;
 fi
 bads=$(cat dkconf.log | grep -iv "warning" | grep -i "redis" | wc -l)
 if [[ $bads -lt 1 ]]; then
-	printf "\n\n configure failed \n\n"
+	printf "\n\n configure failed: redis \n\n"
 	exit 0;
 fi
 cat dkconf.log | grep -iv "warning" | grep -i --color "mcrypt\|vips\|uuid\|gearman"
