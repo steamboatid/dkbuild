@@ -123,9 +123,13 @@ uuid_config = --with-uuid=shared,/usr
 vips_config = --with-vips=shared,/usr
 gearman_config = --with-gearman=shared,/usr
 
-common_EXTENSIONS += dba
+common_EXTENSIONS += dba opcache
 dba_config = --disable-dba
 
+opcache_config = --enable-opcache --enable-opcache-file --enable-huge-code-pages
+
+export pdo_PRIORITY
+export common_EXTENSIONS
 
 ">>$BASE/debian/rules.d/ext-common.mk
 
