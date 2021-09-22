@@ -1,12 +1,15 @@
 #!/bin/bash
 
-printf "\ncopy from ~/org.src \n"
-rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
-/root/org.src/php8/ /root/src/php8/
-
 
 BASE="/root/src/php8/php8.0-8.0.10"
 cd $BASE
+
+rm -rf configure*
+
+
+printf "\ncopy from ~/org.src \n"
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+/root/org.src/php8/ /root/src/php8/
 
 
 singles=(mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary memcached)
@@ -148,6 +151,21 @@ sed -i -r "s/apache2 phpdbg embed fpm cgi cli/fpm cli/g" debian/rules
 sed -i -r "s/amd64 i386 arm64/amd64/g" debian/rules
 sed -i -r "s/\.\/buildconf --force/autoreconf --force --install --verbose\n  \.\/buildconf --force/g" debian/rules
 # sed -i -r "s///g" debian/rules
+
+# 
+echo \
+"m4_include([/usr/share/aclocal/libtool.m4])
+m4_include([/usr/share/aclocal/ltoptions.m4])
+m4_include([/usr/share/aclocal/ltsugar.m4])
+m4_include([/usr/share/aclocal/ltversion.m4])
+m4_include([/usr/share/aclocal/lt~obsolete.m4])
+">build/aclocal.m4
+echo \
+"m4_include([build/aclocal.m4])
+AC_CONFIG_MACRO_DIRS([m4])
+
+">extras-m4
+sed -i '/m4_include(\[build\/ax_check/e cat extras-m4' configure.ac
 
 dh clean
 autoreconf --force --install --verbose
