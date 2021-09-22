@@ -27,11 +27,13 @@ prepare_build_flags
 
 prepare_source() {
 	if [ ! -e /root/org.src/git-php ]; then
+		printf "\n\n-- update git at org.src \n"
 		get_update_new_git "php/php-src" "/root/org.src/git-php"
 	fi
 
+	printf "\n\n-- rsync with src \n"
 	mkdir -p /root/src/git-php
-	rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times \
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \
 	/root/org.src/git-php/ /root/src/git-php/
 
