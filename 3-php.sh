@@ -115,6 +115,10 @@ echo \
 
 
 # --with-gearman \
+# --enable-memcached-igbinary \
+# --enable-redis-igbinary \
+# --enable-igbinary \
+
 echo \
 "--with-mcrypt \
 --with-uuid \
@@ -122,12 +126,10 @@ echo \
 \
 --enable-raphf \
 --enable-apcu \
---enable-igbinary \
 --with-imagick \
 --enable-memcached \
 --with-libmemcached-dir \
 --enable-memcached-session \
---enable-memcached-igbinary \
 --enable-memcached-json \
 --enable-memcached-msgpack \
 --with-msgpack \
@@ -135,7 +137,6 @@ echo \
 --enable-redis \
 --disable-redis-session \
 --disable-redis-json \
---enable-redis-igbinary \
 --enable-redis-msgpack \
 --enable-redis-zstd \
 ">moreops
