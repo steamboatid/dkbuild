@@ -123,10 +123,10 @@ STRIP CPPFLAGS -O2 -g -pedantic
 STRIP CXXFLAGS -O2 -g -pedantic
 STRIP LDFLAGS -O2 -g -pedantic
 
-PREPEND CFLAGS -O3
+PREPEND CFLAGS -O3 -Wl,--copy-dt-needed-entries -pthread -lm -ldl -lpaper
 PREPEND CPPFLAGS -O3
-PREPEND CXXFLAGS -O3
-PREPEND LDFLAGS -Wl,-s
+PREPEND CXXFLAGS -O3 -Wl,--copy-dt-needed-entries -pthread -lm -ldl -lpaper
+PREPEND LDFLAGS -Wl,-s -Wl,-lm -Wl,-ldl -pthread
 ">/etc/dpkg/buildflags.conf
 }
 
@@ -137,13 +137,13 @@ prepare_build_flags() {
 	AAA="${AAA/$GO2/$OPT3}"
 	GO2="-O2"
 	OPT3="-O3"
-	CFLAGS="${AAA/$GO2/$OPT3}"
+	CFLAGS="${AAA/$GO2/$OPT3} -Wl,--copy-dt-needed-entries -lm -ldl -lpaper"
 	export CFLAGS
 	export EXTRA_CFLAGS=$CFLAGS
 	export DEB_CFLAGS_SET=$CFLAGS
 
 	LD=gcc
-	LDFLAGS="-Wl,-s -pthread ${CFLAGS} ${LDFLAGS}"
+	LDFLAGS="-Wl,-s -Wl,-lm -Wl,-ldl -pthread ${CFLAGS} ${LDFLAGS}"
 	export LDFLAGS
 	export EXTRA_LDFLAGS=$LDFLAGS
 	export DEB_LDFLAGS_SET=$LDFLAGS
