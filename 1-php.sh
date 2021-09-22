@@ -43,9 +43,8 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/php8/git-phpredis $dst_dir
 # cp /root/src/php8/git-phpredis $dst_dir -Rfa
-exit 0;
-
 printf "\n\n"
+
 
 ./buildconf -f
 ./configure --help | sort | grep --color -i "mcrypt\|vips\|uuid\|gearman\|apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached\|redis" |\
