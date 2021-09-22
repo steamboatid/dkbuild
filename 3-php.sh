@@ -63,41 +63,41 @@ make clean
 --disable-debug \
 --disable-phpdbg \
 --disable-rpath \
---enable-calendar=shared,/usr \
---enable-ctype=shared,/usr \
+--enable-calendar=shared \
+--enable-ctype=shared \
 --enable-dom \
---enable-exif=shared,/usr \
---enable-fileinfo=shared,/usr \
---enable-filter=shared,/usr \
---enable-ftp=shared,/usr \
---with-openssl=shared,/usr --with-openssl-dir=/usr \
---enable-hash=shared,/usr \
---enable-inotify=shared,/usr \
---enable-phar=shared,/usr \
---enable-session=shared,/usr \
---enable-shmop=shared,/usr \
---enable-sockets=shared,/usr \
---enable-sysvmsg=shared,/usr \
---enable-sysvsem=shared,/usr \
---enable-sysvshm=shared,/usr \
---enable-tokenizer=shared,/usr \
---enable-xml=shared,/usr \
+--enable-exif=shared \
+--enable-fileinfo=shared \
+--enable-filter=shared \
+--enable-ftp=shared \
+--with-openssl=shared --with-openssl-dir=/usr \
+--enable-hash=shared \
+--enable-inotify=shared \
+--enable-phar=shared \
+--enable-session=shared \
+--enable-shmop=shared \
+--enable-sockets=shared \
+--enable-sysvmsg=shared \
+--enable-sysvsem=shared \
+--enable-sysvshm=shared \
+--enable-tokenizer=shared \
+--enable-xml=shared \
 --localstatedir=/var \
 --mandir=/usr/share/man \
 \
 --with-external-pcre \
---with-ffi=shared,/usr \
---with-gettext=shared,/usr \
+--with-ffi=shared \
+--with-gettext=shared \
 --with-layout=GNU \
---with-libxml=shared,/usr \
---with-mhash=shared,/usr \
---with-password-argon2=shared,/usr \
---with-pear=shared,/usr \
---with-pic=shared,/usr \
---with-sodium=shared,/usr \
---with-system-tzdata=shared,/usr \
+--with-libxml=shared \
+--with-mhash=shared \
+--with-password-argon2=shared \
+--with-pear=shared \
+--with-pic=shared \
+--with-sodium=shared \
+--with-system-tzdata=shared \
 --with-zlib-dir=/usr \
---with-zlib=shared,/usr \
+--with-zlib=shared \
 
 
 
