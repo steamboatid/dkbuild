@@ -113,11 +113,13 @@ echo \
 --enable-redis-zstd \
 ">moreops
 
+
+# --with-gearman \
 echo \
-"--with-gearman \
---with-mcrypt \
+"--with-mcrypt \
 --with-uuid \
 --with-vips \
+\
 --enable-raphf \
 --enable-apcu \
 --enable-igbinary \
