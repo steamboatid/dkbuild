@@ -150,8 +150,6 @@ prepare_build_flags() {
 
 	AR=gcc-ar
 	RANLIB=gcc-ranlib
-	echo $CFLAGS
-	echo $LDFLAGS
 
 	dpkg-buildflags --get CFLAGS
 	dpkg-buildflags --get LDFLAGS
