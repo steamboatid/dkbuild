@@ -228,12 +228,12 @@ if [[ $bads -lt 1 ]]; then
 	printf "\n\n configure failed: redis \n\n"
 	exit 0;
 fi
-cat dkconf.log | grep -iv "warning" | grep -i --color "mcrypt\|vips\|uuid\|gearman"
-cat dkconf.log | grep -iv "warning" | grep -i --color "apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached\|redis"
-cat dkconf.log | grep -iv "warning" | \
-grep -i --color "apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached\|redis\|mcrypt\|vips\|uuid\|gearman" | \
-grep -i --color " no"
-exit 0;
+# cat dkconf.log | grep -iv "warning" | grep -i --color "mcrypt\|vips\|uuid\|gearman"
+# cat dkconf.log | grep -iv "warning" | grep -i --color "apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached\|redis"
+# cat dkconf.log | grep -iv "warning" | \
+# grep -i --color "apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached\|redis\|mcrypt\|vips\|uuid\|gearman" | \
+# grep -i --color " no"
+# exit 0;
 
 
 if [[ $(tail -n30 dkconf.log | grep "Thank you for using PHP" | wc -l) -gt 0 ]]; then
