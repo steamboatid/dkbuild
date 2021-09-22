@@ -21,6 +21,7 @@ prepare_build_flags
 
 get_update_new_git "php/php-src" "/root/org.src/git-php"
 
+mkdir -p /root/src/git-php
 rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times \
 --delete --exclude '.git' \
 /root/org.src/git-php /root/src/git-php
