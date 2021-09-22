@@ -80,24 +80,24 @@ cd /root/src/git-php
 --enable-sysvmsg=shared \
 --enable-sysvsem=shared \
 --enable-sysvshm=shared \
---enable-tokenizer=shared \
---enable-xml=shared \
---localstatedir=/var \
---mandir=/usr/share/man \
-\
---with-external-pcre \
---with-ffi=shared \
---with-gettext=shared \
---with-layout=GNU \
---with-libxml=shared \
---with-mhash=shared \
---with-password-argon2=shared \
---with-pear=shared \
---with-pic=shared \
---with-sodium=shared \
---with-system-tzdata=shared \
---with-zlib-dir=/usr \
---with-zlib=shared \
+# --enable-tokenizer=shared \
+# --enable-xml=shared \
+# --localstatedir=/var \
+# --mandir=/usr/share/man \
+# \
+# --with-external-pcre \
+# --with-ffi=shared \
+# --with-gettext=shared \
+# --with-layout=GNU \
+# --with-libxml=shared \
+# --with-mhash=shared \
+# --with-password-argon2=shared \
+# --with-pear=shared \
+# --with-pic=shared \
+# --with-sodium=shared \
+# --with-system-tzdata=shared \
+# --with-zlib-dir=/usr \
+# --with-zlib=shared \
 
 
 
