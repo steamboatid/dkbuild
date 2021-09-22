@@ -118,6 +118,7 @@ echo \
 # --enable-memcached-igbinary \
 # --enable-redis-igbinary \
 # --enable-igbinary \
+# --with-imagick \
 
 echo \
 "--with-mcrypt \
@@ -126,7 +127,6 @@ echo \
 \
 --enable-raphf \
 --enable-apcu \
---with-imagick \
 --enable-memcached \
 --with-libmemcached-dir \
 --enable-memcached-session \
