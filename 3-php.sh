@@ -97,8 +97,9 @@ cd /root/src/git-php
 --with-system-tzdata=shared \
 --with-zlib-dir=/usr \
 --with-zlib=shared \
+--enable-tokenizer \
 
-# --enable-tokenizer=shared \
+
 
 
 sleep 0.1
