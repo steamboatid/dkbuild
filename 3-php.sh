@@ -78,7 +78,7 @@ copy_extra_mods() {
 
 
 cd /root/src/git-php
-prepare_source
+# prepare_source
 
 
 >debops
@@ -226,11 +226,14 @@ doconf="./configure \
 debops=$(cat debops)
 moreops=$(cat moreops)
 doconf="${doconf} ${debops} ${moreops}"
-doconf=$(printf "$doconf" | tr "\\\\" "")
+doconf=$(printf "$doconf" | sed -r "s/\//g")
 printf "\n\n$doconf \n\n"
 exit 0;
 
+
+
 eval $doconf 2>&1 | tee dkconf.log
+
 
 bads=$(cat dkconf.log | grep -iv "warning" | grep -i "mcrypt\|vips\|uuid\|gearman" | wc -l)
 if [[ $bads -lt 1 ]]; then
