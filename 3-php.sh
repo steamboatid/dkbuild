@@ -90,7 +90,7 @@ echo \
 --with-vips=/usr
 ">moreops
 
-
+./buildconf -f
 ./configure --enable-ftp --with-openssl --disable-cgi \
 --enable-bcmath \
 --enable-bcmath \
