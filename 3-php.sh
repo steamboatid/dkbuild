@@ -102,6 +102,14 @@ echo \
 --enable-memcached-msgpack \
 --with-msgpack=/usr \
 --with-http=/usr \
+--enable-redis=/usr \
+--disable-redis-session \
+--disable-redis-json \
+--enable-redis-igbinary \
+--enable-redis-msgpack \
+--enable-redis-lzf \
+--enable-redis-zstd \
+--enable-redis-lz4 \
 ">moreops
 
 echo \
@@ -121,6 +129,14 @@ echo \
 --enable-memcached-msgpack \
 --with-msgpack \
 --with-http \
+--enable-redis \
+--disable-redis-session \
+--disable-redis-json \
+--enable-redis-igbinary \
+--enable-redis-msgpack \
+--enable-redis-lzf \
+--enable-redis-zstd \
+--enable-redis-lz4 \
 ">moreops
 
 
