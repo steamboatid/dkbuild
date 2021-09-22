@@ -117,8 +117,6 @@ echo \
 --with-msgpack=/usr \
 --with-http=/usr \
 --enable-redis=/usr \
---disable-redis-session \
---disable-redis-json \
 --enable-redis-igbinary \
 --enable-redis-msgpack \
 --enable-redis-zstd \
@@ -147,8 +145,6 @@ echo \
 --with-msgpack \
 --with-http \
 --enable-redis \
---disable-redis-session \
---disable-redis-json \
 --enable-redis-msgpack \
 --enable-redis-zstd \
 ">moreops
@@ -226,9 +222,9 @@ doconf="./configure \
 debops=$(cat debops)
 moreops=$(cat moreops)
 doconf="${doconf} ${debops} ${moreops}"
-doconf=$(printf "$doconf" | sed -r "s/\n//g" | sed -r "s/\s+/ /g" | sed -r "s/\s/ \\\\\n/g")
+doconf=$(printf "$doconf" | tr "\n" " " | tr "\\" " " | sed -r "s/\s+/ /g" | sed -r "s/\s/ \\\\\n/g" | sort -u)
 printf "\n\n$doconf \n\n"
-exit 0;
+# exit 0;
 
 
 
