@@ -32,6 +32,10 @@ for adir in "${singles[@]}"; do
 done
 
 
+if [ ! -e /root/org.src/php8/git-phpredis ]; then
+	/bin/bash /tb2/build/dk-prep-gits.sh
+fi
+
 printf "\n---copy redis \n"
 dst_dir="$BASE/ext/redis"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
