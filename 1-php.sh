@@ -34,7 +34,12 @@ done
 
 printf "\n---copy redis \n"
 dst_dir="$BASE/ext/redis"
-cp /root/src/php8/git-phpredis $dst_dir -Rfa
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+/root/org.src/php8/git-phpredis /root/src/php8/git-phpredis
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+/root/org.src/php8/git-phpredis $dst_dir
+# cp /root/src/php8/git-phpredis $dst_dir -Rfa
+exit 0;
 
 printf "\n\n"
 
