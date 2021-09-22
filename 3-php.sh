@@ -161,6 +161,11 @@ $(cat moreops) \
 2>&1 | tee dkconf.log
 
 
+bads=$(cat dkconf.log | grep -v "warning" | grep -i "mcrypt\|vips\|uuid\|gearman" | wc -l)
+if [[ $bads -lt 1 ]]; then
+	printf "\n\n configure failed \n\n"
+	exit 0;
+fi
 
 
 if [[ $(tail -n30 dkconf.log | grep "Thank you for using PHP" | wc -l) -gt 0 ]]; then
