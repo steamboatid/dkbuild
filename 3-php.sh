@@ -153,7 +153,8 @@ echo \
 --enable-tokenizer \
 --with-iconv \
 \
---enable-opcache --enable-opcache-file --enable-huge-code-pages \
+--enable-zts --enable-rtld-now --enable-sigchild --enable-werror --with-gnu-ld \
+--enable-opcache --enable-opcache-jit --enable-opcache-file --enable-huge-code-pages \
 \
 $(cat debops) \
 $(cat moreops) \
