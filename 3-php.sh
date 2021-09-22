@@ -87,7 +87,7 @@ for afile in $(find /root/src/php8/php8.0-8.0.10/debian/rules.d -type f | grep -
 	sed -r "s/\\\//g" | sed "s/^\s//g" | sed -r "s/(.*)_config = //g" | \
 	sed -r "s/\=shared\,/\=/g" | sed -r "s/\=shared//g" >> debops
 done
-cat debops | tr "\n" " " | sed -r "s/\s+/ /g" | sed -r "s/ / \\\ \n/g" | grep -iv "dba\|db4\|lmdb\|qdbm" > debops.tmp
+cat debops | tr "\n" " " | sed -r "s/\s+/ /g" | sed -r "s/ / \\\ \n/g" | grep -iv "dba\|db4\|lmdb\|qdbm\|gdbm" > debops.tmp
 mv debops.tmp debops
 cat debops | grep --color db
 # exit 0;
