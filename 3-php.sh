@@ -61,8 +61,8 @@ for afile in $(find /root/src/php8/php8.0-8.0.10/debian/rules.d -type f | grep -
 done
 cat debops | tr "\n" " " | sed -r "s/\s+/ /g" | sed -r "s/ / \\\ \n/g" > debops.tmp
 mv debops.tmp debops
-# cat debops
-# exit 0;
+cat debops
+exit 0;
 
 
 if [ ! -e /root/org.src/git-php ]; then
