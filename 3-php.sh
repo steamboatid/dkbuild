@@ -18,8 +18,11 @@ export TODATE=$(date +%Y%m%d)
 
 
 source /tb2/build/dk-build-0libs.sh
+/bin/bash /tb2/build/dk-config-gen.sh
+
 reset_build_flags
 prepare_build_flags
+
 
 copy_extra_mods() {
 	mods=(mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary memcached)
@@ -107,9 +110,7 @@ echo \
 --disable-redis-json \
 --enable-redis-igbinary \
 --enable-redis-msgpack \
---enable-redis-lzf \
 --enable-redis-zstd \
---enable-redis-lz4 \
 ">moreops
 
 echo \
@@ -134,9 +135,7 @@ echo \
 --disable-redis-json \
 --enable-redis-igbinary \
 --enable-redis-msgpack \
---enable-redis-lzf \
 --enable-redis-zstd \
---enable-redis-lz4 \
 ">moreops
 
 

@@ -29,7 +29,7 @@ doback(){
 # reset default build flags
 #-------------------------------------------
 reset_build_flags
-
+prepare_build_flags
 
 
 # gen config

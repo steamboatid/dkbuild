@@ -29,6 +29,7 @@ rm -rf /root/src/pcre/*deb
 # reset default build flags
 #-------------------------------------------
 reset_build_flags
+prepare_build_flags
 
 
 # get source

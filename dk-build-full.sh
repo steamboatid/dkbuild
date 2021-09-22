@@ -22,6 +22,7 @@ source /tb2/build/dk-build-0libs.sh
 reset_build_flags
 prepare_build_flags
 
+
 echo $CFLAGS
 echo $LDFLAGS
 dpkg-buildflags --get CFLAGS

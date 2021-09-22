@@ -26,6 +26,7 @@ VEROVR="0.5.1"
 # reset default build flags
 #-------------------------------------------
 reset_build_flags
+prepare_build_flags
 
 
 # delete old debs
