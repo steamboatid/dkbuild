@@ -43,6 +43,11 @@ copy_extra_mods() {
 		printf "\n copy from $ori_dir --to-- $dst_dir \n\n"
 		cp $ori_dir $dst_dir -Rfa
 	done
+
+	printf "\n---copy redis \n"
+	dst_dir="$BASE/ext/redis"
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+	/root/org.src/php8/git-phpredis $dst_dir
 }
 
 >debops
@@ -77,6 +82,13 @@ cd /root/src/git-php
 
 # copy extra mods
 copy_extra_mods
+
+echo \
+"--with-gearman=/usr
+--with-mcrypt=/usr
+--with-uuid=/usr
+--with-vips=/usr
+">extraops
 
 
 ./configure --enable-ftp --with-openssl --disable-cgi \
@@ -144,6 +156,7 @@ copy_extra_mods
 --enable-opcache --enable-opcache-file --enable-huge-code-pages \
 \
 $(cat debops) \
+$(cat extraops) \
 \
 2>&1 | tee dkconf.log
 
