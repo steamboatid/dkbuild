@@ -154,7 +154,9 @@ echo \
 
 
 ./buildconf -f
-./configure --enable-ftp --with-openssl --disable-cgi \
+
+doconf="./configure \
+--enable-ftp --with-openssl --disable-cgi \
 --enable-bcmath \
 --with-curl \
 --enable-exif \
@@ -215,12 +217,15 @@ echo \
 --with-iconv \
 \
 --enable-zts --enable-rtld-now --enable-sigchild \
---enable-opcache --enable-opcache-jit --enable-opcache-file --enable-huge-code-pages \
-\
-$(cat debops) \
-$(cat moreops) \
-\
-2>&1 | tee dkconf.log
+--enable-opcache --enable-opcache-jit --enable-opcache-file --enable-huge-code-pages"
+
+
+debops=$(cat debops)
+moreops=$(cat moreops)
+doconf="${doconf} ${debops} ${moreops}"
+printf "\n\n$doconf \n\n"
+exit 0;
+
 
 
 bads=$(cat dkconf.log | grep -iv "warning" | grep -i "mcrypt\|vips\|uuid\|gearman" | wc -l)
