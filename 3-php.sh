@@ -207,7 +207,7 @@ echo \
 --enable-tokenizer \
 --with-iconv \
 \
---enable-zts --enable-rtld-now --enable-sigchild --with-gnu-ld \
+--enable-zts --enable-rtld-now --enable-sigchild \
 --enable-opcache --enable-opcache-jit --enable-opcache-file --enable-huge-code-pages \
 \
 $(cat debops) \
