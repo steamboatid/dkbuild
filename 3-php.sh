@@ -130,6 +130,7 @@ copy_extra_mods
 --with-zlib-dir=/usr \
 --with-zlib=shared \
 --enable-tokenizer \
+--with-iconv=shared \
 2>&1 | tee dkconf.log
 
 
