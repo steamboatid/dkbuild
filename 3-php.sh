@@ -153,6 +153,9 @@ echo \
 --with-uuid \
 --with-vips \
 \
+--enable-raphf \
+--with-http \
+\
 --enable-memcached \
 --with-libmemcached-dir \
 --enable-memcached-session \
