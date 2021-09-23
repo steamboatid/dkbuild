@@ -31,11 +31,22 @@ prepare_source() {
 		get_update_new_git "php/php-src" "/root/org.src/git-php"
 	fi
 
+	if [ ! -e /root/org.src/git-gearman ]; then
+		printf "\n\n-- update git at org.src \n"
+		get_update_new_git "php/pecl-networking-gearman" "/root/org.src/git-gearman"
+	fi
+
 	printf "\n\n-- rsync with src \n"
 	mkdir -p /root/src/git-php
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \
 	/root/org.src/git-php/ /root/src/git-php/
+
+	printf "\n\n-- rsync gearman \n"
+	mkdir -p /root/src/git-php/ext/gearman/
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	--delete --exclude '.git' \
+	/root/org.src/git-gearman/ /root/src/git-php/ext/gearman/
 
 
 	aptold install -fy \
@@ -132,7 +143,7 @@ echo \
 
 echo \
 "\
---with-gearman=shared,/usr \
+--with-gearman \
 \
 --with-mcrypt \
 --with-uuid \
