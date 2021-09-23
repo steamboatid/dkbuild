@@ -139,7 +139,8 @@ prepare_build_flags() {
 	AAA="${AAA/$GO2/$OPT3}"
 	GO2="-O2"
 	OPT3="-O3"
-	CFLAGS="${AAA/$GO2/$OPT3} -ldl -lstdc++ -lcrypto -lcurl -liconv -licucore -lm -lmysqlclient -lpng -lresolv -lssl -lxml2 -lz -lgd"
+	# CFLAGS="${AAA/$GO2/$OPT3} -ldl -lstdc++ -lcrypto -lcurl -liconv -licucore -lm -lmysqlclient -lpng -lresolv -lssl -lxml2 -lz -lgd"
+	CFLAGS="${AAA/$GO2/$OPT3} -ldl -lstdc++ -lm -lresolv"
 	export CFLAGS
 	export EXTRA_CFLAGS=$CFLAGS
 	export DEB_CFLAGS_SET=$CFLAGS
