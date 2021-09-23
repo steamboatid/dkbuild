@@ -41,9 +41,9 @@ prepare_source() {
 		get_update_new_git "m6w6/ext-http" "/root/org.src/git-http"
 	fi
 
-	if [ ! -e /root/org.src/git-raph ]; then
-		printf "\n\n-- update pecl raph git at org.src \n"
-		get_update_new_git "m6w6/ext-raph" "/root/org.src/git-raph"
+	if [ ! -e /root/org.src/git-raphf ]; then
+		printf "\n\n-- update pecl raphf git at org.src \n"
+		get_update_new_git "m6w6/ext-raphf" "/root/org.src/git-raphf"
 	fi
 
 	printf "\n\n-- rsync with src \n"
@@ -69,6 +69,7 @@ prepare_source() {
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \
 	/root/org.src/git-raphf/ /root/src/git-php/ext/raphf/
+	exit 0;
 
 
 	aptold install -fy \
