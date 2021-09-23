@@ -146,7 +146,7 @@ prepare_build_flags() {
 
 	LD=gcc
 	# LDFLAGS="-Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lpthread ${CFLAGS} ${LDFLAGS}"
-	LDFLAGS="-lm -ldl -lstdc++ ${CFLAGS} ${LDFLAGS}"
+	LDFLAGS="${CFLAGS} ${LDFLAGS}"
 	export LDFLAGS
 	export LIBS=$LDFLAGS
 	export LDLIBS=$LDFLAGS
