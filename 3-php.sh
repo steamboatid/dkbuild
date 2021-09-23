@@ -153,8 +153,17 @@ echo \
 --with-uuid \
 --with-vips \
 \
---enable-raphf \
---with-http=shared \
+--with-gearman \
+--with-imagick \
+--enable-apcu \
+\
+--enable-igbinary \
+--enable-memcached-igbinary \
+--enable-redis-igbinary \
+\
+--with-msgpack \
+--enable-redis-msgpack \
+--enable-memcached-msgpack \
 \
 --enable-memcached \
 --with-libmemcached-dir \
