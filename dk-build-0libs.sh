@@ -126,8 +126,10 @@ STRIP LDFLAGS -O2 -g -pedantic
 PREPEND CFLAGS -O3 -lm -ldl -lstdc++
 PREPEND CPPFLAGS -O3 -lstdc++
 PREPEND CXXFLAGS -O3 -lm -ldl -lstdc++
-PREPEND LDFLAGS -Wl,-s -pthread
+PREPEND LDFLAGS -O3 -lm -ldl -lstdc++
 ">/etc/dpkg/buildflags.conf
+
+# PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lpthread
 }
 
 prepare_build_flags() {
@@ -143,8 +145,11 @@ prepare_build_flags() {
 	export DEB_CFLAGS_SET=$CFLAGS
 
 	LD=gcc
-	LDFLAGS="-Wl,-s -Wl,-lm -Wl,-ldl ${CFLAGS} ${LDFLAGS}"
+	# LDFLAGS="-Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lpthread ${CFLAGS} ${LDFLAGS}"
+	LDFLAGS="-lm -ldl -lstdc++ --hash-style=gnu ${CFLAGS} ${LDFLAGS}"
 	export LDFLAGS
+	export LIBS=$LDFLAGS
+	export LDLIBS=$LDFLAGS
 	export EXTRA_LDFLAGS=$LDFLAGS
 	export DEB_LDFLAGS_SET=$LDFLAGS
 

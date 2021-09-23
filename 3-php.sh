@@ -175,7 +175,6 @@ doconf="./configure \
 --enable-soap --with-libxml \
 \
 --enable-posix \
---disable-debug \
 --disable-phpdbg \
 --disable-rpath \
 --enable-calendar \
