@@ -69,7 +69,6 @@ prepare_source() {
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \
 	/root/org.src/git-raph/ /root/src/git-php/ext/raph/
-	exit 0;
 
 
 	aptold install -fy \
