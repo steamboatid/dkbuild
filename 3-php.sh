@@ -153,8 +153,8 @@ echo \
 --with-uuid \
 --with-vips \
 \
---enable-raphf \
---with-http \
+--enable-raphf=shared \
+--with-http=shared \
 \
 --enable-memcached \
 --with-libmemcached-dir \
