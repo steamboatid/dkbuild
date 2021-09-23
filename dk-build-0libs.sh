@@ -123,10 +123,10 @@ STRIP CPPFLAGS -O2 -g -pedantic
 STRIP CXXFLAGS -O2 -g -pedantic
 STRIP LDFLAGS -O2 -g -pedantic
 
-PREPEND CFLAGS -O3 -lm -ldl -lstdc++
+PREPEND CFLAGS -O3 -ldl -lstdc++ -lcrypto -lcurl -liconv -licucore -lm -lmysqlclient -lpng -lresolv -lssl -lxml2 -lz -lgd
 PREPEND CPPFLAGS -O3 -lstdc++
-PREPEND CXXFLAGS -O3 -lm -ldl -lstdc++
-PREPEND LDFLAGS -O3 -lm -ldl -lstdc++
+PREPEND CXXFLAGS -O3 -ldl -lstdc++ -lcrypto -lcurl -liconv -licucore -lm -lmysqlclient -lpng -lresolv -lssl -lxml2 -lz -lgd
+PREPEND LDFLAGS -O3 -ldl -lstdc++ -lcrypto -lcurl -liconv -licucore -lm -lmysqlclient -lpng -lresolv -lssl -lxml2 -lz -lgd
 ">/etc/dpkg/buildflags.conf
 
 # PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lpthread
@@ -139,7 +139,7 @@ prepare_build_flags() {
 	AAA="${AAA/$GO2/$OPT3}"
 	GO2="-O2"
 	OPT3="-O3"
-	CFLAGS="${AAA/$GO2/$OPT3} -lm -ldl -lstdc++"
+	CFLAGS="${AAA/$GO2/$OPT3} -ldl -lstdc++ -lcrypto -lcurl -liconv -licucore -lm -lmysqlclient -lpng -lresolv -lssl -lxml2 -lz -lgd"
 	export CFLAGS
 	export EXTRA_CFLAGS=$CFLAGS
 	export DEB_CFLAGS_SET=$CFLAGS
