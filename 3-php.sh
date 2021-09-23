@@ -27,13 +27,23 @@ prepare_build_flags
 
 prepare_source() {
 	if [ ! -e /root/org.src/git-php ]; then
-		printf "\n\n-- update git at org.src \n"
+		printf "\n\n-- update php git at org.src \n"
 		get_update_new_git "php/php-src" "/root/org.src/git-php"
 	fi
 
 	if [ ! -e /root/org.src/git-gearman ]; then
-		printf "\n\n-- update git at org.src \n"
+		printf "\n\n-- update gearman git at org.src \n"
 		get_update_new_git "php/pecl-networking-gearman" "/root/org.src/git-gearman"
+	fi
+
+	if [ ! -e /root/org.src/git-http ]; then
+		printf "\n\n-- update pecl http git at org.src \n"
+		get_update_new_git "m6w6/ext-http" "/root/org.src/git-http"
+	fi
+
+	if [ ! -e /root/org.src/git-raph ]; then
+		printf "\n\n-- update pecl raph git at org.src \n"
+		get_update_new_git "m6w6/ext-raph" "/root/org.src/git-raph"
 	fi
 
 	printf "\n\n-- rsync with src \n"
@@ -47,6 +57,18 @@ prepare_source() {
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \
 	/root/org.src/git-gearman/ /root/src/git-php/ext/gearman/
+
+	printf "\n\n-- rsync http \n"
+	mkdir -p /root/src/git-php/ext/http/
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	--delete --exclude '.git' \
+	/root/org.src/git-http/ /root/src/git-php/ext/http/
+
+	printf "\n\n-- rsync raph \n"
+	mkdir -p /root/src/git-php/ext/raph/
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	--delete --exclude '.git' \
+	/root/org.src/git-raph/ /root/src/git-php/ext/raph/
 
 
 	aptold install -fy \
@@ -136,14 +158,13 @@ echo \
 
 
 # \
-# --with-gearman \
-# --enable-raphf \
-# --with-http \
 # \
 
 echo \
 "\
 --with-gearman \
+--enable-raphf \
+--with-http \
 \
 --with-mcrypt \
 --with-uuid \
