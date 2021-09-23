@@ -124,30 +124,30 @@ echo \
 ">moreops
 
 
+# \
+# --with-gearman \
+# --enable-memcached-igbinary \
+# --enable-redis-igbinary \
+# --enable-igbinary \
+# --with-imagick \
+# \
+# --enable-raphf \
+# --enable-apcu \
+# --enable-memcached \
+# --with-libmemcached-dir \
+# --enable-memcached-session \
+# --enable-memcached-json \
+# --enable-memcached-msgpack \
+# --with-msgpack \
+# --with-http \
+# --enable-redis \
+# --enable-redis-msgpack \
+# --enable-redis-zstd \
 
 echo \
 "--with-mcrypt \
 --with-uuid \
 --with-vips \
-\
---with-gearman \
---enable-memcached-igbinary \
---enable-redis-igbinary \
---enable-igbinary \
---with-imagick \
-\
---enable-raphf \
---enable-apcu \
---enable-memcached \
---with-libmemcached-dir \
---enable-memcached-session \
---enable-memcached-json \
---enable-memcached-msgpack \
---with-msgpack \
---with-http \
---enable-redis \
---enable-redis-msgpack \
---enable-redis-zstd \
 ">moreops
 
 
@@ -216,7 +216,7 @@ doconf="./configure \
 
 debops=$(cat debops)
 moreops=$(cat moreops)
-doconf="${doconf} ${debops}"
+doconf="${doconf} ${debops} ${moreops}"
 # doconf=$(printf "$doconf" | tr "\n" " " | tr "\\" " " | sed -r "s/\s+/ /g" | sed -r "s/\s/ \\\\\n/g" | sort -u)
 doconf=$(printf "$doconf" | tr "\n" " " | tr "\\\\" " " | sed -r "s/\s+/ /g")
 printf "\n\n$doconf \n\n"
