@@ -69,7 +69,7 @@ prepare_source() {
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \
 	/root/org.src/git-raphf/ /root/src/git-php/ext/raphf/
-	exit 0;
+	# exit 0;
 
 
 	aptold install -fy \
