@@ -126,28 +126,37 @@ echo \
 
 # \
 # --with-gearman \
+# --with-imagick \
+# --enable-apcu \
+# \
+# --enable-igbinary \
 # --enable-memcached-igbinary \
 # --enable-redis-igbinary \
-# --enable-igbinary \
-# --with-imagick \
+# \
+# --with-msgpack \
+# --enable-redis-msgpack \
+# --enable-memcached-msgpack \
 # \
 # --enable-raphf \
-# --enable-apcu \
+# --with-http \
+# \
 # --enable-memcached \
 # --with-libmemcached-dir \
 # --enable-memcached-session \
 # --enable-memcached-json \
-# --enable-memcached-msgpack \
-# --with-msgpack \
-# --with-http \
 # --enable-redis \
-# --enable-redis-msgpack \
 # --enable-redis-zstd \
 
 echo \
-"--with-mcrypt \
+"\
+--with-mcrypt \
 --with-uuid \
 --with-vips \
+\
+--enable-memcached \
+--with-libmemcached-dir \
+--enable-memcached-session \
+--enable-memcached-json \
 ">moreops
 
 
