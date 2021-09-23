@@ -81,6 +81,11 @@ cd /root/src/git-php
 prepare_source
 
 
+[ -e Makefile ] && make clean
+./buildconf -f
+# exit 0;
+
+
 >debops
 for afile in $(find /root/src/php8/php8.0-8.0.10/debian/rules.d -type f | grep -v "prepare"); do
 	cat $afile | grep "with\|enable" | sed -r "s/\://g" | sed -r "s/\+//g" | sed -r "s/\s+/ /g" |\
@@ -89,12 +94,8 @@ for afile in $(find /root/src/php8/php8.0-8.0.10/debian/rules.d -type f | grep -
 done
 cat debops | tr "\n" " " | sed -r "s/\s+/ /g" | sed -r "s/ / \\\ \n/g" | grep -iv "dba\|db4\|lmdb\|qdbm\|gdbm" > debops.tmp
 mv debops.tmp debops
-cat debops | grep --color db
-# exit 0;
+# cat debops | grep --color db; exit 0;
 
-
-[ -e Makefile ] && make clean
-./buildconf -f
 
 # copy extra mods
 copy_extra_mods
@@ -223,7 +224,7 @@ doconf="${doconf} ${debops} ${moreops}"
 # doconf=$(printf "$doconf" | tr "\n" " " | tr "\\" " " | sed -r "s/\s+/ /g" | sed -r "s/\s/ \\\\\n/g" | sort -u)
 doconf=$(printf "$doconf" | tr "\n" " " | tr "\\\\" " " | sed -r "s/\s+/ /g")
 printf "\n\n$doconf \n\n"
-exit 0;
+# exit 0;
 
 
 
