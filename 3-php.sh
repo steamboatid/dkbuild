@@ -153,7 +153,6 @@ echo \
 --with-uuid \
 --with-vips \
 \
---with-gearman \
 --with-imagick \
 --enable-apcu \
 \
