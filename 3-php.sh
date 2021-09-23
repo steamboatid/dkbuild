@@ -157,6 +157,9 @@ echo \
 --with-libmemcached-dir \
 --enable-memcached-session \
 --enable-memcached-json \
+\
+--enable-redis \
+--enable-redis-zstd \
 ">moreops
 
 
