@@ -92,7 +92,7 @@ for afile in $(find /root/src/php8/php8.0-8.0.10/debian/rules.d -type f | grep -
 	sed -r "s/\\\//g" | sed "s/^\s//g" | sed -r "s/(.*)_config = //g" | \
 	sed -r "s/\=shared\,/\=/g" | sed -r "s/\=shared//g" >> debops
 done
-cat debops | tr "\n" " " | sed -r "s/\s+/ /g" | sed -r "s/ / \\\ \n/g" | grep -iv "dba\|db4\|lmdb\|qdbm\|gdbm" > debops.tmp
+cat debops | tr "\n" " " | sed -r "s/\s+/ /g" | sed -r "s/ / \\\ \n/g" | grep -iv "dba\|db4\|lmdb\|qdbm\|gdbm\|backtrack\|libxml-dir" > debops.tmp
 mv debops.tmp debops
 # cat debops | grep --color db; exit 0;
 
@@ -185,8 +185,6 @@ doconf="./configure \
 --enable-filter \
 --enable-ftp \
 --with-openssl --with-openssl-dir=/usr \
---enable-hash \
---enable-inotify \
 --enable-phar \
 --enable-session \
 --enable-shmop \
@@ -204,17 +202,15 @@ doconf="./configure \
 --with-libxml \
 --with-mhash \
 --with-password-argon2 \
---with-pear \
 --with-pic \
 --with-sodium \
---with-system-tzdata \
 --with-zlib-dir=/usr \
 --with-zlib \
 --enable-tokenizer \
 --with-iconv \
 \
 --enable-zts --enable-rtld-now --enable-sigchild \
---enable-opcache --enable-opcache-jit --enable-opcache-file --enable-huge-code-pages \
+--enable-opcache --enable-opcache-jit --enable-huge-code-pages \
 "
 
 

@@ -126,9 +126,10 @@ STRIP LDFLAGS -O2 -pedantic
 PREPEND CFLAGS -O3  -ldl -lstdc++ -lm -lresolv
 PREPEND CPPFLAGS -O3 -lstdc++
 PREPEND CXXFLAGS -O3  -ldl -lstdc++ -lm -lresolv
-PREPEND LDFLAGS -ldl -lstdc++ -lm -lresolv
+PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++
 ">/etc/dpkg/buildflags.conf
 
+# PREPEND LDFLAGS -ldl -lstdc++ -lm -lresolv
 # PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lpthread
 }
 
