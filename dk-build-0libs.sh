@@ -152,6 +152,7 @@ prepare_build_flags() {
 	export LDFLAGS
 	export LIBS=$LDFLAGS
 	export LDLIBS=$LDFLAGS
+	export LIBFLAGS=$LDFLAGS
 	export EXTRA_LDFLAGS=$LDFLAGS
 	export DEB_LDFLAGS_SET=$LDFLAGS
 
