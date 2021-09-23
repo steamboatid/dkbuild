@@ -176,7 +176,6 @@ doconf="./configure \
 \
 --enable-posix \
 --disable-phpdbg \
---disable-rpath \
 --enable-calendar \
 --enable-ctype \
 --enable-dom \

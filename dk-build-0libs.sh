@@ -123,10 +123,10 @@ STRIP CPPFLAGS -O2 -g -pedantic
 STRIP CXXFLAGS -O2 -g -pedantic
 STRIP LDFLAGS -O2 -g -pedantic
 
-PREPEND CFLAGS -O3  -ldl -lstdc++ -lm -lresolv
+PREPEND CFLAGS -O3  -ldl -lstdc++ -lm -lresolv --whole-archive -lmystaticlib
 PREPEND CPPFLAGS -O3 -lstdc++
-PREPEND CXXFLAGS -O3  -ldl -lstdc++ -lm -lresolv
-PREPEND LDFLAGS -O3  -ldl -lstdc++ -lm -lresolv
+PREPEND CXXFLAGS -O3  -ldl -lstdc++ -lm -lresolv --whole-archive -lmystaticlib
+PREPEND LDFLAGS -O3  -ldl -lstdc++ -lm -lresolv --whole-archive -lmystaticlib
 ">/etc/dpkg/buildflags.conf
 
 # PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lpthread
@@ -140,7 +140,7 @@ prepare_build_flags() {
 	GO2="-O2"
 	OPT3="-O3"
 	# CFLAGS="${AAA/$GO2/$OPT3} -ldl -lstdc++ -lcrypto -lcurl -liconv -licucore -lm -lmysqlclient -lpng -lresolv -lssl -lxml2 -lz -lgd"
-	CFLAGS="${AAA/$GO2/$OPT3} -ldl -lstdc++ -lm -lresolv"
+	CFLAGS="${AAA/$GO2/$OPT3} -ldl -lstdc++ -lm -lresolv --whole-archive -lmystaticlib"
 	export CFLAGS
 	export EXTRA_CFLAGS=$CFLAGS
 	export DEB_CFLAGS_SET=$CFLAGS
