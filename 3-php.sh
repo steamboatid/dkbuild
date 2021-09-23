@@ -64,11 +64,11 @@ prepare_source() {
 	--delete --exclude '.git' \
 	/root/org.src/git-http/ /root/src/git-php/ext/http/
 
-	printf "\n\n-- rsync raph \n"
-	mkdir -p /root/src/git-php/ext/raph/
+	printf "\n\n-- rsync raphf \n"
+	mkdir -p /root/src/git-php/ext/raphf/
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \
-	/root/org.src/git-raph/ /root/src/git-php/ext/raph/
+	/root/org.src/git-raphf/ /root/src/git-php/ext/raphf/
 
 
 	aptold install -fy \
