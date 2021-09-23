@@ -126,29 +126,14 @@ echo \
 
 # \
 # --with-gearman \
-# --with-imagick \
-# --enable-apcu \
-# \
-# --enable-igbinary \
-# --enable-memcached-igbinary \
-# --enable-redis-igbinary \
-# \
-# --with-msgpack \
-# --enable-redis-msgpack \
-# --enable-memcached-msgpack \
-# \
 # --enable-raphf \
 # --with-http \
 # \
-# --enable-memcached \
-# --with-libmemcached-dir \
-# --enable-memcached-session \
-# --enable-memcached-json \
-# --enable-redis \
-# --enable-redis-zstd \
 
 echo \
 "\
+--with-gearman=shared,/usr \
+\
 --with-mcrypt \
 --with-uuid \
 --with-vips \
