@@ -123,10 +123,10 @@ STRIP CPPFLAGS -O2 -g -pedantic
 STRIP CXXFLAGS -O2 -g -pedantic
 STRIP LDFLAGS -O2 -g -pedantic
 
-PREPEND CFLAGS -O3 -ldl -lstdc++ -lcrypto -lcurl -liconv -licucore -lm -lmysqlclient -lpng -lresolv -lssl -lxml2 -lz -lgd
+PREPEND CFLAGS -O3  -ldl -lstdc++ -lm -lresolv
 PREPEND CPPFLAGS -O3 -lstdc++
-PREPEND CXXFLAGS -O3 -ldl -lstdc++ -lcrypto -lcurl -liconv -licucore -lm -lmysqlclient -lpng -lresolv -lssl -lxml2 -lz -lgd
-PREPEND LDFLAGS -O3 -ldl -lstdc++ -lcrypto -lcurl -liconv -licucore -lm -lmysqlclient -lpng -lresolv -lssl -lxml2 -lz -lgd
+PREPEND CXXFLAGS -O3  -ldl -lstdc++ -lm -lresolv
+PREPEND LDFLAGS -O3  -ldl -lstdc++ -lm -lresolv
 ">/etc/dpkg/buildflags.conf
 
 # PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lpthread
