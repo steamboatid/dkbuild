@@ -118,15 +118,15 @@ chmod +x /usr/local/sbin/aptnew
 #-------------------------------------------
 reset_build_flags() {
 	echo \
-"STRIP CFLAGS -O2 -g -pedantic
-STRIP CPPFLAGS -O2 -g -pedantic
-STRIP CXXFLAGS -O2 -g -pedantic
-STRIP LDFLAGS -O2 -g -pedantic
+"STRIP CFLAGS -O2 -pedantic
+STRIP CPPFLAGS -O2 -pedantic
+STRIP CXXFLAGS -O2 -pedantic
+STRIP LDFLAGS -O2 -pedantic
 
 PREPEND CFLAGS -O3  -ldl -lstdc++ -lm -lresolv
 PREPEND CPPFLAGS -O3 -lstdc++
 PREPEND CXXFLAGS -O3  -ldl -lstdc++ -lm -lresolv
-PREPEND LDFLAGS -O3  -ldl -lstdc++ -lm -lresolv
+PREPEND LDFLAGS -ldl -lstdc++ -lm -lresolv
 ">/etc/dpkg/buildflags.conf
 
 # PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lpthread
@@ -134,7 +134,7 @@ PREPEND LDFLAGS -O3  -ldl -lstdc++ -lm -lresolv
 
 prepare_build_flags() {
 	AAA=`dpkg-buildflags --get CFLAGS`
-	GO2="-g -O2"
+	GO2="-O2"
 	OPT3="-O3"
 	AAA="${AAA/$GO2/$OPT3}"
 	GO2="-O2"
@@ -157,8 +157,8 @@ prepare_build_flags() {
 	AR=gcc-ar
 	RANLIB=gcc-ranlib
 
-	export DEB_CFLAGS_STRIP="-g -O2"
-	export DEB_LDFLAGS_STRIP="-g -O2"
+	export DEB_CFLAGS_STRIP="-O2"
+	export DEB_LDFLAGS_STRIP="-O2"
 
 
 	alias cd="cd -P"
