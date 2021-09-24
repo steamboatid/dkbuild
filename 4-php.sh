@@ -114,11 +114,13 @@ prepare_build_flags
 # find php8.0 folder
 BNAME=$(basename $(find /root/src/php8 -mindepth 1 -maxdepth 1 -type d -name "php8.0*"))
 BASE="/root/src/php8/$BNAME"
+BORG="/root/org.src/php8/$BNAME"
 cd $BASE
 
 prepare_source
 
 cat $BASE/debian/rules.d/ext-common.mk
+cat $BORG/debian/rules.d/ext-common.mk
 exit 0;
 
 
