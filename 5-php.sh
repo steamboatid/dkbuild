@@ -142,19 +142,20 @@ cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
 # apcu_config = --enable-apcu=shared
 # apc_config = --enable-apcu=shared
 
+# common_EXTENSIONS += raphf http gearman
+# gearman_config = --with-gearman=shared
+# raphf_config = --enable-raphf=shared
+# http_config = --with-http=shared
+
+# common_EXTENSIONS += mcrypt vips uuid imagick
+# mcrypt_config = --with-mcrypt=shared
+# vips_config = --with-vips=shared
+# uuid_config = --with-uuid=shared
+# imagick_config = --with-imagick=shared
+
+
 echo \
 "
-common_EXTENSIONS += raphf http gearman
-gearman_config = --with-gearman=shared
-raphf_config = --enable-raphf=shared
-http_config = --with-http=shared
-
-common_EXTENSIONS += mcrypt vips uuid imagick
-mcrypt_config = --with-mcrypt=shared
-vips_config = --with-vips=shared
-uuid_config = --with-uuid=shared
-imagick_config = --with-imagick=shared
-
 common_EXTENSIONS += igbinary
 igbinary_config = --enable-igbinary=shared \
 --enable-memcached-igbinary \
