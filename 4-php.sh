@@ -80,7 +80,8 @@ prepare_source() {
 
 
 copy_extra_mods() {
-	mods=(mcrypt vips uuid apcu imagick msgpack igbinary memcached)
+	# mods=(mcrypt vips uuid apcu imagick msgpack igbinary memcached)
+	mods=(mcrypt vips uuid imagick msgpack igbinary memcached)
 
 	finds=$(find /root/org.src/php8 -mindepth 2 -maxdepth 2 -type d | grep -v "debian\|\.pc\|bc" | sed -r "s/\s/\n/g" | sort)
 
