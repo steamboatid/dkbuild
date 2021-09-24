@@ -153,19 +153,19 @@ cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
 # uuid_config = --with-uuid=shared
 # imagick_config = --with-imagick=shared
 
+# common_EXTENSIONS += igbinary
+# igbinary_config = --enable-igbinary=shared \
+# --enable-memcached-igbinary \
+# --enable-redis-igbinary
+
+# common_EXTENSIONS += msgpack
+# msgpack_config = --with-msgpack=shared \
+# --enable-redis-msgpack \
+# --enable-memcached-msgpack
+
 
 echo \
 "
-common_EXTENSIONS += igbinary
-igbinary_config = --enable-igbinary=shared \
---enable-memcached-igbinary \
---enable-redis-igbinary
-
-common_EXTENSIONS += msgpack
-msgpack_config = --with-msgpack=shared \
---enable-redis-msgpack \
---enable-memcached-msgpack
-
 common_EXTENSIONS += memcached
 memcached_config = --enable-memcached=shared \
 --with-libmemcached-dir=/usr \
