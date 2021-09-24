@@ -182,6 +182,7 @@ redis_config = --enable-redis=shared \
 # sed -r "s/\=shared\,\/usr/\=\/usr/g" | sed -r "s/\=shared//g" \
 
 cat $BASE/debian/rules.d/ext-common.mk | sed -r "s/with-iconv\=shared/with-iconv/g" | \
+sed -r "s/pdo\=shared/pdo/g" \
 > /tmp/ext-common.mk
 mv /tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk
 
