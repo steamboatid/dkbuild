@@ -118,9 +118,6 @@ cd $BASE
 
 prepare_source
 
-cat $BASE/debian/rules.d/ext-common.mk
-cat $BORG/debian/rules.d/ext-common.mk
-exit 0;
 
 
 [ -e Makefile ] && make clean
@@ -138,6 +135,9 @@ fi
 
 # copy ext-common.mk back
 cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
+
+cat $BASE/debian/rules.d/ext-common.mk
+exit 0;
 
 
 # common_EXTENSIONS += apcu
