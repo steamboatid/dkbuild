@@ -211,3 +211,5 @@ rm -rf debian/libphp-embed* debian/libapache2-mod*
 printf "\n\n"
 
 bash /tb2/build/dk-build-full.sh
+
+sapi/cli/php -m
