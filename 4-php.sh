@@ -183,50 +183,6 @@ dba_config = --disable-dba \
 	--disable-inifile \
 	--disable-flatfile
 
-common_EXTENSIONS += common
-common_config = --enable-bcmath \
---enable-dom \
---enable-fileinfo \
---enable-gd \
---enable-huge-code-pages \
---enable-mbstring \
---enable-opcache \
---enable-opcache-jit \
---enable-phar \
---enable-posix \
---enable-rtld-now \
---enable-session \
---enable-shmop \
---enable-sigchild \
---enable-soap \
---enable-sockets \
---enable-sysvmsg \
---enable-sysvsem \
---enable-sysvshm \
---enable-tokenizer \
---enable-xml \
---enable-zts \
---localstatedir=/var \
---mandir=/usr/share/man \
---with-curl \
---with-external-pcre \
---with-ffi \
---with-gmp \
---with-iconv \
---with-jpeg \
---with-layout=GNU \
---with-libxml \
---with-mhash \
---with-openssl \
---with-openssl-dir=/usr \
---without-avif \
---with-pic \
---with-readline \
---with-sodium \
---with-webp \
---with-zlib \
---with-zlib-dir=/usr
-
 ">>$BASE/debian/rules.d/ext-common.mk
 # cat $BASE/debian/rules.d/ext-common.mk; exit 0;
 
@@ -236,6 +192,9 @@ common_config = --enable-bcmath \
 # mv /tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk
 
 # cat $BASE/debian/rules.d/ext-common.mk; exit 0;
+
+cat $BASE/debian/rules.d/ext-ldap.mk | grep -r "s/with-ldap/without-ldap/g" > /tmp/ext-ldap.mk
+mv /tmp/ext-ldap.mk $BASE/debian/rules.d/ext-ldap.mk
 
 
 # debian/rules mods
@@ -258,4 +217,4 @@ printf "\n\n"
 
 bash /tb2/build/dk-build-full.sh
 
-sapi/cli/php -m
+[ -e sapi/cli/php ] && sapi/cli/php -m
