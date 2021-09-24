@@ -182,7 +182,7 @@ dba_config = --disable-dba \
 	--disable-flatfile
 
 ">>$BASE/debian/rules.d/ext-common.mk
-# cat $BASE/debian/rules.d/ext-common.mk; exit 0;
+cat $BASE/debian/rules.d/ext-common.mk; exit 0;
 
 # cat $BASE/debian/rules.d/ext-common.mk | sed -r "s/with-iconv\=shared/with-iconv/g" | \
 # sed -r "s/\=shared\,\/usr/\=\/usr/g" | sed -r "s/\=shared//g" \
