@@ -142,17 +142,6 @@ cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
 # apcu_config = --enable-apcu=shared
 # apc_config = --enable-apcu=shared
 
-# common_EXTENSIONS += raphf http gearman
-# gearman_config = --with-gearman=shared
-# raphf_config = --enable-raphf=shared
-# http_config = --with-http=shared
-
-# common_EXTENSIONS += mcrypt vips uuid imagick
-# mcrypt_config = --with-mcrypt=shared
-# vips_config = --with-vips=shared
-# uuid_config = --with-uuid=shared
-# imagick_config = --with-imagick=shared
-
 # common_EXTENSIONS += igbinary
 # igbinary_config = --enable-igbinary=shared \
 # --enable-memcached-igbinary \
@@ -166,6 +155,17 @@ cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
 
 echo \
 "
+common_EXTENSIONS += raphf http gearman
+gearman_config = --with-gearman=shared
+raphf_config = --enable-raphf=shared
+http_config = --with-http=shared
+
+common_EXTENSIONS += mcrypt vips uuid imagick
+mcrypt_config = --with-mcrypt=shared
+vips_config = --with-vips=shared
+uuid_config = --with-uuid=shared
+imagick_config = --with-imagick=shared
+
 common_EXTENSIONS += memcached
 memcached_config = --enable-memcached=shared \
 --with-libmemcached-dir=/usr \
@@ -192,8 +192,8 @@ redis_config = --enable-redis=shared \
 
 
 # debian/rules mods
-sed -i -r "s/apache2 phpdbg embed fpm cgi cli/fpm cli/g" debian/rules
-sed -i -r "s/amd64 i386 arm64/amd64/g" debian/rules
+# sed -i -r "s/apache2 phpdbg embed fpm cgi cli/fpm cli/g" debian/rules
+# sed -i -r "s/amd64 i386 arm64/amd64/g" debian/rules
 sed -i -r "s/\-pedantic//g" debian/rules
 
 
