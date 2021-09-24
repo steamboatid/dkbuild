@@ -135,6 +135,9 @@ fi
 # copy ext-common.mk back
 cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
 
+cat /tb2/tmp/ext-common.mk
+exit 0;
+
 
 # common_EXTENSIONS += apcu
 # apcu_config = --enable-apcu=shared
