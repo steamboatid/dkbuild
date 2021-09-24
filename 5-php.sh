@@ -142,93 +142,40 @@ cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
 # apcu_config = --enable-apcu=shared
 # apc_config = --enable-apcu=shared
 
-# echo \
-# "
-# common_EXTENSIONS += raphf http gearman
-# gearman_config = --with-gearman=shared
-# raphf_config = --enable-raphf=shared
-# http_config = --with-http=shared
+echo \
+"
+common_EXTENSIONS += raphf http gearman
+gearman_config = --with-gearman=shared
+raphf_config = --enable-raphf=shared
+http_config = --with-http=shared
 
-# common_EXTENSIONS += mcrypt vips uuid imagick
-# mcrypt_config = --with-mcrypt=shared
-# vips_config = --with-vips=shared
-# uuid_config = --with-uuid=shared
-# imagick_config = --with-imagick=shared
+common_EXTENSIONS += mcrypt vips uuid imagick
+mcrypt_config = --with-mcrypt=shared
+vips_config = --with-vips=shared
+uuid_config = --with-uuid=shared
+imagick_config = --with-imagick=shared
 
-# common_EXTENSIONS += igbinary
-# igbinary_config = --enable-igbinary=shared \
-# --enable-memcached-igbinary \
-# --enable-redis-igbinary
+common_EXTENSIONS += igbinary
+igbinary_config = --enable-igbinary=shared \
+--enable-memcached-igbinary \
+--enable-redis-igbinary
 
-# common_EXTENSIONS += msgpack
-# msgpack_config = --with-msgpack=shared \
-# --enable-redis-msgpack \
-# --enable-memcached-msgpack
+common_EXTENSIONS += msgpack
+msgpack_config = --with-msgpack=shared \
+--enable-redis-msgpack \
+--enable-memcached-msgpack
 
-# common_EXTENSIONS += memcached
-# memcached_config = --enable-memcached=shared \
-# --with-libmemcached-dir=/usr \
-# --enable-memcached-session \
-# --enable-memcached-json
+common_EXTENSIONS += memcached
+memcached_config = --enable-memcached=shared \
+--with-libmemcached-dir=/usr \
+--enable-memcached-session \
+--enable-memcached-json
 
-# common_EXTENSIONS += redis
-# redis_config = --enable-redis=shared \
-# --enable-redis-zstd
+common_EXTENSIONS += redis
+redis_config = --enable-redis=shared \
+--enable-redis-zstd
 
-# dba_config = --disable-dba \
-# 	--without-db4 \
-# 	--without-gdbm \
-# 	--without-qdbm \
-# 	--without-lmdb \
-# 	--disable-inifile \
-# 	--disable-flatfile
-
-
-# common_EXTENSIONS += allinone
-# allinone_config = --enable-bcmath \
-# --enable-dom \
-# --enable-fileinfo \
-# --enable-gd \
-# --enable-huge-code-pages \
-# --enable-mbstring \
-# --enable-opcache \
-# --enable-opcache-jit \
-# --enable-phar \
-# --enable-posix \
-# --enable-rtld-now \
-# --enable-session \
-# --enable-shmop \
-# --enable-sigchild \
-# --enable-soap \
-# --enable-sockets \
-# --enable-sysvmsg \
-# --enable-sysvsem \
-# --enable-sysvshm \
-# --enable-tokenizer \
-# --enable-xml \
-# --enable-zts \
-# --localstatedir=/var \
-# --mandir=/usr/share/man \
-# --with-curl \
-# --with-external-pcre \
-# --with-ffi \
-# --with-gmp \
-# --with-iconv \
-# --with-jpeg \
-# --with-layout=GNU \
-# --with-libxml \
-# --with-mhash \
-# --with-openssl \
-# --with-openssl-dir=/usr \
-# --without-avif \
-# --with-pic \
-# --with-readline \
-# --with-sodium \
-# --with-webp \
-# --with-zlib \
-# --with-zlib-dir=/usr
-
-# ">>$BASE/debian/rules.d/ext-common.mk
+">>$BASE/debian/rules.d/ext-common.mk
 # cat $BASE/debian/rules.d/ext-common.mk; exit 0;
 
 # cat $BASE/debian/rules.d/ext-common.mk | sed -r "s/with-iconv\=shared/with-iconv/g" | \
@@ -244,9 +191,9 @@ cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
 
 
 # debian/rules mods
-# sed -i -r "s/apache2 phpdbg embed fpm cgi cli/fpm cli/g" debian/rules
-# sed -i -r "s/amd64 i386 arm64/amd64/g" debian/rules
-# sed -i -r "s/\-pedantic//g" debian/rules
+sed -i -r "s/apache2 phpdbg embed fpm cgi cli/fpm cli/g" debian/rules
+sed -i -r "s/amd64 i386 arm64/amd64/g" debian/rules
+sed -i -r "s/\-pedantic//g" debian/rules
 
 
 dh clean
