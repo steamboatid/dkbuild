@@ -135,7 +135,7 @@ fi
 # copy ext-common.mk back
 cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
 
-cat /tb2/tmp/ext-common.mk
+$BASE/debian/rules.d/ext-common.mk
 exit 0;
 
 
