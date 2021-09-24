@@ -37,7 +37,6 @@ prepare_source() {
 	fi
 
 	printf "\ncopy from ~/org.src \n"
-	rm -rf /root/src/php8/*
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \
 	/root/org.src/php8/ /root/src/php8/
