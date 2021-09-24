@@ -134,6 +134,10 @@ fi
 cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
 
 
+# common_EXTENSIONS += apcu
+# apcu_config = --enable-apcu=shared
+# apc_config = --enable-apcu=shared
+
 echo \
 "
 common_EXTENSIONS += raphf http gearman
@@ -146,10 +150,6 @@ mcrypt_config = --with-mcrypt=shared
 vips_config = --with-vips=shared
 uuid_config = --with-uuid=shared
 imagick_config = --with-imagick=shared
-
-common_EXTENSIONS += apcu
-apcu_config = --enable-apcu=shared
-apc_config = --enable-apcu=shared
 
 common_EXTENSIONS += igbinary
 igbinary_config = --enable-igbinary=shared \
