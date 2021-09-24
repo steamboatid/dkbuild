@@ -137,38 +137,38 @@ cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
 echo \
 "
 common_EXTENSIONS += raphf http gearman
-gearman_config = --with-gearman
-raphf_config = --enable-raphf
-http_config = --with-http
+gearman_config = --with-gearman=shared
+raphf_config = --enable-raphf=shared
+http_config = --with-http=shared
 
 common_EXTENSIONS += mcrypt vips uuid imagick
-mcrypt_config = --with-mcrypt
-vips_config = --with-vips
-uuid_config = --with-uuid
-imagick_config = --with-imagick
+mcrypt_config = --with-mcrypt=shared
+vips_config = --with-vips=shared
+uuid_config = --with-uuid=shared
+imagick_config = --with-imagick=shared
 
 common_EXTENSIONS += apcu
-apcu_config = --enable-apcu
-apc_config = --enable-apcu
+apcu_config = --enable-apcu=shared
+apc_config = --enable-apcu=shared
 
 common_EXTENSIONS += igbinary
-igbinary_config = --enable-igbinary \
+igbinary_config = --enable-igbinary=shared \
 --enable-memcached-igbinary \
 --enable-redis-igbinary
 
 common_EXTENSIONS += msgpack
-msgpack_config = --with-msgpack \
+msgpack_config = --with-msgpack=shared \
 --enable-redis-msgpack \
 --enable-memcached-msgpack
 
 common_EXTENSIONS += memcached
-memcached_config = --enable-memcached \
+memcached_config = --enable-memcached=shared \
 --with-libmemcached-dir=/usr \
 --enable-memcached-session \
 --enable-memcached-json
 
 common_EXTENSIONS += redis
-redis_config = --enable-redis \
+redis_config = --enable-redis=shared \
 --enable-redis-zstd
 
 dba_config = --disable-dba \
@@ -240,10 +240,11 @@ common_config = --enable-bcmath \
 ">>$BASE/debian/rules.d/ext-common.mk
 # cat $BASE/debian/rules.d/ext-common.mk; exit 0;
 
-cat $BASE/debian/rules.d/ext-common.mk | sed -r "s/with-iconv\=shared/with-iconv/g" | \
-sed -r "s/\=shared\,\/usr/\=\/usr/g" | sed -r "s/\=shared//g" \
-> /tmp/ext-common.mk
-mv /tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk
+# cat $BASE/debian/rules.d/ext-common.mk | sed -r "s/with-iconv\=shared/with-iconv/g" | \
+# sed -r "s/\=shared\,\/usr/\=\/usr/g" | sed -r "s/\=shared//g" \
+# > /tmp/ext-common.mk
+# mv /tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk
+
 # cat $BASE/debian/rules.d/ext-common.mk; exit 0;
 
 
