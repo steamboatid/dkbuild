@@ -4,6 +4,10 @@
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 /tb2/build/*sh root@argo:/tb2/build/
 
+#-- db4.8 debs
+rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+/var/lib/lxc/bus/rootfs/root/db4.8-debs/ argo:/tb2/build/buster-db4.8/
+
 # nohup /bin/bash /tb2/build/zgit-auto.sh >/dev/null 2>&1 &
 /bin/bash /tb2/build/zgit-auto.sh
 
@@ -43,5 +47,4 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 
 # ssh argo "/bin/bash /tb2/build/dk-lxc-exec.sh -n aaa -d buster"
 
-ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/5-php.sh
-
+# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/5-php.sh

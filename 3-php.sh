@@ -114,6 +114,7 @@ copy_extra_mods() {
 
 cd /root/src/git-php
 prepare_source
+alter_berkeley_dbh
 
 
 [ -e Makefile ] && make clean
@@ -122,13 +123,15 @@ prepare_source
 
 
 >debops
-for afile in $(find /root/src/php8/php8.0-8.0.10/debian/rules.d -type f | grep -v "prepare"); do
+for afile in $(find /root/org.src/php8/php8.0-8.0.10/debian/rules.d -type f | grep -v "prepare"); do
 	cat $afile | grep "with\|enable" | sed -r "s/\://g" | sed -r "s/\+//g" | sed -r "s/\s+/ /g" |\
 	sed -r "s/\\\//g" | sed "s/^\s//g" | sed -r "s/(.*)_config = //g" | \
 	sed -r "s/\=shared\,/\=/g" | sed -r "s/\=shared//g" >> debops
 done
-cat debops | tr "\n" " " | sed -r "s/\s+/ /g" | sed -r "s/ / \\\ \n/g" | grep -iv "dba\|db4\|lmdb\|qdbm\|gdbm\|backtrack\|libxml-dir" > debops.tmp
+# cat debops | tr "\n" " " | sed -r "s/\s+/ /g" | sed -r "s/ / \\\ \n/g" | grep -iv "dba\|db4\|lmdb\|qdbm\|gdbm\|backtrack\|libxml-dir" > debops.tmp
+cat debops | tr "\n" " " | sed -r "s/\s+/ /g" | sed -r "s/ / \\\ \n/g" | grep -iv "backtrack\|libxml-dir" > debops.tmp
 mv debops.tmp debops
+# cat debops; exit 0;
 # cat debops | grep --color db; exit 0;
 
 
@@ -190,7 +193,24 @@ echo \
 \
 --enable-redis \
 --enable-redis-zstd \
+\
+--enable-dba \
+--with-db4=/usr \
+--without-gdbm \
+--with-qdbm=/usr \
+--with-lmdb=/usr \
+--enable-inifile \
+--enable-flatfile \
+\
+--with-liblz4=/usr \
+--with-liblzf=/usr \
+--enable-redis-lz4 \
+
 ">moreops
+
+# --enable-redis-lzf \
+# --with-system-fastlz=/usr \
+
 
 
 
@@ -267,6 +287,7 @@ printf "\n\n$doconf \n\n" > doconf
 
 
 eval $doconf 2>&1 | tee dkconf.log
+# exit 0;
 
 
 bads=$(cat dkconf.log | grep -iv "warning" | grep -i "mcrypt\|vips\|uuid\|gearman" | wc -l)
@@ -304,12 +325,7 @@ fi
 
 
 sleep 0.1
-# sed -i "s/\-g //g" Makefile
 sed -i "s/-O2/-O3/g" Makefile
-# sed -i "s/noeneration-date/no-generation-date/g" Makefile
-# sed -i "s/large-functionrowth/large-function-growth/g" Makefile
-# sed -i "s/inline-unitrowth/inline-unit-growth/g" Makefile
-# sed -i "s///g" Makefile
 
 find /root/src/git-php/ -type d -name ".libs" -exec rm -rf {} \;  >/dev/null
 find /root/src/git-php/ -type d -name ".libs" -exec rm -rf {} \;  >/dev/null

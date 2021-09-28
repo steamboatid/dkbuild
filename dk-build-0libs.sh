@@ -6,6 +6,7 @@ export DEBIAN_FRONTEND="noninteractive"
 export DEBFULLNAME="Dwi Kristianto"
 export DEBEMAIL="steamboatid@gmail.com"
 export EMAIL="steamboatid@gmail.com"
+export DPKG_COLORS="always"
 
 export RELNAME=$(lsb_release -sc)
 export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
@@ -117,31 +118,35 @@ chmod +x /usr/local/sbin/aptnew
 # reset default build flags
 #-------------------------------------------
 reset_build_flags() {
-	echo \
-"STRIP CFLAGS -O2 -pedantic
-STRIP CPPFLAGS -O2 -pedantic
-STRIP CXXFLAGS -O2 -pedantic
-STRIP LDFLAGS -O2 -pedantic
+	unused="-Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-unused-const-variable"
+	libsld="-ldl -lstdc++ -lm -lresolv -lpthread"
 
-PREPEND CFLAGS -O3  -ldl -lstdc++ -lm -lresolv
+	echo \
+"STRIP CFLAGS -O2 -pedantic -Wall
+STRIP CPPFLAGS -O2 -pedantic -Wall
+STRIP CXXFLAGS -O2 -pedantic -Wall
+STRIP LDFLAGS -O2 -pedantic -Wall
+
+PREPEND CFLAGS -O3 ${libsld} ${unused}
 PREPEND CPPFLAGS -O3 -lstdc++
-PREPEND CXXFLAGS -O3  -ldl -lstdc++ -lm -lresolv
+PREPEND CXXFLAGS -O3 ${libsld}
 PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++
 ">/etc/dpkg/buildflags.conf
+
+	# cat /etc/dpkg/buildflags.conf; exit 0;
 
 # PREPEND LDFLAGS -ldl -lstdc++ -lm -lresolv
 # PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lpthread
 }
 
 prepare_build_flags() {
-	AAA=`dpkg-buildflags --get CFLAGS`
-	GO2="-O2"
-	OPT3="-O3"
-	AAA="${AAA/$GO2/$OPT3}"
-	GO2="-O2"
-	OPT3="-O3"
-	# CFLAGS="${AAA/$GO2/$OPT3} -ldl -lstdc++ -lcrypto -lcurl -liconv -licucore -lm -lmysqlclient -lpng -lresolv -lssl -lxml2 -lz -lgd"
-	CFLAGS="${AAA/$GO2/$OPT3} -ldl -lstdc++ -lm -lresolv"
+	unused="-Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable"
+	libsld="-ldl -lstdc++ -lm -lresolv"
+
+	CFLAGS=$(dpkg-buildflags --get CFLAGS)
+	CFLAGS=$(printf " ${CFLAGS} ${libsld} ${unused}" | sed -r "s/\-Wall//g" | sed -r "s/\s+/ /g" | sed -r "s/^\s//g")
+	# printf "\n ${CFLAGS}"; exit 0;
+
 	export CFLAGS
 	export EXTRA_CFLAGS=$CFLAGS
 	export DEB_CFLAGS_SET=$CFLAGS
@@ -336,3 +341,18 @@ save_local_debs() {
 	/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
 }
 
+
+alter_berkeley_dbh() {
+	if [ ! -e /usr/include ]; then
+		apt-cache search db5 | grep -i "berkeley" | cut -d" " -f1 | grep -v "dbg\|sym" | xargs aptold install -fy
+	fi
+
+	cp /usr/include/db.h /usr/include/db.h.bak
+	cp -f /usr/include/db.h /tmp/db.h
+	sed -i -r "s/\s+/ /g" /tmp/db.h
+	sed -i -r "s/5.3/4.8/g" /tmp/db.h
+	sed -i -r "s/^\#define DB_VERSION_MAJOR [0-9]/#define DB_VERSION_MAJOR 4/g" /tmp/db.h
+	sed -i -r "s/^\#define DB_VERSION_MINOR [0-9]/#define DB_VERSION_MINOR 8/g" /tmp/db.h
+
+	# cat /tmp/db.h | grep "DB_VERSION"; exit 0;
+}

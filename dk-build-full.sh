@@ -30,7 +30,18 @@ dpkg-buildflags --get LDFLAGS
 
 
 
-[ -e debian/rules ] && chmod +x debian/rules
+if [ -e debian/rules ]; then
+	sed -i -r "s/O2/O3/g" debian/rules
+	sed -i -r "s/\-pedantic//g" debian/rules
+	sed -i -r "s/\-Wall//g" debian/rules
+
+	if [[ $(cat debian/rules | grep "dpkg\-shlibdeps" | wc -l) -gt 0 ]]; then
+		if [[ $(cat debian/rules | grep "dpkg\-shlibdeps" | grep "warnings" | wc -l) -lt 1 ]]; then
+			sed -i -r "s/dpkg-shlibdeps/dpkg-shlibdeps --warnings=0/g" debian/rules
+		fi
+	fi
+	chmod +x debian/rules
+fi
 
 if [ -e "debian/libnginx-mod-http-ndk.nginx" ]; then
 	chmod +x debian/libnginx-mod*nginx
@@ -74,42 +85,42 @@ time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 --no-lintian --no-tgz-check --no-sign -b -uc -us -D 2>&1 | tee dkbuild.log
 
 
-# isdeps=$(cat dkbuild.log | grep -i "unmet build dependencies" | wc -l)
-# if [[ $isdeps -gt 0 ]]; then
-# 	cat dkbuild.log | grep -i "unmet build dependencies" | \
-# 	sed "s/dpkg-checkbuilddeps: //g" |
-# 	sed "s/error: //g" |
-# 	sed "s/Unmet build dependencies: //g" | sed "s/|//g" >> ~/build.deps
-# 	cat ~/build.deps
-# fi
+isdeps=$(cat dkbuild.log | grep -i "unmet build dependencies" | wc -l)
+if [[ $isdeps -gt 0 ]]; then
+	cat dkbuild.log | grep -i "unmet build dependencies" | \
+	sed "s/dpkg-checkbuilddeps: //g" |
+	sed "s/error: //g" |
+	sed "s/Unmet build dependencies: //g" | sed "s/|//g" >> ~/build.deps
+	cat ~/build.deps
+fi
 
-# isfail=$(tail -n100 dkbuild.log | grep -i failed | wc -l)
-# if [[ $isfail -gt 0 ]]; then
-# 	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
-# 	export DH_VERBOSE=1; \
-# 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
-# 	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
-# 	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
-# 	--no-lintian --no-tgz-check --no-sign -b -uc -us -D 2>&1 | tee dkbuild.log
-# fi
+isfail=$(tail -n100 dkbuild.log | grep -i failed | wc -l)
+if [[ $isfail -gt 0 ]]; then
+	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
+	export DH_VERBOSE=1; \
+	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
+	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
+	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
+	--no-lintian --no-tgz-check --no-sign -b -uc -us -D 2>&1 | tee dkbuild.log
+fi
 
-# isflict=$(tail -n100 dkbuild.log | grep -i conflict | wc -l)
-# isfail=$(tail -n100 dkbuild.log | grep -i failed | wc -l)
-# if [[ $isfail -gt 0 ]] && [[ $isflict -gt 0 ]]; then
-# 	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
-# 	export DH_VERBOSE=1; \
-# 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
-# 	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
-# 	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
-# 	--no-lintian --no-tgz-check --no-sign -b -uc -us -d 2>&1 | tee dkbuild.log
-# fi
+isflict=$(tail -n100 dkbuild.log | grep -i conflict | wc -l)
+isfail=$(tail -n100 dkbuild.log | grep -i failed | wc -l)
+if [[ $isfail -gt 0 ]] && [[ $isflict -gt 0 ]]; then
+	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
+	export DH_VERBOSE=1; \
+	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
+	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
+	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
+	--no-lintian --no-tgz-check --no-sign -b -uc -us -d 2>&1 | tee dkbuild.log
+fi
 
-# if [[ $isdeps -gt 0 ]]; then
-# 	printf "\n\n ${red}unmet build dependencies: ${end}"
-# 	ATMP=$(mktemp)
-# 	cat ~/build.deps | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | \
-# 	sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g" > $ATMP
-# 	mv $ATMP ~/build.deps
-# 	cat ~/build.deps
-# 	printf "\n\n"
-# fi
+if [[ $isdeps -gt 0 ]]; then
+	printf "\n\n ${red}unmet build dependencies: ${end}"
+	ATMP=$(mktemp)
+	cat ~/build.deps | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | \
+	sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g" > $ATMP
+	mv $ATMP ~/build.deps
+	cat ~/build.deps
+	printf "\n\n"
+fi
