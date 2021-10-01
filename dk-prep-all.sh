@@ -150,7 +150,8 @@ xargs aptold install -fy  --no-install-recommends  --allow-downgrades
 apt-cache search db5 | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
 xargs aptold install -fy  --no-install-recommends  --allow-downgrades
 
-aptold install -fy default-jdk libx11-dev xorg-dev libcurl4-openssl-dev \
+aptold install -fy --no-install-recommends  --allow-downgrades \
+default-jdk libx11-dev xorg-dev libcurl4-openssl-dev \
 mandoc apache2-dev dh-apache2 libdb-dev \
 liblz4-dev lz4 liblz4-* libdirectfb-dev liblzf-dev liblzf-dev
 libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
@@ -158,7 +159,40 @@ libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev libssl-dev libx
 libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
 php-dev libc6-dev libticonv-dev libiconv-hook-dev \
 libghc-iconv-dev libiconv-hook-dev libc-bin \
-libqdbm* libgdbm* libxqdbm*
+libqdbm* libgdbm* libxqdbm* libxmlrpc-c*dev xmlrpc-api-utils
+
+aptold install -fy --no-install-recommends  --allow-downgrades \
+apache2-dev autotools-dev *clang*dev default-libmysqlclient-dev devscripts dpkg-dev \
+firebird-dev freetds-dev libapparmor-dev libapr1-dev libargon2-dev libatomic-ops-dev \
+libavif*dev libavif-dev libb64-dev libboost1.67-dev libboost-atomic1.67-dev \
+libboost-chrono1.67-dev libboost-date-time1.67-dev libboost-date-time-dev \
+libboost-serialization1.67-dev libboost-system1.67-dev libboost-system-dev \
+libboost-thread1.67-dev libboost-thread-dev libbz2-dev libc6-dev libc-client*-dev \
+libc-client-dev lib*clang*dev libclang*dev libclang-dev libconsole-bridge-dev \
+libcurl4-openssl-dev libdb*dev libdb5*dev libdb5*-dev libdb*dev libdb-dev \
+libdirectfb-dev libedit-dev libenchant-dev libevent-dev libexpat1-dev \
+libexpat-dev libffi-dev libfindlib-ocaml-dev libfreetype6-dev libfreetype*dev \
+libgcrypt20-dev libgdchart-gd2-xpm-dev \
+libgd-dev libgd-gd2-noxpm-ocaml-dev libgeoip-dev libghc-ldap-dev libghc-mmap-dev \
+libglib2.0-dev libgmp3-dev libgmp-dev libgoogle-perftools-dev \
+libiconv-hook-dev libicu-dev libjbig-dev libjemalloc-dev libjpeg*dev libjpeg-dev \
+libkf5imap-dev libkf5ldap-dev libkrb5-dev libldap2-dev libldap-ocaml-dev libldb-dev \
+liblmdb-dev libluajit-5.1-dev liblz4-dev liblzf-dev liblzma*dev libmagic-dev \
+libmaxminddb-dev libmcrypt-dev libmemcached-dev libmhash-dev \
+libmm-dev libmysqlclient-dev libnethttpd-ocaml-dev libocamlnet-ocaml-dev libonig-dev \
+libpam0g-dev libpcre2-dev libpcre3-dev libpcre++-dev libpcre-ocaml-dev libperl-dev \
+libpng*dev libpng-dev libpq-dev libpspell-dev libqdbm-dev libreadline-dev \
+libroscpp-core-dev librust-memmap-dev libsasl2-dev libsnmp-dev libsodium-dev \
+libsodium-dev libsqlite3-dev libssl-dev libsystemd-dev libticonv-dev \
+libtidy-dev libtiff-dev libwebp-dev libwrap0-dev libx11-dev libxft*dev libxml2-dev \
+libxml-light-ocaml-dev libxmlrpc-c++8-dev libxmlrpc-core-c3-dev libxmlrpc-epi-dev \
+libxmlrpc-light-ocaml-dev libxmlrpcpp-dev libxmltok1-dev libxpm-dev libxslt1-dev \
+libyaml-dev libzip-dev libzip-ocaml-dev libzstd*dev libzstd-dev lua-geoip-dev \
+lua-ldap-dev lua-zlib-dev php-all-dev \
+php-dev php-igbinary-all-dev php-memcached-all-dev \
+postgresql-server-dev-* postgresql-server-dev-all slapi-dev \
+systemtap-sdt-dev tcl-dev unixodbc-dev uuid-dev xorg-dev \
+zlib1g*dev zlib1g-dev
 
 
 aptold build-dep -fy php8.0 php-defaults \
