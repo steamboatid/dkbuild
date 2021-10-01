@@ -39,7 +39,9 @@ fetch_url "https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db
 
 dpkg-source --no-check --ignore-bad-version -x db4_4.8.30-buster1.dsc
 
-#-- sync to src
+
+#--- sync to src
+#-------------------------------------------
 printf "\n-- sync to src db4 \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/db4/ /root/src/db4/

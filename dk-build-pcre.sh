@@ -40,7 +40,8 @@ chown_apt
 apt source -y libpcre3
 
 
-#-- sync to src
+#--- sync to src
+#-------------------------------------------
 printf "\n-- sync to src pcre \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/pcre/ /root/src/pcre/

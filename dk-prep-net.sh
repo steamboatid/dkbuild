@@ -137,7 +137,7 @@ for apkg in $(cat $FSRC | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort); do
 done
 
 
-#-- sync to src
+#--- sync to src
 #-------------------------------------------
 printf "\n-- sync to src php8 \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \

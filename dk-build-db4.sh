@@ -53,7 +53,7 @@ cp debian/changelog debian/changelog.1 -fa
 
 # override version from source
 #-------------------------------------------
-if [ -e lib/resty/core/base.lua ]; then
+if [ -e build_windows/db_config.h ]; then
 	VERSRC=$(cat build_windows/db_config.h | grep "PACKAGE_VERSION" | sed -r "s/\s+/ /g" | sed "s/\"//g" | cut -d" " -f3)
 	VEROVR="${VERSRC}.1"
 	printf "\n\n VERSRC=$VERSRC ---> VEROVR=$VEROVR \n"

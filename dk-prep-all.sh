@@ -82,7 +82,8 @@ chown_apt
 apt source -y libpcre3
 
 
-#-- sync to src
+#--- sync to src
+#-------------------------------------------
 printf "\n-- sync to src pcre \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/pcre/ /root/src/pcre/
@@ -222,7 +223,8 @@ php8.0-xsl php8.0-zip \
 php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu
 
 
-#-- sync to src
+#--- sync to src
+#-------------------------------------------
 printf "\n-- sync to src php8 \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/php8/ /root/src/php8/

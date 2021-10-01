@@ -28,6 +28,13 @@ get_update_new_git "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
 get_update_new_git "steamboatid/db4" "/root/org.src/db4/git-db4"
 
 
+#--- sync to src
+#-------------------------------------------
+printf "\n-- sync to src pcre \n"
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+/root/org.src/pcre/ /root/src/pcre/
+
+
 #--- last
 #-------------------------------------------
 save_local_debs
