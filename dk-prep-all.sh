@@ -154,7 +154,8 @@ libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-de
 libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev libssl-dev libxml2-dev \
 libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
 php-dev libc6-dev libticonv-dev libiconv-hook-dev \
-libghc-iconv-dev libiconv-hook-dev libc-bin
+libghc-iconv-dev libiconv-hook-dev libc-bin \
+libqdbm* libgdbm* libxqdbm*
 
 
 aptold build-dep -fy php8.0 php-defaults \

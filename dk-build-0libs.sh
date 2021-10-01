@@ -368,5 +368,6 @@ alter_berkeley_dbh() {
 	sed -i -r "s/^\#define DB_VERSION_MINOR [0-9]/#define DB_VERSION_MINOR 8/g" /tmp/db.h
 	mv /tmp/db.h /usr/include/db.h
 
+	# cat /usr/include/db.h | grep "DB_VERSION"; exit 0;
 	# cat /tmp/db.h | grep "DB_VERSION"; exit 0;
 }

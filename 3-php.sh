@@ -118,7 +118,7 @@ alter_berkeley_dbh
 
 
 [ -e Makefile ] && make clean
-./buildconf -f
+# ./buildconf -f
 # exit 0;
 
 
@@ -194,7 +194,7 @@ echo \
 --enable-redis \
 --enable-redis-zstd \
 \
---enable-dba \
+--enable-dba=shared \
 --with-db4=/usr \
 --without-gdbm \
 --with-qdbm=/usr \
@@ -287,6 +287,7 @@ printf "\n\n$doconf \n\n" > doconf
 
 
 eval $doconf 2>&1 | tee dkconf.log
+alter_berkeley_dbh
 # exit 0;
 
 
