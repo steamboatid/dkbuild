@@ -94,13 +94,13 @@ export LANGUAGE=en_US.UTF-8
 
 
 	cd `mktemp -d`; \
-	apt update;\
+	aptold update;\
 	dpkg --configure -a; \
 	aptold install -y locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
 	gnupg2 apt-utils tzdata curl && \
 	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen &&\
 	apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys &&\
-	apt update; apt full-upgrade -fy
+	aptold update; aptold full-upgrade -fy
 
 	echo "1" > /run/done.init.dkbuild.txt
 fi
@@ -115,22 +115,22 @@ rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
 /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/; \
 mkdir -p /root/.local/share/nano/ /root/.config/procps/; \
 dpkg --configure -a; \
-apt autoclean; apt clean; apt update
-apt full-upgrade --auto-remove --purge -fy
+aptold autoclean; aptold clean; aptold update
+aptold full-upgrade --auto-remove --purge -fy
 
 
 
 # special steps for keydb only
 cd `mktemp -d`; \
 rm -rf /etc/keydb /etc/systemd /lib/systemd/system/keydb*; \
-systemctl daemon-reload; apt purge --auto-remove --purge  -fy keydb*; \
-apt update; aptnew full-upgrade --auto-remove --purge -fy; \
+systemctl daemon-reload; aptold purge --auto-remove --purge  -fy keydb*; \
+aptold update; aptnew full-upgrade --auto-remove --purge -fy; \
 aptnew install --reinstall -fy keydb-server keydb-tools; \
 netstat -nlpat |grep --color keydb-server
 
 
 # cd `mktemp -d`; \
-# apt purge --auto-remove --purge \
+# aptold purge --auto-remove --purge \
 # php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy
 
 # rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb \
@@ -150,7 +150,7 @@ netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 if [[ $(dpkg -l | grep "^ii" | grep "keydb\-server" | wc -l) -lt 1 ]]; then
 	rm -rf /var/lib/dpkg/info/keydb-server.*
 	dpkg --configure -a
-	apt install -fy
+	aptold install -fy
 fi
 
 

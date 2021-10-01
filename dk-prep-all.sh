@@ -39,7 +39,8 @@ find /root/src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
 
 # NGINX, source via git
 #-------------------------------------------
-apt full-upgrade --fix-missing -fy
+aptold update
+aptold full-upgrade --fix-missing -fy
 aptold install -fy   --no-install-recommends \
 devscripts build-essential lintian debhelper git git-extras wget axel \
 diffutils patch patchutils quilt git dgit \
