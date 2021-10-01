@@ -49,4 +49,4 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 
 # ssh argo "/bin/bash /tb2/build/dk-lxc-exec.sh -n aaa -d buster"
 
-# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/5-php.sh
+ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/3-php.sh

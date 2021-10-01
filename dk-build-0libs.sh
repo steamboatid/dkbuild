@@ -132,19 +132,19 @@ chmod +x /usr/local/sbin/aptnew
 # reset default build flags
 #-------------------------------------------
 reset_build_flags() {
-	# unused="-Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-unused-const-variable"
-	# libsld="-ldl -lstdc++ -lm -lresolv -lpthread"
+	unused="-Wno-error -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-unused-const-variable"
+	libsld="-ldl -lstdc++ -lm -lresolv -lpthread"
 
 	echo \
-"STRIP CFLAGS -O2 -pedantic -Wall
-STRIP CPPFLAGS -O2 -pedantic -Wall
-STRIP CXXFLAGS -O2 -pedantic -Wall
-STRIP LDFLAGS -O2 -pedantic -Wall
+"STRIP CFLAGS -O2 -pedantic -Wall -Werror -Wextra
+STRIP CPPFLAGS -O2 -pedantic -Wall -Werror -Wextra
+STRIP CXXFLAGS -O2 -pedantic -Wall -Werror -Wextra
+STRIP LDFLAGS -O2 -pedantic -Wall -Werror -Wextra
 
 PREPEND CFLAGS -O3 ${libsld} ${unused}
 PREPEND CPPFLAGS -O3 -lstdc++
 PREPEND CXXFLAGS -O3 ${libsld}
-PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++
+PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lresolv
 ">/etc/dpkg/buildflags.conf
 
 	# cat /etc/dpkg/buildflags.conf; exit 0;
@@ -154,7 +154,7 @@ PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++
 }
 
 prepare_build_flags() {
-	unused="-Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-unused-const-variable"
+	unused="-Wno-error -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-unused-const-variable"
 	libsld="-ldl -lstdc++ -lm -lresolv"
 
 	CFLAGS=$(dpkg-buildflags --get CFLAGS)
@@ -168,7 +168,7 @@ prepare_build_flags() {
 	# CFLAGS=$(cat /tmp/flags.new | tr "\n" " " | sed -r "s/^\s//g" | sed -r "s/\s+/ /g")
 	CFLAGS=$(cat /tmp/flags.new)
 	rm -rf /tmp/flags.new /tmp/flags
-	# printf "\n${CFLAGS}"; exit 0;
+	printf "\n${CFLAGS}"; exit 0;
 
 	export CFLAGS
 	export EXTRA_CFLAGS=$CFLAGS
