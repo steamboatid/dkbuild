@@ -168,7 +168,7 @@ prepare_build_flags() {
 	# CFLAGS=$(cat /tmp/flags.new | tr "\n" " " | sed -r "s/^\s//g" | sed -r "s/\s+/ /g")
 	CFLAGS=$(cat /tmp/flags.new)
 	rm -rf /tmp/flags.new /tmp/flags
-	printf "\n${CFLAGS}"; exit 0;
+	# printf "\n${CFLAGS}"; exit 0;
 
 	export CFLAGS
 	export EXTRA_CFLAGS=$CFLAGS
