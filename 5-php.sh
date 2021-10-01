@@ -141,9 +141,33 @@ cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
 
 
 
-# common_EXTENSIONS += apcu
-# apcu_config = --enable-apcu=shared
-# apc_config = --enable-apcu=shared
+
+
+# echo \
+# "
+# common_EXTENSIONS += raphf http gearman
+# gearman_config = --with-gearman=shared,/usr
+# raphf_config = --enable-raphf=shared
+# http_config = --with-http=shared,/usr
+
+# common_EXTENSIONS += mcrypt vips uuid imagick
+# mcrypt_config = --with-mcrypt=shared,/usr
+# vips_config = --with-vips=shared,/usr
+# uuid_config = --with-uuid=shared,/usr
+# imagick_config = --with-imagick=shared,/usr
+
+# common_EXTENSIONS += memcached
+# memcached_config = --enable-memcached=shared \
+# --with-libmemcached-dir=/usr \
+# --enable-memcached-session \
+# --enable-memcached-json
+
+# common_EXTENSIONS += redis
+# redis_config = --enable-redis=shared \
+# --enable-redis-zstd \
+# --enable-redis-lz4 \
+# --with-liblz4=/usr \
+# --with-liblzf=/usr
 
 # common_EXTENSIONS += igbinary
 # igbinary_config = --enable-igbinary=shared \
@@ -155,50 +179,12 @@ cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
 # --enable-redis-msgpack \
 # --enable-memcached-msgpack
 
-# raphf_config = --enable-raphf=shared
-# http_config = --with-http=shared,/usr
+# common_EXTENSIONS += apcu
+# apcu_config = --enable-apcu
+# apc_config = --enable-apcu
 
-
-echo \
-"
-common_EXTENSIONS += raphf http gearman
-gearman_config = --with-gearman=shared,/usr
-
-common_EXTENSIONS += mcrypt vips uuid imagick
-mcrypt_config = --with-mcrypt=shared,/usr
-vips_config = --with-vips=shared,/usr
-uuid_config = --with-uuid=shared,/usr
-imagick_config = --with-imagick=shared,/usr
-
-common_EXTENSIONS += memcached
-memcached_config = --enable-memcached=shared \
---with-libmemcached-dir=/usr \
---enable-memcached-session \
---enable-memcached-json
-
-common_EXTENSIONS += redis
-redis_config = --enable-redis=shared \
---enable-redis-zstd \
---enable-redis-lz4 \
---with-liblz4=/usr \
---with-liblzf=/usr
-
-common_EXTENSIONS += igbinary
-igbinary_config = --enable-igbinary=shared \
---enable-memcached-igbinary \
---enable-redis-igbinary
-
-common_EXTENSIONS += msgpack
-msgpack_config = --with-msgpack=shared \
---enable-redis-msgpack \
---enable-memcached-msgpack
-
-common_EXTENSIONS += apcu
-apcu_config = --enable-apcu
-apc_config = --enable-apcu
-
-">>$BASE/debian/rules.d/ext-common.mk
-# cat $BASE/debian/rules.d/ext-common.mk; exit 0;
+# ">>$BASE/debian/rules.d/ext-common.mk
+cat $BASE/debian/rules.d/ext-common.mk; exit 0;
 
 # sed -r "s/\=shared\,\/usr/\=\/usr/g" | sed -r "s/\=shared//g" \
 
