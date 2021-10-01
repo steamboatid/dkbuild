@@ -25,6 +25,7 @@ get_update_new_git "steamboatid/phpredis" "/root/org.src/php8/git-phpredis"
 get_update_new_git "steamboatid/keydb" "/root/org.src/keydb/git-keydb"
 get_update_new_git "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"
 get_update_new_git "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
+get_update_new_git "steamboatid/db4" "/root/org.src/db4/git-db4"
 
 
 #--- last

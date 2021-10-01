@@ -56,6 +56,10 @@ doback_bash /tb2/build/dk-build-libzip.sh &
 
 # some job at foreground
 #-------------------------------------------
+/bin/bash /tb2/build/dk-build-db4.sh
+printf "\n\n\n"
+sleep 1
+
 /bin/bash /tb2/build/dk-build-nginx.sh
 printf "\n\n\n"
 sleep 1

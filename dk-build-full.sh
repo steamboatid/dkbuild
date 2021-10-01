@@ -123,4 +123,17 @@ if [[ $isdeps -gt 0 ]]; then
 	mv $ATMP ~/build.deps
 	cat ~/build.deps
 	printf "\n\n"
+	exit 1;
+fi
+
+isflict=$(tail -n100 dkbuild.log | grep -i conflict | wc -l)
+isfail=$(tail -n100 dkbuild.log | grep -i failed | wc -l)
+if [[ $isfail -gt 0 ]] || [[ $isflict -gt 0 ]]; then
+	exit 2;
+fi
+
+# if no error, then success
+isok=$(tail -n100 dkbuild.log | grep -i "binary\-only" | wc -l)
+if [[ $isok -gt 0 ]]; then
+	exit 0;
 fi

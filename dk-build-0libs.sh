@@ -158,15 +158,11 @@ prepare_build_flags() {
 	libsld="-ldl -lstdc++ -lm -lresolv"
 
 	CFLAGS=$(dpkg-buildflags --get CFLAGS)
-	CFLAGS="${CFLAGS} ${libsld} ${unused}"
-
-	printf " ${CFLAGS} ${libsld} ${unused}" > /tmp/flags
-	cat /tmp/flags | \
-	sed -r "s/\-pedantic-\errors//g" | sed -r "s/\-Wpedantic//g" | sed -r "s/\-pedantic//g" |\
-	sed -r "s/\-Wextra//g" | sed -r "s/\-Wall//g" | sed -r "s/\-Werror//g" | \
-	sed -r "s/\s+/ /g" | sed -r "s/^\s//g" > /tmp/flags.new
-	# CFLAGS=$(cat /tmp/flags.new | tr "\n" " " | sed -r "s/^\s//g" | sed -r "s/\s+/ /g")
-	CFLAGS=$(cat /tmp/flags.new)
+	printf " ${CFLAGS} ${libsld} ${unused} " | \
+	sed -r "s/ \-pedantic-\errors//g" | sed -r "s/ \-Wpedantic//g" | sed -r "s/ \-pedantic//g" |\
+	sed -r "s/ \-Wextra / /g" | sed -r "s/ \-Wall / /g" | sed -r "s/ \-Werror / /g" | \
+	sed -r "s/\s+/ /g" | sed -r "s/^\s//g" > /tmp/flags
+	CFLAGS=$(cat /tmp/flags)
 	rm -rf /tmp/flags.new /tmp/flags
 	# printf "\n${CFLAGS}"; exit 0;
 
@@ -388,4 +384,11 @@ alter_berkeley_dbh() {
 
 	# cat /usr/include/db.h | grep "DB_VERSION"; exit 0;
 	# cat /tmp/db.h | grep "DB_VERSION"; exit 0;
+}
+
+fetch_url() {
+	URL=$1
+	BNAME=$(basename $URL)
+	curl -sS -fkL $URL > $BNAME
+	wget -kc $URL
 }
