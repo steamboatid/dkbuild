@@ -1,6 +1,9 @@
 #!/bin/bash
 
 
+source /tb2/build/dk-build-0libs.sh
+
+
 #-- delete empty files
 find /etc/apt/trusted.gpg.d -type f -empty -delete
 find /etc/apt/trusted.gpg.d -type f -name ".#*" -delete
@@ -9,7 +12,7 @@ chmod -x /etc/apt/trusted.gpg.d/*
 
 #-- apt install
 printf "\n apt install"
-apt install -yf gnupg2 apt-utils tzdata curl
+aptold install -yf gnupg2 apt-utils tzdata curl
 
 #-- fetch from repo.aisits.id
 printf "\n fetch from repo.aisits.id"

@@ -102,12 +102,15 @@ copy_extra_mods() {
 	done
 }
 
+rm -rf /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock
 
 source /tb2/build/dk-build-0libs.sh
 /bin/bash /tb2/build/dk-config-gen.sh
 
+
 reset_build_flags
 prepare_build_flags
+alter_berkeley_dbh
 
 
 # find php8.0 folder
@@ -174,7 +177,24 @@ memcached_config = --enable-memcached=shared \
 
 common_EXTENSIONS += redis
 redis_config = --enable-redis=shared \
---enable-redis-zstd
+--enable-redis-zstd \
+--enable-redis-lz4 \
+--with-liblz4=/usr \
+--with-liblzf=/usr
+
+common_EXTENSIONS += igbinary
+igbinary_config = --enable-igbinary=shared \
+--enable-memcached-igbinary \
+--enable-redis-igbinary
+
+common_EXTENSIONS += msgpack
+msgpack_config = --with-msgpack=shared \
+--enable-redis-msgpack \
+--enable-memcached-msgpack
+
+common_EXTENSIONS += apcu
+apcu_config = --enable-apcu
+apc_config = --enable-apcu
 
 ">>$BASE/debian/rules.d/ext-common.mk
 # cat $BASE/debian/rules.d/ext-common.mk; exit 0;

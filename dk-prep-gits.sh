@@ -30,4 +30,4 @@ get_update_new_git "steamboatid/libzip" "/root/src/libzip/git-libzip"
 
 #--- last
 save_local_debs
-apt install -fy --auto-remove --purge
+aptold install -fy --auto-remove --purge

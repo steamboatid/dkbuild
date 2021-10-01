@@ -232,4 +232,4 @@ cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | xargs aptold install -y --ig
 
 #--- last
 save_local_debs
-apt install -fy --auto-remove --purge
+aptold install -fy --auto-remove --purge

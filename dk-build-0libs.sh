@@ -14,6 +14,10 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
+# java libs
+export JAVA_HOME=/usr/lib/jvm/default-java/
+export JAVA_INCLUDE_DIR=/usr/lib/jvm/default-java/include
+
 
 # bash colors
 export red=$'\e[1;31m'
@@ -118,8 +122,8 @@ chmod +x /usr/local/sbin/aptnew
 # reset default build flags
 #-------------------------------------------
 reset_build_flags() {
-	unused="-Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-unused-const-variable"
-	libsld="-ldl -lstdc++ -lm -lresolv -lpthread"
+	# unused="-Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-unused-const-variable"
+	# libsld="-ldl -lstdc++ -lm -lresolv -lpthread"
 
 	echo \
 "STRIP CFLAGS -O2 -pedantic -Wall
@@ -140,12 +144,21 @@ PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++
 }
 
 prepare_build_flags() {
-	unused="-Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable"
+	unused="-Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-unused-const-variable"
 	libsld="-ldl -lstdc++ -lm -lresolv"
 
 	CFLAGS=$(dpkg-buildflags --get CFLAGS)
-	CFLAGS=$(printf " ${CFLAGS} ${libsld} ${unused}" | sed -r "s/\-Wall//g" | sed -r "s/\s+/ /g" | sed -r "s/^\s//g")
-	# printf "\n ${CFLAGS}"; exit 0;
+	CFLAGS="${CFLAGS} ${libsld} ${unused}"
+
+	printf " ${CFLAGS} ${libsld} ${unused}" > /tmp/flags
+	cat /tmp/flags | \
+	# sed -r "s/\-pedantic-\errors//g" | sed -r "s/\-Wpedantic//g" | sed -r "s/\-pedantic//g" |\
+	# sed -r "s/\-Wextra//g" | sed -r "s/\-Wall//g" | sed -r "s/\-Werror//g" | \
+	sed -r "s/\s+/ /g" | sed -r "s/^\s//g" > /tmp/flags.new
+	# CFLAGS=$(cat /tmp/flags.new | tr "\n" " " | sed -r "s/^\s//g" | sed -r "s/\s+/ /g")
+	CFLAGS=$(cat /tmp/flags.new)
+	rm -rf /tmp/flags.new /tmp/flags
+	# printf "\n${CFLAGS}"; exit 0;
 
 	export CFLAGS
 	export EXTRA_CFLAGS=$CFLAGS

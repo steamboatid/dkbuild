@@ -142,6 +142,20 @@ libgmp-dev libsasl2-dev libmhash-dev unixodbc-dev freetds-dev libpspell-dev libs
 libpng*dev libdb5*-dev libfreetype*dev libxft*dev libgdchart-gd2-xpm-dev freetds-dev libldb-dev libldap2-dev \
 libdb5*dev libdb4*dev libdn*dev libidn*dev libomp-dev
 
+apt-cache search libdb | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
+xargs aptold install -fy  --no-install-recommends  --allow-downgrades
+apt-cache search db5 | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
+xargs aptold install -fy  --no-install-recommends  --allow-downgrades
+
+aptold install -fy default-jdk libx11-dev xorg-dev libcurl4-openssl-dev \
+mandoc apache2-dev dh-apache2 libdb-dev \
+liblz4-dev lz4 liblz4-* libdirectfb-dev liblzf-dev liblzf-dev
+libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
+libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev libssl-dev libxml2-dev \
+libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
+php-dev libc6-dev libticonv-dev libiconv-hook-dev \
+libghc-iconv-dev libiconv-hook-dev libc-bin
+
 
 aptold build-dep -fy php8.0 php-defaults \
 php8.0-cli php8.0-fpm php8.0-common php8.0-curl php8.0-fpm php8.0-gd \
@@ -248,4 +262,4 @@ get_update_new_git "steamboatid/libzip" "/root/src/libzip/git-libzip"
 
 #--- last
 save_local_debs
-apt install -fy --auto-remove --purge
+aptold install -fy --auto-remove --purge

@@ -145,4 +145,4 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 
 #--- last
 save_local_debs
-apt install -fy --auto-remove --purge
+aptold install -fy --auto-remove --purge
