@@ -155,13 +155,14 @@ cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
 # --enable-redis-msgpack \
 # --enable-memcached-msgpack
 
+# raphf_config = --enable-raphf=shared
+# http_config = --with-http=shared,/usr
+
 
 echo \
 "
 common_EXTENSIONS += raphf http gearman
 gearman_config = --with-gearman=shared,/usr
-raphf_config = --enable-raphf=shared
-http_config = --with-http=shared,/usr
 
 common_EXTENSIONS += mcrypt vips uuid imagick
 mcrypt_config = --with-mcrypt=shared,/usr
@@ -216,7 +217,7 @@ mv /tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk
 # debian/rules mods
 # sed -i -r "s/apache2 phpdbg embed fpm cgi cli/fpm cli/g" debian/rules
 # sed -i -r "s/amd64 i386 arm64/amd64/g" debian/rules
-sed -i -r "s/\-pedantic//g" debian/rules
+# sed -i -r "s/\-pedantic//g" debian/rules
 
 
 dh clean
