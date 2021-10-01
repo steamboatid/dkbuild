@@ -184,7 +184,7 @@ cp /tb2/tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk -fa
 # apc_config = --enable-apcu
 
 # ">>$BASE/debian/rules.d/ext-common.mk
-cat $BASE/debian/rules.d/ext-common.mk; exit 0;
+# cat $BASE/debian/rules.d/ext-common.mk; exit 0;
 
 # sed -r "s/\=shared\,\/usr/\=\/usr/g" | sed -r "s/\=shared//g" \
 
