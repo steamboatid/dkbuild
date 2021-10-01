@@ -34,17 +34,22 @@ export end=$'\e[0m'
 
 
 
-# aptold create and check (version3)
+# aptold create and check (version4)
 #-------------------------------------------
 create_aptold() {
 	echo \
 '#!/bin/bash
-# version3
+# version4
 
 save_local_debs() {
 	mkdir -p /tb2/tmp/cachedebs/
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
+	if [ -e /var/cache/apt/archives ]; then
+		DNUMS=$(/var/cache/apt/archives/*deb | wc -l)
+		if [[ $DNUMS -gt 0 ]]; then
+			rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+			/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
+		fi
+	fi
 }
 
 str="$*"
@@ -69,24 +74,29 @@ fi
 
 if [ ! -e /usr/local/sbin/aptold ]; then
 	create_aptold
-elif [[ $(grep "version3" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version4" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
 	create_aptold
 fi
 chmod +x /usr/local/sbin/aptold
 
 
 
-# aptnew create and check (version3)
+# aptnew create and check (version4)
 #-------------------------------------------
 create_aptnew() {
 	echo \
 '#!/bin/bash
-# version3
+# version4
 
 save_local_debs() {
 	mkdir -p /tb2/tmp/cachedebs/
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
+	if [ -e /var/cache/apt/archives ]; then
+		DNUMS=$(/var/cache/apt/archives/*deb | wc -l)
+		if [[ $DNUMS -gt 0 ]]; then
+			rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+			/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
+		fi
+	fi
 }
 
 str="$*"
@@ -111,7 +121,7 @@ fi
 
 if [ ! -e /usr/local/sbin/aptnew ]; then
 	create_aptnew
-elif [[ $(grep "version3" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version4" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
 	create_aptnew
 fi
 chmod +x /usr/local/sbin/aptnew
@@ -351,8 +361,11 @@ install_new() {
 save_local_debs() {
 	mkdir -p /tb2/tmp/cachedebs/
 	if [ -e /var/cache/apt/archives ]; then
-		rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-		/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
+		DNUMS=$(/var/cache/apt/archives/*deb | wc -l)
+		if [[ $DNUMS -gt 0 ]]; then
+			rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+			/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
+		fi
 	fi
 }
 
