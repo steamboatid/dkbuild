@@ -34,7 +34,6 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-net.sh
 
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh
-# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-gits.sh
 
 
 # ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/xrepo.sh
@@ -51,5 +50,6 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 
 # ssh argo "/bin/bash /tb2/build/dk-lxc-exec.sh -n aaa -d buster"
 
+ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-gits.sh
 ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-db4.sh
-# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/5-php.sh
+ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/5-php.sh
