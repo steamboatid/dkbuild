@@ -136,10 +136,10 @@ reset_build_flags() {
 	libsld="-ldl -lstdc++ -lm -lresolv -lpthread"
 
 	echo \
-"STRIP CFLAGS -O2 -pedantic -Wall -Werror -Wextra
-STRIP CPPFLAGS -O2 -pedantic -Wall -Werror -Wextra
-STRIP CXXFLAGS -O2 -pedantic -Wall -Werror -Wextra
-STRIP LDFLAGS -O2 -pedantic -Wall -Werror -Wextra
+"STRIP CFLAGS -O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic
+STRIP CPPFLAGS -O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic
+STRIP CXXFLAGS -O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic
+STRIP LDFLAGS -O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic
 
 PREPEND CFLAGS -O3 ${libsld} ${unused}
 PREPEND CPPFLAGS -O3 -lstdc++
@@ -162,8 +162,8 @@ prepare_build_flags() {
 
 	printf " ${CFLAGS} ${libsld} ${unused}" > /tmp/flags
 	cat /tmp/flags | \
-	# sed -r "s/\-pedantic-\errors//g" | sed -r "s/\-Wpedantic//g" | sed -r "s/\-pedantic//g" |\
-	# sed -r "s/\-Wextra//g" | sed -r "s/\-Wall//g" | sed -r "s/\-Werror//g" | \
+	sed -r "s/\-pedantic-\errors//g" | sed -r "s/\-Wpedantic//g" | sed -r "s/\-pedantic//g" |\
+	sed -r "s/\-Wextra//g" | sed -r "s/\-Wall//g" | sed -r "s/\-Werror//g" | \
 	sed -r "s/\s+/ /g" | sed -r "s/^\s//g" > /tmp/flags.new
 	# CFLAGS=$(cat /tmp/flags.new | tr "\n" " " | sed -r "s/^\s//g" | sed -r "s/\s+/ /g")
 	CFLAGS=$(cat /tmp/flags.new)
