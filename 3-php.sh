@@ -123,7 +123,7 @@ alter_berkeley_dbh
 
 
 >debops
-for afile in $(find /root/org.src/php8/php8.0-8.0.10/debian/rules.d -type f | grep -v "prepare"); do
+for afile in $(find /root/org.src/php8/php8.0-8.0.11/debian/rules.d -type f | grep -v "prepare"); do
 	cat $afile | grep "with\|enable" | sed -r "s/\://g" | sed -r "s/\+//g" | sed -r "s/\s+/ /g" |\
 	sed -r "s/\\\//g" | sed "s/^\s//g" | sed -r "s/(.*)_config = //g" | \
 	sed -r "s/\=shared\,/\=/g" | sed -r "s/\=shared//g" >> debops

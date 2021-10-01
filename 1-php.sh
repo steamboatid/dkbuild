@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-BASE="/root/src/php8/php8.0-8.0.10"
+BASE="/root/src/php8/php8.0-8.0.11"
 cd $BASE
 
 rm -rf configure* build debian
