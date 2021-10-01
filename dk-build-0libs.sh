@@ -280,13 +280,16 @@ update_existing_git() {
 	printf "\n\n"
 }
 
+# get_update_new_git $url $dst_dir $branch
 get_update_new_git(){
 	URL=$1
 	DST=$2
+	BRA=$3
 
 	if [ ! -d ${DST} ]; then
-		printf "\n---new clone to: $DST \n---from: https://github.com/${URL} \n"
-		git clone https://github.com/${URL} $DST
+		printf "\n---new clone to: $DST \n---from: https://github.com/${URL} $BRA \n"
+		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
+		git clone https://github.com/${URL} $OPS $DST
 	else
 		update_existing_git $DST $URL
 	fi
