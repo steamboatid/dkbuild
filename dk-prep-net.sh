@@ -44,7 +44,7 @@ get_package_file_gz(){
 	fi
 }
 
-# remove ALL first
+#--- remove ALL first
 #-------------------------------------------
 # cd `mktemp -d` && apt remove -fy --fix-missing --fix-broken php* nginx*
 
@@ -53,7 +53,7 @@ get_package_file_gz(){
 chown_apt
 
 
-# NGINX
+#--- NGINX
 #-------------------------------------------
 rm -rf /tmp/nginx
 mkdir -p /tb2/tmp /root/src/nginx /tmp/nginx
@@ -80,7 +80,7 @@ cat /tmp/deps.pkgs | tr "\n" " " | xargs aptold install -my
 # exit 0;
 
 
-# PHP
+#--- PHP
 #-------------------------------------------
 rm -rf /tmp/php8
 mkdir -p /tb2/tmp /root/src/php8 /root/org.src/php8 /tmp/php8
@@ -117,6 +117,7 @@ FNOW2="/tb2/tmp/php8-pkg-now-2.txt"
 FSRC="/tb2/tmp/php8-pkg-src.txt"
 
 # search package from "Package:"
+#-------------------------------------------
 cat $FDST | grep "Package:\|Source:" | \
 sed "s/Package\: //g" | sed "s/Source\: //g" |
 grep -v "\-embed\|\-dbg\|dbgsym\|php5\|php7\|php8.1\|recode\|phalcon" |
@@ -137,12 +138,14 @@ done
 
 
 #-- sync to src
-printf "\n-- sync to src \n"
+#-------------------------------------------
+printf "\n-- sync to src php8 \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/php8/ /root/src/php8/
 
 
 
 #--- last
+#-------------------------------------------
 save_local_debs
 aptold install -fy --auto-remove --purge

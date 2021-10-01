@@ -18,7 +18,7 @@ source /tb2/build/dk-build-0libs.sh
 
 
 
-# NGINX
+#--- NGINX
 #-------------------------------------------
 echo \
 'deb http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu bionic main
@@ -39,7 +39,7 @@ if [[ $NUMDIR -lt 1 ]]; then
 	apt source lua-resty-core lua-resty-lrucache
 fi
 
-# NGINX-LUA
+#--- NGINX-LUA
 #-------------------------------------------
 NUMDIR=$(find /root/org.src/nginx -mindepth 1 -maxdepth 1 -type d -iname "lua*" | wc -l)
 if [[ $NUMDIR -lt 1 ]]; then
@@ -47,7 +47,7 @@ if [[ $NUMDIR -lt 1 ]]; then
 	apt source lua-resty-core lua-resty-lrucache
 fi
 
-# NGINX-PCRE
+#--- NGINX-PCRE
 #-------------------------------------------
 NUMDIR=$(find /root/org.src/nginx -mindepth 1 -maxdepth 1 -type d -iname "pcre*" | wc -l)
 if [[ $NUMDIR -lt 1 ]]; then
@@ -57,19 +57,20 @@ fi
 
 
 #-- sync to src
+printf "\n-- sync to src nginx \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/nginx/ /root/src/nginx/
 
 
-# PHP8
+#--- PHP8
 #-------------------------------------------
 
 
-# KEYDB
+#--- KEYDB
 #-------------------------------------------
 
 
-# NUTCRACKER
+#--- NUTCRACKER
 #-------------------------------------------
 
 

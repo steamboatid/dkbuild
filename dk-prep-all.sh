@@ -62,9 +62,9 @@ save_local_debs
 
 #--- recreate dir, delete debs
 #-------------------------------------------
-mkdir -p /root/src/nginx \
-/root/src/lua-resty-lrucache \
-/root/src/lua-resty-core
+mkdir -p /root/org.src/nginx /root/src/nginx \
+/root/org.src/lua-resty-lrucache /root/src/lua-resty-lrucache \
+/root/org.src/lua-resty-core /root/src/lua-resty-core
 
 rm -rf /root/src/nginx/*deb \
 /root/src/lua-resty-lrucache/*deb \
@@ -83,6 +83,7 @@ apt source -y libpcre3
 
 
 #-- sync to src
+printf "\n-- sync to src pcre \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/pcre/ /root/src/pcre/
 
@@ -188,6 +189,7 @@ php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu
 
 
 #-- sync to src
+printf "\n-- sync to src php8 \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/php8/ /root/src/php8/
 
@@ -223,7 +225,7 @@ aptold install -y
 
 #--- recreate dir, delete debs
 #-------------------------------------------
-mkdir -p /root/src/keydb
+mkdir -p /root/org.src/keydb /root/src/keydb
 rm -rf /root/src/keydb/*deb
 
 # get source if not exists via github
@@ -239,7 +241,7 @@ aptold build-dep -fy nutcracker
 
 #--- recreate dir, delete debs
 #-------------------------------------------
-mkdir -p /root/src/nutcracker
+mkdir -p /root/org.src/nutcracker /root/src/nutcracker
 rm -rf /root/src/nutcracker/*deb
 
 # get source if not exists via github
@@ -255,12 +257,25 @@ aptold build-dep -fy libzip4
 
 #--- recreate dir, delete debs
 #-------------------------------------------
-mkdir -p /root/src/libzip
+mkdir -p /root/org.src/libzip /root/src/libzip
 rm -rf /root/src/libzip/*deb
 
 # get source if not exists via github
 #-------------------------------------------
 get_update_new_git "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
+
+
+
+#--- final delete all *deb
+#-------------------------------------------
+find /root/src -type f -iname "*.deb" -delete
+
+#--- final rsync org.src to src {WITHOUT delete}
+#--- sync to src
+#-------------------------------------------
+printf "\n-- sync to src ALL \n"
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+/root/org.src/ /root/src/
 
 
 #--- last

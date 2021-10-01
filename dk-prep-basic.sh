@@ -22,7 +22,7 @@ chown_apt
 
 
 
-# clean up previous
+#--- clean up previous
 #-------------------------------------------
 find /var/lib/apt/lists/ -type f -delete; \
 find /var/cache/apt/ -type f -delete; \
@@ -39,7 +39,7 @@ dpkg --configure -a; \
 aptold install -y
 
 
-# preparing screen
+#--- preparing screen
 #-------------------------------------------
 aptold install -y screen
 # screen -rR
@@ -59,7 +59,7 @@ hardstatus alwayslastline
 hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W}%c %{g}]'
 EOT
 
-# preparing ccache
+#--- preparing ccache
 #-------------------------------------------
 aptold install -y ccache
 export CCACHE_DIR=/tb2/tmp/ccache
@@ -80,7 +80,7 @@ max_size = 100.0G
 '>/tb2/tmp/ccache/ccache.conf
 
 
-# preparing apt sources.list
+#--- preparing apt sources.list
 #-------------------------------------------
 ping 1.1.1.1 -c3
 
@@ -186,10 +186,12 @@ apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys &&\
 aptold update; aptold full-upgrade --auto-remove --purge -fy
 
 #--- just incase needed
+#-------------------------------------------
 dpkg --configure -a; \
 aptold install -y linux-image-amd64 linux-headers-amd64
 
 #--- remove unneeded packages
+#-------------------------------------------
 dpkg --configure -a; \
 apt purge -yf unattended-upgrades apparmor \
 anacron msttcorefonts ttf-mscorefonts-installer needrestart redis*; \
@@ -201,6 +203,7 @@ aptold install -y
 
 #--- install build dependencies:
 #--- clang, cmake, libgearman-dev
+#-------------------------------------------
 apt-cache search clang|grep 11|awk '{print $1}' > /tmp/deps.pkgs
 echo "libclang-dev" >>  /tmp/deps.pkgs
 echo "cmake cmake-extras extra-cmake-modules" >>  /tmp/deps.pkgs
@@ -231,5 +234,6 @@ cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | xargs aptold install -y --ig
 
 
 #--- last
+#-------------------------------------------
 save_local_debs
 aptold install -fy --auto-remove --purge

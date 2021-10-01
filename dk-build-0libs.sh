@@ -350,8 +350,10 @@ install_new() {
 
 save_local_debs() {
 	mkdir -p /tb2/tmp/cachedebs/
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
+	if [ -e /var/cache/apt/archives ]; then
+		rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+		/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
+	fi
 }
 
 
