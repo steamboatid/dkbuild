@@ -128,7 +128,7 @@ prepare_source
 # exit 0;
 
 
-# copy_extra_mods
+copy_extra_mods
 
 
 # backup ext-common.mk first
