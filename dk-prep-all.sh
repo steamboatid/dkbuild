@@ -35,6 +35,7 @@ find /root/src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
 /bin/bash /tb2/build/dk-config-gen.sh
 /bin/bash /tb2/build/dk-prep-basic.sh
 /bin/bash /tb2/build/dk-prep-net.sh
+/bin/bash /tb2/build/dk-prep-gits.sh
 
 
 # NGINX, source via git
@@ -71,9 +72,9 @@ rm -rf /root/src/nginx/*deb \
 
 # get source if not exists via github
 #-------------------------------------------
-get_update_new_git "steamboatid/nginx" "/root/src/nginx/git-nginx"
-get_update_new_git "steamboatid/lua-resty-lrucache" "/root/src/lua-resty-lrucache/git-lua-resty-lrucache"
-get_update_new_git "steamboatid/lua-resty-core" "/root/src/lua-resty-core/git-lua-resty-core"
+get_update_new_git "steamboatid/nginx" "/root/org.src/nginx/git-nginx"
+get_update_new_git "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache"
+get_update_new_git "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core"
 
 mkdir -p /root/org.src/pcre /root/src/pcre
 cd /root/org.src/pcre
@@ -192,7 +193,7 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 
 #--- update phpredis from git
 #-------------------------------------------
-get_update_new_git "steamboatid/phpredis" "/root/src/php8/git-phpredis"
+get_update_new_git "steamboatid/phpredis" "/root/org.src/php8/git-phpredis"
 
 
 
@@ -227,7 +228,7 @@ rm -rf /root/src/keydb/*deb
 
 # get source if not exists via github
 #-------------------------------------------
-get_update_new_git "steamboatid/keydb" "/root/src/keydb/git-keydb"
+get_update_new_git "steamboatid/keydb" "/root/org.src/keydb/git-keydb"
 
 
 
@@ -243,7 +244,7 @@ rm -rf /root/src/nutcracker/*deb
 
 # get source if not exists via github
 #-------------------------------------------
-get_update_new_git "steamboatid/nutcracker" "/root/src/nutcracker/git-nutcracker"
+get_update_new_git "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"
 
 
 
@@ -259,7 +260,7 @@ rm -rf /root/src/libzip/*deb
 
 # get source if not exists via github
 #-------------------------------------------
-get_update_new_git "steamboatid/libzip" "/root/src/libzip/git-libzip"
+get_update_new_git "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
 
 
 #--- last
