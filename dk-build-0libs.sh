@@ -361,7 +361,7 @@ install_new() {
 save_local_debs() {
 	mkdir -p /tb2/tmp/cachedebs/
 	if [ -e /var/cache/apt/archives ]; then
-		DNUMS=$(/var/cache/apt/archives/*deb | wc -l)
+		DNUMS=$(find -L /var/cache/apt/archives/ -type f -iname "*.deb" | wc -l)
 		if [[ $DNUMS -gt 0 ]]; then
 			rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 			/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
