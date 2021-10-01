@@ -31,7 +31,7 @@ get_update_new_git "steamboatid/db4" "/root/org.src/db4/git-db4"
 #--- sync to src
 #-------------------------------------------
 printf "\n-- sync to src ALL \n"
-rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times --delete \
+rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times \
 /root/org.src/ /root/src/
 
 
