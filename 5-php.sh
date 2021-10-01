@@ -128,7 +128,7 @@ prepare_source
 # exit 0;
 
 
-copy_extra_mods
+# copy_extra_mods
 
 
 # backup ext-common.mk first
@@ -201,9 +201,9 @@ mv /tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk
 
 
 # debian/rules mods
-# sed -i -r "s/apache2 phpdbg embed fpm cgi cli/fpm cli/g" debian/rules
-# sed -i -r "s/amd64 i386 arm64/amd64/g" debian/rules
-# sed -i -r "s/\-pedantic//g" debian/rules
+sed -i -r "s/apache2 phpdbg embed fpm cgi cli/fpm cli/g" debian/rules
+sed -i -r "s/amd64 i386 arm64/amd64/g" debian/rules
+sed -i -r "s/\-pedantic//g" debian/rules
 
 
 dh clean
