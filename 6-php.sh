@@ -180,7 +180,8 @@ sed -i -r "s/apache2 phpdbg embed fpm cgi cli/cli/g" debian/rules
 
 cp /tb2/build/dk-php-control $BASE/debian/control -Rfav
 cat $BASE/debian/control | grep --color=auto more
-exit 0;
+# exit 0;
+
 
 
 # revert backup if exists
