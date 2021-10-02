@@ -27,8 +27,8 @@ prepare_build_flags
 
 prepare_source() {
 	if [ ! -e /root/org.src/git-php ]; then
-		printf "\n\n-- update php git at org.src \n"
-		get_update_new_salsa "php-team/php" "/root/org.src/git-php" "debian/main/8.0"
+		printf "\n\n-- update php git from SALSA.debian at org.src \n"
+		get_update_new_salsa "php-team/php.git" "/root/org.src/git-php" "debian/main/8.0"
 	fi
 
 	if [ ! -e /root/org.src/git-gearman ]; then

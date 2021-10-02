@@ -270,7 +270,17 @@ update_existing_git() {
 				# exit 1; # exit as error
 
 				# recloning
-				git clone https://github.com/${URL} $DST
+				ORIGIN=$(git config --get remote.origin.url)
+				if [[ $ORIGIN == *"github"* ]]; then
+					git clone https://github.com/${URL} $DST
+				elif [[ $ORIGIN == *"salsa"* ]]; then
+					git clone https://salsa.debian.org/${URL} $DST
+				elif [[ $ORIGIN == *"gitlab"* ]]; then
+					git clone https://gitlab.com/${URL} $DST
+				else
+					ADOM=$(echo ${ORIGIN} | awk -F[/:] '{print $4}')
+					git clone https://${ADOM}/${URL} $DST
+				fi
 			fi
 		fi
 	fi
@@ -299,7 +309,7 @@ get_update_new_salsa(){
 	BRA=$3
 
 	if [ ! -d ${DST} ]; then
-		printf "\n---new clone to: $DST \n---from: https://github.com/${URL} -b $BRA $DST \n"
+		printf "\n---new clone to: $DST \n---from: https://salsa.debian.org/${URL} -b $BRA $DST \n"
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 		git clone https://salsa.debian.org/${URL} $OPS $DST
 	else
