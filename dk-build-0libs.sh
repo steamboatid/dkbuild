@@ -423,8 +423,10 @@ fix_usr_lib_symlinks() {
 	PREV=$PWD
 	cd /usr/lib
 
-	printf "\n\n"
-	for afile in $(find /usr/lib/x86_64-linux-gnu); do
+	NUMS=$(find /usr/lib/x86_64-linux-gnu -maxdepth 1 -type f -iname "*.so" | wc -l)
+	printf "\n\n --- .so lib files= $NUMS \n"
+
+	for afile in $(find /usr/lib/x86_64-linux-gnu -maxdepth 1 -type f -iname "*.so"); do
 		printf "."
 		BFILE=$(basename $afile)
 		FINUM=$(find /usr/lib -iname "${BFILE}" | wc -l)
