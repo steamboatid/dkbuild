@@ -111,4 +111,7 @@ printf "files "
 find -L /w3repo/phideb -type f -group root  -exec chown webme:webme {} \;
 find -L /w3repo/phideb -type f -user root  -exec chown webme:webme {} \;
 
+printf "\n\n touch folders & files: "
+find -L /w3repo/phideb -exec touch {} \;
+
 /bin/bash /root/cf-clear.sh
