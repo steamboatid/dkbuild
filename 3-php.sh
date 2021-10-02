@@ -212,12 +212,12 @@ echo \
 ">moreops
 
 
-# --enable-raphf \
 # --with-http \
 
 echo \
 "\
 --with-gearman \
+--enable-raphf \
 \
 --with-mcrypt \
 --with-uuid \
@@ -341,7 +341,8 @@ printf "\n\n$doconf \n\n" > doconf
 
 
 printf "\n delete mods: http raphf "
-rm -rf /root/src/salsa-php/ext/http  /root/src/salsa-php/ext/raphf
+# rm -rf /root/src/salsa-php/ext/http  /root/src/salsa-php/ext/raphf
+rm -rf /root/src/salsa-php/ext/http
 
 pwd
 ./buildconf -f
