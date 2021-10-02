@@ -99,11 +99,15 @@ aptold install -fy --fix-broken
 
 
 aptold install -fy pkg-config build-essential autoconf bison re2c \
-libxml2-dev libsqlite3-dev curl make gcc devscripts debhelper dh-apache2 apache2-dev libc-client-dev
+libxml2-dev libsqlite3-dev curl make gcc devscripts debhelper dh-apache2 apache2-dev libc-client-dev \
+	2>&1 | grep --color=auto "Depends"
 
-aptold install -fy libwebp-dev
-aptold install -fy libwebp-dev libwebp6 libgd-dev
-aptold install -fy libgd-dev libgd3
+aptold install -fy libwebp-dev \
+	2>&1 | grep --color=auto "Depends"
+aptold install -fy libwebp-dev libwebp6 libgd-dev \
+	2>&1 | grep --color=auto "Depends"
+aptold install -fy libgd-dev libgd3 \
+	2>&1 | grep --color=auto "Depends"
 
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
@@ -120,7 +124,8 @@ php8.0-cli php8.0-fpm php8.0-common php8.0-curl php8.0-fpm php8.0-gd \
 php8.0-bcmath php8.0-bz2 php8.0-gmp php8.0-ldap php8.0-mbstring php8.0-mysql \
 php8.0-opcache php8.0-readline php8.0-soap php8.0-tidy php8.0-xdebug php8.0-xml php8.0-xsl php8.0-zip \
 php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu \
-pkg-php-tools libdistro-info-perl php-all-dev
+pkg-php-tools libdistro-info-perl php-all-dev \
+	2>&1 | grep --color=auto "Depends"
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
 devscripts build-essential lintian debhelper git git-extras wget axel dh-make dh-php ccache \
@@ -144,12 +149,15 @@ libwrap0-dev libxml2-dev libxmltok1-dev libxslt1-dev libzip-dev locales-all netb
 libxml2-dev libpcre3-dev libbz2-dev libcurl4-openssl-dev libjpeg-dev libxpm-dev libfreetype6-dev libmysqlclient-dev postgresql-server-dev-all \
 libgmp-dev libsasl2-dev libmhash-dev unixodbc-dev freetds-dev libpspell-dev libsnmp-dev libtidy-dev libxslt1-dev libmcrypt-dev \
 libpng*dev libdb5*-dev libfreetype*dev libxft*dev libgdchart-gd2-xpm-dev freetds-dev libldb-dev libldap2-dev \
-libdb5*dev libdb4*dev libdn*dev libidn*dev libomp-dev
+libdb5*dev libdb4*dev libdn*dev libidn*dev libomp-dev \
+	2>&1 | grep --color=auto "Depends"
 
 apt-cache search libdb | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
-xargs aptold install -fy  --no-install-recommends  --allow-downgrades
+xargs aptold install -fy  --no-install-recommends  --allow-downgrades \
+	2>&1 | grep --color=auto "Depends"
 apt-cache search db5 | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
-xargs aptold install -fy  --no-install-recommends  --allow-downgrades
+xargs aptold install -fy  --no-install-recommends  --allow-downgrades \
+	2>&1 | grep --color=auto "Depends"
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
 default-jdk libx11-dev xorg-dev libcurl4-openssl-dev \
@@ -160,7 +168,8 @@ libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev libssl-dev libx
 libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
 php-dev libc6-dev libticonv-dev libiconv-hook-dev \
 libghc-iconv-dev libiconv-hook-dev libc-bin \
-libqdbm* libgdbm* libxqdbm* libxmlrpc-c*dev xmlrpc-api-utils
+libqdbm* libgdbm* libxqdbm* libxmlrpc-c*dev xmlrpc-api-utils \
+	2>&1 | grep --color=auto "Depends"
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
 apache2-dev autotools-dev *clang*dev default-libmysqlclient-dev devscripts dpkg-dev \
@@ -193,14 +202,24 @@ lua-ldap-dev lua-zlib-dev php-all-dev \
 php-dev php-igbinary-all-dev php-memcached-all-dev \
 postgresql-server-dev-* postgresql-server-dev-all slapi-dev \
 systemtap-sdt-dev tcl-dev unixodbc-dev uuid-dev xorg-dev \
-zlib1g*dev zlib1g-dev
+zlib1g*dev zlib1g-dev \
+	2>&1 | grep --color=auto "Depends"
+
+aptold install -fy \
+libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
+libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev \
+libssl-dev libxml2-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
+pkg-config build-essential autoconf bison re2c libxml2-dev libsqlite3-dev freetds-dev \
+libmagickwand-dev libmagickwand-6*dev libgraphicsmagick1-dev libmagickcore-6-arch-config \
+	2>&1 | grep --color=auto "Depends"
 
 
 aptold build-dep -fy php8.0 php-defaults \
 php8.0-cli php8.0-fpm php8.0-common php8.0-curl php8.0-fpm php8.0-gd \
 php8.0-bcmath php8.0-bz2 php8.0-gmp php8.0-ldap php8.0-mbstring php8.0-mysql \
 php8.0-opcache php8.0-readline php8.0-soap php8.0-tidy php8.0-xdebug php8.0-xml php8.0-xsl php8.0-zip \
-php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu
+php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu \
+	2>&1 | grep --color=auto "Depends"
 
 #--- recreate dir, delete debs
 #-------------------------------------------
@@ -316,4 +335,5 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 
 #--- last
 save_local_debs
-aptold install -fy --auto-remove --purge
+aptold install -fy --auto-remove --purge \
+	2>&1 | grep --color=auto "Depends"

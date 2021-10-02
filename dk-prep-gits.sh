@@ -38,4 +38,5 @@ rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times \
 #--- last
 #-------------------------------------------
 save_local_debs
-aptold install -fy --auto-remove --purge
+aptold install -fy --auto-remove --purge \
+	2>&1 | grep --color=auto "Depends"

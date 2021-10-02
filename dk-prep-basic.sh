@@ -198,6 +198,7 @@ anacron msttcorefonts ttf-mscorefonts-installer needrestart redis*; \
 rm -rf /var/log/unattended-upgrades /var/cache/apparmor /etc/apparmor.d
 
 dpkg --configure -a; \
+aptold install -fy
 aptold install -y
 
 
@@ -236,4 +237,5 @@ cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | xargs aptold install -y --ig
 #--- last
 #-------------------------------------------
 save_local_debs
-aptold install -fy --auto-remove --purge
+aptold install -fy --auto-remove --purge \
+	2>&1 | grep --color=auto "Depends"
