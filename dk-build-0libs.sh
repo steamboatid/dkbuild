@@ -423,7 +423,9 @@ fix_usr_lib_symlinks() {
 	PREV=$PWD
 	cd /usr/lib
 
+	printf "\n\n"
 	for afile in $(find /usr/lib/x86_64-linux-gnu); do
+		printf "."
 		BFILE=$(basename $afile)
 		FINUM=$(find /usr/lib -iname "${BFILE}" | wc -l)
 		if [[ $FINUM -lt 1 ]]; then
@@ -431,6 +433,7 @@ fix_usr_lib_symlinks() {
 			ln -s $afile .
 		fi
 	done
+	printf "\n\n"
 
 	cd $PREV
 }
