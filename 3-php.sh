@@ -163,7 +163,7 @@ alter_berkeley_dbh
 
 pwd
 [ -e Makefile ] && make clean
-# ./buildconf -f
+./buildconf -f
 # exit 0;
 
 
@@ -263,6 +263,7 @@ echo \
 
 pwd
 ./buildconf -f
+./buildconf -f
 
 doconf="./configure \
 --enable-ftp --with-openssl --disable-cgi \
@@ -343,6 +344,7 @@ printf "\n delete mods: http raphf "
 rm -rf /root/src/salsa-php/ext/http  /root/src/salsa-php/ext/raphf
 
 pwd
+./buildconf -f
 eval $doconf 2>&1 | tee dkconf.log
 
 printf "\n alter_berkeley_dbh "
