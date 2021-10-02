@@ -133,7 +133,8 @@ chmod +x /usr/local/sbin/aptnew
 #-------------------------------------------
 reset_build_flags() {
 	unused="-Wno-error -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-unused-const-variable"
-	libsld="-ldl -lstdc++ -lm -lresolv -lpthread"
+	# libsld="-ldl -lstdc++ -lm -lresolv -lpthread"
+	libsld="-largon2 -lresolv -lcrypt -lrt -lstdc++ -lutil -lrt -lm -ldl  -lxml2 -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err -lssl -lcrypto -lpcre2-8 -lz -lsodium -largon2"
 
 	echo \
 "STRIP CFLAGS -O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic
@@ -155,7 +156,8 @@ PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lresolv
 
 prepare_build_flags() {
 	unused="-Wno-error -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-unused-const-variable"
-	libsld="-ldl -lstdc++ -lm -lresolv"
+	# libsld="-ldl -lstdc++ -lm -lresolv"
+	libsld="-largon2 -lresolv -lcrypt -lrt -lstdc++ -lutil -lrt -lm -ldl  -lxml2 -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err -lssl -lcrypto -lpcre2-8 -lz -lsodium -largon2"
 
 	CFLAGS=$(dpkg-buildflags --get CFLAGS)
 	printf " ${CFLAGS} ${libsld} ${unused} " | \
