@@ -293,6 +293,20 @@ get_update_new_git(){
 	fi
 }
 
+get_update_new_salsa(){
+	URL=$1
+	DST=$2
+	BRA=$3
+
+	if [ ! -d ${DST} ]; then
+		printf "\n---new clone to: $DST \n---from: https://github.com/${URL} -b $BRA $DST \n"
+		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
+		git clone https://salsa.debian.org/${URL} $OPS $DST
+	else
+		update_existing_git $DST $URL
+	fi
+}
+
 fix_keydb_permission_problem() {
 	# return if not installed yet
 	if [ `dpkg -l | grep keydb | grep -v "^ii" | wc -l` -lt 1 ]; then return 0; fi
