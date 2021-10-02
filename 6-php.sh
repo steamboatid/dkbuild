@@ -204,7 +204,7 @@ cat $BASE/debian/control | grep --color=auto more
 # exit 0;
 
 rm -rf $BASE/debian/libapache2-* $BASE/debian/libphp* $BASE/debian/php-cgi*  $BASE/debian/php-fpm* \
- $BASE/debian/php-phpdbg*
+ $BASE/debian/php-phpdbg* $BASE/debian/rules.d/prepare-fpm-pools.mk
 
 
 rm -rf $BASE/ext/http
