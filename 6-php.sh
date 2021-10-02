@@ -198,6 +198,7 @@ sed -i -r "s/iconv\=shared/iconv/g" debian/rules.d/ext-common.mk
 
 sed -i -r "s/apache2 phpdbg embed fpm cgi cli/cli/g" debian/rules
 sed -i -r "s/\-\-fail\-missing//g" debian/rules
+sed -i -r "s/prepare\-fpm\-pools//g" debian/rules
 
 cp /tb2/build/dk-php-control $BASE/debian/control -Rfav
 cat $BASE/debian/control | grep --color=auto more
