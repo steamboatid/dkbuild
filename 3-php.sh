@@ -2,6 +2,7 @@
 
 
 BASE="/root/src/salsa-php"
+mkdir -p $BASE
 cd $BASE
 
 export DEBIAN_FRONTEND="noninteractive"
