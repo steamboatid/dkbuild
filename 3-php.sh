@@ -54,6 +54,11 @@ prepare_source() {
 		get_update_new_git "m6w6/ext-raphf" "/root/org.src/git-raphf"
 	fi
 
+	if [ ! -e /root/org.src/git-redis ]; then
+		printf "\n\n-- update redis git at org.src \n"
+		get_update_new_git "steamboatid/phpredis" "/root/org.src/git-redis"
+	fi
+
 	printf "\n\n-- rsync with src \n"
 	mkdir -p /root/src/salsa-php
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
@@ -77,6 +82,12 @@ prepare_source() {
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \
 	/root/org.src/git-raphf/ /root/src/salsa-php/ext/raphf/
+
+	printf "\n\n-- rsync redis \n"
+	mkdir -p /root/src/salsa-php/ext/redis/
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	--delete --exclude '.git' \
+	/root/org.src/git-redis/ /root/src/salsa-php/ext/redis/
 	# exit 0;
 
 
@@ -97,7 +108,7 @@ prepare_source() {
 
 	allmods=(mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary memcached)
 	modpkgs=$(apt-cache search php | grep -v "php7\|php5\|php8.1" | \
-grep "mcrypt\|vips\|uuid\|gearman\|apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached" |\
+grep "mcrypt\|vips\|uuid\|gearman\|apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached\|redis" |\
 cut -d" " -f1 | tr "\n" " ")
 	echo "${modpkgs}" | xargs aptold install -fy    2>&1 | grep "Depends"
 	echo "${modpkgs}" | xargs aptold build-dep -fy  2>&1 | grep "Depends"
@@ -381,3 +392,16 @@ else
 fi
 
 sapi/cli/php -m
+sapi/cli/php -m | grep "gearman\|raphf\|http"
+NUMS=$(sapi/cli/php -m | grep "gearman\|raphf\|http" | wc -l)
+printf "\n\n MODS=$NUMS of 3 "
+
+sapi/cli/php -m | grep "mcrypt\|vips\|uuid\|apcu\|imagick"
+NUMS=$(sapi/cli/php -m | grep "mcrypt\|vips\|uuid\|apcu\|imagick" | wc -l)
+printf "\n\n MODS=$NUMS of 5"
+
+sapi/cli/php -m | grep "msgpack\|igbinary\|memcached\|redis"
+NUMS=$(sapi/cli/php -m | grep "msgpack\|igbinary\|memcached\|redis" | wc -l)
+printf "\n\n MODS=$NUMS of 4"
+
+printf "\n\n\n"
