@@ -172,7 +172,7 @@ echo \
 "">debian/rules.d/ext-httpraph.mk
 
 
-sed -i -r "s/iconv=shared/iconv=/usr/g" debian/rules.d/ext-common.mk
+sed -i -r "s/iconv\=shared/iconv/g" debian/rules.d/ext-common.mk
 
 
 
