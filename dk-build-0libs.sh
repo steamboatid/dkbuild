@@ -295,8 +295,8 @@ get_update_new_git(){
 	BRA=$3
 
 	if [ ! -d ${DST} ]; then
-		printf "\n---new clone to: $DST \n---from: https://github.com/${URL} -b $BRA $DST \n"
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
+		printf "\n---new clone to: $DST \n---from: https://github.com/${URL} $OPS $DST \n"
 		git clone https://github.com/${URL} $OPS $DST
 	else
 		update_existing_git $DST $URL
@@ -309,8 +309,8 @@ get_update_new_salsa(){
 	BRA=$3
 
 	if [ ! -d ${DST} ]; then
-		printf "\n---new clone to: $DST \n---from: https://salsa.debian.org/${URL} -b $BRA $DST \n"
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
+		printf "\n---new clone to: $DST \n---from: https://salsa.debian.org/${URL} $OPS $DST \n"
 		git clone https://salsa.debian.org/${URL} $OPS $DST
 	else
 		update_existing_git $DST $URL
