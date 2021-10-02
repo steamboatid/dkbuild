@@ -136,6 +136,7 @@ prepare_source
 alter_berkeley_dbh
 
 
+pwd
 [ -e Makefile ] && make clean
 # ./buildconf -f
 # exit 0;
