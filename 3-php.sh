@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-BASE="/root/src/git-php"
+BASE="/root/src/salsa-php"
 cd $BASE
 
 export DEBIAN_FRONTEND="noninteractive"
@@ -26,9 +26,9 @@ prepare_build_flags
 
 
 prepare_source() {
-	if [ ! -e /root/org.src/git-php ]; then
+	if [ ! -e /root/org.src/salsa-php ]; then
 		printf "\n\n-- update php git from SALSA.debian at org.src \n"
-		get_update_new_salsa "php-team/php.git" "/root/org.src/git-php" "debian/main/8.0"
+		get_update_new_salsa "php-team/php.git" "/root/org.src/salsa-php" "debian/main/8.0"
 	fi
 
 	if [ ! -e /root/org.src/git-gearman ]; then
@@ -47,28 +47,28 @@ prepare_source() {
 	fi
 
 	printf "\n\n-- rsync with src \n"
-	mkdir -p /root/src/git-php
+	mkdir -p /root/src/salsa-php
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \
-	/root/org.src/git-php/ /root/src/git-php/
+	/root/org.src/salsa-php/ /root/src/salsa-php/
 
 	printf "\n\n-- rsync gearman \n"
-	mkdir -p /root/src/git-php/ext/gearman/
+	mkdir -p /root/src/salsa-php/ext/gearman/
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \
-	/root/org.src/git-gearman/ /root/src/git-php/ext/gearman/
+	/root/org.src/git-gearman/ /root/src/salsa-php/ext/gearman/
 
 	printf "\n\n-- rsync http \n"
-	mkdir -p /root/src/git-php/ext/http/
+	mkdir -p /root/src/salsa-php/ext/http/
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \
-	/root/org.src/git-http/ /root/src/git-php/ext/http/
+	/root/org.src/git-http/ /root/src/salsa-php/ext/http/
 
 	printf "\n\n-- rsync raphf \n"
-	mkdir -p /root/src/git-php/ext/raphf/
+	mkdir -p /root/src/salsa-php/ext/raphf/
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \
-	/root/org.src/git-raphf/ /root/src/git-php/ext/raphf/
+	/root/org.src/git-raphf/ /root/src/salsa-php/ext/raphf/
 	# exit 0;
 
 
@@ -123,7 +123,7 @@ copy_extra_mods() {
 
 
 
-cd /root/src/git-php
+cd /root/src/salsa-php
 prepare_source
 alter_berkeley_dbh
 
@@ -339,8 +339,8 @@ fi
 sleep 0.1
 sed -i "s/-O2/-O3/g" Makefile
 
-find /root/src/git-php/ -type d -name ".libs" -exec rm -rf {} \;  >/dev/null
-find /root/src/git-php/ -type d -name ".libs" -exec rm -rf {} \;  >/dev/null
+find /root/src/salsa-php/ -type d -name ".libs" -exec rm -rf {} \;  >/dev/null
+find /root/src/salsa-php/ -type d -name ".libs" -exec rm -rf {} \;  >/dev/null
 
 
 printf "\n\n exec make \n"
