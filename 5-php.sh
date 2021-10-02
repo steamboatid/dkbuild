@@ -102,14 +102,23 @@ copy_extra_mods() {
 	done
 }
 
+
 rm -rf /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock
 
 source /tb2/build/dk-build-0libs.sh
 /bin/bash /tb2/build/dk-config-gen.sh
 
 
+printf "\n reset_build_flags"
 reset_build_flags
+
+printf "\n prepare_build_flags"
 prepare_build_flags
+
+printf "\n fix_usr_lib_symlinks"
+fix_usr_lib_symlinks
+
+printf "\n alter_berkeley_dbh"
 alter_berkeley_dbh
 
 
@@ -119,16 +128,18 @@ BASE="/root/src/php8/$BNAME"
 BORG="/root/org.src/php8/$BNAME"
 cd $BASE
 
+printf "\n prepare_source"
 prepare_source
 
 
-
+pwd
 [ -e Makefile ] && make clean
 ./buildconf -f
 # exit 0;
 
 
-# copy_extra_mods
+printf "\n copy_extra_mods"
+copy_extra_mods
 
 
 # backup ext-common.mk first
@@ -201,8 +212,10 @@ mv /tmp/ext-common.mk $BASE/debian/rules.d/ext-common.mk
 
 
 # debian/rules mods
-sed -i -r "s/apache2 phpdbg embed fpm cgi cli/fpm cli/g" debian/rules
-sed -i -r "s/amd64 i386 arm64/amd64/g" debian/rules
+# sed -i -r "s/apache2 phpdbg embed fpm cgi cli/fpm cli/g" debian/rules
+# sed -i -r "s/amd64 i386 arm64/amd64/g" debian/rules
+sed -i -r "s/\-Wpedantic//g" debian/rules
+sed -i -r "s/\-pedantic-errors//g" debian/rules
 sed -i -r "s/\-pedantic//g" debian/rules
 
 
@@ -211,4 +224,22 @@ fakeroot debian/rules clean
 
 bash /tb2/build/dk-build-full.sh
 
-[ -e sapi/cli/php ] && sapi/cli/php -m
+if [ -e sapi/cli/php ]; then
+	printf "\n\n\n"
+	sapi/cli/php -m
+	printf "\n\n\n"
+
+	sapi/cli/php -m | grep --color=auto "gearman\|raphf\|http"
+	NUMS=$(sapi/cli/php -m | grep "gearman\|raphf\|http" | wc -l)
+	printf "\n MODS=$NUMS of 3 \n\n"
+
+	sapi/cli/php -m | grep --color=auto "mcrypt\|vips\|uuid\|apcu\|imagick"
+	NUMS=$(sapi/cli/php -m | grep "mcrypt\|vips\|uuid\|apcu\|imagick" | wc -l)
+	printf "\n MODS=$NUMS of 5 \n\n"
+
+	sapi/cli/php -m | grep --color=auto "msgpack\|igbinary\|memcached\|redis"
+	NUMS=$(sapi/cli/php -m | grep "msgpack\|igbinary\|memcached\|redis" | wc -l)
+	printf "\n MODS=$NUMS of 4 \n\n"
+
+	printf "\n\n\n"
+fi

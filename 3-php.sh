@@ -330,7 +330,10 @@ doconf="${doconf} ${debops} ${moreops}"
 # doconf=$(printf "$doconf" | tr "\n" " " | tr "\\" " " | sed -r "s/\s+/ /g" | sed -r "s/\s/ \\\\\n/g" | sort -u)
 doconf=$(printf "$doconf" | tr "\n" " " | tr "\\\\" " " | sed -r "s/\s+/ /g")
 printf "\n\n$doconf \n\n" > doconf
-# exit 0;
+printf "\n\n$doconf \n\n" | grep --color "gearman\|raphf\|http\|mcrypt\|vips\|uuid\|apcu\|imagick\|msgpack\|igbinary\|memcached\|redis"
+NUMS=$(printf "\n\n$doconf \n\n" | grep --color "gearman\|raphf\|http\|mcrypt\|vips\|uuid\|apcu\|imagick\|msgpack\|igbinary\|memcached\|redis" | wc -l)
+printf "\n MODS=$NUMS of 12 \n\n"
+exit 0;
 
 
 pwd
@@ -391,17 +394,20 @@ else
 	exit 0;
 fi
 
+printf "\n\n\n"
 sapi/cli/php -m
-sapi/cli/php -m | grep "gearman\|raphf\|http"
+printf "\n\n\n"
+
+sapi/cli/php -m | grep --color=auto "gearman\|raphf\|http"
 NUMS=$(sapi/cli/php -m | grep "gearman\|raphf\|http" | wc -l)
-printf "\n\n MODS=$NUMS of 3 "
+printf "\n MODS=$NUMS of 3 \n\n"
 
-sapi/cli/php -m | grep "mcrypt\|vips\|uuid\|apcu\|imagick"
+sapi/cli/php -m | grep --color=auto "mcrypt\|vips\|uuid\|apcu\|imagick"
 NUMS=$(sapi/cli/php -m | grep "mcrypt\|vips\|uuid\|apcu\|imagick" | wc -l)
-printf "\n\n MODS=$NUMS of 5"
+printf "\n MODS=$NUMS of 5 \n\n"
 
-sapi/cli/php -m | grep "msgpack\|igbinary\|memcached\|redis"
+sapi/cli/php -m | grep --color=auto "msgpack\|igbinary\|memcached\|redis"
 NUMS=$(sapi/cli/php -m | grep "msgpack\|igbinary\|memcached\|redis" | wc -l)
-printf "\n\n MODS=$NUMS of 4"
+printf "\n MODS=$NUMS of 4 \n\n"
 
 printf "\n\n\n"
