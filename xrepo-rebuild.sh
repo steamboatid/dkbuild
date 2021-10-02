@@ -76,6 +76,7 @@ apt-ftparchive --arch amd64 packages pool/bullseye/ > dists/bullseye/main/binary
 printf "\n\n create Release files at binary-amd64 folder"
 cd /tb2/phideb/dists/buster/main/binary-amd64
 gzip -kf Packages
+xz -kfz Packages
 echo \
 'Archive: stable
 Origin: phideb
@@ -87,6 +88,7 @@ Architecture: amd64
 
 cd /tb2/phideb/dists/bullseye/main/binary-amd64
 gzip -kf Packages
+xz -kfz Packages
 echo \
 'Archive: stable
 Origin: phideb
