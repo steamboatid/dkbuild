@@ -418,3 +418,18 @@ fetch_url() {
 	curl -sS -fkL $URL > $BNAME
 	wget -kc $URL
 }
+
+fix_usr_lib_symlinks() {
+	PREV=$PWD
+	cd /usr/lib
+
+	for afile in $(find /usr/lib/x86_64-linux-gnu); do
+		BFILE=$(basename $afile)
+		FINUM=$(find /usr/lib -iname "${BFILE}" | wc -l)
+		if [[ $FINUM -lt 1 ]]; then
+			ln -s $afile .
+		fi
+	done
+
+	cd $PREV
+}

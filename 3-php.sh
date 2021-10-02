@@ -21,8 +21,10 @@ export TODATE=$(date +%Y%m%d)
 source /tb2/build/dk-build-0libs.sh
 /bin/bash /tb2/build/dk-config-gen.sh
 
+
 reset_build_flags
 prepare_build_flags
+fix_usr_lib_symlinks
 
 
 
