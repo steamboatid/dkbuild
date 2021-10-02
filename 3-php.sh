@@ -84,8 +84,8 @@ prepare_source() {
 grep "mcrypt\|vips\|uuid\|gearman\|apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached" |\
 cut -d" " -f1 | tr "\n" " ")
 	echo "${modpkgs}" | xargs aptold install -fy
-	echo "${modpkgs}" | xargs aptold build-dep install -fy
-	echo "${modpkgs}" | xargs aptold source install -fy
+	echo "${modpkgs}" | xargs aptold build-dep -fy
+	echo "${modpkgs}" | xargs aptold source -y
 }
 
 copy_extra_mods() {
