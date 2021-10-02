@@ -28,7 +28,7 @@ fi
 
 if [ `cat ~/.bashrc | grep alias | grep "grep --color" | wc -l` -lt 1 ]; then
 	# echo "grep alias not found"
-	echo "alias grep='grep --color=always'" >> ~/.bashrc
+	echo "alias grep='grep --color=auto'" >> ~/.bashrc
 fi
 
 #--- colorfull shell

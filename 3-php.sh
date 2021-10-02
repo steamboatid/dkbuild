@@ -76,13 +76,20 @@ prepare_source() {
 	libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
 	libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev \
 	libssl-dev libxml2-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev
+
+	mkdir -p /root/org.src/php8
+	cd /root/org.src/php8
+	allmods=(mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary memcached)
+	modpkgs=$(apt-cache search php | grep -v "php7\|php5\|php8.1" | \
+grep "mcrypt\|vips\|uuid\|gearman\|apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached" |\
+cut -d" " -f1 | tr "\n" " ")
+	echo "${modpkgs}" | xargs aptold install -fy
+	echo "${modpkgs}" | xargs aptold build-dep install -fy
+	echo "${modpkgs}" | xargs aptold source install -fy
 }
 
-
 copy_extra_mods() {
-	# mods=(mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary memcached)
 	mods=(mcrypt vips uuid apcu imagick msgpack igbinary memcached)
-	# singles=(memcached)
 
 	finds=$(find /root/org.src/php8 -mindepth 2 -maxdepth 2 -type d | grep -v "debian\|\.pc\|bc" | sed -r "s/\s/\n/g" | sort)
 
