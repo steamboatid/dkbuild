@@ -98,7 +98,7 @@ prepare_source() {
 	pkg-config build-essential autoconf bison re2c libxml2-dev libsqlite3-dev freetds-dev \
 		2>&1 | grep --color=auto "Depends"
 
-	ln -s /usr/lib/x86_64-linux-gnu/libsybdb.so /usr/lib/
+	ln -sf /usr/lib/x86_64-linux-gnu/libsybdb.so /usr/lib/
 
 	PREVDIR=$PWD
 	mkdir -p /root/org.src/php8
@@ -321,6 +321,9 @@ doconf="./configure \
 \
 --enable-zts --enable-rtld-now --enable-sigchild \
 --enable-opcache --enable-opcache-jit --enable-huge-code-pages \
+\
+--enable-all --with-kerberos  --with-imap-ssl --without-oci8
+
 "
 
 
