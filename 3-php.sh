@@ -22,8 +22,13 @@ source /tb2/build/dk-build-0libs.sh
 /bin/bash /tb2/build/dk-config-gen.sh
 
 
+printf "\n reset_build_flags"
 reset_build_flags
+
+printf "\n prepare_build_flags"
 prepare_build_flags
+
+printf "\n fix_usr_lib_symlinks"
 fix_usr_lib_symlinks
 
 
@@ -139,7 +144,11 @@ copy_extra_mods() {
 
 
 cd /root/src/salsa-php
+
+printf "\n prepare_source"
 prepare_source
+
+printf "\n alter_berkeley_dbh"
 alter_berkeley_dbh
 
 
@@ -163,6 +172,7 @@ mv debops.tmp debops
 
 
 # copy extra mods
+printf "\n copy_extra_mods"
 copy_extra_mods
 
 echo \
