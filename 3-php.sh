@@ -84,7 +84,7 @@ prepare_source() {
 
 	allmods=(mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary memcached)
 	modpkgs=$(apt-cache search php | grep -v "php7\|php5\|php8.1" | \
-grep "mcrypt\|vips\|uuid\|gearman\|apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached" |\
+grep "mcrypt\|vips\|uuid\|gearman\|apc\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached" |\
 cut -d" " -f1 | tr "\n" " ")
 	echo "${modpkgs}" | xargs aptold install -fy    2>&1 | grep "Depends"
 	echo "${modpkgs}" | xargs aptold build-dep -fy  2>&1 | grep "Depends"
