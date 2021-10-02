@@ -217,7 +217,7 @@ echo \
 echo \
 "\
 --with-gearman \
---enable-raphf \
+--enable-raphf=shared \
 \
 --with-mcrypt \
 --with-uuid \
