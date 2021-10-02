@@ -80,6 +80,7 @@ prepare_source() {
 	pkg-config build-essential autoconf bison re2c libxml2-dev libsqlite3-dev \
 		2>&1 | grep --color=auto "Depends"
 
+	PREVDIR=$PWD
 	mkdir -p /root/org.src/php8
 	cd /root/org.src/php8
 	chown -Rf _apt.root /var/lib/update-notifier/package-data-downloads/partial/ /var/cache/apt/archives/partial/
@@ -92,6 +93,8 @@ cut -d" " -f1 | tr "\n" " ")
 	echo "${modpkgs}" | xargs aptold install -fy    2>&1 | grep "Depends"
 	echo "${modpkgs}" | xargs aptold build-dep -fy  2>&1 | grep "Depends"
 	echo "${modpkgs}" | xargs aptold source -y      2>&1 | grep "Depends"
+
+	cd $PREVDIR
 
 	printf "\n\n-- rsync with src \n"
 	mkdir -p /root/src/salsa-php

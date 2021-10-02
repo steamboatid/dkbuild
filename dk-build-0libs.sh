@@ -396,7 +396,6 @@ save_local_debs() {
 
 
 alter_berkeley_dbh() {
-	PREVDIR=$PWD
 	if [ ! -e /usr/include ]; then
 		apt-cache search db5 | grep -i "berkeley" | cut -d" " -f1 | grep -v "dbg\|sym" | xargs aptold install -fy
 	fi
@@ -408,8 +407,6 @@ alter_berkeley_dbh() {
 	sed -i -r "s/^\#define DB_VERSION_MAJOR [0-9]/#define DB_VERSION_MAJOR 4/g" /tmp/db.h
 	sed -i -r "s/^\#define DB_VERSION_MINOR [0-9]/#define DB_VERSION_MINOR 8/g" /tmp/db.h
 	mv /tmp/db.h /usr/include/db.h
-
-	cd $PREVDIR
 
 	# cat /usr/include/db.h | grep "DB_VERSION"; exit 0;
 	# cat /tmp/db.h | grep "DB_VERSION"; exit 0;
