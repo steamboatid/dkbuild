@@ -323,8 +323,6 @@ doconf="./configure \
 \
 --enable-zts --enable-rtld-now --enable-sigchild \
 --enable-opcache --enable-opcache-jit --enable-huge-code-pages \
-\
---enable-all --with-kerberos  --with-imap-ssl --without-oci8
 
 "
 
