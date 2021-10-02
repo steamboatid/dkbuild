@@ -39,7 +39,7 @@ VEROVR=""
 #-------------------------------------------
 reset_build_flags
 prepare_build_flags
-alter_berkeley_dbh
+# alter_berkeley_dbh
 
 
 # delete old debs

@@ -118,8 +118,8 @@ prepare_build_flags
 printf "\n fix_usr_lib_symlinks"
 fix_usr_lib_symlinks
 
-printf "\n alter_berkeley_dbh"
-alter_berkeley_dbh
+# printf "\n alter_berkeley_dbh"
+# alter_berkeley_dbh
 
 
 # find php8.0 folder

@@ -158,8 +158,8 @@ cd /root/src/salsa-php
 printf "\n prepare_source "
 prepare_source
 
-printf "\n alter_berkeley_dbh "
-alter_berkeley_dbh
+# printf "\n alter_berkeley_dbh "
+# alter_berkeley_dbh
 
 
 pwd
@@ -350,8 +350,8 @@ pwd
 ./buildconf -f
 eval $doconf 2>&1 | tee dkconf.log
 
-printf "\n alter_berkeley_dbh "
-alter_berkeley_dbh
+# printf "\n alter_berkeley_dbh "
+# alter_berkeley_dbh
 # exit 0;
 
 

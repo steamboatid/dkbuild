@@ -37,7 +37,7 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 
 
 # ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/xrepo.sh
-ssh argo -- /bin/bash /tb2/build/xrepo-rebuild.sh
+# ssh argo -- /bin/bash /tb2/build/xrepo-rebuild.sh
 # ssh argo -- /bin/bash /root/cf-clear.sh
 
 # ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/dk-docker-install.sh
@@ -62,3 +62,5 @@ ssh argo -- /bin/bash /tb2/build/xrepo-rebuild.sh
 
 # ssh argo "nohup lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-all.sh >/dev/null 2>&1 &"
 # ssh argo "nohup lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-all.sh >/dev/null 2>&1 &"
+
+ssh argo "nohup /bin/bash /tb2/build/xbuild-test-all.sh >/dev/null 2>&1 &"
