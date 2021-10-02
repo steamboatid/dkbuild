@@ -63,4 +63,7 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 # ssh argo "nohup lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-all.sh >/dev/null 2>&1 &"
 # ssh argo "nohup lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-all.sh >/dev/null 2>&1 &"
 
-ssh argo "nohup /bin/bash /tb2/build/xbuild-test-all.sh >/dev/null 2>&1 &"
+# ssh argo "nohup /bin/bash /tb2/build/xbuild-test-all.sh >/dev/null 2>&1 &"
+
+
+ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/6-php.sh
