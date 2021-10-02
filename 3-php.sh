@@ -86,7 +86,7 @@ prepare_source() {
 	modpkgs=$(apt-cache search php | grep -v "php7\|php5\|php8.1" | \
 grep "mcrypt\|vips\|uuid\|gearman\|apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached" |\
 cut -d" " -f1 | tr "\n" " ")
-	echo "${modpkgs}" | xargs aptold install -fy  >/dev/null
+	echo "${modpkgs}" | xargs aptold install -fy
 	echo "${modpkgs}" | xargs aptold build-dep -fy  >/dev/null
 	echo "${modpkgs}" | xargs aptold source -y  >/dev/null
 }
