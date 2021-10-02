@@ -97,6 +97,7 @@ prepare_source() {
 	libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev \
 	libssl-dev libxml2-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
 	pkg-config build-essential autoconf bison re2c libxml2-dev libsqlite3-dev freetds-dev \
+	libmagickwand-dev libmagickwand-6*dev libgraphicsmagick1-dev libmagickcore-6-arch-config \
 		2>&1 | grep --color=auto "Depends"
 
 	ln -sf /usr/lib/x86_64-linux-gnu/libsybdb.so /usr/lib/
@@ -212,12 +213,13 @@ echo \
 ">moreops
 
 
-# --with-http \
 
 echo \
 "\
 --with-gearman \
---enable-raphf=shared \
+--enable-raphf \
+--with-http \
+--with-iconv \
 \
 --with-mcrypt \
 --with-uuid \
@@ -340,9 +342,9 @@ printf "\n\n$doconf \n\n" > doconf
 # exit 0;
 
 
-printf "\n delete mods: http raphf "
+# printf "\n delete mods: http raphf "
 # rm -rf /root/src/salsa-php/ext/http  /root/src/salsa-php/ext/raphf
-rm -rf /root/src/salsa-php/ext/http
+# rm -rf /root/src/salsa-php/ext/http
 
 pwd
 ./buildconf -f
