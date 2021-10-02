@@ -77,8 +77,10 @@ prepare_source() {
 	libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
 	libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev \
 	libssl-dev libxml2-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
-	pkg-config build-essential autoconf bison re2c libxml2-dev libsqlite3-dev \
+	pkg-config build-essential autoconf bison re2c libxml2-dev libsqlite3-dev freetds-dev \
 		2>&1 | grep --color=auto "Depends"
+
+	ln -s /usr/lib/x86_64-linux-gnu/libsybdb.so /usr/lib/
 
 	PREVDIR=$PWD
 	mkdir -p /root/org.src/php8
