@@ -77,7 +77,8 @@ prepare_source() {
 	libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
 	libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev \
 	libssl-dev libxml2-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
-		2>&1 | grep "Depends"
+	pkg-config build-essential autoconf bison re2c libxml2-dev libsqlite3-dev \
+		2>&1 | grep --color=auto "Depends"
 
 	mkdir -p /root/org.src/php8
 	cd /root/org.src/php8
@@ -91,6 +92,12 @@ cut -d" " -f1 | tr "\n" " ")
 	echo "${modpkgs}" | xargs aptold install -fy    2>&1 | grep "Depends"
 	echo "${modpkgs}" | xargs aptold build-dep -fy  2>&1 | grep "Depends"
 	echo "${modpkgs}" | xargs aptold source -y      2>&1 | grep "Depends"
+
+	printf "\n\n-- rsync with src \n"
+	mkdir -p /root/src/salsa-php
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	--delete --exclude '.git' \
+	/root/org.src/salsa-php/ /root/src/salsa-php/
 }
 
 copy_extra_mods() {

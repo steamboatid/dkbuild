@@ -34,12 +34,12 @@ export end=$'\e[0m'
 
 
 
-# aptold create and check (version5)
+# aptold create and check (version6)
 #-------------------------------------------
 create_aptold() {
 	echo \
 '#!/bin/bash
-# version5
+# version6
 
 save_local_debs() {
 	mkdir -p /tb2/tmp/cachedebs/
@@ -74,19 +74,19 @@ fi
 
 if [ ! -e /usr/local/sbin/aptold ]; then
 	create_aptold
-elif [[ $(grep "version5" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version6" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
 	create_aptold
 fi
 chmod +x /usr/local/sbin/aptold
 
 
 
-# aptnew create and check (version5)
+# aptnew create and check (version6)
 #-------------------------------------------
 create_aptnew() {
 	echo \
 '#!/bin/bash
-# version5
+# version6
 
 save_local_debs() {
 	mkdir -p /tb2/tmp/cachedebs/
@@ -121,7 +121,7 @@ fi
 
 if [ ! -e /usr/local/sbin/aptnew ]; then
 	create_aptnew
-elif [[ $(grep "version5" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version6" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
 	create_aptnew
 fi
 chmod +x /usr/local/sbin/aptnew
