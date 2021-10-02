@@ -59,6 +59,7 @@ prepare_source() {
 		get_update_new_git "steamboatid/phpredis" "/root/org.src/git-redis"
 	fi
 
+
 	printf "\n\n-- rsync with src \n"
 	mkdir -p /root/src/salsa-php
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
@@ -100,13 +101,16 @@ prepare_source() {
 
 	ln -sf /usr/lib/x86_64-linux-gnu/libsybdb.so /usr/lib/
 
+}
+
+get_mod_sources_deb() {
 	PREVDIR=$PWD
 	mkdir -p /root/org.src/php8
 	cd /root/org.src/php8
 	chown -Rf _apt.root /var/lib/update-notifier/package-data-downloads/partial/ /var/cache/apt/archives/partial/
 	chmod -Rf 700  /var/lib/update-notifier/package-data-downloads/partial/ /var/cache/apt/archives/partial/
 
-	allmods=(mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary memcached)
+	allmods=(mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary memcached redis)
 	modpkgs=$(apt-cache search php | grep -v "php7\|php5\|php8.1" | \
 grep "mcrypt\|vips\|uuid\|gearman\|apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached\|redis" |\
 cut -d" " -f1 | tr "\n" " ")
@@ -115,12 +119,6 @@ cut -d" " -f1 | tr "\n" " ")
 	echo "${modpkgs}" | xargs aptold source -y      2>&1 | grep "Depends"
 
 	cd $PREVDIR
-
-	printf "\n\n-- rsync with src \n"
-	mkdir -p /root/src/salsa-php
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	--delete --exclude '.git' \
-	/root/org.src/salsa-php/ /root/src/salsa-php/
 }
 
 copy_extra_mods() {
@@ -181,6 +179,10 @@ mv debops.tmp debops
 # cat debops; exit 0;
 # cat debops | grep --color db; exit 0;
 
+
+# get default mods sources
+printf "\n get_mod_sources_deb"
+get_mod_sources_deb
 
 # copy extra mods
 printf "\n copy_extra_mods"
