@@ -79,13 +79,16 @@ prepare_source() {
 
 	mkdir -p /root/org.src/php8
 	cd /root/org.src/php8
+	chown -Rf _apt.root /var/lib/update-notifier/package-data-downloads/partial/ /var/cache/apt/archives/partial/
+	chmod -Rf 700  /var/lib/update-notifier/package-data-downloads/partial/ /var/cache/apt/archives/partial/
+
 	allmods=(mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary memcached)
 	modpkgs=$(apt-cache search php | grep -v "php7\|php5\|php8.1" | \
 grep "mcrypt\|vips\|uuid\|gearman\|apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached" |\
 cut -d" " -f1 | tr "\n" " ")
-	echo "${modpkgs}" | xargs aptold install -fy
-	echo "${modpkgs}" | xargs aptold build-dep -fy
-	echo "${modpkgs}" | xargs aptold source -y
+	echo "${modpkgs}" | xargs aptold install -fy  >/dev/null
+	echo "${modpkgs}" | xargs aptold build-dep -fy  >/dev/null
+	echo "${modpkgs}" | xargs aptold source -y  >/dev/null
 }
 
 copy_extra_mods() {
