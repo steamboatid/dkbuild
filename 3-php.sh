@@ -212,14 +212,12 @@ echo \
 ">moreops
 
 
-# \
-# \
+# --enable-raphf \
+# --with-http \
 
 echo \
 "\
 --with-gearman \
---enable-raphf \
---with-http \
 \
 --with-mcrypt \
 --with-uuid \
