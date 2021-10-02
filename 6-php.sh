@@ -183,6 +183,10 @@ cat $BASE/debian/control | grep --color=auto more
 # exit 0;
 
 
+rm -rf $BASE/ext/http
+./buildconf -f
+
+
 
 # revert backup if exists
 if [ -e "debian/changelog.1" ]; then
@@ -221,4 +225,5 @@ dch -p -b "backport to $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)
 head debian/changelog
 
 
+./buildconf -f
 /bin/bash /tb2/build/dk-build-full.sh
