@@ -111,3 +111,13 @@ ls -la /tb2/build/$RELNAME-db4/
 # rebuild the repo
 #-------------------------------------------
 ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &"
+
+
+# check installed libdb4.8 as return value
+#-------------------------------------------
+NUMS=$(dpkg -l | grep "^ii" | grep libdb4 | wc -l)
+if [[ $NUMS -gt 0 ]]; then
+	exit 0
+else
+	exit 1
+fi

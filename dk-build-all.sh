@@ -56,15 +56,20 @@ doback_bash /tb2/build/dk-build-libzip.sh &
 
 # some job at foreground
 #-------------------------------------------
-/bin/bash /tb2/build/dk-build-db4.sh
-printf "\n\n\n"
-sleep 1
-
 /bin/bash /tb2/build/dk-build-nginx.sh
 printf "\n\n\n"
 sleep 1
 
-/bin/bash /tb2/build/dk-build-php8.sh
+
+# build & install db4 first, then php
+#-------------------------------------------
+if /bin/bash /tb2/build/dk-build-db4.sh; then
+	printf "\n\n\n"
+	sleep 1
+
+	/bin/bash /tb2/build/dk-build-php8.sh
+fi
+
 printf "\n\n\n"
 sleep 1
 
@@ -130,3 +135,8 @@ while read afile; do
 	cat $afile | grep -i vcs | awk '{print $NF}' | sort -u >>/tmp/all.git
 done
 cat /tmp/all.git | grep "http" | sort -u | sort >/root/all.git
+
+
+# rebuild the repo
+#-------------------------------------------
+ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &"
