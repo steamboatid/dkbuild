@@ -285,7 +285,7 @@ get_update_new_git(){
 	BRA=$3
 
 	if [ ! -d ${DST} ]; then
-		printf "\n---new clone to: $DST \n---from: https://github.com/${URL} $BRA \n"
+		printf "\n---new clone to: $DST \n---from: https://github.com/${URL} -b $BRA $DST \n"
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 		git clone https://github.com/${URL} $OPS $DST
 	else
