@@ -150,7 +150,27 @@ copy_extra_mods
 
 
 echo \
-"">debian/rules.d/ext-caching.mk
+"ext_PACKAGES     += caching
+caching_DESCRIPTION := caching modules
+caching_EXTENSIONS  := redis memcached igbinary msgpack
+caching_config      := --enable-igbinary \
+--enable-memcached-igbinary \
+--enable-redis-igbinary \
+--with-msgpack \
+--enable-redis-msgpack \
+--enable-memcached-msgpack \
+--enable-memcached \
+--with-libmemcached-dir \
+--enable-memcached-session \
+--enable-memcached-json \
+--enable-redis \
+--enable-redis-zstd \
+--with-liblz4=/usr \
+--with-liblzf=/usr \
+--enable-redis-lz4
+export caching_EXTENSIONS
+export caching_DESCRIPTION
+">debian/rules.d/ext-caching.mk
 
 
 echo \
@@ -177,10 +197,14 @@ sed -i -r "s/iconv\=shared/iconv/g" debian/rules.d/ext-common.mk
 
 
 sed -i -r "s/apache2 phpdbg embed fpm cgi cli/cli/g" debian/rules
+sed -i -r "s/\-\-fail\-missing//g" debian/rules
 
 cp /tb2/build/dk-php-control $BASE/debian/control -Rfav
 cat $BASE/debian/control | grep --color=auto more
 # exit 0;
+
+rm -rf $BASE/debian/libapache2-* $BASE/debian/libphp* $BASE/debian/php-cgi*  $BASE/debian/php-fpm* \
+ $BASE/debian/php-phpdbg*
 
 
 rm -rf $BASE/ext/http
@@ -220,7 +244,7 @@ if [ -n "$VEROVR" ]; then
 	printf "\n by VEROVR \n--- VERNUM= $VERNUM NEXT= $VERNEXT---\n\n\n"
 fi
 
-dch -p -b "backport to $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
+dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
 -v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.aisits.id" -D buster -u high; \
 head debian/changelog
 
