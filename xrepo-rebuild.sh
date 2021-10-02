@@ -48,6 +48,9 @@ EOF
 mkdir -p /tb2/phideb/{dists,pool}/{buster,bullseye}
 mkdir -p /tb2/phideb/dists/{buster,bullseye}/main/binary-amd64
 
+# delete old files
+find /tb2/phideb -type f -delete
+
 folders=(php8 nginx nutcracker lua-resty-core lua-resty-lrucache keydb pcre libzip db4)
 for afolder in "${folders[@]}"; do
 	printf " copy folder: $afolder \n"
