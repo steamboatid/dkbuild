@@ -232,7 +232,7 @@ echo \
 
 
 
-
+pwd
 ./buildconf -f
 
 doconf="./configure \
@@ -304,7 +304,7 @@ printf "\n\n$doconf \n\n" > doconf
 # exit 0;
 
 
-
+pwd
 eval $doconf 2>&1 | tee dkconf.log
 alter_berkeley_dbh
 # exit 0;
