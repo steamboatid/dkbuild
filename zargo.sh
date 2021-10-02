@@ -4,6 +4,9 @@
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 /tb2/build/*sh root@argo:/tb2/build/
 
+rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
+/tb2/build/dk* root@argo:/tb2/build/
+
 #-- db4 debs
 # rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 # /var/lib/lxc/bus/rootfs/root/db4-debs/ argo:/tb2/build/buster-db4/
