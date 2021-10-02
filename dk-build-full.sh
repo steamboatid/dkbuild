@@ -119,9 +119,10 @@ if [[ $isdeps -gt 0 ]]; then
 	printf "\n\n ${red}unmet build dependencies: ${end}"
 	ATMP=$(mktemp)
 	cat ~/build.deps | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | \
-	sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g" > $ATMP
+	sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g" | sort -u | sort > $ATMP
 	mv $ATMP ~/build.deps
 	cat ~/build.deps
+	cat ~/build.deps | xargs aptold install -fy 2>&1 | grep --color=auto "Depends"
 	printf "\n\n"
 	exit 1;
 fi
