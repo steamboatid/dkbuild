@@ -427,6 +427,7 @@ fix_usr_lib_symlinks() {
 		BFILE=$(basename $afile)
 		FINUM=$(find /usr/lib -iname "${BFILE}" | wc -l)
 		if [[ $FINUM -lt 1 ]]; then
+			printf "\n $afile"
 			ln -s $afile .
 		fi
 	done
