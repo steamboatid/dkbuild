@@ -330,10 +330,12 @@ doconf="${doconf} ${debops} ${moreops}"
 # doconf=$(printf "$doconf" | tr "\n" " " | tr "\\" " " | sed -r "s/\s+/ /g" | sed -r "s/\s/ \\\\\n/g" | sort -u)
 doconf=$(printf "$doconf" | tr "\n" " " | tr "\\\\" " " | sed -r "s/\s+/ /g")
 printf "\n\n$doconf \n\n" > doconf
-printf "\n\n$doconf \n\n" | tr " " "\n" | grep --color "gearman\|raphf\|http\|mcrypt\|vips\|uuid\|apcu\|imagick\|msgpack\|igbinary\|memcached\|redis"
-NUMS=$(printf "\n\n$doconf \n\n" | tr " " "\n" | grep --color "gearman\|raphf\|http\|mcrypt\|vips\|uuid\|apcu\|imagick\|msgpack\|igbinary\|memcached\|redis" | wc -l)
-printf "\n MODS=$NUMS of 12 \n\n"
-exit 0;
+
+# debugging $doconf
+# printf "\n\n$doconf \n\n" | tr " " "\n" | grep --color "gearman\|raphf\|http\|mcrypt\|vips\|uuid\|apcu\|imagick\|msgpack\|igbinary\|memcached\|redis"
+# NUMS=$(printf "\n\n$doconf \n\n" | tr " " "\n" | grep --color "gearman\|raphf\|http\|mcrypt\|vips\|uuid\|apcu\|imagick\|msgpack\|igbinary\|memcached\|redis" | wc -l)
+# printf "\n MODS=$NUMS of 12 \n\n"
+# exit 0;
 
 
 pwd
