@@ -149,8 +149,9 @@ common_DESCRIPTION := documentation, examples and common
 
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext iconv pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
-msgpack redis memcached \
-gearman mcrypt uuid vips imagick apcu raphf http
+msgpack gearman mcrypt uuid vips imagick apcu \
+redis memcached \
+raphf http
 
 calendar_config = --enable-calendar=shared
 ctype_config = --enable-ctype=shared
@@ -171,21 +172,6 @@ sysvsem_config = --enable-sysvsem=shared
 sysvshm_config = --enable-sysvshm=shared
 tokenizer_config = --enable-tokenizer=shared
 
-msgpack_config = --with-msgpack=shared \
-	--enable-redis-msgpack \
-	--enable-memcached-msgpack
-
-memcached_config = --enable-memcached \
-	--with-libmemcached-dir \
-	--enable-memcached-session \
-	--enable-memcached-json
-
-redis_config = --enable-redis=shared \
-	--enable-redis-zstd \
-	--with-liblz4=/usr \
-	--with-liblzf=/usr \
-	--enable-redis-lz4
-
 gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
 uuid_config = --with-uuid=shared
@@ -193,8 +179,25 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
+msgpack_config = --with-msgpack=shared \
+	--enable-redis-msgpack \
+	--enable-memcached-msgpack
+
+redis_config = --enable-redis=shared \
+	--enable-redis-zstd \
+	--with-liblz4=/usr \
+	--with-liblzf=/usr \
+	--enable-redis-lz4 \
+	--with-msgpack --enable-redis-msgpack
+
+memcached_config = --enable-memcached=shared \
+	--with-libmemcached-dir \
+	--enable-memcached-session \
+	--enable-memcached-json \
+	--with-msgpack --enable-memcached-msgpack
+
 raphf_config = --enable-raphf
-http_config = --with-http --with-iconv
+http_config = --with-http --with-iconv --enable-raphf
 
 export pdo_PRIORITY
 export common_EXTENSIONS
