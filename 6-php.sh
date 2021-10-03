@@ -137,7 +137,7 @@ copy_extra_mods
 
 
 # igbinary 
-# igbinary_config = --enable-igbinary=shared \
+# igbinary_config = --enable-igbinary \
 # 	--enable-memcached-igbinary \
 # 	--enable-redis-igbinary
 
@@ -153,31 +153,31 @@ dkmods msgpack gearman mcrypt uuid vips imagick apcu \
 redis memcached \
 raphf http
 
-calendar_config = --enable-calendar=shared
-ctype_config = --enable-ctype=shared
-exif_config = --enable-exif=shared
-fileinfo_config = --enable-fileinfo=shared
-ffi_config = --with-ffi=shared
-ftp_config = --enable-ftp=shared --with-openssl-dir=/usr
-gettext_config = --with-gettext=shared,/usr
-iconv_config = --with-iconv=shared
-pdo_config = --enable-pdo=shared
+calendar_config = --enable-calendar
+ctype_config = --enable-ctype
+exif_config = --enable-exif
+fileinfo_config = --enable-fileinfo
+ffi_config = --with-ffi
+ftp_config = --enable-ftp --with-openssl-dir=/usr
+gettext_config = --with-gettext=/usr
+iconv_config = --with-iconv
+pdo_config = --enable-pdo
 pdo_PRIORITY := 10
-phar_config = --enable-phar=shared
-posix_config = --enable-posix=shared
-shmop_config = --enable-shmop=shared
-sockets_config = --enable-sockets=shared
-sysvmsg_config = --enable-sysvmsg=shared
-sysvsem_config = --enable-sysvsem=shared
-sysvshm_config = --enable-sysvshm=shared
-tokenizer_config = --enable-tokenizer=shared
+phar_config = --enable-phar
+posix_config = --enable-posix
+shmop_config = --enable-shmop
+sockets_config = --enable-sockets
+sysvmsg_config = --enable-sysvmsg
+sysvsem_config = --enable-sysvsem
+sysvshm_config = --enable-sysvshm
+tokenizer_config = --enable-tokenizer
 
-gearman_config = --with-gearman=shared
-mcrypt_config = --with-mcrypt=shared
-uuid_config = --with-uuid=shared
-vips_config = --with-vips=shared
-imagick_config = --with-imagick=shared
-apcu_config = --enable-apcu=shared
+gearman_config = --with-gearman
+mcrypt_config = --with-mcrypt
+uuid_config = --with-uuid
+vips_config = --with-vips
+imagick_config = --with-imagick
+apcu_config = --enable-apcu
 
 dkmods_config = --with-msgpack \
 	--enable-redis-msgpack \
@@ -202,25 +202,25 @@ dkmods_config = --with-msgpack \
 	--with-imagick \
 	--enable-apcu
 
-msgpack_config = --with-msgpack=shared \
+msgpack_config = --with-msgpack \
 	--enable-redis-msgpack \
 	--enable-memcached-msgpack
 
-redis_config = --enable-redis=shared \
+redis_config = --enable-redis \
 	--enable-redis-zstd \
 	--with-liblz4=/usr \
 	--with-liblzf=/usr \
 	--enable-redis-lz4 \
-	--with-msgpack=shared --enable-redis-msgpack
+	--with-msgpack --enable-redis-msgpack
 
-memcached_config = --enable-memcached=shared \
+memcached_config = --enable-memcached \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
 	--enable-memcached-json \
-	--with-msgpack=shared --enable-memcached-msgpack
+	--with-msgpack --enable-memcached-msgpack
 
-raphf_config = --enable-raphf=shared
-http_config = --with-http=shared --with-iconv=shared --enable-raphf=shared
+raphf_config = --enable-raphf
+http_config = --with-http --with-iconv --enable-raphf
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -229,7 +229,7 @@ export common_DESCRIPTION
 ">debian/rules.d/ext-common.mk
 
 
-# sed -i -r "s/iconv\=shared/iconv/g" debian/rules.d/ext-common.mk
+# sed -i -r "s/iconv\/iconv/g" debian/rules.d/ext-common.mk
 
 
 
