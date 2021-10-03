@@ -35,7 +35,7 @@ get_update_new_git "m6w6/ext-raphf" "/root/org.src/git-raphf"
 #--- sync to src
 #-------------------------------------------
 printf "\n-- sync to src ALL \n"
-rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times \
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 /root/org.src/ /root/src/
 
 

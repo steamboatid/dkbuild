@@ -28,25 +28,17 @@ cd $BASE
 
 prepare_source() {
 
-	if [ ! -e /root/org.src/git-gearman ]; then
-		printf "\n\n-- update gearman git at org.src \n"
-		get_update_new_git "php/pecl-networking-gearman" "/root/org.src/git-gearman"
-	fi
+	printf "\n\n-- update gearman git at org.src \n"
+	get_update_new_git "php/pecl-networking-gearman" "/root/org.src/git-gearman"
 
-	if [ ! -e /root/org.src/git-http ]; then
-		printf "\n\n-- update pecl http git at org.src \n"
-		get_update_new_git "m6w6/ext-http" "/root/org.src/git-http"
-	fi
+	printf "\n\n-- update pecl http git at org.src \n"
+	get_update_new_git "m6w6/ext-http" "/root/org.src/git-http"
 
-	if [ ! -e /root/org.src/git-raphf ]; then
-		printf "\n\n-- update pecl raphf git at org.src \n"
-		get_update_new_git "m6w6/ext-raphf" "/root/org.src/git-raphf"
-	fi
+	printf "\n\n-- update pecl raphf git at org.src \n"
+	get_update_new_git "m6w6/ext-raphf" "/root/org.src/git-raphf"
 
-	if [ ! -e /root/org.src/git-redis ]; then
-		printf "\n\n-- update redis git at org.src \n"
-		get_update_new_git "steamboatid/phpredis" "/root/org.src/git-redis"
-	fi
+	printf "\n\n-- update redis git at org.src \n"
+	get_update_new_git "steamboatid/phpredis" "/root/org.src/git-redis"
 
 
 	printf "\n-- rsync PHP CORE \n"
