@@ -28,16 +28,9 @@ cd $BASE
 
 prepare_source() {
 
-	printf "\n\n-- update gearman git at org.src \n"
 	get_update_new_git "php/pecl-networking-gearman" "/root/org.src/git-gearman"
-
-	printf "\n\n-- update pecl http git at org.src \n"
 	get_update_new_git "m6w6/ext-http" "/root/org.src/git-http"
-
-	printf "\n\n-- update pecl raphf git at org.src \n"
 	get_update_new_git "m6w6/ext-raphf" "/root/org.src/git-raphf"
-
-	printf "\n\n-- update redis git at org.src \n"
 	get_update_new_git "steamboatid/phpredis" "/root/org.src/git-redis"
 
 
@@ -197,8 +190,8 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
-raphf_config = --enable-raphf=shared
-http_config = --with-http=shared --with-iconv
+raphf_config = --enable-raphf
+http_config = --with-http --with-iconv
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -214,6 +207,7 @@ export common_DESCRIPTION
 # sed -i -r "s/apache2 phpdbg embed fpm cgi cli/cli/g" debian/rules
 # sed -i -r "s/\-\-fail\-missing//g" debian/rules
 # sed -i -r "s/prepare\-fpm\-pools//g" debian/rules
+sed -i -r "s/disable\-static/enable\-static/g" debian/rules
 
 # cp /tb2/build/dk-php-control $BASE/debian/control -Rfav
 # cat $BASE/debian/control | grep --color=auto more
