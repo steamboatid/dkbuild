@@ -137,11 +137,13 @@ printf "\n copy_extra_mods "
 copy_extra_mods
 
 
-# igbinary 
+# igbinary
+#
 # igbinary_config = --enable-igbinary=shared \
 # 	--enable-memcached-igbinary \
 # 	--enable-redis-igbinary
-
+#  \
+#	--with-msgpack --enable-memcached-msgpack
 
 
 echo \
@@ -160,7 +162,7 @@ fileinfo_config = --enable-fileinfo=shared
 ffi_config = --with-ffi=shared
 ftp_config = --enable-ftp=shared --with-openssl-dir=/usr
 gettext_config = --with-gettext=shared,/usr
-iconv_config = --with-iconv
+iconv_config = --with-iconv=shared
 pdo_config = --enable-pdo=shared
 pdo_PRIORITY := 10
 phar_config = --enable-phar=shared
@@ -189,10 +191,9 @@ redis_config = --enable-redis=shared \
 memcached_config = --enable-memcached \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
-	--enable-memcached-json \
-	--with-msgpack --enable-memcached-msgpack
+	--enable-memcached-json
 
-http_config = --with-http --with-iconv --enable-raphf
+http_config = --with-http --enable-raphf
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -208,7 +209,7 @@ export common_DESCRIPTION
 # sed -i -r "s/apache2 phpdbg embed fpm cgi cli/cli/g" debian/rules
 # sed -i -r "s/\-\-fail\-missing//g" debian/rules
 # sed -i -r "s/prepare\-fpm\-pools//g" debian/rules
-sed -i -r "s/disable\-static/enable\-static/g" debian/rules
+# sed -i -r "s/disable\-static/enable\-static/g" debian/rules
 # sed -i -r "s/make -f/make -f -B -i -k/" debian/rules
 
 # cp /tb2/build/dk-php-control $BASE/debian/control -Rfav
@@ -260,6 +261,9 @@ dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELV
 -v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.aisits.id" -D buster -u high; \
 head debian/changelog
 
+
+dh clean
+fakeroot debian/rules clean
 
 ./buildconf -f
 /bin/bash /tb2/build/dk-build-full.sh
