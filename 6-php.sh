@@ -269,4 +269,5 @@ if [[ $isok -gt 0 ]]; then
 else
 	cd ext-build
 	make
+	tail -n30 dkbuild.log
 fi
