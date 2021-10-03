@@ -193,7 +193,7 @@ memcached_config = --enable-memcached \
 	--enable-memcached-session \
 	--enable-memcached-json
 
-http_config = --with-http --enable-raphf
+http_config = --with-http=shared --enable-raphf=shared
 
 export pdo_PRIORITY
 export common_EXTENSIONS
