@@ -184,15 +184,15 @@ redis_config = --enable-redis=shared \
 	--with-liblz4=/usr \
 	--with-liblzf=/usr \
 	--enable-redis-lz4 \
-	--with-msgpack=/usr --enable-redis-msgpack
+	--with-msgpack --enable-redis-msgpack
 
 memcached_config = --enable-memcached \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
 	--enable-memcached-json \
-	--with-msgpack=/usr --enable-memcached-msgpack
+	--with-msgpack --enable-memcached-msgpack
 
-http_config = --with-http=/usr --with-iconv=/usr --enable-raphf
+http_config = --with-http --with-iconv --enable-raphf
 
 export pdo_PRIORITY
 export common_EXTENSIONS
