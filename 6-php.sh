@@ -180,26 +180,26 @@ tokenizer_config = --enable-tokenizer=shared
 caching_config = --enable-igbinary \
 	--enable-memcached-igbinary \
 	--enable-redis-igbinary \
-	--with-msgpack=shared \
+	--with-msgpack \
 	--enable-redis-msgpack \
 	--enable-memcached-msgpack \
-	--enable-memcached=shared \
+	--enable-memcached \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
 	--enable-memcached-json \
-	--enable-redis=shared \
+	--enable-redis \
 	--enable-redis-zstd \
 	--with-liblz4=/usr \
 	--with-liblzf=/usr \
 	--enable-redis-lz4
 
-moremods_config = --with-gearman=shared \
-	--with-mcrypt=shared \
-	--with-uuid=shared \
-	--with-vips=shared \
-	--with-imagick=shared \
-	--enable-apcu=shared \
-	--enable-raphf=shared
+moremods_config = --with-gearman \
+	--with-mcrypt \
+	--with-uuid \
+	--with-vips \
+	--with-imagick \
+	--enable-apcu \
+	--enable-raphf
 
 export pdo_PRIORITY
 export common_EXTENSIONS
