@@ -154,23 +154,24 @@ echo \
 
 common_EXTENSIONS  += redis memcached igbinary msgpack
 caching_config      := --enable-igbinary \
---enable-memcached-igbinary \
---enable-redis-igbinary \
---with-msgpack=shared \
---enable-redis-msgpack \
---enable-memcached-msgpack \
---enable-memcached=shared \
---with-libmemcached-dir \
---enable-memcached-session \
---enable-memcached-json \
---enable-redis=shared \
---enable-redis-zstd \
---with-liblz4=/usr \
---with-liblzf=/usr \
---enable-redis-lz4
+	--enable-memcached-igbinary \
+	--enable-redis-igbinary \
+	--with-msgpack=shared \
+	--enable-redis-msgpack \
+	--enable-memcached-msgpack \
+	--enable-memcached=shared \
+	--with-libmemcached-dir \
+	--enable-memcached-session \
+	--enable-memcached-json \
+	--enable-redis=shared \
+	--enable-redis-zstd \
+	--with-liblz4=/usr \
+	--with-liblzf=/usr \
+	--enable-redis-lz4 \
+	--enable-pdo=shared,/usr
 export common_EXTENSIONS
 export common_DESCRIPTION
-">debian/rules.d/ext-common.mk
+">>debian/rules.d/ext-common.mk
 
 
 echo \
@@ -183,7 +184,8 @@ moremods_config      := --with-gearman=shared \
 	--with-vips=shared \
 	--with-imagick=shared \
 	--enable-apcu=shared \
-	--enable-raphf=shared
+	--enable-raphf=shared \
+	--enable-pdo=shared,/usr
 export common_EXTENSIONS
 export common_DESCRIPTION
 ">>debian/rules.d/ext-common.mk
