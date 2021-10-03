@@ -72,6 +72,7 @@ prepare_source() {
 	libssl-dev libxml2-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
 	pkg-config build-essential autoconf bison re2c libxml2-dev libsqlite3-dev freetds-dev \
 	libmagickwand-dev libmagickwand-6*dev libgraphicsmagick1-dev libmagickcore-6-arch-config \
+	libmsgpack-dev libmsgpackc2 \
 		2>&1 | grep --color=auto "Depends"
 
 	ln -sf /usr/lib/x86_64-linux-gnu/libsybdb.so /usr/lib/
