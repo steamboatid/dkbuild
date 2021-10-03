@@ -28,6 +28,10 @@ get_update_new_git "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
 get_update_new_git "steamboatid/db4" "/root/org.src/db4/git-db4"
 
 
+get_update_new_git "php/pecl-networking-gearman" "/root/org.src/git-gearman"
+get_update_new_git "m6w6/ext-http" "/root/org.src/git-http"
+get_update_new_git "m6w6/ext-raphf" "/root/org.src/git-raphf"
+
 #--- sync to src
 #-------------------------------------------
 printf "\n-- sync to src ALL \n"

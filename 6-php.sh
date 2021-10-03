@@ -177,29 +177,32 @@ sysvsem_config = --enable-sysvsem=shared
 sysvshm_config = --enable-sysvshm=shared
 tokenizer_config = --enable-tokenizer=shared
 
-caching_config = --enable-igbinary \
+igbinary_config = --enable-igbinary=shared \
 	--enable-memcached-igbinary \
-	--enable-redis-igbinary \
-	--with-msgpack \
+	--enable-redis-igbinary
+
+msgpack_config = --with-msgpack=shared \
 	--enable-redis-msgpack \
-	--enable-memcached-msgpack \
-	--enable-memcached \
+	--enable-memcached-msgpack
+
+memcached_config = --enable-memcached \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
-	--enable-memcached-json \
-	--enable-redis \
+	--enable-memcached-json
+
+redis_config = --enable-redis=shared \
 	--enable-redis-zstd \
 	--with-liblz4=/usr \
 	--with-liblzf=/usr \
 	--enable-redis-lz4
 
-moremods_config = --with-gearman \
-	--with-mcrypt \
-	--with-uuid \
-	--with-vips \
-	--with-imagick \
-	--enable-apcu \
-	--enable-raphf
+gearman_config = --with-gearman=shared
+mcrypt_config = --with-mcrypt=shared
+uuid_config = --with-uuid=shared
+vips_config = --with-vips=shared
+imagick_config = --with-imagick=shared
+apcu_config = --enable-apcu=shared
+raphf_config = --enable-raphf=shared
 
 export pdo_PRIORITY
 export common_EXTENSIONS
