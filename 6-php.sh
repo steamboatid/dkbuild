@@ -185,13 +185,13 @@ redis_config = --enable-redis=shared \
 	--enable-redis-lz4 \
 	--with-msgpack --enable-redis-msgpack
 
-memcached_config = --enable-memcached=shared \
+memcached_config = --enable-memcached \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
 	--enable-memcached-json \
 	--with-msgpack --enable-memcached-msgpack
 
-http_config = --with-http=shared --with-iconv --enable-raphf
+http_config = --with-http --with-iconv --enable-raphf
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -269,5 +269,6 @@ if [[ $isok -gt 0 ]]; then
 else
 	cd ext-build
 	make
-	tail -n30 dkbuild.log
+
+	cd ..; tail -n30 dkbuild.log
 fi
