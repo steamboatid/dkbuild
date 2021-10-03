@@ -452,3 +452,16 @@ fix_usr_lib_symlinks() {
 
 	cd $PREV
 }
+
+db4_install() {
+	DB4NUM=$(dpkg -l | grep libdb4.8 | grep "^ii" | wc -l)
+	if [[ $DB4NUM -lt 7 ]]; then
+		apt purge -fy libdb5*dev libdb++-dev libdb-dev libdb5.3-tcl  >/dev/null
+		apt purge -fy libdb5*dev libdb++-dev libdb-dev libdb5.3-tcl  >/dev/null
+
+		if [ -d /tb2/build/$RELNAME-db4 ]; then
+			cd /tb2/build/$RELNAME-db4
+			dpkg -i --force-all *deb
+		fi
+	fi
+}

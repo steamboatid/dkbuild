@@ -130,6 +130,8 @@ copy_extra_mods() {
 
 
 
+printf "\n db4_install "
+db4_install
 
 printf "\n prepare_source "
 prepare_source
@@ -157,7 +159,7 @@ fileinfo_config = --enable-fileinfo=shared
 ffi_config = --with-ffi=shared
 ftp_config = --enable-ftp=shared --with-openssl-dir=/usr
 gettext_config = --with-gettext=shared,/usr
-iconv_config = --with-iconv=shared
+iconv_config = --with-iconv
 pdo_config = --enable-pdo=shared
 pdo_PRIORITY := 10
 phar_config = --enable-phar=shared
@@ -196,7 +198,7 @@ imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
 raphf_config = --enable-raphf=shared
-http_config = --with-http=shared
+http_config = --with-http=shared --with-iconv
 
 export pdo_PRIORITY
 export common_EXTENSIONS
