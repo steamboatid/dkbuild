@@ -136,6 +136,7 @@ printf "\n copy_extra_mods "
 copy_extra_mods
 
 
+# igbinary 
 # igbinary_config = --enable-igbinary=shared \
 # 	--enable-memcached-igbinary \
 # 	--enable-redis-igbinary
@@ -148,7 +149,7 @@ common_DESCRIPTION := documentation, examples and common
 
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext iconv pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
-redis memcached igbinary msgpack \
+msgpack redis memcached \
 gearman mcrypt uuid vips imagick apcu raphf http
 
 calendar_config = --enable-calendar=shared
