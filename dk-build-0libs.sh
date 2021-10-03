@@ -241,20 +241,27 @@ chown_apt() {
 }
 
 update_existing_git() {
-	DST=$1
 	URL=$2
+	DST=$1
+	FURL=$3
+	BRA=$4
 
+	PDIR=$PWD
+	mkdir -p $DST
 	cd $DST
 	printf "\n---updating $PWD \n"
-	git reset --hard
+	
 	git config  --global pull.ff only
-	git rm -r --cached . >/dev/null 2>&1
-	git submodule update --init --recursive -f
-	git fetch --all
 
-	git pull --update-shallow --ff-only
-	git pull --depth=1 --ff-only
-	git pull --ff-only
+	if git reset --hard  >/dev/null 2>&1; then
+		git rm -r --cached . >/dev/null 2>&1
+		git submodule update --init --recursive -f  >/dev/null 2>&1
+		git fetch --all  >/dev/null 2>&1
+
+		git pull --update-shallow --ff-only  >/dev/null 2>&1
+		git pull --depth=1 --ff-only  >/dev/null 2>&1
+		git pull --ff-only  >/dev/null 2>&1
+	fi
 
 	if git pull origin $(git rev-parse --abbrev-ref HEAD) --ff-only; then
 		printf " --- pull OK \n"
@@ -264,27 +271,31 @@ update_existing_git() {
 		else
 			if ! git pull origin $(git rev-parse --abbrev-ref HEAD) --rebase; then
 				cd ..
-				rm -rf $1
-				printf "\n\n ${red}git update at $1 is failed. please re-execute $0 again ${end}"
-				printf "\n Recloning: ${blu} https://github.com/${URL} ${end} \n\n"
+				rm -rf ${DST}
+				printf "\n\n ${red} >>> git update at $1 is failed. please re-execute $0 again ${end} \n"
 				# exit 1; # exit as error
 
 				# recloning
+				[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 				ORIGIN=$(git config --get remote.origin.url)
-				if [[ $ORIGIN == *"github"* ]]; then
-					git clone https://github.com/${URL} $DST
-				elif [[ $ORIGIN == *"salsa"* ]]; then
-					git clone https://salsa.debian.org/${URL} $DST
-				elif [[ $ORIGIN == *"gitlab"* ]]; then
-					git clone https://gitlab.com/${URL} $DST
-				else
+				printf "\n ORIGIN: $ORIGIN \n FURL:   $FURL \n DST:    $DST \n BRANCH: $BRA "
+
+				if [ ! -z $FURL ]; then
+					printf "\n Recloning: ${blu} ${FURL} ${OPS} ${end} \n\n"
+					git clone $FURL $OPS $DST
+				elif [ ! -z $ORIGIN ]; then
 					ADOM=$(echo ${ORIGIN} | awk -F[/:] '{print $4}')
-					git clone https://${ADOM}/${URL} $DST
+					printf "\n Recloning: ${blu} https://${ADOM}/${URL} ${OPS} ${end} \n\n"
+					git clone https://${ADOM}/${URL} $OPS $DST
+				else
+					#--- failed
+					printf "\n\n\n\n"
+					exit 1;
 				fi
 			fi
 		fi
 	fi
-	cd ..
+	cd $PDIR
 	printf "\n\n"
 }
 
@@ -299,7 +310,8 @@ get_update_new_git(){
 		printf "\n---new clone to: $DST \n---from: https://github.com/${URL} $OPS $DST \n"
 		git clone https://github.com/${URL} $OPS $DST
 	else
-		update_existing_git $DST $URL
+		FURL="https://github.com/${URL}"
+		update_existing_git $DST $URL $FURL $BRA
 	fi
 }
 
@@ -313,7 +325,8 @@ get_update_new_salsa(){
 		printf "\n---new clone to: $DST \n---from: https://salsa.debian.org/${URL} $OPS $DST \n"
 		git clone https://salsa.debian.org/${URL} $OPS $DST
 	else
-		update_existing_git $DST $URL
+		FURL="https://salsa.debian.org/${URL}"
+		update_existing_git $DST $URL $FURL $BRA
 	fi
 }
 
