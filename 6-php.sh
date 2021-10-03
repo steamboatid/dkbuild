@@ -149,7 +149,7 @@ common_DESCRIPTION := documentation, examples and common
 
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext iconv pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
-msgpack gearman mcrypt uuid vips imagick apcu \
+dkmods msgpack gearman mcrypt uuid vips imagick apcu \
 redis memcached \
 raphf http
 
@@ -160,7 +160,7 @@ fileinfo_config = --enable-fileinfo=shared
 ffi_config = --with-ffi=shared
 ftp_config = --enable-ftp=shared --with-openssl-dir=/usr
 gettext_config = --with-gettext=shared,/usr
-iconv_config = --with-iconv
+iconv_config = --with-iconv=shared
 pdo_config = --enable-pdo=shared
 pdo_PRIORITY := 10
 phar_config = --enable-phar=shared
@@ -179,6 +179,29 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
+dkmods_config = --with-msgpack \
+	--enable-redis-msgpack \
+	--enable-memcached-msgpack \
+	--enable-redis \
+	--enable-redis-zstd \
+	--with-liblz4=/usr \
+	--with-liblzf=/usr \
+	--enable-redis-lz4 \
+	--with-msgpack --enable-redis-msgpack \
+	--enable-memcached \
+	--with-libmemcached-dir \
+	--enable-memcached-session \
+	--enable-memcached-json \
+	--with-msgpack --enable-memcached-msgpack \
+	--enable-raphf \
+	--with-http --with-iconv --enable-raphf \
+	--with-gearman \
+	--with-mcrypt \
+	--with-uuid \
+	--with-vips \
+	--with-imagick \
+	--enable-apcu
+
 msgpack_config = --with-msgpack=shared \
 	--enable-redis-msgpack \
 	--enable-memcached-msgpack
@@ -188,16 +211,16 @@ redis_config = --enable-redis=shared \
 	--with-liblz4=/usr \
 	--with-liblzf=/usr \
 	--enable-redis-lz4 \
-	--with-msgpack --enable-redis-msgpack
+	--with-msgpack=shared --enable-redis-msgpack
 
 memcached_config = --enable-memcached=shared \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
 	--enable-memcached-json \
-	--with-msgpack --enable-memcached-msgpack
+	--with-msgpack=shared --enable-memcached-msgpack
 
-raphf_config = --enable-raphf
-http_config = --with-http --with-iconv --enable-raphf
+raphf_config = --enable-raphf=shared
+http_config = --with-http=shared --with-iconv=shared --enable-raphf=shared
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -267,3 +290,11 @@ head debian/changelog
 
 ./buildconf -f
 /bin/bash /tb2/build/dk-build-full.sh
+
+isok=$(tail -n100 dkbuild.log | grep -i "binary\-only" | wc -l)
+if [[ $isok -gt 0 ]]; then
+	exit 0;
+else
+	cd ext-build
+	make
+fi
