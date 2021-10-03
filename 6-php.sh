@@ -177,7 +177,7 @@ sysvsem_config = --enable-sysvsem=shared
 sysvshm_config = --enable-sysvshm=shared
 tokenizer_config = --enable-tokenizer=shared
 
-caching_config     := --enable-igbinary \
+caching_config = --enable-igbinary \
 	--enable-memcached-igbinary \
 	--enable-redis-igbinary \
 	--with-msgpack=shared \
@@ -193,7 +193,7 @@ caching_config     := --enable-igbinary \
 	--with-liblzf=/usr \
 	--enable-redis-lz4
 
-moremods_config    := --with-gearman=shared \
+moremods_config = --with-gearman=shared \
 	--with-mcrypt=shared \
 	--with-uuid=shared \
 	--with-vips=shared \
