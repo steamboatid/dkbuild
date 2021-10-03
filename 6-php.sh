@@ -149,9 +149,8 @@ common_DESCRIPTION := documentation, examples and common
 
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext iconv pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
-msgpack gearman mcrypt uuid vips imagick apcu \
-redis memcached \
-raphf http
+gearman mcrypt uuid vips imagick apcu \
+redis memcached http
 
 calendar_config = --enable-calendar=shared
 ctype_config = --enable-ctype=shared
@@ -179,10 +178,6 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
-msgpack_config = --with-msgpack=shared \
-	--enable-redis-msgpack \
-	--enable-memcached-msgpack
-
 redis_config = --enable-redis=shared \
 	--enable-redis-zstd \
 	--with-liblz4=/usr \
@@ -196,7 +191,6 @@ memcached_config = --enable-memcached=shared \
 	--enable-memcached-json \
 	--with-msgpack --enable-memcached-msgpack
 
-raphf_config = --enable-raphf=shared
 http_config = --with-http=shared --with-iconv --enable-raphf
 
 export pdo_PRIORITY
@@ -214,7 +208,7 @@ export common_DESCRIPTION
 # sed -i -r "s/\-\-fail\-missing//g" debian/rules
 # sed -i -r "s/prepare\-fpm\-pools//g" debian/rules
 sed -i -r "s/disable\-static/enable\-static/g" debian/rules
-sed -i -r "s/make -f/make -f -B -i -k/" debian/rules
+# sed -i -r "s/make -f/make -f -B -i -k/" debian/rules
 
 # cp /tb2/build/dk-php-control $BASE/debian/control -Rfav
 # cat $BASE/debian/control | grep --color=auto more
