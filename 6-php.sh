@@ -153,6 +153,7 @@ common_DESCRIPTION := documentation, examples and common
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext iconv pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
 gearman mcrypt uuid vips imagick apcu \
+msgpack raphf \
 redis memcached http
 
 calendar_config = --enable-calendar=shared
@@ -181,19 +182,22 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
+msgpack_config = --with-msgpack=shared \
+	--enable-memcached-msgpack --enable-redis-msgpack
+
 redis_config = --enable-redis=shared \
 	--enable-redis-zstd \
 	--with-liblz4=/usr \
 	--with-liblzf=/usr \
-	--enable-redis-lz4 \
-	--with-msgpack --enable-redis-msgpack
+	--enable-redis-lz4
 
-memcached_config = --enable-memcached \
+memcached_config = --enable-memcached=shared \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
 	--enable-memcached-json
 
-http_config = --with-http=shared --enable-raphf=shared
+raphf_config = --enable-raphf=shared
+http_config = --with-http=shared
 
 export pdo_PRIORITY
 export common_EXTENSIONS
