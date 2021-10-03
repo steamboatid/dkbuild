@@ -150,62 +150,63 @@ copy_extra_mods
 
 
 echo \
-"ext_PACKAGES     += caching
-caching_DESCRIPTION := caching modules
-caching_EXTENSIONS  := redis memcached igbinary msgpack
+"
+
+common_EXTENSIONS  += redis memcached igbinary msgpack
 caching_config      := --enable-igbinary \
 --enable-memcached-igbinary \
 --enable-redis-igbinary \
---with-msgpack \
+--with-msgpack=shared \
 --enable-redis-msgpack \
 --enable-memcached-msgpack \
---enable-memcached \
+--enable-memcached=shared \
 --with-libmemcached-dir \
 --enable-memcached-session \
 --enable-memcached-json \
---enable-redis \
+--enable-redis=shared \
 --enable-redis-zstd \
 --with-liblz4=/usr \
 --with-liblzf=/usr \
 --enable-redis-lz4
-export caching_EXTENSIONS
-export caching_DESCRIPTION
-">debian/rules.d/ext-caching.mk
+export common_EXTENSIONS
+export common_DESCRIPTION
+">debian/rules.d/ext-common.mk
 
 
 echo \
-"ext_PACKAGES     += moremods
-moremods_DESCRIPTION := additional PHP modules
-moremods_EXTENSIONS  := gearman mcrypt uuid vips imagick apcu
-moremods_config      := --with-gearman \
-	--with-mcrypt \
-	--with-uuid \
-	--with-vips \
-	--with-imagick \
-	--enable-apcu
-export moremods_EXTENSIONS
-export moremods_DESCRIPTION
-">debian/rules.d/ext-moremods.mk
+"
+
+common_EXTENSIONS  += gearman mcrypt uuid vips imagick apcu raphf
+moremods_config      := --with-gearman=shared \
+	--with-mcrypt=shared \
+	--with-uuid=shared \
+	--with-vips=shared \
+	--with-imagick=shared \
+	--enable-apcu=shared \
+	--enable-raphf=shared
+export common_EXTENSIONS
+export common_DESCRIPTION
+">>debian/rules.d/ext-common.mk
 
 
 echo \
 "">debian/rules.d/ext-httpraph.mk
 
 
-sed -i -r "s/iconv\=shared/iconv/g" debian/rules.d/ext-common.mk
+# sed -i -r "s/iconv\=shared/iconv/g" debian/rules.d/ext-common.mk
 
 
 
-sed -i -r "s/apache2 phpdbg embed fpm cgi cli/cli/g" debian/rules
-sed -i -r "s/\-\-fail\-missing//g" debian/rules
-sed -i -r "s/prepare\-fpm\-pools//g" debian/rules
+# sed -i -r "s/apache2 phpdbg embed fpm cgi cli/cli/g" debian/rules
+# sed -i -r "s/\-\-fail\-missing//g" debian/rules
+# sed -i -r "s/prepare\-fpm\-pools//g" debian/rules
 
-cp /tb2/build/dk-php-control $BASE/debian/control -Rfav
-cat $BASE/debian/control | grep --color=auto more
-# exit 0;
+# cp /tb2/build/dk-php-control $BASE/debian/control -Rfav
+# cat $BASE/debian/control | grep --color=auto more
+# # exit 0;
 
-rm -rf $BASE/debian/libapache2-* $BASE/debian/libphp* $BASE/debian/php-cgi*  $BASE/debian/php-fpm* \
- $BASE/debian/php-phpdbg* $BASE/debian/rules.d/prepare-fpm-pools.mk
+# rm -rf $BASE/debian/libapache2-* $BASE/debian/libphp* $BASE/debian/php-cgi*  $BASE/debian/php-fpm* \
+#  $BASE/debian/php-phpdbg* $BASE/debian/rules.d/prepare-fpm-pools.mk
 
 
 rm -rf $BASE/ext/http
