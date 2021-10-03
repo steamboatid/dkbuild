@@ -148,7 +148,7 @@ common_DESCRIPTION := documentation, examples and common
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext iconv pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
 redis memcached igbinary msgpack \
-gearman mcrypt uuid vips imagick apcu raphf
+gearman mcrypt uuid vips imagick apcu raphf http
 
 calendar_config = --enable-calendar=shared
 ctype_config = --enable-ctype=shared
@@ -194,17 +194,15 @@ uuid_config = --with-uuid=shared
 vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
+
 raphf_config = --enable-raphf=shared
+http_config = --with-http=shared
 
 export pdo_PRIORITY
 export common_EXTENSIONS
 export common_DESCRIPTION
 
 ">debian/rules.d/ext-common.mk
-
-
-echo \
-"">debian/rules.d/ext-httpraph.mk
 
 
 # sed -i -r "s/iconv\=shared/iconv/g" debian/rules.d/ext-common.mk
@@ -223,7 +221,7 @@ echo \
 #  $BASE/debian/php-phpdbg* $BASE/debian/rules.d/prepare-fpm-pools.mk
 
 
-rm -rf $BASE/ext/http
+# rm -rf $BASE/ext/http
 ./buildconf -f
 
 
