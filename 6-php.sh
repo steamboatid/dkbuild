@@ -136,6 +136,12 @@ printf "\n copy_extra_mods "
 copy_extra_mods
 
 
+# igbinary_config = --enable-igbinary=shared \
+# 	--enable-memcached-igbinary \
+# 	--enable-redis-igbinary
+
+
+
 echo \
 "ext_PACKAGES      += common
 common_DESCRIPTION := documentation, examples and common
@@ -163,10 +169,6 @@ sysvmsg_config = --enable-sysvmsg=shared
 sysvsem_config = --enable-sysvsem=shared
 sysvshm_config = --enable-sysvshm=shared
 tokenizer_config = --enable-tokenizer=shared
-
-igbinary_config = --enable-igbinary=shared \
-	--enable-memcached-igbinary \
-	--enable-redis-igbinary
 
 msgpack_config = --with-msgpack=shared \
 	--enable-redis-msgpack \
