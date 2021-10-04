@@ -170,7 +170,7 @@ fileinfo_config = --enable-fileinfo=shared
 ffi_config = --with-ffi=shared
 ftp_config = --enable-ftp=shared --with-openssl-dir=/usr
 gettext_config = --with-gettext=shared,/usr
-iconv_config = --with-iconv=shared
+iconv_config = --with-iconv=shared,/usr
 pdo_config = --enable-pdo=shared
 pdo_PRIORITY := 10
 phar_config = --enable-phar=shared
@@ -189,8 +189,8 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
-msgpack_config = --with-msgpack=shared
-raphf_config = --enable-raphf=shared
+msgpack_config = --with-msgpack=shared,/usr
+raphf_config = --enable-raphf=shared,/usr
 
 redis_config = --enable-redis=shared \
 	--enable-redis-zstd \
@@ -199,12 +199,12 @@ redis_config = --enable-redis=shared \
 	--enable-redis-lz4 \
 	--with-msgpack --enable-redis-msgpack
 
-memcached_config = --enable-memcached=shared \
+memcached_config = --enable-memcached=shared,/usr \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
 	--enable-memcached-json
 
-http_config = --with-http=shared --enable-raphf=shared --with-iconv=shared
+http_config = --with-http=shared,/usr --enable-raphf=shared,/usr --with-iconv=shared,/usr
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -284,9 +284,8 @@ fi
 
 # rm -rf $BASE/ext/http
 
-DKCONF="DK_CONFIG \:\= --with-iconv --enable-raphf \
---with-msgpack \
---enable-memcached-msgpack --enable-redis-msgpack \
+DKCONF="DK_CONFIG \:\= --with-iconv=shared,/usr --enable-raphf=shared,/usr \
+--with-msgpack=shared,/usr --enable-redis-msgpack \
 \n\n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF}\nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/\\$\(CONFIGURE_PCRE_JIT\)/\\$\(CONFIGURE_PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
