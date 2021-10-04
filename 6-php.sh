@@ -41,13 +41,13 @@ prepare_source() {
 	get_update_new_github "steamboatid/phpredis" "/root/org.src/git-redis"
 
 	# https://github.com/krakjoe/parallel
-	get_update_new_github "krakjoe/parallel" "/root/org.src/git-parallel"
+	# get_update_new_github "krakjoe/parallel" "/root/org.src/git-parallel"
 
 	# https://github.com/rosmanov/pecl-eio
-	get_update_new_github "rosmanov/pecl-eio" "/root/org.src/git-eio"
+	# get_update_new_github "rosmanov/pecl-eio" "/root/org.src/git-eio"
 
 	# https://bitbucket.org/osmanov/pecl-ev.git
-	get_update_new_bitbucket "osmanov/pecl-ev.git" "/root/org.src/git-ev"
+	# get_update_new_bitbucket "osmanov/pecl-ev.git" "/root/org.src/git-ev"
 
 
 	printf "\n-- rsync PHP CORE \n"
@@ -81,23 +81,23 @@ prepare_source() {
 	--delete --exclude '.git' \
 	/root/org.src/git-redis/ $BASE/ext/redis/
 
-	printf "\n-- rsync parallel \n"
-	mkdir -p $BASE/ext/parallel/
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	--delete --exclude '.git' \
-	/root/org.src/git-parallel/ $BASE/ext/parallel/
+	# printf "\n-- rsync parallel \n"
+	# mkdir -p $BASE/ext/parallel/
+	# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	# --delete --exclude '.git' \
+	# /root/org.src/git-parallel/ $BASE/ext/parallel/
 
-	printf "\n-- rsync eio \n"
-	mkdir -p $BASE/ext/eio/
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	--delete --exclude '.git' \
-	/root/org.src/git-eio/ $BASE/ext/eio/
+	# printf "\n-- rsync eio \n"
+	# mkdir -p $BASE/ext/eio/
+	# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	# --delete --exclude '.git' \
+	# /root/org.src/git-eio/ $BASE/ext/eio/
 
-	printf "\n-- rsync ev \n"
-	mkdir -p $BASE/ext/ev/
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	--delete --exclude '.git' \
-	/root/org.src/git-ev/ $BASE/ext/ev/
+	# printf "\n-- rsync ev \n"
+	# mkdir -p $BASE/ext/ev/
+	# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	# --delete --exclude '.git' \
+	# /root/org.src/git-ev/ $BASE/ext/ev/
 	# exit 0;
 
 
@@ -186,7 +186,6 @@ copy_extra_mods
 # 	--enable-memcached-session \
 # 	--enable-memcached-json
 
-# sockets_config = --enable-sockets=shared
 # iconv_config = --enable-iconv=shared
 
 
@@ -195,9 +194,9 @@ echo \
 common_DESCRIPTION := documentation, examples and common
 
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext pdo phar posix \
-shmop sysvmsg sysvsem sysvshm tokenizer \
+shmop sockets sysvmsg sysvsem sysvshm tokenizer \
 gearman mcrypt uuid vips imagick apcu \
-redis parallel ev eio
+redis
 
 calendar_config = --enable-calendar=shared
 ctype_config = --enable-ctype=shared
@@ -211,6 +210,7 @@ pdo_PRIORITY := 10
 phar_config = --enable-phar=shared
 posix_config = --enable-posix=shared
 shmop_config = --enable-shmop=shared
+sockets_config = --enable-sockets=shared
 sysvmsg_config = --enable-sysvmsg=shared
 sysvsem_config = --enable-sysvsem=shared
 sysvshm_config = --enable-sysvshm=shared
@@ -229,10 +229,6 @@ redis_config = --enable-redis=shared \
 	--with-liblzf=/usr \
 	--enable-redis-lz4 \
 	--with-msgpack --enable-redis-msgpack
-
-eio_config = --with-eio=shared --enable-eio-sockets --enable-sockets=shared
-ev_config = --with-ev=shared --enable-ev-libevent-api
-parallel_config = --enable-parallel=shared
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -317,7 +313,7 @@ sed -i -r "s/disable\-static/enable\-static/g" debian/rules
 DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
 --with-msgpack --enable-redis-msgpack --enable-memcached-msgpack \
 --enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json \
- \n\n"
+\n\n"
 
 printf "\n\n $DKCONF \n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
@@ -325,9 +321,9 @@ sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
 
 # export cli_config =
-DKCLICONF="--enable-zts"
+DKCLICONF="--enable-zts --enable-parallel=shared"
 sed -i -r "s/export cli_config \= /export cli_config = ${DKCLICONF} /g" debian/rules
-sed -i -r "s/export fpm_config \= /export fpm_config = ${DKCLICONF} /g" debian/rules
+# sed -i -r "s/export fpm_config \= /export fpm_config = ${DKCLICONF} /g" debian/rules
 
 
 # cat debian/rules;
