@@ -182,7 +182,7 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
-msgpack_config = --with-msgpack=shared \
+msgpack_config = --with-msgpack \
 	--enable-memcached-msgpack --enable-redis-msgpack
 
 redis_config = --enable-redis=shared \
@@ -197,7 +197,7 @@ memcached_config = --enable-memcached=shared \
 	--enable-memcached-json
 
 raphf_config = --enable-raphf=shared
-http_config = --with-http=shared
+http_config = --with-http=shared --enable-raphf --with-iconv
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -223,8 +223,16 @@ export common_DESCRIPTION
 # rm -rf $BASE/debian/libapache2-* $BASE/debian/libphp* $BASE/debian/php-cgi*  $BASE/debian/php-fpm* \
 #  $BASE/debian/php-phpdbg* $BASE/debian/rules.d/prepare-fpm-pools.mk
 
-
 # rm -rf $BASE/ext/http
+
+DKCONF="DK_CONFIG \:\= --with-iconv --enable-raphf \
+	--with-msgpack \
+	--enable-memcached-msgpack --enable-redis-msgpack \
+	\n\n"
+sed -i -r "s/^COMMON_CONFIG/${DKCONF}\nCOMMON_CONFIG/g" debian/rules
+sed -i -r "s/\$\(CONFIGURE_PCRE_JIT\)/\$\(CONFIGURE_PCRE_JIT\) \$\(DK_CONFIG\)/g" debian/rules
+cat debian/rules; exit 0;
+
 ./buildconf -f
 
 
