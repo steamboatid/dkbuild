@@ -30,7 +30,12 @@ prepare_source() {
 
 	get_update_new_git "php/pecl-networking-gearman" "/root/org.src/git-gearman"
 	get_update_new_git "m6w6/ext-http" "/root/org.src/git-http"
+
+	rm -rf /root/org.src/git-raph
 	get_update_new_git "m6w6/ext-raphf" "/root/org.src/git-raphf"
+	ls -sf /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
+	ls -sf /root/org.src/git-raphf/php_raphf_test.c /root/org.src/git-raphf/src/php_raphf_test.c
+
 	get_update_new_git "steamboatid/phpredis" "/root/org.src/git-redis"
 
 
@@ -53,6 +58,7 @@ prepare_source() {
 	/root/org.src/git-http/ $BASE/ext/http/
 
 	printf "\n-- rsync raphf \n"
+	rm -rf /root/org.src/git-raph
 	mkdir -p $BASE/ext/raphf/
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \
@@ -233,6 +239,11 @@ sed -i -r "s/^COMMON_CONFIG/${DKCONF}\nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/\\$\(CONFIGURE_PCRE_JIT\)/\\$\(CONFIGURE_PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
 # cat debian/rules; cat debian/rules | grep CONFIGURE_PCRE_JIT; exit 0;
+
+#--- fix raphf bug
+ls -sf $BASE/ext/raphf/php_raphf.h $BASE/ext/raphf/src/php_raphf.h
+ls -sf $BASE/ext/raphf/php_raphf_test.c $BASE/ext/raphf/src/php_raphf_test.c
+
 
 ./buildconf -f
 
