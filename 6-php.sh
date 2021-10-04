@@ -197,7 +197,7 @@ common_DESCRIPTION := documentation, examples and common
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext pdo phar posix \
 shmop sysvmsg sysvsem sysvshm tokenizer \
 gearman mcrypt uuid vips imagick apcu \
-redis memcached
+redis parallel ev eio
 
 calendar_config = --enable-calendar=shared
 ctype_config = --enable-ctype=shared
@@ -229,6 +229,10 @@ redis_config = --enable-redis=shared \
 	--with-liblzf=/usr \
 	--enable-redis-lz4 \
 	--with-msgpack --enable-redis-msgpack
+
+eio_config = --with-eio=shared --enable-eio-sockets --enable-sockets=shared
+ev_config = --with-ev=shared --enable-ev-libevent-api
+parallel_config = --enable-parallel=shared
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -310,12 +314,10 @@ sed -i -r "s/disable\-static/enable\-static/g" debian/rules
 
 # --enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json
 
-DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv --enable-sockets \
+DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
 --with-msgpack --enable-redis-msgpack --enable-memcached-msgpack \
 --enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json \
---with-eio --enable-eio-sockets \
---with-ev --enable-ev-libevent-api \
---enable-parallel \n\n"
+ \n\n"
 
 printf "\n\n $DKCONF \n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
