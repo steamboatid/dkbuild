@@ -267,7 +267,7 @@ export common_DESCRIPTION
 sed -i -r "s/\-\-fail\-missing//g" debian/rules
 # sed -i -r "s/prepare\-fpm\-pools//g" debian/rules
 sed -i -r "s/disable\-static/enable\-static/g" debian/rules
-sed -i -r "s/make -f/make -f -B -i -k/" debian/rules
+# sed -i -r "s/make -f/make -f -B -i -k/" debian/rules
 
 # cp /tb2/build/dk-php-control $BASE/debian/control -Rfav
 # cat $BASE/debian/control | grep --color=auto more
