@@ -28,17 +28,26 @@ cd $BASE
 
 prepare_source() {
 
-	get_update_new_git "php/pecl-networking-gearman" "/root/org.src/git-gearman"
-	get_update_new_git "m6w6/ext-http" "/root/org.src/git-http"
+	get_update_new_github "php/pecl-networking-gearman" "/root/org.src/git-gearman"
+	get_update_new_github "m6w6/ext-http" "/root/org.src/git-http"
 
 	rm -rf /root/org.src/git-raph
-	get_update_new_git "m6w6/ext-raphf" "/root/org.src/git-raphf"
+	get_update_new_github "m6w6/ext-raphf" "/root/org.src/git-raphf"
 	ln -sf /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
 	ln -sf /root/org.src/git-raphf/src/php_raphf_api.c /root/org.src/git-raphf/php_raphf_api.c
 	ln -sf /root/org.src/git-raphf/src/php_raphf_api.h /root/org.src/git-raphf/php_raphf_api.h
 	rm -rf /root/org.src/git-raphf/src/php_raphf_test.c
 
-	get_update_new_git "steamboatid/phpredis" "/root/org.src/git-redis"
+	get_update_new_github "steamboatid/phpredis" "/root/org.src/git-redis"
+
+	# https://github.com/krakjoe/parallel
+	get_update_new_github "krakjoe/parallel" "/root/org.src/git-parallel"
+
+	# https://github.com/rosmanov/pecl-eio
+	get_update_new_github "rosmanov/eio" "/root/org.src/git-eio"
+
+	# https://bitbucket.org/osmanov/pecl-ev.git
+	get_update_new_bitbucket "osmanov/pecl-ev.git" "/root/org.src/git-ev"
 
 
 	printf "\n-- rsync PHP CORE \n"
@@ -71,6 +80,24 @@ prepare_source() {
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \
 	/root/org.src/git-redis/ $BASE/ext/redis/
+
+	printf "\n-- rsync parallel \n"
+	mkdir -p $BASE/ext/parallel/
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	--delete --exclude '.git' \
+	/root/org.src/git-parallel/ $BASE/ext/parallel/
+
+	printf "\n-- rsync eio \n"
+	mkdir -p $BASE/ext/eio/
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	--delete --exclude '.git' \
+	/root/org.src/git-eio/ $BASE/ext/eio/
+
+	printf "\n-- rsync ev \n"
+	mkdir -p $BASE/ext/ev/
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	--delete --exclude '.git' \
+	/root/org.src/git-ev/ $BASE/ext/ev/
 	# exit 0;
 
 
@@ -159,13 +186,16 @@ copy_extra_mods
 # 	--enable-memcached-session \
 # 	--enable-memcached-json
 
+# sockets_config = --enable-sockets=shared
+# iconv_config = --enable-iconv=shared
+
 
 echo \
 "ext_PACKAGES      += common
 common_DESCRIPTION := documentation, examples and common
 
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext pdo phar posix \
-shmop sockets sysvmsg sysvsem sysvshm tokenizer \
+shmop sysvmsg sysvsem sysvshm tokenizer \
 gearman mcrypt uuid vips imagick apcu \
 redis memcached
 
@@ -181,7 +211,6 @@ pdo_PRIORITY := 10
 phar_config = --enable-phar=shared
 posix_config = --enable-posix=shared
 shmop_config = --enable-shmop=shared
-sockets_config = --enable-sockets=shared
 sysvmsg_config = --enable-sysvmsg=shared
 sysvsem_config = --enable-sysvsem=shared
 sysvshm_config = --enable-sysvshm=shared
@@ -281,16 +310,25 @@ sed -i -r "s/disable\-static/enable\-static/g" debian/rules
 
 # --enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json
 
-DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
+DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv --enable-sockets \
 --with-msgpack --enable-redis-msgpack --enable-memcached-msgpack \
---enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json \n\n"
-
+--enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json \
+--with-eio --enable-eio-sockets \
+--with-ev --enable-ev-libevent-api \
+--enable-parallel \n\n"
 
 printf "\n\n $DKCONF \n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
-# cat debian/rules; 
+
+# export cli_config =
+DKCLICONF="--enable-zts"
+sed -i -r "s/export cli_config \= /export cli_config = ${DKCLICONF} /g" debian/rules
+sed -i -r "s/export fpm_config \= /export fpm_config = ${DKCLICONF} /g" debian/rules
+
+
+# cat debian/rules;
 # cat debian/rules | grep "PCRE_JIT) "; exit 0;
 
 #--- fix raphf bug

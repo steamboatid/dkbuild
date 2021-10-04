@@ -299,8 +299,8 @@ update_existing_git() {
 	printf "\n\n"
 }
 
-# get_update_new_git $url $dst_dir $branch
-get_update_new_git(){
+# get_update_new_github $url $dst_dir $branch
+get_update_new_github(){
 	URL=$1
 	DST=$2
 	BRA=$3
@@ -311,6 +311,36 @@ get_update_new_git(){
 		git clone https://github.com/${URL} $OPS $DST
 	else
 		FURL="https://github.com/${URL}"
+		update_existing_git $DST $URL $FURL $BRA
+	fi
+}
+
+get_update_new_gitlab(){
+	URL=$1
+	DST=$2
+	BRA=$3
+
+	if [ ! -d ${DST} ]; then
+		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
+		printf "\n---new clone to: $DST \n---from: https://gitlab.com/${URL} $OPS $DST \n"
+		git clone https://gitlab.com/${URL} $OPS $DST
+	else
+		FURL="https://gitlab.com/${URL}"
+		update_existing_git $DST $URL $FURL $BRA
+	fi
+}
+
+get_update_new_bitbucket(){
+	URL=$1
+	DST=$2
+	BRA=$3
+
+	if [ ! -d ${DST} ]; then
+		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
+		printf "\n---new clone to: $DST \n---from: https://bitbucket.org/${URL} $OPS $DST \n"
+		git clone https://bitbucket.org/${URL} $OPS $DST
+	else
+		FURL="https://bitbucket.org/${URL}"
 		update_existing_git $DST $URL $FURL $BRA
 	fi
 }

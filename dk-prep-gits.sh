@@ -17,21 +17,21 @@ export TODATE=$(date +%Y%m%d)
 source /tb2/build/dk-build-0libs.sh
 
 
-get_update_new_git "steamboatid/nginx" "/root/org.src/nginx/git-nginx"
-get_update_new_git "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache"
-get_update_new_git "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core"
+get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"
+get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache"
+get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core"
 
-get_update_new_git "steamboatid/phpredis" "/root/org.src/php8/git-phpredis"
-get_update_new_git "steamboatid/keydb" "/root/org.src/keydb/git-keydb"
-get_update_new_git "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"
-get_update_new_git "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
-get_update_new_git "steamboatid/db4" "/root/org.src/db4/git-db4"
+get_update_new_github "steamboatid/phpredis" "/root/org.src/php8/git-phpredis"
+get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"
+get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"
+get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
+get_update_new_github "steamboatid/db4" "/root/org.src/db4/git-db4"
 
 
-get_update_new_git "php/pecl-networking-gearman" "/root/org.src/git-gearman"
-get_update_new_git "m6w6/ext-http" "/root/org.src/git-http"
+get_update_new_github "php/pecl-networking-gearman" "/root/org.src/git-gearman"
+get_update_new_github "m6w6/ext-http" "/root/org.src/git-http"
 rm -rf /root/org.src/git-raph
-get_update_new_git "m6w6/ext-raphf" "/root/org.src/git-raphf"
+get_update_new_github "m6w6/ext-raphf" "/root/org.src/git-raphf"
 
 #--- sync to src
 #-------------------------------------------
