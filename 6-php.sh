@@ -189,19 +189,21 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
-msgpack_config = --with-msgpack \
+msgpack_config = --with-msgpack=shared \
 	--enable-memcached-msgpack --enable-redis-msgpack
 
 redis_config = --enable-redis=shared \
 	--enable-redis-zstd \
 	--with-liblz4=/usr \
 	--with-liblzf=/usr \
-	--enable-redis-lz4
+	--enable-redis-lz4 \
+	--with-msgpack --enable-redis-msgpack
 
 memcached_config = --enable-memcached=shared \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
-	--enable-memcached-json
+	--enable-memcached-json \
+	--with-msgpack --enable-memcached-msgpack
 
 raphf_config = --enable-raphf=shared
 http_config = --with-http=shared --enable-raphf --with-iconv
