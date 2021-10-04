@@ -232,9 +232,7 @@ DKCONF="DK_CONFIG \:\= --with-iconv --enable-raphf \
 sed -i -r "s/^COMMON_CONFIG/${DKCONF}\nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/\\$\(CONFIGURE_PCRE_JIT\)/\\$\(CONFIGURE_PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
-cat debian/rules
-cat debian/rules | grep CONFIGURE_PCRE_JIT
-exit 0;
+# cat debian/rules; cat debian/rules | grep CONFIGURE_PCRE_JIT; exit 0;
 
 ./buildconf -f
 
