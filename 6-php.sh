@@ -189,8 +189,8 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
-msgpack_config = --with-msgpack=shared,/usr
-raphf_config = --enable-raphf=shared,/usr
+msgpack_config = --with-msgpack=shared
+raphf_config = --enable-raphf=shared
 
 redis_config = --enable-redis=shared \
 	--enable-redis-zstd \
@@ -199,12 +199,12 @@ redis_config = --enable-redis=shared \
 	--enable-redis-lz4 \
 	--with-msgpack --enable-redis-msgpack
 
-memcached_config = --enable-memcached=shared,/usr \
+memcached_config = --enable-memcached=shared \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
 	--enable-memcached-json
 
-http_config = --with-http=shared,/usr --enable-raphf=shared,/usr --with-iconv=shared,/usr
+http_config = --with-http=shared --enable-raphf=shared --with-iconv=shared
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -284,8 +284,8 @@ fi
 
 # rm -rf $BASE/ext/http
 
-DKCONF="DK_CONFIG \:\= --with-iconv=shared,\/usr --enable-raphf=shared,\/usr \
---with-msgpack=shared,\/usr --enable-redis-msgpack \n\n"
+DKCONF="DK_CONFIG \:\= --with-iconv=shared --enable-raphf=shared \
+--with-msgpack=shared --enable-redis-msgpack \n\n"
 
 printf "\n\n $DKCONF \n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
