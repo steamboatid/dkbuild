@@ -34,7 +34,8 @@ prepare_source() {
 	rm -rf /root/org.src/git-raph
 	get_update_new_git "m6w6/ext-raphf" "/root/org.src/git-raphf"
 	ln -sf /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
-	# ln -sf /root/org.src/git-raphf/php_raphf_test.c /root/org.src/git-raphf/src/php_raphf_test.c
+	ln -sf /root/org.src/git-raphf/src/php_raphf_api.c /root/org.src/git-raphf/php_raphf_api.c
+	ln -sf /root/org.src/git-raphf/src/php_raphf_api.h /root/org.src/git-raphf/php_raphf_api.h
 	rm -rf /root/org.src/git-raphf/src/php_raphf_test.c
 
 	get_update_new_git "steamboatid/phpredis" "/root/org.src/git-redis"
