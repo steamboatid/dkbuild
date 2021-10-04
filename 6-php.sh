@@ -189,8 +189,8 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
-msgpack_config = --with-msgpack=shared \
-	--enable-memcached-msgpack --enable-redis-msgpack
+msgpack_config = --with-msgpack=shared
+raphf_config = --enable-raphf=shared
 
 redis_config = --enable-redis=shared \
 	--enable-redis-zstd \
@@ -205,7 +205,6 @@ memcached_config = --enable-memcached=shared \
 	--enable-memcached-json \
 	--with-msgpack --enable-memcached-msgpack
 
-raphf_config = --enable-raphf=shared
 http_config = --with-http=shared --enable-raphf --with-iconv
 
 export pdo_PRIORITY
@@ -213,6 +212,57 @@ export common_EXTENSIONS
 export common_DESCRIPTION
 
 ">debian/rules.d/ext-common.mk
+
+
+echo \
+"ext_PACKAGES   += allmods
+allmods_DESCRIPTION := all modules for PHP
+allmods_EXTENSIONS  := allmods
+allmods_config = --with-gearman \
+	--with-mcrypt \
+	--with-uuid \
+	--with-vips \
+	--with-imagick \
+	--enable-apcu \
+\
+	--with-msgpack \
+	--enable-raphf \
+	--with-iconv \
+\
+	--enable-redis \
+	--enable-redis-zstd \
+	--with-liblz4=/usr \
+	--with-liblzf=/usr \
+	--enable-redis-lz4 \
+	--enable-redis-msgpack \
+\
+	--enable-memcached \
+	--with-libmemcached-dir \
+	--enable-memcached-session \
+	--enable-memcached-json \
+	--enable-memcached-msgpack \
+\
+	--with-http
+
+export allmods_EXTENSIONS
+export allmods_DESCRIPTION
+">debian/rules.d/ext-allmods.mk
+
+
+if [[ $(grep "allmods" debian/control | wc -l) -lt 1 ]]; then
+	echo \
+"Package: php8.0-allmods
+Architecture: any
+Depends: ucf,
+         ${misc:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Built-Using: ${php:Built-Using}
+Description: All modules for PHP
+ This package provides the all modules for PHP.
+">>debian/control
+fi
 
 
 # sed -i -r "s/iconv\=shared/iconv/g" debian/rules.d/ext-common.mk
@@ -248,6 +298,10 @@ ln -sf $BASE/ext/raphf/php_raphf.h $BASE/ext/raphf/src/php_raphf.h
 # ln -sf $BASE/ext/raphf/php_raphf_test.c $BASE/ext/raphf/src/php_raphf_test.c
 rm -rf $BASE/ext/raphf/src/php_raphf_test.c
 # ls -la $BASE/ext/raphf/src; exit 0;
+
+touch debian/php-cgi.NEWS
+touch debian/php-fpm.NEWS
+touch debian/libapache2-mod-php.NEWS
 
 
 ./buildconf -f
@@ -305,4 +359,5 @@ else
 	make
 
 	cd ..; tail -n30 dkbuild.log
+	cat dkbuild.log | grep -i "cannot "
 fi
