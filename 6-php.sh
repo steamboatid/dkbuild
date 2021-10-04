@@ -196,7 +196,7 @@ redis_config = --enable-redis=shared \
 	--with-msgpack --enable-redis-msgpack
 
 memcached_config = --enable-memcached=shared \
-	--with-libmemcached-dir \
+	--with-libmemcached-dir=/usr \
 	--enable-memcached-session \
 	--enable-memcached-json
 
@@ -264,10 +264,10 @@ export common_DESCRIPTION
 
 
 # sed -i -r "s/apache2 phpdbg embed fpm cgi cli/cli/g" debian/rules
-# sed -i -r "s/\-\-fail\-missing//g" debian/rules
+sed -i -r "s/\-\-fail\-missing//g" debian/rules
 # sed -i -r "s/prepare\-fpm\-pools//g" debian/rules
-# sed -i -r "s/disable\-static/enable\-static/g" debian/rules
-# sed -i -r "s/make -f/make -f -B -i -k/" debian/rules
+sed -i -r "s/disable\-static/enable\-static/g" debian/rules
+sed -i -r "s/make -f/make -f -B -i -k/" debian/rules
 
 # cp /tb2/build/dk-php-control $BASE/debian/control -Rfav
 # cat $BASE/debian/control | grep --color=auto more
