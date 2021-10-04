@@ -226,12 +226,15 @@ export common_DESCRIPTION
 # rm -rf $BASE/ext/http
 
 DKCONF="DK_CONFIG \:\= --with-iconv --enable-raphf \
-	--with-msgpack \
-	--enable-memcached-msgpack --enable-redis-msgpack \
-	\n\n"
+--with-msgpack \
+--enable-memcached-msgpack --enable-redis-msgpack \
+\n\n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF}\nCOMMON_CONFIG/g" debian/rules
-sed -i -r "s/\$\(CONFIGURE_PCRE_JIT\)/\$\(CONFIGURE_PCRE_JIT\) \$\(DK_CONFIG\)/g" debian/rules
-cat debian/rules; exit 0;
+sed -i -r "s/\\$\(CONFIGURE_PCRE_JIT\)/\\$\(CONFIGURE_PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
+
+cat debian/rules
+cat debian/rules | grep CONFIGURE_PCRE_JIT
+exit 0;
 
 ./buildconf -f
 
