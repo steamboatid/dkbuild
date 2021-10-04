@@ -160,7 +160,7 @@ common_DESCRIPTION := documentation, examples and common
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
 gearman mcrypt uuid vips imagick apcu \
-redis memcached http
+redis memcached
 
 calendar_config = --enable-calendar=shared
 ctype_config = --enable-ctype=shared
@@ -198,8 +198,6 @@ memcached_config = --enable-memcached=shared \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
 	--enable-memcached-json
-
-http_config = --with-http --enable-raphf --with-iconv
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -279,7 +277,7 @@ export common_DESCRIPTION
 
 # rm -rf $BASE/ext/http
 
-DKCONF="DK_CONFIG \:\= --with-iconv --enable-raphf \
+DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
 --with-msgpack --enable-redis-msgpack --enable-memcached-msgpack \n\n"
 
 printf "\n\n $DKCONF \n"
