@@ -157,10 +157,9 @@ echo \
 "ext_PACKAGES      += common
 common_DESCRIPTION := documentation, examples and common
 
-common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext iconv pdo phar posix \
+common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
 gearman mcrypt uuid vips imagick apcu \
-msgpack raphf \
 redis memcached http
 
 calendar_config = --enable-calendar=shared
@@ -170,7 +169,6 @@ fileinfo_config = --enable-fileinfo=shared
 ffi_config = --with-ffi=shared
 ftp_config = --enable-ftp=shared --with-openssl-dir=/usr
 gettext_config = --with-gettext=shared,/usr
-iconv_config = --with-iconv=shared,/usr
 pdo_config = --enable-pdo=shared
 pdo_PRIORITY := 10
 phar_config = --enable-phar=shared
@@ -189,9 +187,6 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
-msgpack_config = --with-msgpack=shared
-raphf_config = --enable-raphf=shared
-
 redis_config = --enable-redis=shared \
 	--enable-redis-zstd \
 	--with-liblz4=/usr \
@@ -202,9 +197,10 @@ redis_config = --enable-redis=shared \
 memcached_config = --enable-memcached=shared \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
-	--enable-memcached-json
+	--enable-memcached-json \
+	--with-msgpack --enable-memcached-msgpack
 
-http_config = --with-http=shared --enable-raphf=shared --with-iconv=shared
+http_config = --with-http=shared --enable-raphf --with-iconv
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -213,56 +209,56 @@ export common_DESCRIPTION
 ">debian/rules.d/ext-common.mk
 
 
-echo \
-"ext_PACKAGES   += allmods
-allmods_DESCRIPTION := all modules for PHP
-allmods_EXTENSIONS  := allmods
-allmods_config = --with-gearman=shared \
-	--with-mcrypt=shared \
-	--with-uuid=shared \
-	--with-vips=shared \
-	--with-imagick=shared \
-	--enable-apcu=shared \
-\
-	--with-msgpack=shared \
-	--enable-raphf=shared \
-	--with-iconv=shared \
-\
-	--enable-redis=shared \
-	--enable-redis-zstd \
-	--with-liblz4=/usr \
-	--with-liblzf=/usr \
-	--enable-redis-lz4 \
-	--enable-redis-msgpack \
-\
-	--enable-memcached=shared \
-	--with-libmemcached-dir \
-	--enable-memcached-session \
-	--enable-memcached-json
-\
-	--with-http=shared
+# echo \
+# "ext_PACKAGES   += allmods
+# allmods_DESCRIPTION := all modules for PHP
+# allmods_EXTENSIONS  := allmods
+# allmods_config = --with-gearman=shared \
+# 	--with-mcrypt=shared \
+# 	--with-uuid=shared \
+# 	--with-vips=shared \
+# 	--with-imagick=shared \
+# 	--enable-apcu=shared \
+# \
+# 	--with-msgpack=shared \
+# 	--enable-raphf=shared \
+# 	--with-iconv=shared \
+# \
+# 	--enable-redis=shared \
+# 	--enable-redis-zstd \
+# 	--with-liblz4=/usr \
+# 	--with-liblzf=/usr \
+# 	--enable-redis-lz4 \
+# 	--enable-redis-msgpack \
+# \
+# 	--enable-memcached=shared \
+# 	--with-libmemcached-dir \
+# 	--enable-memcached-session \
+# 	--enable-memcached-json
+# \
+# 	--with-http=shared
 
-export allmods_EXTENSIONS
-export allmods_DESCRIPTION
-">debian/rules.d/ext-allmods.mk
+# export allmods_EXTENSIONS
+# export allmods_DESCRIPTION
+# ">debian/rules.d/ext-allmods.mk
 
 
-if [[ $(grep "allmods" debian/control | wc -l) -lt 1 ]]; then
-	echo \
-"
+# if [[ $(grep "allmods" debian/control | wc -l) -lt 1 ]]; then
+# 	echo \
+# "
 
-Package: php8.0-allmods
-Architecture: any
-Depends: ucf,
-         \${misc:Depends},
-         \${php:Depends},
-         \${shlibs:Depends}
-Pre-Depends: \${misc:Pre-Depends}
-Built-Using: \${php:Built-Using}
-Description: All modules for PHP
- This package provides the all modules for PHP.
-">>debian/control
-fi
+# Package: php8.0-allmods
+# Architecture: any
+# Depends: ucf,
+#          \${misc:Depends},
+#          \${php:Depends},
+#          \${shlibs:Depends}
+# Pre-Depends: \${misc:Pre-Depends}
+# Built-Using: \${php:Built-Using}
+# Description: All modules for PHP
+#  This package provides the all modules for PHP.
+# ">>debian/control
+# fi
 
 
 # sed -i -r "s/iconv\=shared/iconv/g" debian/rules.d/ext-common.mk
@@ -296,7 +292,6 @@ sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
 #--- fix raphf bug
 ln -sf $BASE/ext/raphf/php_raphf.h $BASE/ext/raphf/src/php_raphf.h
-# ln -sf $BASE/ext/raphf/php_raphf_test.c $BASE/ext/raphf/src/php_raphf_test.c
 rm -rf $BASE/ext/raphf/src/php_raphf_test.c
 # ls -la $BASE/ext/raphf/src; exit 0;
 
