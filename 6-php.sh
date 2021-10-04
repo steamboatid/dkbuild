@@ -44,7 +44,7 @@ prepare_source() {
 	get_update_new_github "krakjoe/parallel" "/root/org.src/git-parallel"
 
 	# https://github.com/rosmanov/pecl-eio
-	get_update_new_github "rosmanov/eio" "/root/org.src/git-eio"
+	get_update_new_github "rosmanov/pecl-eio" "/root/org.src/git-eio"
 
 	# https://bitbucket.org/osmanov/pecl-ev.git
 	get_update_new_bitbucket "osmanov/pecl-ev.git" "/root/org.src/git-ev"
