@@ -202,10 +202,9 @@ redis_config = --enable-redis=shared \
 memcached_config = --enable-memcached=shared \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
-	--enable-memcached-json \
-	--with-msgpack --enable-memcached-msgpack
+	--enable-memcached-json
 
-http_config = --with-http=shared --enable-raphf --with-iconv
+http_config = --with-http=shared --enable-raphf=shared --with-iconv=shared
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -218,31 +217,30 @@ echo \
 "ext_PACKAGES   += allmods
 allmods_DESCRIPTION := all modules for PHP
 allmods_EXTENSIONS  := allmods
-allmods_config = --with-gearman \
-	--with-mcrypt \
-	--with-uuid \
-	--with-vips \
-	--with-imagick \
-	--enable-apcu \
+allmods_config = --with-gearman=shared \
+	--with-mcrypt=shared \
+	--with-uuid=shared \
+	--with-vips=shared \
+	--with-imagick=shared \
+	--enable-apcu=shared \
 \
-	--with-msgpack \
-	--enable-raphf \
-	--with-iconv \
+	--with-msgpack=shared \
+	--enable-raphf=shared \
+	--with-iconv=shared \
 \
-	--enable-redis \
+	--enable-redis=shared \
 	--enable-redis-zstd \
 	--with-liblz4=/usr \
 	--with-liblzf=/usr \
 	--enable-redis-lz4 \
 	--enable-redis-msgpack \
 \
-	--enable-memcached \
+	--enable-memcached=shared \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
-	--enable-memcached-json \
-	--enable-memcached-msgpack \
+	--enable-memcached-json
 \
-	--with-http
+	--with-http=shared
 
 export allmods_EXTENSIONS
 export allmods_DESCRIPTION
