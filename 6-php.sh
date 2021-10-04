@@ -251,7 +251,9 @@ export allmods_DESCRIPTION
 
 if [[ $(grep "allmods" debian/control | wc -l) -lt 1 ]]; then
 	echo \
-"Package: php8.0-allmods
+"
+
+Package: php8.0-allmods
 Architecture: any
 Depends: ucf,
          \${misc:Depends},
