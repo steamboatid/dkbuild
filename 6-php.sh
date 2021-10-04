@@ -243,6 +243,7 @@ sed -i -r "s/\\$\(CONFIGURE_PCRE_JIT\)/\\$\(CONFIGURE_PCRE_JIT\) \\$\(DK_CONFIG\
 #--- fix raphf bug
 ls -sf $BASE/ext/raphf/php_raphf.h $BASE/ext/raphf/src/php_raphf.h
 ls -sf $BASE/ext/raphf/php_raphf_test.c $BASE/ext/raphf/src/php_raphf_test.c
+ls -la $BASE/ext/raphf/src; exit 0;
 
 
 ./buildconf -f
