@@ -289,6 +289,8 @@ sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
 #--- fix raphf bug
 ln -sf $BASE/ext/raphf/php_raphf.h $BASE/ext/raphf/src/php_raphf.h
+ln -sf $BASE/ext/raphf/src/php_raphf_api.c $BASE/ext/raphf/php_raphf_api.c
+ln -sf $BASE/ext/raphf/src/php_raphf_api.h $BASE/ext/raphf/php_raphf_api.h
 rm -rf $BASE/ext/raphf/src/php_raphf_test.c
 # ls -la $BASE/ext/raphf/src; exit 0;
 
