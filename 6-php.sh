@@ -284,8 +284,8 @@ fi
 
 # rm -rf $BASE/ext/http
 
-DKCONF="DK_CONFIG \:\= --with-iconv=shared,/usr --enable-raphf=shared,/usr \
---with-msgpack=shared,/usr --enable-redis-msgpack \
+DKCONF="DK_CONFIG \:\= --with-iconv=shared,/usr --enable-raphf=shared,\/usr \
+--with-msgpack=shared,\/usr --enable-redis-msgpack \
 \n\n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 # sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
