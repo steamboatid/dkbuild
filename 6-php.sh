@@ -197,10 +197,9 @@ redis_config = --enable-redis=shared \
 memcached_config = --enable-memcached=shared \
 	--with-libmemcached-dir \
 	--enable-memcached-session \
-	--enable-memcached-json \
-	--with-msgpack --enable-memcached-msgpack
+	--enable-memcached-json
 
-http_config = --with-http=shared --enable-raphf --with-iconv
+http_config = --with-http --enable-raphf --with-iconv
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -280,8 +279,8 @@ export common_DESCRIPTION
 
 # rm -rf $BASE/ext/http
 
-DKCONF="DK_CONFIG \:\= --with-iconv=shared --enable-raphf=shared \
---with-msgpack=shared --enable-redis-msgpack \n\n"
+DKCONF="DK_CONFIG \:\= --with-iconv --enable-raphf \
+--with-msgpack --enable-redis-msgpack --enable-memcached-msgpack \n\n"
 
 printf "\n\n $DKCONF \n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
