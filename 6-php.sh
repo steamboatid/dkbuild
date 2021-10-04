@@ -154,6 +154,12 @@ copy_extra_mods
 #	--with-msgpack --enable-memcached-msgpack
 
 
+# memcached_config = --enable-memcached=shared \
+# 	--with-libmemcached-dir=/usr \
+# 	--enable-memcached-session \
+# 	--enable-memcached-json
+
+
 echo \
 "ext_PACKAGES      += common
 common_DESCRIPTION := documentation, examples and common
@@ -194,11 +200,6 @@ redis_config = --enable-redis=shared \
 	--with-liblzf=/usr \
 	--enable-redis-lz4 \
 	--with-msgpack --enable-redis-msgpack
-
-memcached_config = --enable-memcached=shared \
-	--with-libmemcached-dir=/usr \
-	--enable-memcached-session \
-	--enable-memcached-json
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -278,8 +279,12 @@ sed -i -r "s/disable\-static/enable\-static/g" debian/rules
 
 # rm -rf $BASE/ext/http
 
+# --enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json
+
 DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
---with-msgpack --enable-redis-msgpack --enable-memcached-msgpack \n\n"
+--with-msgpack --enable-redis-msgpack --enable-memcached-msgpack \
+--enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json \n\n"
+
 
 printf "\n\n $DKCONF \n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
