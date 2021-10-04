@@ -33,8 +33,8 @@ prepare_source() {
 
 	rm -rf /root/org.src/git-raph
 	get_update_new_git "m6w6/ext-raphf" "/root/org.src/git-raphf"
-	ls -sf /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
-	ls -sf /root/org.src/git-raphf/php_raphf_test.c /root/org.src/git-raphf/src/php_raphf_test.c
+	ln -sf /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
+	ln -sf /root/org.src/git-raphf/php_raphf_test.c /root/org.src/git-raphf/src/php_raphf_test.c
 
 	get_update_new_git "steamboatid/phpredis" "/root/org.src/git-redis"
 
@@ -241,8 +241,8 @@ sed -i -r "s/\\$\(CONFIGURE_PCRE_JIT\)/\\$\(CONFIGURE_PCRE_JIT\) \\$\(DK_CONFIG\
 # cat debian/rules; cat debian/rules | grep CONFIGURE_PCRE_JIT; exit 0;
 
 #--- fix raphf bug
-ls -sf $BASE/ext/raphf/php_raphf.h $BASE/ext/raphf/src/php_raphf.h
-ls -sf $BASE/ext/raphf/php_raphf_test.c $BASE/ext/raphf/src/php_raphf_test.c
+ln -sf $BASE/ext/raphf/php_raphf.h $BASE/ext/raphf/src/php_raphf.h
+ln -sf $BASE/ext/raphf/php_raphf_test.c $BASE/ext/raphf/src/php_raphf_test.c
 ls -la $BASE/ext/raphf/src; exit 0;
 
 
