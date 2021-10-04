@@ -254,11 +254,11 @@ if [[ $(grep "allmods" debian/control | wc -l) -lt 1 ]]; then
 "Package: php8.0-allmods
 Architecture: any
 Depends: ucf,
-         ${misc:Depends},
-         ${php:Depends},
-         ${shlibs:Depends}
-Pre-Depends: ${misc:Pre-Depends}
-Built-Using: ${php:Built-Using}
+         \${misc:Depends},
+         \${php:Depends},
+         \${shlibs:Depends}
+Pre-Depends: \${misc:Pre-Depends}
+Built-Using: \${php:Built-Using}
 Description: All modules for PHP
  This package provides the all modules for PHP.
 ">>debian/control
