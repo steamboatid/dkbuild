@@ -174,7 +174,7 @@ common_DESCRIPTION := documentation, examples and common
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
 gearman mcrypt uuid vips imagick apcu \
-msgpack redis memcached http
+msgpack redis memcached iconv raphf http
 
 calendar_config = --enable-calendar=shared
 ctype_config = --enable-ctype=shared
@@ -202,12 +202,14 @@ imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
 msgpack_config = --with-msgpack=shared --enable-redis-msgpack
+
 iconv_config = --with-iconv=shared
 raphf_config = --enable-raphf=shared
 
 http_config = --with-http=shared \
 	--enable-raphf=shared \
-	--with-iconv=shared
+	--with-iconv=shared \
+	--without-http-shared-deps
 
 memcached_config = --enable-memcached=shared \
 	--with-libmemcached-dir=/usr \
