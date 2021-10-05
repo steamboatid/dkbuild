@@ -311,8 +311,8 @@ export common_DESCRIPTION
 # --enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json
 # --enable-memcached-msgpack
 
-DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
---with-msgpack --enable-redis-msgpack \
+DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \\\n \
+--with-msgpack --enable-redis-msgpack \\\n \
 --enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
 \n\n"
 
@@ -324,7 +324,7 @@ DKSHLIBDEPS="override_dh_shlibdeps\: \n\
 	dh_shlibdeps --warnings=0 --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 \n\n"
 sed -i -r "s/\.PHONY/${DKSHLIBDEPS} \n\.PHONY/g" debian/rules
 
-cat debian/rules | grep "DKCONF"
+cat debian/rules | grep "DK_CONF"
 tail -n10 debian/rules; exit 0;
 
 
