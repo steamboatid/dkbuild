@@ -415,9 +415,12 @@ isok=$(tail -n100 dkbuild.log | grep -i "binary\-only" | wc -l)
 if [[ $isok -gt 0 ]]; then
 	exit 0;
 else
-	cd ext-build
-	make
+	if [ -d ext-build ]; then
+		cd ext-build
+		make
+		cd ..
+	fi
 
-	cd ..; tail -n30 dkbuild.log
+	tail -n30 dkbuild.log
 	cat dkbuild.log | grep -i "cannot "
 fi
