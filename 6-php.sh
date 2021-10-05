@@ -337,7 +337,7 @@ if [[ $(grep "override_dh_auto_build\:" debian/rules | wc -l) -lt 1 ]]; then
 fi
 
 # cat debian/rules | grep "DK_CONF"
-tail -n10 debian/rules; exit 0;
+# tail -n10 debian/rules; exit 0;
 
 
 # DKCLICONF="--enable-zts --enable-parallel=shared"
