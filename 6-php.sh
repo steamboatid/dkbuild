@@ -28,17 +28,17 @@ cd $BASE
 
 prepare_source() {
 
-	get_update_new_github "php/pecl-networking-gearman" "/root/org.src/git-gearman"
-	get_update_new_github "m6w6/ext-http" "/root/org.src/git-http"
+	# get_update_new_github "php/pecl-networking-gearman" "/root/org.src/git-gearman"
+	# get_update_new_github "m6w6/ext-http" "/root/org.src/git-http"
 
-	rm -rf /root/org.src/git-raph
-	get_update_new_github "m6w6/ext-raphf" "/root/org.src/git-raphf"
-	ln -sf /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
-	ln -sf /root/org.src/git-raphf/src/php_raphf_api.c /root/org.src/git-raphf/php_raphf_api.c
-	ln -sf /root/org.src/git-raphf/src/php_raphf_api.h /root/org.src/git-raphf/php_raphf_api.h
-	rm -rf /root/org.src/git-raphf/src/php_raphf_test.c
+	# rm -rf /root/org.src/git-raph
+	# get_update_new_github "m6w6/ext-raphf" "/root/org.src/git-raphf"
+	# ln -sf /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
+	# ln -sf /root/org.src/git-raphf/src/php_raphf_api.c /root/org.src/git-raphf/php_raphf_api.c
+	# ln -sf /root/org.src/git-raphf/src/php_raphf_api.h /root/org.src/git-raphf/php_raphf_api.h
+	# rm -rf /root/org.src/git-raphf/src/php_raphf_test.c
 
-	get_update_new_github "steamboatid/phpredis" "/root/org.src/git-redis"
+	# get_update_new_github "steamboatid/phpredis" "/root/org.src/git-redis"
 
 	# https://github.com/krakjoe/parallel
 	# get_update_new_github "krakjoe/parallel" "/root/org.src/git-parallel"
