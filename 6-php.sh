@@ -320,9 +320,11 @@ DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
-DKSHLIBDEPS="override_dh_shlibdeps\: \n\
-	dh_shlibdeps --warnings=0 --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 \n\n"
-sed -i -r "s/\.PHONY/${DKSHLIBDEPS} \n\.PHONY/g" debian/rules
+if [[ $(grep "override_dh_shlibdeps" debian/rules | wc -l) -lt 1 ]]; then
+	DKSHLIBDEPS="override_dh_shlibdeps\: \n\
+		dh_shlibdeps --  --warnings=0 --ignore-missing-info \n\n"
+	sed -i -r "s/\.PHONY/${DKSHLIBDEPS} \n\.PHONY/g" debian/rules
+fi
 
 # cat debian/rules | grep "DK_CONF"
 # tail -n10 debian/rules; exit 0;
