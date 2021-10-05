@@ -328,18 +328,18 @@ fi
 
 # odir=\$PWD\; \\\ \n \
 # phpize\; make -ik -j\`nproc\`\; cp modules\/\* . -fav\; \\\ \n \
+# cd \$adir\; pwd\; \\\ \n \
+# cd \.\.\; \\\ \n \
 if [[ $(grep "override_dh_auto_build\:" debian/rules | wc -l) -lt 1 ]]; then
 	DKBUILD="override_dh_auto_build\: \n\
-		pwd\; \\\ \n \
-		for adir in \$(find ext -mindepth 1 -maxdepth 1 -type d)\; do \\\ \n \
-			cd \$adir\; pwd\; \\\ \n \
-			cd \.\.\; \\\ \n \
-		done \n"
+	printf "\\n\\n\\n\\n"; pwd\; \\\ \n \
+	for adir in \$(find ext -mindepth 1 -maxdepth 1 -type d)\; do \\\ \n \
+	done \n"
 	sed -i -r "s/\.PHONY/${DKBUILD} \n\.PHONY/g" debian/rules
 fi
 
 # cat debian/rules | grep "DK_CONF"
-# tail -n10 debian/rules; exit 0;
+tail -n10 debian/rules; exit 0;
 
 
 # DKCLICONF="--enable-zts --enable-parallel=shared"
