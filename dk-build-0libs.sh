@@ -191,6 +191,8 @@ prepare_build_flags() {
 	export DEB_CXXFLAGS_STRIP="-O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic"
 	export DEB_CPPFLAGS_STRIP="-O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic"
 
+	export DEB_DH_SHLIBDEPS_ARGS_ALL="--warnings=0 --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0"
+
 
 	alias cd="cd -P"
 	export CCACHE_SLOPPINESS=include_file_mtime

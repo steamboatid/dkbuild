@@ -320,6 +320,12 @@ printf "\n\n $DKCONF \n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
+DKSHLIBDEPS="override_dh_shlibdeps: \n\
+	dh_shlibdeps --warnings=0 --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0"
+sed -i -r "s/\.PHONY/${DKSHLIBDEPS} \n\.PHONY/g" debian/rules
+
+tail -n30 debian/rules; exit 0;
+
 
 # DKCLICONF="--enable-zts --enable-parallel=shared"
 # sed -i -r "s/export cli_config \= /export cli_config = ${DKCLICONF} /g" debian/rules
