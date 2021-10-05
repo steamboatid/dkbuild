@@ -65,11 +65,11 @@ prepare_source() {
 	--delete --exclude '.git' \
 	/root/org.src/git-parallel/ $BASE/ext/parallel/
 
-	printf "\n-- rsync eio \n"
-	mkdir -p $BASE/ext/eio/
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	--delete --exclude '.git' \
-	/root/org.src/git-eio/ $BASE/ext/eio/
+	# printf "\n-- rsync eio \n"
+	# mkdir -p $BASE/ext/eio/
+	# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	# --delete --exclude '.git' \
+	# /root/org.src/git-eio/ $BASE/ext/eio/
 
 	printf "\n-- rsync ev \n"
 	mkdir -p $BASE/ext/ev/
@@ -167,6 +167,15 @@ cd $BASE
 
 # iconv_config = --enable-iconv=shared
 
+# iconv_config = --with-iconv=shared
+# raphf_config = --enable-raphf=shared
+
+# http_config = --with-http=shared \
+# 	--enable-raphf=shared \
+# 	--with-iconv=shared \
+# 	--without-http-shared-deps
+
+
 
 echo \
 "ext_PACKAGES      += common
@@ -203,14 +212,6 @@ imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
 msgpack_config = --with-msgpack=shared --enable-redis-msgpack
-
-iconv_config = --with-iconv=shared
-raphf_config = --enable-raphf=shared
-
-http_config = --with-http=shared \
-	--enable-raphf=shared \
-	--with-iconv=shared \
-	--without-http-shared-deps
 
 memcached_config = --enable-memcached=shared \
 	--with-libmemcached-dir=/usr \
