@@ -322,7 +322,7 @@ sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
 DKSHLIBDEPS="override_dh_shlibdeps\: \n\
 	dh_shlibdeps --warnings=0 --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 \n\n"
-sed -i -r "s/\.PHONY/${DKSHLIBDEPS} \n\.PHONY/g" debian/rules
+# sed -i -r "s/\.PHONY/${DKSHLIBDEPS} \n\.PHONY/g" debian/rules
 
 tail -n30 debian/rules; exit 0;
 
