@@ -137,19 +137,20 @@ reset_build_flags() {
 	# libsld="-largon2 -lresolv -lcrypt -lrt -lstdc++ -lutil -lrt -lm -ldl  -lxml2 -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err -lssl -lcrypto -lpcre2-8 -lz -lsodium -largon2"
 
 	echo \
-"STRIP CFLAGS -O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic
+"
+STRIP CFLAGS   -O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic
 STRIP CPPFLAGS -O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic
 STRIP CXXFLAGS -O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic
-STRIP LDFLAGS -O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic
+STRIP LDFLAGS  -O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic
 
-PREPEND CFLAGS -O3 ${libsld} ${unused}
+PREPEND CFLAGS   -O3 ${libsld} ${unused}
 PREPEND CPPFLAGS -O3 -lstdc++
 PREPEND CXXFLAGS -O3 ${libsld}
-PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lresolv
 ">/etc/dpkg/buildflags.conf
 
 	# cat /etc/dpkg/buildflags.conf; exit 0;
 
+# PREPEND LDFLAGS  -Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lresolv
 # PREPEND LDFLAGS -ldl -lstdc++ -lm -lresolv
 # PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lpthread
 }
@@ -176,17 +177,19 @@ prepare_build_flags() {
 	# LDFLAGS="-Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lpthread ${CFLAGS} ${LDFLAGS}"
 	LDFLAGS="${CFLAGS} ${LDFLAGS}"
 	export LDFLAGS
-	export LIBS=$LDFLAGS
-	export LDLIBS=$LDFLAGS
-	export LIBFLAGS=$LDFLAGS
+	# export LIBS=$LDFLAGS
+	# export LDLIBS=$LDFLAGS
+	# export LIBFLAGS=$LDFLAGS
 	export EXTRA_LDFLAGS=$LDFLAGS
 	export DEB_LDFLAGS_SET=$LDFLAGS
 
 	AR=gcc-ar
 	RANLIB=gcc-ranlib
 
-	export DEB_CFLAGS_STRIP="-O2"
-	export DEB_LDFLAGS_STRIP="-O2"
+	export DEB_CFLAGS_STRIP="-O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic"
+	export DEB_LDFLAGS_STRIP="-O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic"
+	export DEB_CXXFLAGS_STRIP="-O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic"
+	export DEB_CPPFLAGS_STRIP="-O2 -pedantic -Wall -Werror -Wextra -Wpedantic -pedantic-errors -pedantic"
 
 
 	alias cd="cd -P"
