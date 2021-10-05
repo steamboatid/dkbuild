@@ -294,9 +294,9 @@ export common_DESCRIPTION
 
 
 # sed -i -r "s/apache2 phpdbg embed fpm cgi cli/cli/g" debian/rules
-sed -i -r "s/\-\-fail\-missing//g" debian/rules
+# sed -i -r "s/\-\-fail\-missing//g" debian/rules
 # sed -i -r "s/prepare\-fpm\-pools//g" debian/rules
-sed -i -r "s/disable\-static/enable\-static/g" debian/rules
+# sed -i -r "s/disable\-static/enable\-static/g" debian/rules
 # sed -i -r "s/make -f/make -f -B -i -k/" debian/rules
 
 # cp /tb2/build/dk-php-control $BASE/debian/control -Rfav
@@ -309,9 +309,10 @@ sed -i -r "s/disable\-static/enable\-static/g" debian/rules
 # rm -rf $BASE/ext/http
 
 # --enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json
+# --enable-memcached-msgpack
 
 DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
---with-msgpack --enable-redis-msgpack --enable-memcached-msgpack \
+--with-msgpack --enable-redis-msgpack \
 --enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json \
 \n\n"
 
@@ -320,9 +321,8 @@ sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
 
-# export cli_config =
-DKCLICONF="--enable-zts --enable-parallel=shared"
-sed -i -r "s/export cli_config \= /export cli_config = ${DKCLICONF} /g" debian/rules
+# DKCLICONF="--enable-zts --enable-parallel=shared"
+# sed -i -r "s/export cli_config \= /export cli_config = ${DKCLICONF} /g" debian/rules
 # sed -i -r "s/export fpm_config \= /export fpm_config = ${DKCLICONF} /g" debian/rules
 
 
