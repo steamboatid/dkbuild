@@ -330,6 +330,7 @@ fi
 # phpize\; make -ik -j\`nproc\`\; cp modules\/\* . -fav\; \\\ \n \
 if [[ $(grep "override_dh_auto_build\:" debian/rules | wc -l) -lt 1 ]]; then
 	DKBUILD="override_dh_auto_build\: \n\
+		pwd\; \\\ \n \
 		for adir in \$(find ext -mindepth 1 -maxdepth 1 -type d)\; do \\\ \n \
 			cd \$adir\; pwd\; \\\ \n \
 			cd \.\.\; \\\ \n \
