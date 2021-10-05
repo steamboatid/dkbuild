@@ -196,7 +196,7 @@ common_DESCRIPTION := documentation, examples and common
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
 gearman mcrypt uuid vips imagick apcu \
-redis
+msgpack redis
 
 calendar_config = --enable-calendar=shared
 ctype_config = --enable-ctype=shared
@@ -223,12 +223,14 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
+msgpack_config = --with-msgpack=shared --enable-redis-msgpack
+
 redis_config = --enable-redis=shared \
 	--enable-redis-zstd \
 	--with-liblz4=/usr \
 	--with-liblzf=/usr \
 	--enable-redis-lz4 \
-	--with-msgpack --enable-redis-msgpack
+	--with-msgpack=shared --enable-redis-msgpack
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -326,20 +328,16 @@ if [[ $(grep "override_dh_shlibdeps" debian/rules | wc -l) -lt 1 ]]; then
 	sed -i -r "s/\.PHONY/${DKSHLIBDEPS} \n\.PHONY/g" debian/rules
 fi
 
-# odir=\$PWD\; \\\ \n \
-# phpize\; make -ik -j\`nproc\`\; cp modules\/\* . -fav\; \\\ \n\
-# cd \$adir\; pwd\; \\\ \n \
-# cd \.\.\; \\\ \n \
-if [[ $(grep "override_dh_auto_build\:" debian/rules | wc -l) -lt 1 ]]; then
-	DKBUILD="override_dh_auto_build\: \n\
-	pwd\; \\\ \n\
-	for adir in \$(find \.\/ext -mindepth 1 -maxdepth 1 -type d)\; do \\\ \n\
-		cd \$\$adir\; pwd\; \\\ \n\
-		phpize\; make -ik -j\`nproc\`\; cp modules\/\* . -fav\; \\\ \n\
-		cd \.\.\; \\\ \n\
-	done \n"
-	sed -i -r "s/\.PHONY/${DKBUILD} \n\.PHONY/g" debian/rules
-fi
+# if [[ $(grep "override_dh_auto_build\:" debian/rules | wc -l) -lt 1 ]]; then
+# 	DKBUILD="override_dh_auto_build\: \n\
+# 	pwd\; \\\ \n\
+# 	for adir in \$(find \.\/ext -mindepth 1 -maxdepth 1 -type d)\; do \\\ \n\
+# 		cd \$\$adir\; pwd\; \\\ \n\
+# 		phpize\; make -ik -j\`nproc\`\; cp modules\/\* . -fav\; \\\ \n\
+# 		cd \.\.\; \\\ \n\
+# 	done \n"
+# 	sed -i -r "s/\.PHONY/${DKBUILD} \n\.PHONY/g" debian/rules
+# fi
 
 # cat debian/rules | grep "DK_CONF"
 # tail -n10 debian/rules; exit 0;
