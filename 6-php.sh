@@ -332,7 +332,7 @@ fi
 # cd \.\.\; \\\ \n \
 if [[ $(grep "override_dh_auto_build\:" debian/rules | wc -l) -lt 1 ]]; then
 	DKBUILD="override_dh_auto_build\: \n\
-	printf "\\n\\n\\n\\n"; pwd\; \\\ \n \
+	printf "\\\n\\\n\\\n\\\n"; pwd\; \\\ \n \
 	for adir in \$(find ext -mindepth 1 -maxdepth 1 -type d)\; do \\\ \n \
 	done \n"
 	sed -i -r "s/\.PHONY/${DKBUILD} \n\.PHONY/g" debian/rules
