@@ -313,7 +313,7 @@ export common_DESCRIPTION
 
 DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
 --with-msgpack --enable-redis-msgpack \
---enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json \
+--enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
 \n\n"
 
 printf "\n\n $DKCONF \n"
