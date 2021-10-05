@@ -324,7 +324,8 @@ DKSHLIBDEPS="override_dh_shlibdeps\: \n\
 	dh_shlibdeps --warnings=0 --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 \n\n"
 # sed -i -r "s/\.PHONY/${DKSHLIBDEPS} \n\.PHONY/g" debian/rules
 
-tail -n30 debian/rules; exit 0;
+cat debian/rules | grep "DKCONF"
+tail -n10 debian/rules; exit 0;
 
 
 # DKCLICONF="--enable-zts --enable-parallel=shared"
