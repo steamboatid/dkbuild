@@ -326,8 +326,18 @@ if [[ $(grep "override_dh_shlibdeps" debian/rules | wc -l) -lt 1 ]]; then
 	sed -i -r "s/\.PHONY/${DKSHLIBDEPS} \n\.PHONY/g" debian/rules
 fi
 
+if [[ $(grep "override_dh_auto_build\:" debian/rules | wc -l) -lt 1 ]]; then
+	DKBUILD="override_dh_auto_build\: \n\
+		for adir in \$(find ext -mindepth 1 -maxdepth 1 -type d); do \\\ \n
+			cd \$\{adir\}; \
+			phpize; make -ik -j\`nproc\`; cp modules\/\* . -fav; \
+			cd \.\.; \
+		done"
+	sed -i -r "s/\.PHONY/${DKBUILD} \n\.PHONY/g" debian/rules
+fi
+
 # cat debian/rules | grep "DK_CONF"
-# tail -n10 debian/rules; exit 0;
+tail -n10 debian/rules; exit 0;
 
 
 # DKCLICONF="--enable-zts --enable-parallel=shared"
