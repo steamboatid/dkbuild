@@ -148,6 +148,7 @@ get_mod_sources_deb
 
 printf "\n copy_extra_mods "
 copy_extra_mods
+cd $BASE
 
 
 # igbinary
