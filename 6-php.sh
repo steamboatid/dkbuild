@@ -316,13 +316,13 @@ DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
 --enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
 \n\n"
 
-printf "\n\n $DKCONF \n"
+# printf "\n\n $DKCONF \n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
 DKSHLIBDEPS="override_dh_shlibdeps\: \n\
 	dh_shlibdeps --warnings=0 --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 \n\n"
-# sed -i -r "s/\.PHONY/${DKSHLIBDEPS} \n\.PHONY/g" debian/rules
+sed -i -r "s/\.PHONY/${DKSHLIBDEPS} \n\.PHONY/g" debian/rules
 
 cat debian/rules | grep "DKCONF"
 tail -n10 debian/rules; exit 0;
