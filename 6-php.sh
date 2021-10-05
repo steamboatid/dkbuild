@@ -28,28 +28,6 @@ cd $BASE
 
 prepare_source() {
 
-	# get_update_new_github "php/pecl-networking-gearman" "/root/org.src/git-gearman"
-	# get_update_new_github "m6w6/ext-http" "/root/org.src/git-http"
-
-	# rm -rf /root/org.src/git-raph
-	# get_update_new_github "m6w6/ext-raphf" "/root/org.src/git-raphf"
-	# ln -sf /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
-	# ln -sf /root/org.src/git-raphf/src/php_raphf_api.c /root/org.src/git-raphf/php_raphf_api.c
-	# ln -sf /root/org.src/git-raphf/src/php_raphf_api.h /root/org.src/git-raphf/php_raphf_api.h
-	# rm -rf /root/org.src/git-raphf/src/php_raphf_test.c
-
-	# get_update_new_github "steamboatid/phpredis" "/root/org.src/git-redis"
-
-	# https://github.com/krakjoe/parallel
-	# get_update_new_github "krakjoe/parallel" "/root/org.src/git-parallel"
-
-	# https://github.com/rosmanov/pecl-eio
-	# get_update_new_github "rosmanov/pecl-eio" "/root/org.src/git-eio"
-
-	# https://bitbucket.org/osmanov/pecl-ev.git
-	# get_update_new_bitbucket "osmanov/pecl-ev.git" "/root/org.src/git-ev"
-
-
 	printf "\n-- rsync PHP CORE \n"
 	mkdir -p $BASE
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
@@ -81,23 +59,23 @@ prepare_source() {
 	--delete --exclude '.git' \
 	/root/org.src/git-redis/ $BASE/ext/redis/
 
-	# printf "\n-- rsync parallel \n"
-	# mkdir -p $BASE/ext/parallel/
-	# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	# --delete --exclude '.git' \
-	# /root/org.src/git-parallel/ $BASE/ext/parallel/
+	printf "\n-- rsync parallel \n"
+	mkdir -p $BASE/ext/parallel/
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	--delete --exclude '.git' \
+	/root/org.src/git-parallel/ $BASE/ext/parallel/
 
-	# printf "\n-- rsync eio \n"
-	# mkdir -p $BASE/ext/eio/
-	# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	# --delete --exclude '.git' \
-	# /root/org.src/git-eio/ $BASE/ext/eio/
+	printf "\n-- rsync eio \n"
+	mkdir -p $BASE/ext/eio/
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	--delete --exclude '.git' \
+	/root/org.src/git-eio/ $BASE/ext/eio/
 
-	# printf "\n-- rsync ev \n"
-	# mkdir -p $BASE/ext/ev/
-	# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	# --delete --exclude '.git' \
-	# /root/org.src/git-ev/ $BASE/ext/ev/
+	printf "\n-- rsync ev \n"
+	mkdir -p $BASE/ext/ev/
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	--delete --exclude '.git' \
+	/root/org.src/git-ev/ $BASE/ext/ev/
 	# exit 0;
 
 
@@ -196,7 +174,7 @@ common_DESCRIPTION := documentation, examples and common
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
 gearman mcrypt uuid vips imagick apcu \
-msgpack redis
+msgpack redis memcached http
 
 calendar_config = --enable-calendar=shared
 ctype_config = --enable-ctype=shared
@@ -224,6 +202,17 @@ imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
 msgpack_config = --with-msgpack=shared --enable-redis-msgpack
+iconv_config = --with-iconv=shared
+raphf_config = --enable-raphf=shared
+
+http_config = --with-http=shared \
+	--enable-raphf=shared \
+	--with-iconv=shared
+
+memcached_config = --enable-memcached=shared \
+	--with-libmemcached-dir=/usr \
+	--enable-memcached-session \
+	--enable-memcached-json
 
 redis_config = --enable-redis=shared \
 	--enable-redis-zstd \

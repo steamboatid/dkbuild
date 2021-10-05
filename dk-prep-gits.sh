@@ -33,6 +33,20 @@ get_update_new_github "m6w6/ext-http" "/root/org.src/git-http"
 rm -rf /root/org.src/git-raph
 get_update_new_github "m6w6/ext-raphf" "/root/org.src/git-raphf"
 
+rm -rf /root/org.src/git-raph
+get_update_new_github "m6w6/ext-raphf" "/root/org.src/git-raphf"
+ln -sf /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
+ln -sf /root/org.src/git-raphf/src/php_raphf_api.c /root/org.src/git-raphf/php_raphf_api.c
+ln -sf /root/org.src/git-raphf/src/php_raphf_api.h /root/org.src/git-raphf/php_raphf_api.h
+rm -rf /root/org.src/git-raphf/src/php_raphf_test.c
+
+get_update_new_github "steamboatid/phpredis" "/root/org.src/git-redis"
+
+get_update_new_github "krakjoe/parallel" "/root/org.src/git-parallel"
+get_update_new_github "rosmanov/pecl-eio" "/root/org.src/git-eio"
+get_update_new_bitbucket "osmanov/pecl-ev.git" "/root/org.src/git-ev"
+
+
 #--- sync to src
 #-------------------------------------------
 printf "\n-- sync to src ALL \n"
