@@ -330,7 +330,7 @@ if [[ $(grep "override_dh_auto_build\:" debian/rules | wc -l) -lt 1 ]]; then
 	DKBUILD="override_dh_auto_build\: \n\
 		odir=\$PWD\; \\\ \n \
 		for adir in \$(find ext -mindepth 1 -maxdepth 1 -type d)\; do \\\ \n \
-			cd \$\{adir\}\; pwd\; \\\ \n \
+			cd \$adir\; pwd\; \\\ \n \
 			phpize\; make -ik -j\`nproc\`\; cp modules\/\* . -fav\; \\\ \n \
 			cd \.\.\; \\\ \n \
 		done; cd \$odir \n"
