@@ -165,8 +165,6 @@ cd $BASE
 # 	--enable-memcached-session \
 # 	--enable-memcached-json
 
-# iconv_config = --enable-iconv=shared
-
 # iconv_config = --with-iconv=shared
 # raphf_config = --enable-raphf=shared
 
@@ -184,7 +182,7 @@ common_DESCRIPTION := documentation, examples and common
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
 gearman mcrypt uuid vips imagick apcu \
-msgpack redis memcached iconv raphf http
+msgpack redis memcached
 
 calendar_config = --enable-calendar=shared
 ctype_config = --enable-ctype=shared
@@ -213,10 +211,11 @@ apcu_config = --enable-apcu=shared
 
 msgpack_config = --with-msgpack=shared --enable-redis-msgpack
 
-memcached_config = --enable-memcached=shared \
+memcached_config = --with-memcached=shared \
 	--with-libmemcached-dir=/usr \
 	--enable-memcached-session \
-	--enable-memcached-json
+	--enable-memcached-json \
+	--with-msgpack=shared --enable-memcached-msgpack
 
 redis_config = --enable-redis=shared \
 	--enable-redis-zstd \
@@ -232,56 +231,110 @@ export common_DESCRIPTION
 ">debian/rules.d/ext-common.mk
 
 
-# echo \
-# "ext_PACKAGES   += allmods
-# allmods_DESCRIPTION := all modules for PHP
-# allmods_EXTENSIONS  := allmods
-# allmods_config = --with-gearman=shared \
-# 	--with-mcrypt=shared \
-# 	--with-uuid=shared \
-# 	--with-vips=shared \
-# 	--with-imagick=shared \
-# 	--enable-apcu=shared \
-# \
-# 	--with-msgpack=shared \
-# 	--enable-raphf=shared \
-# 	--with-iconv=shared \
-# \
-# 	--enable-redis=shared \
-# 	--enable-redis-zstd \
-# 	--with-liblz4=/usr \
-# 	--with-liblzf=/usr \
-# 	--enable-redis-lz4 \
-# 	--enable-redis-msgpack \
-# \
-# 	--enable-memcached=shared \
-# 	--with-libmemcached-dir \
-# 	--enable-memcached-session \
-# 	--enable-memcached-json
-# \
-# 	--with-http=shared
+if [[ $(grep "-extramods" debian/control | wc -l) -lt 1 ]]; then
+	echo \
+"
 
-# export allmods_EXTENSIONS
-# export allmods_DESCRIPTION
-# ">debian/rules.d/ext-allmods.mk
+Package: php8.0-extramods
+Architecture: any
+Depends: ucf,
+         \${misc:Depends},
+         \${php:Depends},
+         \${shlibs:Depends}
+Pre-Depends: \${misc:Pre-Depends}
+Built-Using: \${php:Built-Using}
+Description: Extra modules for PHP.
+
+Package: php8.0-http
+Architecture: any
+Depends: ucf,
+         \${misc:Depends},
+         \${php:Depends},
+         \${shlibs:Depends}
+Pre-Depends: \${misc:Pre-Depends}
+Built-Using: \${php:Built-Using}
+Description: HTTP, RAPH and ICONV modules for PHP.
+
+Package: php8.0-memcached
+Architecture: any
+Depends: ucf,
+         \${misc:Depends},
+         \${php:Depends},
+         \${shlibs:Depends}
+Pre-Depends: \${misc:Pre-Depends}
+Built-Using: \${php:Built-Using}
+Description: MEMCACHED modules for PHP.
+">>debian/control
 
 
-# if [[ $(grep "allmods" debian/control | wc -l) -lt 1 ]]; then
-# 	echo \
-# "
+echo \
+"ext_PACKAGES      += http
+http_DESCRIPTION := http raphf iconv
+http_EXTENSIONS  := http raphf iconv
+iconv_config = --with-iconv=shared
+raphf_config = --enable-raphf=shared
+http_config = --with-http=shared \
+--enable-raphf=shared \
+--with-iconv=shared \
+--without-http-shared-deps
+export http_EXTENSIONS
+export http_DESCRIPTION
+">debian/rules.d/ext-http.mk
 
-# Package: php8.0-allmods
-# Architecture: any
-# Depends: ucf,
-#          \${misc:Depends},
-#          \${php:Depends},
-#          \${shlibs:Depends}
-# Pre-Depends: \${misc:Pre-Depends}
-# Built-Using: \${php:Built-Using}
-# Description: All modules for PHP
-#  This package provides the all modules for PHP.
-# ">>debian/control
-# fi
+echo \
+"ext_PACKAGES      += memcached
+memcached_DESCRIPTION := memcached and msgpack
+memcached_EXTENSIONS  := msgpack memcached
+msgpack_config = --with-msgpack=shared --enable-redis-msgpack
+memcached_config = --with-memcached=shared \
+--with-libmemcached-dir=/usr \
+--enable-memcached-session \
+--enable-memcached-json \
+--with-msgpack=shared --enable-memcached-msgpack
+export memcached_EXTENSIONS
+export memcached_DESCRIPTION
+">debian/rules.d/ext-memcached.mk
+
+
+echo \
+"ext_PACKAGES      += extramods
+http_DESCRIPTION := extra modules
+http_EXTENSIONS  := http raphf iconv msgpack memcached \
+redis gearman mcrypt uuid vips imagic apcu
+
+iconv_config = --with-iconv=shared
+raphf_config = --enable-raphf=shared
+http_config = --with-http=shared \
+--enable-raphf=shared \
+--with-iconv=shared \
+--without-http-shared-deps
+
+msgpack_config = --with-msgpack=shared --enable-redis-msgpack
+memcached_config = --with-memcached=shared \
+--with-libmemcached-dir=/usr \
+--enable-memcached-session \
+--enable-memcached-json \
+--with-msgpack=shared --enable-memcached-msgpack
+
+
+gearman_config = --with-gearman=shared
+mcrypt_config = --with-mcrypt=shared
+uuid_config = --with-uuid=shared
+vips_config = --with-vips=shared
+imagick_config = --with-imagick=shared
+apcu_config = --enable-apcu=shared
+
+redis_config = --enable-redis=shared \
+	--enable-redis-zstd \
+	--with-liblz4=/usr \
+	--with-liblzf=/usr \
+	--enable-redis-lz4 \
+	--with-msgpack=shared --enable-redis-msgpack
+
+export memcached_EXTENSIONS
+export memcached_DESCRIPTION
+">debian/rules.d/ext-extramods.mk
+fi
 
 
 # sed -i -r "s/iconv\=shared/iconv/g" debian/rules.d/ext-common.mk
@@ -305,21 +358,24 @@ export common_DESCRIPTION
 
 # --enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json
 # --enable-memcached-msgpack
+# --with-msgpack --enable-redis-msgpack \
 
-DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
---with-msgpack --enable-redis-msgpack \
---enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
-\n\n"
+# DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
+# --enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
+# \n\n"
+# # printf "\n\n $DKCONF \n"
+# sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
+# sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
-# printf "\n\n $DKCONF \n"
-sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
-sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
+# disable all dh_shlibdeps warnings
+# ---------------------------------------------------
 if [[ $(grep "override_dh_shlibdeps" debian/rules | wc -l) -lt 1 ]]; then
 	DKSHLIBDEPS="override_dh_shlibdeps\: \n\
 		dh_shlibdeps --  --warnings=0 --ignore-missing-info \n\n"
 	sed -i -r "s/\.PHONY/${DKSHLIBDEPS} \n\.PHONY/g" debian/rules
 fi
+
 
 # if [[ $(grep "override_dh_auto_build\:" debian/rules | wc -l) -lt 1 ]]; then
 # 	DKBUILD="override_dh_auto_build\: \n\
