@@ -170,8 +170,13 @@ cd $BASE
 # --enable-memcached-session \
 # --enable-memcached-json
 
+# igbinary
+# --enable-igbinary=shared --enable-redis-igbinary \
+# igbinary_config = --enable-igbinary=shared
+
+
 extslist="gearman mcrypt uuid vips imagick apcu msgpack redis \
-http raphf iconv igbinary memcached"
+http raphf iconv memcached"
 
 extconf="iconv_config = --with-iconv
 raphf_config = --enable-raphf
@@ -182,14 +187,13 @@ http_config = --with-http \
 --enable-shared=http,raphf,iconv --disable-option-checking
 
 msgpack_config = --with-msgpack=shared
-igbinary_config = --enable-igbinary=shared
 
 memcached_config = --with-memcached \
 --with-libmemcached-dir=/usr \
 --enable-memcached-session \
 --enable-memcached-json \
 --with-msgpack=shared --enable-memcached-msgpack \
---enable-shared=memcached,igbinary,msgpack --disable-option-checking
+--enable-shared=memcached,msgpack --disable-option-checking
 
 redis_config = --enable-redis=shared \
 --enable-redis-zstd \
@@ -197,8 +201,7 @@ redis_config = --enable-redis=shared \
 --with-liblzf=/usr \
 --enable-redis-lz4 \
 --with-msgpack=shared --enable-redis-msgpack \
---enable-igbinary=shared --enable-redis-igbinary \
---enable-shared=redis,igbinary,msgpack --disable-option-checking
+--enable-shared=redis,msgpack --disable-option-checking
 
 gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
@@ -278,7 +281,7 @@ fi
 DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
 --enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
 --enable-memcached-msgpack \
---enable-shared=http,raphf,iconv,memcached,redis,igbinary,msgpack,gearman,mcrypt,uuid,vips,imagick,apcu \
+--enable-shared=http,raphf,iconv,memcached,redis,msgpack,gearman,mcrypt,uuid,vips,imagick,apcu \
 --disable-option-checking \
 \n\n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
