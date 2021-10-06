@@ -24,6 +24,12 @@ BORG="/root/org.src/php8/$BNAME"
 mkdir -p $BASE
 cd $BASE
 
+printf "\n-- rsync PHP CORE \n"
+mkdir -p $BASE
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+--delete --exclude '.git' \
+$BORG/ $BASE/
+
 
 
 prepare_source() {
@@ -379,22 +385,22 @@ sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
 echo \
 "#!/bin/bash
-phpize
-./configure
-nohup make -iks >/dev/null 2>&1 &
+for adir in \$(find ext -mindepth 1 -maxdepth 1 -type d | sort); do
+cd \$adir
+phpize && ./configure >/dev/null 2>&1 && make -iks >/dev/null 2>&1
+cd ../..
+done
 ">dkext.sh
+# cat dkext.sh; exit 0;
 
-DKPREPEXT="prepext\: \n\
-for adir in \$\(find ext -mindepth 1 -maxdepth 1 -type d\)\; do \\\\\n\
-	cd \$\$adir\; pwd; \\\\\n\
-	nohup /bin/bash \.\.\/\.\.\/dkext\.sh \>\/dev\/null 2\>\&1 \& \\\\\n\
-	cd \.\.\/\.\.\/\; pwd\; \\\\\n\
-done\
-\n\n"
-sed -i -r "s/^prepared\:/${DKPREPEXT} \nprepared\: prepext /g" debian/rules
+DKPREPEXT="prepext\:\n\
+	nohup \/bin\/bash \.\/dkext\.sh \n\n"
+sed -i -r "s/^prepared\: /$DKPREPEXT \nprepared\: prepext /g" debian/rules
 # sed -i -r "s/^override_dh_auto_install\:/override_dh_auto_install\: prepext /g" debian/rules
-# sed -i -r "s/^override_dh_auto_build-arch\:/override_dh_auto_build-arch\: prepext /g" debian/rules
-cat debian/rules; exit 0;
+sed -i -r "s/^override_dh_auto_build-arch\:/override_dh_auto_build-arch\: prepext /g" debian/rules
+sed -i -r "s/PHONY\: prepared/PHONY\: prepext prepared/g" debian/rules
+# cat debian/rules | grep "prepared"; cat debian/rules | grep "prepext";
+# cat debian/rules; exit 0;
 
 
 # disable all dh_shlibdeps warnings
