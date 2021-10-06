@@ -388,7 +388,9 @@ echo \
 for adir in \$(find ext -mindepth 1 -maxdepth 1 -type d | sort); do
 cd \$adir
 pwd
-phpize && ./configure >/dev/null 2>&1 && make -iks >/dev/null 2>&1 &
+phpize >/dev/null 2>&1 && ./configure >/dev/null 2>&1 && make -iks >/dev/null 2>&1
+mkdir -p .libs
+cp modules/* ./libs -fav
 cd ../..
 done
 ">dkext.sh
