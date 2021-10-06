@@ -171,8 +171,9 @@ cd $BASE
 # --enable-memcached-json
 
 # igbinary
-# --enable-igbinary=shared --enable-redis-igbinary \
 # igbinary_config = --enable-igbinary=shared
+# --enable-igbinary=shared --enable-redis-igbinary \
+# --with-msgpack=shared --enable-memcached-msgpack \
 
 
 extslist="gearman mcrypt uuid vips imagick apcu msgpack redis \
@@ -192,7 +193,6 @@ memcached_config = --with-memcached \
 --with-libmemcached-dir=/usr \
 --enable-memcached-session \
 --enable-memcached-json \
---with-msgpack=shared --enable-memcached-msgpack \
 --enable-shared=memcached,msgpack --disable-option-checking
 
 redis_config = --enable-redis=shared \
