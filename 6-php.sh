@@ -159,17 +159,7 @@ cd $BASE
 
 # igbinary
 #
-# igbinary_config = --enable-igbinary=shared \
-# 	--enable-memcached-igbinary \
-# 	--enable-redis-igbinary
-#  \
-#	--with-msgpack --enable-memcached-msgpack
 
-
-# memcached_config = --enable-memcached=shared \
-# 	--with-libmemcached-dir=/usr \
-# 	--enable-memcached-session \
-# 	--enable-memcached-json
 
 # iconv_config = --with-iconv=shared
 # raphf_config = --enable-raphf=shared
@@ -178,14 +168,6 @@ cd $BASE
 # 	--enable-raphf=shared \
 # 	--with-iconv=shared \
 # 	--without-http-shared-deps
-
-# 	--with-libmemcached-dir=/usr \
-
-
-# memcached_config = --with-memcached=shared \
-# 	--enable-memcached-session \
-# 	--enable-memcached-json \
-# 	--with-msgpack=shared --enable-memcached-msgpack
 
 # memcached_config = --with-memcached=shared \
 # --with-libmemcached-dir=/usr \
@@ -200,8 +182,8 @@ common_DESCRIPTION := documentation, examples and common
 
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
-gearman mcrypt uuid vips imagick apcu \
-msgpack redis
+gearman mcrypt uuid vips imagick apcu msgpack redis \
+http raphf iconv igbinary memcached
 
 calendar_config = --enable-calendar=shared
 ctype_config = --enable-ctype=shared
@@ -229,13 +211,20 @@ imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
 msgpack_config = --with-msgpack=shared
+igbinary_config = --enable-igbinary=shared
 
 redis_config = --enable-redis=shared \
-	--enable-redis-zstd \
-	--with-liblz4=/usr \
-	--with-liblzf=/usr \
-	--enable-redis-lz4 \
-	--with-msgpack=shared --enable-redis-msgpack
+--enable-redis-zstd \
+--with-liblz4=/usr \
+--with-liblzf=/usr \
+--enable-redis-lz4 \
+--with-msgpack=shared --enable-redis-msgpack
+
+memcached_config = --with-memcached \
+--with-libmemcached-dir=/usr \
+--enable-memcached-session \
+--enable-memcached-json \
+--enable-shared=memcached --disable-option-checking
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -263,8 +252,8 @@ Description: Extra modules for PHP.
 echo \
 "ext_PACKAGES      += extramods
 http_DESCRIPTION := extra modules
-http_EXTENSIONS  := gearman mcrypt uuid vips imagic apcu msgpack redis \
-http raphf iconv memcached
+http_EXTENSIONS  := gearman mcrypt uuid vips imagick apcu msgpack redis \
+http raphf iconv igbinary memcached
 
 iconv_config = --with-iconv
 raphf_config = --enable-raphf
@@ -275,12 +264,15 @@ http_config = --with-http \
 --enable-shared=http,raphf,iconv --disable-option-checking
 
 msgpack_config = --with-msgpack=shared
+igbinary_config = --enable-igbinary=shared
 
 memcached_config = --with-memcached \
 --with-libmemcached-dir=/usr \
 --enable-memcached-session \
 --enable-memcached-json \
---enable-shared=memcached --disable-option-checking
+--with-msgpack=shared --enable-memcached-msgpack \
+--enable-igbinary=shared --enable-memcached-igbinary \
+--enable-shared=memcached,igbinary,msgpack --disable-option-checking
 
 gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
@@ -290,11 +282,13 @@ imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
 redis_config = --enable-redis=shared \
-	--enable-redis-zstd \
-	--with-liblz4=/usr \
-	--with-liblzf=/usr \
-	--enable-redis-lz4 \
-	--with-msgpack=shared --enable-redis-msgpack
+--enable-redis-zstd \
+--with-liblz4=/usr \
+--with-liblzf=/usr \
+--enable-redis-lz4 \
+--with-msgpack=shared --enable-redis-msgpack \
+--enable-igbinary=shared --enable-redis-igbinary \
+--enable-shared=redis,igbinary,msgpack --disable-option-checking
 
 export memcached_EXTENSIONS
 export memcached_DESCRIPTION
@@ -302,44 +296,18 @@ export memcached_DESCRIPTION
 fi
 
 
-# sed -i -r "s/iconv\=shared/iconv/g" debian/rules.d/ext-common.mk
 
-
-
-# sed -i -r "s/apache2 phpdbg embed fpm cgi cli/cli/g" debian/rules
-# sed -i -r "s/\-\-fail\-missing//g" debian/rules
-# sed -i -r "s/prepare\-fpm\-pools//g" debian/rules
-# sed -i -r "s/disable\-static/enable\-static/g" debian/rules
-# sed -i -r "s/make -f/make -f -B -i -k/" debian/rules
-
-# cp /tb2/build/dk-php-control $BASE/debian/control -Rfav
-# cat $BASE/debian/control | grep --color=auto more
-# # exit 0;
-
-# rm -rf $BASE/debian/libapache2-* $BASE/debian/libphp* $BASE/debian/php-cgi*  $BASE/debian/php-fpm* \
-#  $BASE/debian/php-phpdbg* $BASE/debian/rules.d/prepare-fpm-pools.mk
-
-# rm -rf $BASE/ext/http
-
-# --enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json
-# --enable-memcached-msgpack
-# --with-msgpack --enable-redis-msgpack \
-
-
+# static build
+#---------------------------------------------------
 DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
 --enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
---enable-shared=http,raphf,iconv,memcached --disable-option-checking \
+--enable-memcached-igbinary --enable-memcached-msgpack \
+--enable-shared=http,raphf,iconv,memcached,redis,igbinary,msgpack,gearman,mcrypt,uuid,vips,imagick,apcu \
+--disable-option-checking \
 \n\n"
-# printf "\n\n $DKCONF \n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
-
-
-# for adir in $$(find -L ext -mindepth 1 -maxdepth 1 -type d); do \
-# 	cd $$adir; pwd; nohup bash ../../dkb.sh >/dev/null & \
-# 	cd ../..; pwd; \
-# done
-
+# printf "\n\n $DKCONF \n"
 
 
 # echo \
@@ -383,7 +351,7 @@ sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
 
 # disable all dh_shlibdeps warnings
-# ---------------------------------------------------
+#---------------------------------------------------
 if [[ $(grep "override_dh_shlibdeps" debian/rules | wc -l) -lt 1 ]]; then
 	DKSHLIBDEPS="override_dh_shlibdeps\: \n\
 		dh_shlibdeps --  --warnings=0 --ignore-missing-info \n\n"
@@ -395,42 +363,33 @@ sed -i -r "s/(.*)(true)\)/\1false\)/g" ext/http/config9.m4
 # cat ext/http/config9.m4; exit 0
 
 
-# if [[ $(grep "override_dh_auto_build\:" debian/rules | wc -l) -lt 1 ]]; then
-# 	DKBUILD="override_dh_auto_build\: \n\
-# 	pwd\; \\\ \n\
-# 	for adir in \$(find \.\/ext -mindepth 1 -maxdepth 1 -type d)\; do \\\ \n\
-# 		cd \$\$adir\; pwd\; \\\ \n\
-# 		phpize\; make -ik -j\`nproc\`\; cp modules\/\* . -fav\; \\\ \n\
-# 		cd \.\.\; \\\ \n\
-# 	done \n"
-# 	sed -i -r "s/\.PHONY/${DKBUILD} \n\.PHONY/g" debian/rules
-# fi
-
-# cat debian/rules | grep "DK_CONF"
-# tail -n10 debian/rules; exit 0;
+# activate zts and parallel extension
+#---------------------------------------------------
+DKCLICONF="--enable-zts --enable-parallel=shared"
+sed -i -r "s/export cli_config \= /export cli_config = ${DKCLICONF} /g" debian/rules
 
 
-# DKCLICONF="--enable-zts --enable-parallel=shared"
-# sed -i -r "s/export cli_config \= /export cli_config = ${DKCLICONF} /g" debian/rules
-# sed -i -r "s/export fpm_config \= /export fpm_config = ${DKCLICONF} /g" debian/rules
+# continue on missing
+#---------------------------------------------------
+sed -i -r "s/dh_install \-\-fail-missing/dh_install/g" debian/rules
+# sed -i -r "s/disable\-static/enable\-static/g" debian/rules
+# sed -i -r "s/make -f/make -f -B -i -k/" debian/rules
 
-# cat debian/rules;
-# cat debian/rules | grep "PCRE_JIT) "; exit 0;
 
-#-- continue on missing
-# sed -i -r "s/dh_install \-\-fail-missing/dh_install/g" debian/rules
-
-#--- fix raphf bug
+# fix raphf bug
+#---------------------------------------------------
 ln -sf $BASE/ext/raphf/php_raphf.h $BASE/ext/raphf/src/php_raphf.h
 ln -sf $BASE/ext/raphf/src/php_raphf_api.c $BASE/ext/raphf/php_raphf_api.c
 ln -sf $BASE/ext/raphf/src/php_raphf_api.h $BASE/ext/raphf/php_raphf_api.h
 rm -rf $BASE/ext/raphf/src/php_raphf_test.c
 # ls -la $BASE/ext/raphf/src; exit 0;
 
+
+# avoid warning
+#---------------------------------------------------
 touch debian/php-cgi.NEWS
 touch debian/php-fpm.NEWS
 touch debian/libapache2-mod-php.NEWS
-
 
 ./buildconf -f
 
