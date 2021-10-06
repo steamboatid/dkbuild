@@ -387,6 +387,7 @@ echo \
 "#!/bin/bash
 for adir in \$(find ext -mindepth 1 -maxdepth 1 -type d | sort); do
 cd \$adir
+pwd
 phpize && ./configure >/dev/null 2>&1 && make -iks >/dev/null 2>&1
 cd ../..
 done
@@ -394,7 +395,7 @@ done
 # cat dkext.sh; exit 0;
 
 DKPREPEXT="prepext\:\n\
-	nohup \/bin\/bash \.\/dkext\.sh \n\n"
+	\/bin\/bash \.\/dkext\.sh \n\n"
 sed -i -r "s/^prepared\: /$DKPREPEXT \nprepared\: prepext /g" debian/rules
 # sed -i -r "s/^override_dh_auto_install\:/override_dh_auto_install\: prepext /g" debian/rules
 sed -i -r "s/^override_dh_auto_build-arch\:/override_dh_auto_build-arch\: prepext /g" debian/rules
