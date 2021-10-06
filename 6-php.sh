@@ -372,15 +372,29 @@ sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
 
+# for adir in $$(find -L ext -mindepth 1 -maxdepth 1 -type d); do \
+# 	cd $$adir; pwd; nohup bash ../../dkb.sh >/dev/null & \
+# 	cd ../..; pwd; \
+# done
+
+echo \
+"#!/bin/bash
+phpize
+./configure
+nohup make -iks >/dev/null 2>&1 &
+">dkext.sh
+
 DKPREPEXT="prepext\: \n\
 for adir in \$\(find ext -mindepth 1 -maxdepth 1 -type d\)\; do \\\\\n\
-	cd \$\$adir\; phpize\; make -j\`nproc\'\; cd \.\.\; \\\\\n\
+	cd \$\$adir\; pwd; \\\\\n\
+	nohup /bin/bash \.\.\/\.\.\/dkext\.sh \>\/dev\/null 2\>\&1 \& \\\\\n\
+	cd \.\.\/\.\.\/\; pwd\; \\\\\n\
 done\
 \n\n"
-# sed -i -r "s/^prepared\: /${DKPREPEXT} \nprepared\: prepext /g" debian/rules
+sed -i -r "s/^prepared\: /${DKPREPEXT} \nprepared\: prepext /g" debian/rules
 # sed -i -r "s/^override_dh_auto_install\:/override_dh_auto_install\: prepext /g" debian/rules
-# sed -i -r "s/^override_dh_auto_build-arch\:/override_dh_auto_build-arch\: prepext /g" debian/rules
-# cat debian/rules | grep dh_auto_install; exit 0;
+sed -i -r "s/^override_dh_auto_build-arch\:/override_dh_auto_build-arch\: prepext /g" debian/rules
+cat debian/rules; exit 0;
 
 
 # disable all dh_shlibdeps warnings
