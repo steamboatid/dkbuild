@@ -215,14 +215,14 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 
-msgpack_config = --with-msgpack=shared --enable-redis-msgpack
+msgpack_config = --with-msgpack=shared
 
 redis_config = --enable-redis \
 	--enable-redis-zstd \
 	--with-liblz4=/usr \
 	--with-liblzf=/usr \
 	--enable-redis-lz4 \
-	--with-msgpack=shared --enable-redis-msgpack
+	--with-msgpack --enable-redis-msgpack
 
 export pdo_PRIORITY
 export common_EXTENSIONS
