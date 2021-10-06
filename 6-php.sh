@@ -386,30 +386,38 @@ sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 echo \
 "#!/bin/bash
 adir=\$1
+phpapi=\$(cat debian/phpapi)
+
 cd \$adir
 pwd
 phpize >/dev/null 2>&1 && ./configure >/dev/null 2>&1 && make -iks >/dev/null 2>&1
-mkdir -p .libs
+mkdir -p .libs build
 cp modules/* .libs/ -fav
+cp modules/* build/ -fav
 
 mkdir -p ../../debian/tmp
 cp modules/* ../../debian/tmp/ -fav
+
+mkdir -p ../../debian/tmp/usr/lib/php/\$phpapi/
+cp modules/*.so ../../debian/tmp/usr/lib/php/\$phpapi/ -fav
 ">doext.sh
 
 echo \
 "#!/bin/bash
+printf \"\n\n\n\n \"
 for adir in \$(find ext -mindepth 1 -maxdepth 1 -type d | sort); do
 printf \"\n \$adir \"
 bash doext.sh \$adir >/dev/null 2>&1 &
 sleep 0.3
 done
+printf \"\n\n\n\n \"
 ">dkext.sh
 # cat dkext.sh; exit 0;
 
 DKPREPEXT="prepext\:\n\
 	\/bin\/bash \.\/dkext\.sh \n\n"
 sed -i -r "s/^prepared\: /$DKPREPEXT \nprepared\: prepext /g" debian/rules
-# sed -i -r "s/^override_dh_auto_install\:/override_dh_auto_install\: prepext /g" debian/rules
+sed -i -r "s/^override_dh_auto_install\:/override_dh_auto_install\: prepext /g" debian/rules
 sed -i -r "s/^override_dh_auto_build-arch\:/override_dh_auto_build-arch\: prepext /g" debian/rules
 sed -i -r "s/PHONY\: prepared/PHONY\: prepext prepared/g" debian/rules
 # cat debian/rules | grep "prepared"; cat debian/rules | grep "prepext";
