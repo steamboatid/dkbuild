@@ -385,13 +385,19 @@ sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
 echo \
 "#!/bin/bash
-for adir in \$(find ext -mindepth 1 -maxdepth 1 -type d | sort); do
+adir=\$1
 cd \$adir
 pwd
 phpize >/dev/null 2>&1 && ./configure >/dev/null 2>&1 && make -iks >/dev/null 2>&1
 mkdir -p .libs
 cp modules/* .libs/ -fav
-cd ../..
+">doext.sh
+
+echo \
+"#!/bin/bash
+for adir in \$(find ext -mindepth 1 -maxdepth 1 -type d | sort); do
+printf \"\n \$adir \"
+bash doext.sh \$adir
 done
 ">dkext.sh
 # cat dkext.sh; exit 0;
