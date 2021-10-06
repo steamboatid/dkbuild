@@ -217,12 +217,12 @@ apcu_config = --enable-apcu=shared
 
 msgpack_config = --with-msgpack=shared
 
-redis_config = --enable-redis \
+redis_config = --enable-redis=shared \
 	--enable-redis-zstd \
 	--with-liblz4=/usr \
 	--with-liblzf=/usr \
 	--enable-redis-lz4 \
-	--with-msgpack --enable-redis-msgpack
+	--with-msgpack=shared --enable-redis-msgpack
 
 export pdo_PRIORITY
 export common_EXTENSIONS
