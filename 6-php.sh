@@ -157,10 +157,6 @@ copy_extra_mods
 cd $BASE
 
 
-# igbinary
-#
-
-
 # iconv_config = --with-iconv=shared
 # raphf_config = --enable-raphf=shared
 
@@ -174,7 +170,43 @@ cd $BASE
 # --enable-memcached-session \
 # --enable-memcached-json
 
+extslist="gearman mcrypt uuid vips imagick apcu msgpack redis \
+http raphf iconv igbinary memcached"
 
+extconf="iconv_config = --with-iconv
+raphf_config = --enable-raphf
+http_config = --with-http \
+--enable-raphf \
+--with-iconv \
+--without-http-shared-deps \
+--enable-shared=http,raphf,iconv --disable-option-checking
+
+msgpack_config = --with-msgpack=shared
+igbinary_config = --enable-igbinary=shared
+
+memcached_config = --with-memcached \
+--with-libmemcached-dir=/usr \
+--enable-memcached-session \
+--enable-memcached-json \
+--with-msgpack=shared --enable-memcached-msgpack \
+--enable-shared=memcached,igbinary,msgpack --disable-option-checking
+
+redis_config = --enable-redis=shared \
+--enable-redis-zstd \
+--with-liblz4=/usr \
+--with-liblzf=/usr \
+--enable-redis-lz4 \
+--with-msgpack=shared --enable-redis-msgpack \
+--enable-igbinary=shared --enable-redis-igbinary \
+--enable-shared=redis,igbinary,msgpack --disable-option-checking
+
+gearman_config = --with-gearman=shared
+mcrypt_config = --with-mcrypt=shared
+uuid_config = --with-uuid=shared
+vips_config = --with-vips=shared
+imagick_config = --with-imagick=shared
+apcu_config = --enable-apcu=shared
+"
 
 echo \
 "ext_PACKAGES      += common
@@ -182,8 +214,7 @@ common_DESCRIPTION := documentation, examples and common
 
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
-gearman mcrypt uuid vips imagick apcu msgpack redis \
-http raphf iconv igbinary memcached
+${extslist}
 
 calendar_config = --enable-calendar=shared
 ctype_config = --enable-ctype=shared
@@ -203,28 +234,7 @@ sysvsem_config = --enable-sysvsem=shared
 sysvshm_config = --enable-sysvshm=shared
 tokenizer_config = --enable-tokenizer=shared
 
-gearman_config = --with-gearman=shared
-mcrypt_config = --with-mcrypt=shared
-uuid_config = --with-uuid=shared
-vips_config = --with-vips=shared
-imagick_config = --with-imagick=shared
-apcu_config = --enable-apcu=shared
-
-msgpack_config = --with-msgpack=shared
-igbinary_config = --enable-igbinary=shared
-
-redis_config = --enable-redis=shared \
---enable-redis-zstd \
---with-liblz4=/usr \
---with-liblzf=/usr \
---enable-redis-lz4 \
---with-msgpack=shared --enable-redis-msgpack
-
-memcached_config = --with-memcached \
---with-libmemcached-dir=/usr \
---enable-memcached-session \
---enable-memcached-json \
---enable-shared=memcached --disable-option-checking
+${extconf}
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -252,43 +262,9 @@ Description: Extra modules for PHP.
 echo \
 "ext_PACKAGES      += extramods
 http_DESCRIPTION := extra modules
-http_EXTENSIONS  := gearman mcrypt uuid vips imagick apcu msgpack redis \
-http raphf iconv igbinary memcached
+http_EXTENSIONS  := ${extlist}
 
-iconv_config = --with-iconv
-raphf_config = --enable-raphf
-http_config = --with-http \
---enable-raphf \
---with-iconv \
---without-http-shared-deps \
---enable-shared=http,raphf,iconv --disable-option-checking
-
-msgpack_config = --with-msgpack=shared
-igbinary_config = --enable-igbinary=shared
-
-memcached_config = --with-memcached \
---with-libmemcached-dir=/usr \
---enable-memcached-session \
---enable-memcached-json \
---with-msgpack=shared --enable-memcached-msgpack \
---enable-igbinary=shared --enable-memcached-igbinary \
---enable-shared=memcached,igbinary,msgpack --disable-option-checking
-
-gearman_config = --with-gearman=shared
-mcrypt_config = --with-mcrypt=shared
-uuid_config = --with-uuid=shared
-vips_config = --with-vips=shared
-imagick_config = --with-imagick=shared
-apcu_config = --enable-apcu=shared
-
-redis_config = --enable-redis=shared \
---enable-redis-zstd \
---with-liblz4=/usr \
---with-liblzf=/usr \
---enable-redis-lz4 \
---with-msgpack=shared --enable-redis-msgpack \
---enable-igbinary=shared --enable-redis-igbinary \
---enable-shared=redis,igbinary,msgpack --disable-option-checking
+${extconf}
 
 export memcached_EXTENSIONS
 export memcached_DESCRIPTION
@@ -301,8 +277,7 @@ fi
 #---------------------------------------------------
 DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
 --enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
---enable-memcached-igbinary --enable-memcached-msgpack \
---enable-igbinary --with-msgpack \
+--enable-memcached-msgpack \
 --enable-shared=http,raphf,iconv,memcached,redis,igbinary,msgpack,gearman,mcrypt,uuid,vips,imagick,apcu \
 --disable-option-checking \
 \n\n"
