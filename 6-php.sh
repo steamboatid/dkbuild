@@ -391,13 +391,17 @@ pwd
 phpize >/dev/null 2>&1 && ./configure >/dev/null 2>&1 && make -iks >/dev/null 2>&1
 mkdir -p .libs
 cp modules/* .libs/ -fav
+
+mkdir -p ../../debian/tmp
+cp modules/* ../../debian/tmp/ -fav
 ">doext.sh
 
 echo \
 "#!/bin/bash
 for adir in \$(find ext -mindepth 1 -maxdepth 1 -type d | sort); do
 printf \"\n \$adir \"
-bash doext.sh \$adir
+bash doext.sh \$adir >/dev/null 2>&1 &
+sleep 0.3
 done
 ">dkext.sh
 # cat dkext.sh; exit 0;
