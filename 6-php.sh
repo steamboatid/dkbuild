@@ -372,6 +372,17 @@ sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 
 
+DKPREPEXT="prepext\: \n\
+for adir in \$\(find ext -mindepth 1 -maxdepth 1 -type d\)\; do \\\\\n\
+	cd \$\$adir\; phpize\; make -j\`nproc\'\; cd \.\.\; \\\\\n\
+done\
+\n\n"
+sed -i -r "s/^prepared\: /${DKPREPEXT} \nprepared\: prepext /g" debian/rules
+sed -i -r "s/^override_dh_auto_install\:/override_dh_auto_install\: prepext /g" debian/rules
+sed -i -r "s/^override_dh_auto_build-arch\:/override_dh_auto_build-arch\: prepext /g" debian/rules
+cat debian/rules | grep dh_auto_install; exit 0;
+
+
 # disable all dh_shlibdeps warnings
 # ---------------------------------------------------
 if [[ $(grep "override_dh_shlibdeps" debian/rules | wc -l) -lt 1 ]]; then
