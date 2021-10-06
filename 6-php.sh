@@ -173,11 +173,8 @@ cd $BASE
 # 	--with-iconv=shared \
 # 	--without-http-shared-deps
 
-# memcached_config = --with-memcached \
 # 	--with-libmemcached-dir=/usr \
-# 	--enable-memcached-session \
-# 	--enable-memcached-json \
-# 	--with-msgpack --enable-memcached-msgpack
+
 
 
 
@@ -188,7 +185,7 @@ common_DESCRIPTION := documentation, examples and common
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
 gearman mcrypt uuid vips imagick apcu \
-msgpack redis
+msgpack redis memcached
 
 calendar_config = --enable-calendar=shared
 ctype_config = --enable-ctype=shared
@@ -223,6 +220,11 @@ redis_config = --enable-redis=shared \
 	--with-liblzf=/usr \
 	--enable-redis-lz4 \
 	--with-msgpack=shared --enable-redis-msgpack
+
+memcached_config = --with-memcached=shared \
+	--enable-memcached-session \
+	--enable-memcached-json \
+	--with-msgpack=shared --enable-memcached-msgpack
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -362,9 +364,9 @@ export common_DESCRIPTION
 # --enable-memcached-msgpack
 # --with-msgpack --enable-redis-msgpack \
 
-DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
---enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
-\n\n"
+# --enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
+
+DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \n\n"
 # printf "\n\n $DKCONF \n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
