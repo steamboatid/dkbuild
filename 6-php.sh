@@ -275,14 +275,13 @@ export extramods_DESCRIPTION
 fi
 
 
+# --enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
+# --enable-memcached-msgpack \
+# --enable-shared=http,raphf,iconv,memcached,redis,msgpack,gearman,mcrypt,uuid,vips,imagick,apcu \
 
 # static build
 #---------------------------------------------------
-DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
---enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
---enable-memcached-msgpack \
---enable-shared=http,raphf,iconv,memcached,redis,msgpack,gearman,mcrypt,uuid,vips,imagick,apcu \
---disable-option-checking \
+DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv --disable-option-checking \
 \n\n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
