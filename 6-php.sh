@@ -170,14 +170,20 @@ cd $BASE
 # --enable-memcached-session \
 # --enable-memcached-json
 
-# igbinary
+# igbinary  memcached
 # igbinary_config = --enable-igbinary=shared
 # --enable-igbinary=shared --enable-redis-igbinary \
 # --with-msgpack=shared --enable-memcached-msgpack \
 
+# memcached_config = --with-memcached \
+# --with-libmemcached-dir=/usr \
+# --enable-memcached-session \
+# --enable-memcached-json \
+# --enable-shared=memcached,msgpack --disable-option-checking
+
 
 extslist="gearman mcrypt uuid vips imagick apcu msgpack redis \
-http raphf iconv memcached"
+http raphf iconv"
 
 extconf="iconv_config = --with-iconv
 raphf_config = --enable-raphf
@@ -188,12 +194,6 @@ http_config = --with-http \
 --enable-shared=http,raphf,iconv --disable-option-checking
 
 msgpack_config = --with-msgpack=shared
-
-memcached_config = --with-memcached \
---with-libmemcached-dir=/usr \
---enable-memcached-session \
---enable-memcached-json \
---enable-shared=memcached,msgpack --disable-option-checking
 
 redis_config = --enable-redis=shared \
 --enable-redis-zstd \
