@@ -390,7 +390,7 @@ cd \$adir
 pwd
 phpize >/dev/null 2>&1 && ./configure >/dev/null 2>&1 && make -iks >/dev/null 2>&1
 mkdir -p .libs
-cp modules/* ./libs/ -fav
+cp modules/* .libs/ -fav
 cd ../..
 done
 ">dkext.sh
