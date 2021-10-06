@@ -59,11 +59,11 @@ prepare_source() {
 	--delete --exclude '.git' \
 	/root/org.src/git-redis/ $BASE/ext/redis/
 
-	printf "\n-- rsync parallel \n"
-	mkdir -p $BASE/ext/parallel/
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	--delete --exclude '.git' \
-	/root/org.src/git-parallel/ $BASE/ext/parallel/
+	# printf "\n-- rsync parallel \n"
+	# mkdir -p $BASE/ext/parallel/
+	# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	# --delete --exclude '.git' \
+	# /root/org.src/git-parallel/ $BASE/ext/parallel/
 
 	# printf "\n-- rsync eio \n"
 	# mkdir -p $BASE/ext/eio/
@@ -71,11 +71,11 @@ prepare_source() {
 	# --delete --exclude '.git' \
 	# /root/org.src/git-eio/ $BASE/ext/eio/
 
-	printf "\n-- rsync ev \n"
-	mkdir -p $BASE/ext/ev/
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	--delete --exclude '.git' \
-	/root/org.src/git-ev/ $BASE/ext/ev/
+	# printf "\n-- rsync ev \n"
+	# mkdir -p $BASE/ext/ev/
+	# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	# --delete --exclude '.git' \
+	# /root/org.src/git-ev/ $BASE/ext/ev/
 	# exit 0;
 
 
@@ -276,7 +276,8 @@ raphf_config = --enable-raphf=shared
 http_config = --with-http=shared \
 --enable-raphf=shared \
 --with-iconv=shared \
---without-http-shared-deps
+--without-http-shared-deps \
+--enable-shared=http,raphf,iconv --disable-option-checking
 export http_EXTENSIONS
 export http_DESCRIPTION
 ">debian/rules.d/ext-http.mk
@@ -307,7 +308,8 @@ raphf_config = --enable-raphf=shared
 http_config = --with-http=shared \
 --enable-raphf=shared \
 --with-iconv=shared \
---without-http-shared-deps
+--without-http-shared-deps \
+--enable-shared=http,raphf,iconv --disable-option-checking
 
 msgpack_config = --with-msgpack=shared --enable-redis-msgpack
 memcached_config = --with-memcached=shared \
@@ -375,6 +377,10 @@ if [[ $(grep "override_dh_shlibdeps" debian/rules | wc -l) -lt 1 ]]; then
 		dh_shlibdeps --  --warnings=0 --ignore-missing-info \n\n"
 	sed -i -r "s/\.PHONY/${DKSHLIBDEPS} \n\.PHONY/g" debian/rules
 fi
+
+sed -i -r "s/PHP_ADD_EXTENSION_DEP\(\[http\], \[raphf\]/dnl PHP_ADD_EXTENSION_DEP\(\[http\], \[raphf\]/g" ext/http/config9.m4
+sed -i -r "s/(.*)(true)\)/\1false\)/g" ext/http/config9.m4
+# cat ext/http/config9.m4; exit 0
 
 
 # if [[ $(grep "override_dh_auto_build\:" debian/rules | wc -l) -lt 1 ]]; then
