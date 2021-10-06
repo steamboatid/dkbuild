@@ -264,13 +264,13 @@ Description: Extra modules for PHP.
 
 echo \
 "ext_PACKAGES      += extramods
-http_DESCRIPTION := extra modules
-http_EXTENSIONS  := ${extlist}
+extramods_DESCRIPTION := extra modules
+extramods_EXTENSIONS  := ${extlist}
 
 ${extconf}
 
-export memcached_EXTENSIONS
-export memcached_DESCRIPTION
+export extramods_EXTENSIONS
+export extramods_DESCRIPTION
 ">debian/rules.d/ext-extramods.mk
 fi
 
