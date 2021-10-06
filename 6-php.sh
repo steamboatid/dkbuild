@@ -182,17 +182,10 @@ cd $BASE
 # --enable-shared=memcached,msgpack --disable-option-checking
 
 # http raphf iconv
-# iconv_config = --with-iconv
-# raphf_config = --enable-raphf
-# http_config = --with-http \
-# --enable-raphf \
-# --with-iconv \
-# --without-http-shared-deps \
-# --enable-shared=http,raphf,iconv --disable-option-checking
 
 
 extslist="gearman mcrypt uuid vips imagick apcu msgpack redis \
-"
+http raphf iconv"
 
 extconf="msgpack_config = --with-msgpack=shared
 
@@ -203,6 +196,14 @@ redis_config = --enable-redis=shared \
 --enable-redis-lz4 \
 --with-msgpack=shared --enable-redis-msgpack \
 --enable-shared=redis,msgpack --disable-option-checking
+
+iconv_config = --with-iconv
+raphf_config = --enable-raphf
+http_config = --with-http \
+--enable-raphf \
+--with-iconv \
+--without-http-shared-deps \
+--enable-shared=http,raphf,iconv --disable-option-checking
 
 gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
