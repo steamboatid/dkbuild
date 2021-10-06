@@ -302,6 +302,7 @@ fi
 DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
 --enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
 --enable-memcached-igbinary --enable-memcached-msgpack \
+--enable-igbinary --with-msgpack \
 --enable-shared=http,raphf,iconv,memcached,redis,igbinary,msgpack,gearman,mcrypt,uuid,vips,imagick,apcu \
 --disable-option-checking \
 \n\n"
