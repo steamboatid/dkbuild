@@ -271,11 +271,11 @@ echo \
 "ext_PACKAGES      += http
 http_DESCRIPTION := http raphf iconv
 http_EXTENSIONS  := http raphf iconv
-iconv_config = --with-iconv=shared
-raphf_config = --enable-raphf=shared
-http_config = --with-http=shared \
---enable-raphf=shared \
---with-iconv=shared \
+iconv_config = --with-iconv
+raphf_config = --enable-raphf
+http_config = --with-http \
+--enable-raphf \
+--with-iconv \
 --without-http-shared-deps \
 --enable-shared=http,raphf,iconv --disable-option-checking
 export http_EXTENSIONS
@@ -303,11 +303,11 @@ http_DESCRIPTION := extra modules
 http_EXTENSIONS  := http raphf iconv msgpack memcached \
 redis gearman mcrypt uuid vips imagic apcu
 
-iconv_config = --with-iconv=shared
-raphf_config = --enable-raphf=shared
-http_config = --with-http=shared \
---enable-raphf=shared \
---with-iconv=shared \
+iconv_config = --with-iconv
+raphf_config = --enable-raphf
+http_config = --with-http \
+--enable-raphf \
+--with-iconv \
 --without-http-shared-deps \
 --enable-shared=http,raphf,iconv --disable-option-checking
 
