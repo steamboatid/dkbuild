@@ -182,30 +182,30 @@ cd $BASE
 # --enable-shared=memcached,msgpack --disable-option-checking
 
 # http raphf iconv
+# iconv_config = --with-iconv
+# raphf_config = --enable-raphf
+# http_config = --with-http \
+# --enable-raphf \
+# --with-iconv \
+# --without-http-shared-deps \
+# --enable-shared=http,raphf,iconv --disable-option-checking
+
+# msgpack redis
+# msgpack_config = --with-msgpack=shared
+
+# redis_config = --enable-redis=shared \
+# --enable-redis-zstd \
+# --with-liblz4=/usr \
+# --with-liblzf=/usr \
+# --enable-redis-lz4 \
+# --with-msgpack=shared --enable-redis-msgpack \
+# --enable-shared=redis,msgpack --disable-option-checking
 
 
-extslist="gearman mcrypt uuid vips imagick apcu msgpack redis \
-http raphf iconv"
 
-extconf="msgpack_config = --with-msgpack=shared
+extslist="gearman mcrypt uuid vips imagick apcu"
 
-redis_config = --enable-redis=shared \
---enable-redis-zstd \
---with-liblz4=/usr \
---with-liblzf=/usr \
---enable-redis-lz4 \
---with-msgpack=shared --enable-redis-msgpack \
---enable-shared=redis,msgpack --disable-option-checking
-
-iconv_config = --with-iconv
-raphf_config = --enable-raphf
-http_config = --with-http \
---enable-raphf \
---with-iconv \
---without-http-shared-deps \
---enable-shared=http,raphf,iconv --disable-option-checking
-
-gearman_config = --with-gearman=shared
+extconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
 uuid_config = --with-uuid=shared
 vips_config = --with-vips=shared
@@ -248,33 +248,33 @@ export common_DESCRIPTION
 ">debian/rules.d/ext-common.mk
 
 
-if [[ $(grep "-extramods" debian/control | wc -l) -lt 1 ]]; then
-	echo \
-"
+# if [[ $(grep "-extramods" debian/control | wc -l) -lt 1 ]]; then
+# 	echo \
+# "
 
-Package: php8.0-extramods
-Architecture: any
-Depends: ucf,
-         \${misc:Depends},
-         \${php:Depends},
-         \${shlibs:Depends}
-Pre-Depends: \${misc:Pre-Depends}
-Built-Using: \${php:Built-Using}
-Description: Extra modules for PHP.
-">>debian/control
+# Package: php8.0-extramods
+# Architecture: any
+# Depends: ucf,
+#          \${misc:Depends},
+#          \${php:Depends},
+#          \${shlibs:Depends}
+# Pre-Depends: \${misc:Pre-Depends}
+# Built-Using: \${php:Built-Using}
+# Description: Extra modules for PHP.
+# ">>debian/control
 
 
-echo \
-"ext_PACKAGES      += extramods
-extramods_DESCRIPTION := extra modules
-extramods_EXTENSIONS  := ${extlist}
+# echo \
+# "ext_PACKAGES      += extramods
+# extramods_DESCRIPTION := extra modules
+# extramods_EXTENSIONS  := ${extlist}
 
-${extconf}
+# ${extconf}
 
-export extramods_EXTENSIONS
-export extramods_DESCRIPTION
-">debian/rules.d/ext-extramods.mk
-fi
+# export extramods_EXTENSIONS
+# export extramods_DESCRIPTION
+# ">debian/rules.d/ext-extramods.mk
+# fi
 
 
 # --enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
