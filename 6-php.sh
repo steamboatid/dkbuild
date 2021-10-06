@@ -418,7 +418,7 @@ sed -i -r "s/(.*)(true)\)/\1false\)/g" ext/http/config9.m4
 # cat debian/rules | grep "PCRE_JIT) "; exit 0;
 
 #-- continue on missing
-sed -i -r "s/dh_install \-\-fail-missing/dh_install/g" debian/rules
+# sed -i -r "s/dh_install \-\-fail-missing/dh_install/g" debian/rules
 
 #--- fix raphf bug
 ln -sf $BASE/ext/raphf/php_raphf.h $BASE/ext/raphf/src/php_raphf.h
