@@ -187,6 +187,11 @@ cd $BASE
 # 	--enable-memcached-json \
 # 	--with-msgpack=shared --enable-memcached-msgpack
 
+# memcached_config = --with-memcached=shared \
+# --with-libmemcached-dir=/usr \
+# --enable-memcached-session \
+# --enable-memcached-json
+
 
 
 echo \
@@ -271,11 +276,11 @@ http_config = --with-http \
 
 msgpack_config = --with-msgpack=shared
 
-memcached_config = --with-memcached=shared \
+memcached_config = --with-memcached \
 --with-libmemcached-dir=/usr \
 --enable-memcached-session \
---enable-memcached-json
-
+--enable-memcached-json \
+--enable-shared=memcached --disable-option-checking
 
 gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
@@ -320,9 +325,11 @@ fi
 # --enable-memcached-msgpack
 # --with-msgpack --enable-redis-msgpack \
 
-# --enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
 
-DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \n\n"
+DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv \
+--enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
+--enable-shared=http,raphf,iconv,memcached --disable-option-checking \
+\n\n"
 # printf "\n\n $DKCONF \n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
