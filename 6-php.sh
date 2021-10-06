@@ -201,7 +201,7 @@ common_DESCRIPTION := documentation, examples and common
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
 gearman mcrypt uuid vips imagick apcu \
-msgpack redis memcached
+msgpack redis
 
 calendar_config = --enable-calendar=shared
 ctype_config = --enable-ctype=shared
