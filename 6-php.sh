@@ -378,8 +378,8 @@ for adir in \$\(find ext -mindepth 1 -maxdepth 1 -type d\)\; do \\\\\n\
 done\
 \n\n"
 sed -i -r "s/^prepared\: /${DKPREPEXT} \nprepared\: prepext /g" debian/rules
-sed -i -r "s/^override_dh_auto_install\:/override_dh_auto_install\: prepext /g" debian/rules
-sed -i -r "s/^override_dh_auto_build-arch\:/override_dh_auto_build-arch\: prepext /g" debian/rules
+# sed -i -r "s/^override_dh_auto_install\:/override_dh_auto_install\: prepext /g" debian/rules
+# sed -i -r "s/^override_dh_auto_build-arch\:/override_dh_auto_build-arch\: prepext /g" debian/rules
 # cat debian/rules | grep dh_auto_install; exit 0;
 
 
