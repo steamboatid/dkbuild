@@ -176,7 +176,7 @@ cd $BASE
 
 
 
-commonlist="gearman mcrypt uuid vips imagick apcu iconv dbase stats taint"
+commonlist="gearman mcrypt uuid vips imagick apcu iconv"
 
 commonconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
@@ -185,15 +185,14 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 iconv_config = --with-iconv=shared
+"
+
+extlist="parallel sync dbase stats taint"
+extconf="parallel_config = --enable-zts --enable-parallel=shared
+sync_config = --enable-zts --enable-sync=shared
 dbase_config = --enable-dbase=shared
 stats_config = --enable-stats=shared
 taint_config = --enable-taint=shared
-"
-
-extlist="parallel v8 sync"
-extconf="parallel_config = --enable-zts --enable-parallel=shared
-v8_config = --enable-zts --with-v8=shared
-sync_config = --enable-zts --enable-sync=shared
 "
 
 echo \
