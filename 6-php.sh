@@ -181,7 +181,7 @@ cd $BASE
 # --enable-shared=http --disable-option-checking
 
 
-commonlist="gearman mcrypt uuid vips imagick apcu msgpack dbase stats"
+commonlist="gearman mcrypt uuid vips imagick apcu msgpack dbase stats iconv"
 commonconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
 uuid_config = --with-uuid=shared
