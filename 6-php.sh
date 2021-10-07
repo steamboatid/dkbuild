@@ -171,7 +171,7 @@ cd $BASE
 # igbinary_config = --enable-igbinary=shared
 
 
-commonlist="gearman mcrypt uuid vips imagick apcu iconv http msgpack"
+commonlist="gearman mcrypt uuid vips imagick apcu http msgpack"
 
 commonconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
@@ -189,7 +189,7 @@ http_config = --with-http=shared \
 --enable-raphf \
 --with-iconv \
 --without-http-shared-deps \
---enable-shared=http,raphf,iconv --disable-option-checking
+--enable-shared=http --disable-option-checking
 "
 
 extlist="parallel sync dbase stats"
@@ -268,10 +268,10 @@ fi
 
 # static build
 #---------------------------------------------------
-# DKCONF="DK_CONFIG \:\= --with-http=shared --enable-raphf=shared --with-iconv=shared --without-http-shared-deps \
-# --disable-option-checking \n\n"
-# sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
-# sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
+DKCONF="DK_CONFIG \:\= --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps \
+--disable-option-checking --enable-shared=http \n\n"
+sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
+sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 # printf "\n\n $DKCONF \n"
 
 
