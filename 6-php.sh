@@ -176,15 +176,24 @@ cd $BASE
 
 
 
-extslist="gearman mcrypt uuid vips imagick apcu iconv"
+commonlist="gearman mcrypt uuid vips imagick apcu iconv dbase stats taint"
 
-extconf="gearman_config = --with-gearman=shared
+commonconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
 uuid_config = --with-uuid=shared
 vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
-iconv_config = --with-iconv
+iconv_config = --with-iconv=shared
+dbase_config = --enable-dbase=shared
+stats_config = --enable-stats=shared
+taint_config = --enable-taint=shared
+"
+
+extlist="parallel v8 sync"
+extconf="parallel_config = --enable-zts --enable-parallel=shared
+v8_config = --enable-zts --with-v8=shared
+sync_config = --enable-zts --enable-sync=shared
 "
 
 echo \
@@ -193,7 +202,7 @@ common_DESCRIPTION := documentation, examples and common
 
 common_EXTENSIONS  := calendar ctype exif fileinfo ffi ftp gettext pdo phar posix \
 shmop sockets sysvmsg sysvsem sysvshm tokenizer \
-${extslist}
+${commonlist}
 
 calendar_config = --enable-calendar=shared
 ctype_config = --enable-ctype=shared
@@ -213,7 +222,7 @@ sysvsem_config = --enable-sysvsem=shared
 sysvshm_config = --enable-sysvshm=shared
 tokenizer_config = --enable-tokenizer=shared
 
-${extconf}
+${commonconf}
 
 export pdo_PRIORITY
 export common_EXTENSIONS
@@ -222,33 +231,32 @@ export common_DESCRIPTION
 ">debian/rules.d/ext-common.mk
 
 
-# if [[ $(grep "-extramods" debian/control | wc -l) -lt 1 ]]; then
-# 	echo \
-# "
+if [[ $(grep "-extramods" debian/control | wc -l) -lt 1 ]]; then
+	echo \
+"
 
-# Package: php8.0-extramods
-# Architecture: any
-# Depends: ucf,
-#          \${misc:Depends},
-#          \${php:Depends},
-#          \${shlibs:Depends}
-# Pre-Depends: \${misc:Pre-Depends}
-# Built-Using: \${php:Built-Using}
-# Description: Extra modules for PHP.
-# ">>debian/control
+Package: php8.0-extramods
+Architecture: any
+Depends: ucf,
+         \${misc:Depends},
+         \${php:Depends},
+         \${shlibs:Depends}
+Pre-Depends: \${misc:Pre-Depends}
+Built-Using: \${php:Built-Using}
+Description: Extra modules for PHP.
+">>debian/control
 
+	echo \
+"ext_PACKAGES      += extramods
+extramods_DESCRIPTION := extra modules
+extramods_EXTENSIONS  := ${extlist}
 
-# echo \
-# "ext_PACKAGES      += extramods
-# extramods_DESCRIPTION := extra modules
-# extramods_EXTENSIONS  := ${extlist}
+${extconf}
 
-# ${extconf}
-
-# export extramods_EXTENSIONS
-# export extramods_DESCRIPTION
-# ">debian/rules.d/ext-extramods.mk
-# fi
+export extramods_EXTENSIONS
+export extramods_DESCRIPTION
+">debian/rules.d/ext-extramods.mk
+fi
 
 
 # --enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
@@ -319,7 +327,7 @@ sed -i -r "s/(.*)(true)\)/\1false\)/g" ext/http/config9.m4
 
 # activate zts and parallel extension
 #---------------------------------------------------
-DKCLICONF="--enable-zts --enable-parallel=shared"
+DKCLICONF="--enable-zts --enable-parallel=shared --with-v8=shared --enable-sync=shared"
 sed -i -r "s/export cli_config \= /export cli_config = ${DKCLICONF} /g" debian/rules
 
 
