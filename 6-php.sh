@@ -264,7 +264,7 @@ fi
 
 # static build
 #---------------------------------------------------
-DKCONF="DK_CONFIG \:\= --with-http --enable-raphf --with-iconv --disable-option-checking \
+DKCONF="DK_CONFIG \:\= --with-http=shared --enable-raphf=shared --with-iconv=shared --disable-option-checking \
 \n\n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
