@@ -137,6 +137,7 @@ cd $BASE
 # 	--enable-raphf=shared \
 # 	--with-iconv=shared \
 # 	--without-http-shared-deps
+# --without-http-shared-deps \
 
 # memcached_config = --with-memcached=shared \
 # --with-libmemcached-dir=/usr \
@@ -187,7 +188,6 @@ raphf_config = --enable-raphf=shared
 http_config = --with-http=shared \
 --enable-raphf=shared \
 --with-iconv=shared \
---without-http-shared-deps \
 --enable-shared=http,raphf,iconv --disable-option-checking
 "
 
