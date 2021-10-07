@@ -166,9 +166,11 @@ cd $BASE
 # --with-msgpack=shared --enable-redis-msgpack \
 # --enable-shared=redis,msgpack --disable-option-checking
 
+#  igbinary
+# igbinary_config = --enable-igbinary=shared
 
 
-commonlist="gearman mcrypt uuid vips imagick apcu iconv http raphf iconv msgpack igbinary"
+commonlist="gearman mcrypt uuid vips imagick apcu iconv http raphf iconv msgpack"
 
 commonconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
@@ -179,7 +181,6 @@ apcu_config = --enable-apcu=shared
 iconv_config = --with-iconv=shared
 
 msgpack_config = --with-msgpack=shared
-igbinary_config = --enable-igbinary=shared
 
 iconv_config = --with-iconv=shared
 raphf_config = --enable-raphf=shared
