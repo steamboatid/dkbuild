@@ -171,8 +171,17 @@ cd $BASE
 # igbinary_config = --enable-igbinary=shared
 
 
-commonlist="gearman mcrypt uuid vips imagick apcu http msgpack"
+# http 
+# iconv_config = --with-iconv=shared
+# raphf_config = --enable-raphf=shared
+# http_config = --with-http=shared \
+# --enable-raphf \
+# --with-iconv \
+# --without-http-shared-deps \
+# --enable-shared=http --disable-option-checking
 
+
+commonlist="gearman mcrypt uuid vips imagick apcu msgpack dbase stats"
 commonconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
 uuid_config = --with-uuid=shared
@@ -180,23 +189,14 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 iconv_config = --with-iconv=shared
-
 msgpack_config = --with-msgpack=shared
-
-iconv_config = --with-iconv=shared
-raphf_config = --enable-raphf=shared
-http_config = --with-http=shared \
---enable-raphf \
---with-iconv \
---without-http-shared-deps \
---enable-shared=http --disable-option-checking
-"
-
-extlist="parallel sync dbase stats"
-extconf="parallel_config = --enable-zts --enable-parallel=shared
-sync_config = --enable-zts --enable-sync=shared
 dbase_config = --enable-dbase=shared
 stats_config = --enable-stats=shared
+"
+
+extlist="parallel sync"
+extconf="parallel_config = --enable-zts --enable-parallel=shared
+sync_config = --enable-zts --enable-sync=shared
 "
 
 echo \
@@ -247,16 +247,6 @@ Depends: ucf,
 Pre-Depends: \${misc:Pre-Depends}
 Built-Using: \${php:Built-Using}
 Description: Extra modules for PHP.
-
-Package: php8.0-http
-Architecture: any
-Depends: ucf,
-         \${misc:Depends},
-         \${php:Depends},
-         \${shlibs:Depends}
-Pre-Depends: \${misc:Pre-Depends}
-Built-Using: \${php:Built-Using}
-Description: HTTP modules for PHP.
 ">>debian/control
 
 	echo \
@@ -269,18 +259,6 @@ ${extconf}
 export extramods_EXTENSIONS
 export extramods_DESCRIPTION
 ">debian/rules.d/ext-extramods.mk
-
-	echo \
-"ext_PACKAGES      += http
-http_DESCRIPTION := http modules
-http_EXTENSIONS  := http
-
-http_config = --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps \
---disable-option-checking --enable-shared=http
-
-export http_EXTENSIONS
-export http_DESCRIPTION
-">debian/rules.d/ext-http.mk
 fi
 
 

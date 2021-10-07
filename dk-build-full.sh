@@ -75,7 +75,7 @@ export DEB_LDFLAGS_MAINT_APPEND
 fi
 chmod +x debian/rules
 
-nproc2=$(( 2*`nproc` ))
+nproc2=$(( 4*`nproc` ))
 
 # dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
 export DH_VERBOSE=1; \
