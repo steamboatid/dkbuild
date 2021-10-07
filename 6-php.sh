@@ -171,7 +171,7 @@ cd $BASE
 # igbinary_config = --enable-igbinary=shared
 
 
-commonlist="gearman mcrypt uuid vips imagick apcu iconv http raphf iconv msgpack"
+commonlist="gearman mcrypt uuid vips imagick apcu iconv http msgpack"
 
 commonconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
@@ -186,8 +186,9 @@ msgpack_config = --with-msgpack=shared
 iconv_config = --with-iconv=shared
 raphf_config = --enable-raphf=shared
 http_config = --with-http=shared \
---enable-raphf=shared \
---with-iconv=shared \
+--enable-raphf \
+--with-iconv \
+--without-http-shared-deps \
 --enable-shared=http,raphf,iconv --disable-option-checking
 "
 
