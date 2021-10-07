@@ -267,11 +267,10 @@ fi
 
 # static build
 #---------------------------------------------------
-DKCONF="DK_CONFIG \:\= --with-http=shared --enable-raphf=shared --with-iconv=shared --without-http-shared-deps \
---disable-option-checking \
-\n\n"
-sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
-sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
+# DKCONF="DK_CONFIG \:\= --with-http=shared --enable-raphf=shared --with-iconv=shared --without-http-shared-deps \
+# --disable-option-checking \n\n"
+# sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
+# sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 # printf "\n\n $DKCONF \n"
 
 
@@ -323,8 +322,8 @@ if [[ $(grep "override_dh_shlibdeps" debian/rules | wc -l) -lt 1 ]]; then
 	sed -i -r "s/\.PHONY/${DKSHLIBDEPS} \n\.PHONY/g" debian/rules
 fi
 
-sed -i -r "s/PHP_ADD_EXTENSION_DEP\(\[http\], \[raphf\]/dnl PHP_ADD_EXTENSION_DEP\(\[http\], \[raphf\]/g" ext/http/config9.m4
-sed -i -r "s/(.*)(true)\)/\1false\)/g" ext/http/config9.m4
+# sed -i -r "s/PHP_ADD_EXTENSION_DEP\(\[http\], \[raphf\]/dnl PHP_ADD_EXTENSION_DEP\(\[http\], \[raphf\]/g" ext/http/config9.m4
+# sed -i -r "s/(.*)(true)\)/\1false\)/g" ext/http/config9.m4
 # cat ext/http/config9.m4; exit 0
 
 
