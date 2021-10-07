@@ -40,36 +40,14 @@ prepare_source() {
 	--delete --exclude '.git' \
 	$BORG/ $BASE/
 
-	printf "\n-- rsync gearman \n"
-	mkdir -p $BASE/ext/gearman/
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	--delete --exclude '.git' \
-	/root/org.src/git-gearman/ $BASE/ext/gearman/
-
-	printf "\n-- rsync http \n"
-	mkdir -p $BASE/ext/http/
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	--delete --exclude '.git' \
-	/root/org.src/git-http/ $BASE/ext/http/
-
-	printf "\n-- rsync raphf \n"
-	rm -rf /root/org.src/git-raph
-	mkdir -p $BASE/ext/raphf/
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	--delete --exclude '.git' \
-	/root/org.src/git-raphf/ $BASE/ext/raphf/
-
-	printf "\n-- rsync redis \n"
-	mkdir -p $BASE/ext/redis/
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	--delete --exclude '.git' \
-	/root/org.src/git-redis/ $BASE/ext/redis/
-
-	# printf "\n-- rsync parallel \n"
-	# mkdir -p $BASE/ext/parallel/
-	# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	# --delete --exclude '.git' \
-	# /root/org.src/git-parallel/ $BASE/ext/parallel/
+	mods=( gearman http raphf redis parallel dbase memcache mathstats sync taint phpv8 )
+	for amod in "${mods[@]}"; do
+		printf "\n-- rsync $amod \n"
+		mkdir -p $BASE/ext/$amod/
+		rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+		--delete --exclude '.git' \
+		/root/org.src/git-$amod/ $BASE/ext/$amod/
+	done
 
 	# printf "\n-- rsync eio \n"
 	# mkdir -p $BASE/ext/eio/
@@ -77,11 +55,6 @@ prepare_source() {
 	# --delete --exclude '.git' \
 	# /root/org.src/git-eio/ $BASE/ext/eio/
 
-	# printf "\n-- rsync ev \n"
-	# mkdir -p $BASE/ext/ev/
-	# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	# --delete --exclude '.git' \
-	# /root/org.src/git-ev/ $BASE/ext/ev/
 	# exit 0;
 
 
@@ -203,7 +176,7 @@ cd $BASE
 
 
 
-extslist="gearman mcrypt uuid vips imagick apcu"
+extslist="gearman mcrypt uuid vips imagick apcu iconv"
 
 extconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
@@ -211,6 +184,7 @@ uuid_config = --with-uuid=shared
 vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
+iconv_config = --with-iconv
 "
 
 echo \

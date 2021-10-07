@@ -46,6 +46,13 @@ get_update_new_github "krakjoe/parallel" "/root/org.src/git-parallel"
 get_update_new_github "rosmanov/pecl-eio" "/root/org.src/git-eio"
 get_update_new_bitbucket "osmanov/pecl-ev.git" "/root/org.src/git-ev"
 
+get_update_new_github "php/pecl-database-dbase" "/root/org.src/git-dbase"
+get_update_new_github "php/pecl-caching-memcache" "/root/org.src/git-memcache"
+get_update_new_github "php/pecl-math-stats" "/root/org.src/git-mathstats"
+get_update_new_github "pecl-system-sync" "/root/org.src/git-sync"
+get_update_new_github "laruence/taint" "/root/org.src/git-taint"
+get_update_new_github "phpv8/php-v8" "/root/org.src/git-phpv8"
+
 
 #--- sync to src
 #-------------------------------------------
