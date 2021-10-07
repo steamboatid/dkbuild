@@ -40,7 +40,7 @@ prepare_source() {
 	--delete --exclude '.git' \
 	$BORG/ $BASE/
 
-	mods=( gearman http raphf redis parallel dbase mathstats sync phpv8 )
+	mods=( gearman http raphf redis parallel dbase mathstats sync )
 	for amod in "${mods[@]}"; do
 		printf "\n-- rsync $amod \n"
 		mkdir -p $BASE/ext/$amod/
@@ -329,7 +329,7 @@ sed -i -r "s/(.*)(true)\)/\1false\)/g" ext/http/config9.m4
 
 # activate zts and parallel extension
 #---------------------------------------------------
-DKCLICONF="--enable-zts --enable-parallel=shared --with-v8=shared --enable-sync=shared"
+DKCLICONF="--enable-zts --enable-parallel=shared --enable-sync=shared"
 sed -i -r "s/export cli_config \= /export cli_config = ${DKCLICONF} /g" debian/rules
 
 
