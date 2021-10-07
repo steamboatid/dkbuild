@@ -154,14 +154,6 @@ cd $BASE
 # --enable-memcached-json \
 # --enable-shared=memcached,msgpack --disable-option-checking
 
-# http raphf iconv
-# iconv_config = --with-iconv
-# raphf_config = --enable-raphf
-# http_config = --with-http \
-# --enable-raphf \
-# --with-iconv \
-# --without-http-shared-deps \
-# --enable-shared=http,raphf,iconv --disable-option-checking
 
 # msgpack redis
 # msgpack_config = --with-msgpack=shared
@@ -176,7 +168,7 @@ cd $BASE
 
 
 
-commonlist="gearman mcrypt uuid vips imagick apcu iconv"
+commonlist="gearman mcrypt uuid vips imagick apcu iconv http raphf iconv msgpack igbinary"
 
 commonconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
@@ -185,6 +177,17 @@ vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
 iconv_config = --with-iconv=shared
+
+msgpack_config = --with-msgpack=shared
+igbinary_config = --enable-igbinary=shared
+
+iconv_config = --with-iconv=shared
+raphf_config = --enable-raphf=shared
+http_config = --with-http=shared \
+--enable-raphf=shared \
+--with-iconv=shared \
+--without-http-shared-deps \
+--enable-shared=http,raphf,iconv --disable-option-checking
 "
 
 extlist="parallel sync dbase stats taint"
@@ -264,7 +267,8 @@ fi
 
 # static build
 #---------------------------------------------------
-DKCONF="DK_CONFIG \:\= --with-http=shared --enable-raphf=shared --with-iconv=shared --disable-option-checking \
+DKCONF="DK_CONFIG \:\= --with-http=shared --enable-raphf=shared --with-iconv=shared --without-http-shared-deps \
+--disable-option-checking \
 \n\n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
