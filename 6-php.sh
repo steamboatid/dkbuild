@@ -247,6 +247,16 @@ Depends: ucf,
 Pre-Depends: \${misc:Pre-Depends}
 Built-Using: \${php:Built-Using}
 Description: Extra modules for PHP.
+
+Package: php8.0-http
+Architecture: any
+Depends: ucf,
+         \${misc:Depends},
+         \${php:Depends},
+         \${shlibs:Depends}
+Pre-Depends: \${misc:Pre-Depends}
+Built-Using: \${php:Built-Using}
+Description: HTTP modules for PHP.
 ">>debian/control
 
 	echo \
@@ -259,6 +269,18 @@ ${extconf}
 export extramods_EXTENSIONS
 export extramods_DESCRIPTION
 ">debian/rules.d/ext-extramods.mk
+
+	echo \
+"ext_PACKAGES      += http
+http_DESCRIPTION := http modules
+http_EXTENSIONS  := http
+
+http_config = --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps \
+--disable-option-checking --enable-shared=http
+
+export http_EXTENSIONS
+export http_DESCRIPTION
+">debian/rules.d/ext-http.mk
 fi
 
 
@@ -339,6 +361,7 @@ sed -i -r "s/export cli_config \= /export cli_config = ${DKCLICONF} /g" debian/r
 sed -i -r "s/dh_install \-\-fail-missing/dh_install/g" debian/rules
 # sed -i -r "s/disable\-static/enable\-static/g" debian/rules
 # sed -i -r "s/make -f/make -f -B -i -k/" debian/rules
+sed -i -r "s/^\#\$\(info/\$\(info/" debian/rules
 
 
 # fix raphf bug
