@@ -40,7 +40,7 @@ prepare_source() {
 	--delete --exclude '.git' \
 	$BORG/ $BASE/
 
-	mods=( gearman http raphf redis parallel dbase memcache mathstats sync taint phpv8 )
+	mods=( gearman http raphf redis parallel dbase mathstats sync phpv8 )
 	for amod in "${mods[@]}"; do
 		printf "\n-- rsync $amod \n"
 		mkdir -p $BASE/ext/$amod/
@@ -190,12 +190,11 @@ http_config = --with-http=shared \
 --enable-shared=http,raphf,iconv --disable-option-checking
 "
 
-extlist="parallel sync dbase stats taint"
+extlist="parallel sync dbase stats"
 extconf="parallel_config = --enable-zts --enable-parallel=shared
 sync_config = --enable-zts --enable-sync=shared
 dbase_config = --enable-dbase=shared
 stats_config = --enable-stats=shared
-taint_config = --enable-taint=shared
 "
 
 echo \
