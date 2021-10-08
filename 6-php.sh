@@ -141,10 +141,6 @@ cd $BASE
 # 	--without-http-shared-deps
 # --without-http-shared-deps \
 
-# memcached_config = --with-memcached=shared \
-# --with-libmemcached-dir=/usr \
-# --enable-memcached-session \
-# --enable-memcached-json
 
 # igbinary  memcached
 # igbinary_config = --enable-igbinary=shared
@@ -196,7 +192,7 @@ raphf_config = --enable-raphf=shared
 raphf_PRIORITY := 40
 export raphf_PRIORITY
 
-http_config = --with-http=shared
+http_config = --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps
 http_PRIORITY := 90
 export http_PRIORITY
 
@@ -213,11 +209,11 @@ redis_PRIORITY := 90
 export redis_PRIORITY
 "
 
-extlist="parallel sync http memcached"
+extlist="parallel sync http"
 extconf="parallel_config = --enable-zts --enable-parallel=shared
 sync_config = --enable-sync=shared
 
-http_config = --with-http=shared --without-http-shared-deps
+http_config = --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps
 http_PRIORITY := 90
 export http_PRIORITY
 
@@ -291,17 +287,15 @@ export extramods_DESCRIPTION
 fi
 
 
+# http_config = --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps
 # --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps \
 # --enable-shared=http,raphf,iconv,memcached,redis,msgpack,gearman,mcrypt,uuid,vips,imagick,apcu \
+# --enable-memcached=shared --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json \
+# --enable-memcached-msgpack --enable-memcached-sasl \
 
 # static build
 #---------------------------------------------------
-DKCONF="DK_CONFIG \:\= \
---enable-memcached=shared --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json \
---enable-memcached-msgpack --enable-memcached-sasl \
---with-http=shared --without-http-shared-deps \
---disable-option-checking --enable-shared=http --enable-zts \
-\n\n"
+DKCONF="DK_CONFIG \:\= --disable-option-checking \n\n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 # printf "\n\n $DKCONF \n"
