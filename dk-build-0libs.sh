@@ -255,8 +255,9 @@ update_existing_git() {
 	mkdir -p $DST
 	cd $DST
 	printf "\n---updating $PWD \n"
-	
-	git config  --global pull.ff only
+
+	mkdir -p ~/.git
+	git config  --global pull.ff only  >/dev/null 2>&1
 
 	if git reset --hard  >/dev/null 2>&1; then
 		git rm -r --cached . >/dev/null 2>&1
