@@ -185,24 +185,14 @@ stats_config = --enable-stats=shared
 lzf_config = --enable-lzf=shared
 
 iconv_config = --with-iconv=shared
-iconv_PRIORITY := 30
-export iconv_PRIORITY
-
 raphf_config = --enable-raphf=shared
-raphf_PRIORITY := 40
-export raphf_PRIORITY
-
 msgpack_config = --with-msgpack=shared
-msgpack_PRIORITY := 30
-export msgpack_PRIORITY
 
 redis_config = --enable-redis=shared \
 --enable-redis-zstd \
 --with-liblz4=/usr \
 --enable-redis-lz4 \
 --with-msgpack=shared --enable-redis-msgpack
-redis_PRIORITY := 90
-export redis_PRIORITY
 "
 
 # http_config = --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps
