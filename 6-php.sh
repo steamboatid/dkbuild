@@ -156,9 +156,6 @@ cd $BASE
 # --enable-shared=memcached,msgpack --disable-option-checking
 
 
-# msgpack redis
-# msgpack_config = --with-msgpack=shared
-
 # redis_config = --enable-redis=shared \
 # --enable-redis-zstd \
 # --with-liblz4=/usr \
@@ -172,8 +169,6 @@ cd $BASE
 
 
 # http
-# iconv_config = --with-iconv=shared
-# raphf_config = --enable-raphf=shared
 # http_config = --with-http=shared \
 # --enable-raphf \
 # --with-iconv \
@@ -264,14 +259,15 @@ export extramods_DESCRIPTION
 fi
 
 
-# --enable-memcached --with-libmemcached-dir=\/usr --enable-memcached-session --enable-memcached-json \
-# --enable-memcached-msgpack \
 # --enable-shared=http,raphf,iconv,memcached,redis,msgpack,gearman,mcrypt,uuid,vips,imagick,apcu \
 
 # static build
 #---------------------------------------------------
 DKCONF="DK_CONFIG \:\= --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps \
---disable-option-checking --enable-shared=http --enable-zts \n\n"
+--enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json \
+--enable-memcached-msgpack \
+--disable-option-checking --enable-shared=http --enable-zts \
+\n\n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 # printf "\n\n $DKCONF \n"

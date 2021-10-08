@@ -257,6 +257,7 @@ update_existing_git() {
 	printf "\n---updating $PWD \n"
 
 	mkdir -p ~/.git
+	rm -rf ~/.gitconfig.lock
 	git config  --global pull.ff only  >/dev/null 2>&1
 
 	if git reset --hard  >/dev/null 2>&1; then
