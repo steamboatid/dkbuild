@@ -49,13 +49,6 @@ prepare_source() {
 		/root/org.src/git-$amod/ $BASE/ext/$amod/
 	done
 
-	amod="tensor"
-	printf "\n-- rsync $amod \n"
-	mkdir -p $BASE/ext/$amod/
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	--delete --exclude '.git' \
-	/root/org.src/git-$amod/ext/ $BASE/ext/$amod/
-
 	# printf "\n-- rsync eio \n"
 	# mkdir -p $BASE/ext/eio/
 	# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
@@ -178,7 +171,7 @@ cd $BASE
 # igbinary_config = --enable-igbinary=shared
 
 
-# http 
+# http
 # iconv_config = --with-iconv=shared
 # raphf_config = --enable-raphf=shared
 # http_config = --with-http=shared \
@@ -186,9 +179,6 @@ cd $BASE
 # --with-iconv \
 # --without-http-shared-deps \
 # --enable-shared=http --disable-option-checking
-
-# tensor_config = --enable-zts --enable-tensor
-# lzf_config = --enable-lzf
 
 
 commonlist="gearman mcrypt uuid vips imagick apcu msgpack dbase stats iconv lzf"
@@ -206,8 +196,8 @@ lzf_config = --enable-lzf=shared
 "
 
 extlist="parallel sync"
-extconf="parallel_config = --enable-zts --enable-parallel=shared
-sync_config = --enable-zts --enable-sync=shared
+extconf="parallel_config = --enable-parallel=shared
+sync_config = --enable-sync=shared
 "
 
 echo \
@@ -280,7 +270,7 @@ fi
 # static build
 #---------------------------------------------------
 DKCONF="DK_CONFIG \:\= --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps \
---disable-option-checking --enable-shared=http \n\n"
+--disable-option-checking --enable-shared=http --enable-zts \n\n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
 sed -i -r "s/PCRE_JIT\)/PCRE_JIT\) \\$\(DK_CONFIG\)/g" debian/rules
 # printf "\n\n $DKCONF \n"
