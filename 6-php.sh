@@ -205,7 +205,6 @@ export msgpack_PRIORITY
 redis_config = --enable-redis=shared \
 --enable-redis-zstd \
 --with-liblz4=/usr \
---with-liblzf=/usr \
 --enable-redis-lz4 \
 --with-msgpack=shared --enable-redis-msgpack
 redis_PRIORITY := 90
