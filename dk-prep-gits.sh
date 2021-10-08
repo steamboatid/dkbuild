@@ -18,7 +18,7 @@ source /tb2/build/dk-build-0libs.sh
 
 
 # global config
-get_update_new_github
+global_git_config
 
 
 get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"
