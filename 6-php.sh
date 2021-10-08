@@ -40,7 +40,7 @@ prepare_source() {
 	--delete --exclude '.git' \
 	$BORG/ $BASE/
 
-	gitmods=( gearman http raphf redis parallel dbase mathstats sync lzf memcached )
+	gitmods=( gearman http raphf redis parallel dbase mathstats sync lzf )
 	for amod in "${gitmods[@]}"; do
 		printf "\n-- rsync $amod \n"
 		mkdir -p $BASE/ext/$amod/
@@ -79,8 +79,7 @@ get_mod_sources_deb() {
 	chown -Rf _apt.root /var/lib/update-notifier/package-data-downloads/partial/ /var/cache/apt/archives/partial/
 	chmod -Rf 700  /var/lib/update-notifier/package-data-downloads/partial/ /var/cache/apt/archives/partial/
 
-	#  memcached
-	allmods=(mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary redis)
+	allmods=(mcrypt vips uuid gearman apcu imagick raphf http msgpack igbinary redis memcached)
 	modpkgs=$(apt-cache search php | grep -v "php7\|php5\|php8.1" | \
 grep "mcrypt\|vips\|uuid\|gearman\|apcu\|imagick\|raphf\|http\|msgpack\|igbinary\|memcached\|redis" |\
 cut -d" " -f1 | tr "\n" " ")
@@ -93,8 +92,7 @@ cut -d" " -f1 | tr "\n" " ")
 
 
 copy_extra_mods() {
-	#  memcached
-	mods=(mcrypt vips uuid apcu imagick msgpack igbinary)
+	mods=(mcrypt vips uuid apcu imagick msgpack igbinary memcached)
 
 	finds=$(find /root/org.src/php8 -mindepth 2 -maxdepth 2 -type d | grep -v "debian\|\.pc\|bc" | sed -r "s/\s/\n/g" | sort)
 
@@ -187,13 +185,14 @@ lzf_config = --enable-lzf=shared
 iconv_config = --with-iconv=shared
 raphf_config = --enable-raphf=shared
 msgpack_config = --with-msgpack=shared
-
-redis_config = --enable-redis=shared \
---enable-redis-zstd \
---with-liblz4=/usr \
---enable-redis-lz4 \
---with-msgpack=shared --enable-redis-msgpack
 "
+
+
+# redis_config = --enable-redis=shared \
+# --enable-redis-zstd \
+# --with-liblz4=/usr \
+# --enable-redis-lz4 \
+# --with-msgpack=shared --enable-redis-msgpack
 
 # http_config = --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps
 # http_PRIORITY := 90
