@@ -55,6 +55,7 @@ ln -sf /root/org.src/git-raphf/src/php_raphf_api.h /root/org.src/git-raphf/php_r
 rm -rf /root/org.src/git-raphf/src/php_raphf_test.c
 
 get_update_new_github "steamboatid/ext-http" "/root/org.src/git-http"
+get_update_new_github "php-memcached-dev/php-memcached" "/root/org.src/git-memcached"
 
 
 #--- wait
