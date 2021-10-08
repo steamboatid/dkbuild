@@ -53,6 +53,9 @@ get_update_new_github "php/pecl-system-sync" "/root/org.src/git-sync"
 get_update_new_github "laruence/taint" "/root/org.src/git-taint"
 get_update_new_github "phpv8/php-v8" "/root/org.src/git-phpv8"
 
+get_update_new_github "php/pecl-file_formats-lzf" "/root/org.src/git-lzf"
+get_update_new_github "RubixML/Tensor" "/root/org.src/git-tensor"
+
 
 #--- sync to src
 #-------------------------------------------

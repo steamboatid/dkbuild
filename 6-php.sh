@@ -40,14 +40,20 @@ prepare_source() {
 	--delete --exclude '.git' \
 	$BORG/ $BASE/
 
-	mods=( gearman http raphf redis parallel dbase mathstats sync )
-	for amod in "${mods[@]}"; do
+	gitmods=( gearman http raphf redis parallel dbase mathstats sync lzf )
+	for amod in "${gitmods[@]}"; do
 		printf "\n-- rsync $amod \n"
 		mkdir -p $BASE/ext/$amod/
 		rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 		--delete --exclude '.git' \
 		/root/org.src/git-$amod/ $BASE/ext/$amod/
 	done
+
+	amod="tensor"
+	mkdir -p $BASE/ext/$amod/
+	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+	--delete --exclude '.git' \
+	/root/org.src/git-$amod/ext/ $BASE/ext/$amod/
 
 	# printf "\n-- rsync eio \n"
 	# mkdir -p $BASE/ext/eio/
@@ -181,7 +187,7 @@ cd $BASE
 # --enable-shared=http --disable-option-checking
 
 
-commonlist="gearman mcrypt uuid vips imagick apcu msgpack dbase stats iconv"
+commonlist="gearman mcrypt uuid vips imagick apcu msgpack dbase stats iconv lzf"
 commonconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
 uuid_config = --with-uuid=shared
@@ -192,11 +198,13 @@ iconv_config = --with-iconv=shared
 msgpack_config = --with-msgpack=shared
 dbase_config = --enable-dbase=shared
 stats_config = --enable-stats=shared
+lzf_config = --enable-lzf
 "
 
-extlist="parallel sync"
+extlist="parallel sync tensor"
 extconf="parallel_config = --enable-zts --enable-parallel=shared
 sync_config = --enable-zts --enable-sync=shared
+tensor_config--enable-tensor
 "
 
 echo \
