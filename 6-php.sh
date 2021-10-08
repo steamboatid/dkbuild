@@ -191,7 +191,7 @@ cd $BASE
 # lzf_config = --enable-lzf
 
 
-commonlist="gearman mcrypt uuid vips imagick apcu msgpack dbase stats iconv"
+commonlist="gearman mcrypt uuid vips imagick apcu msgpack dbase stats iconv lzf"
 commonconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
 uuid_config = --with-uuid=shared
@@ -202,6 +202,7 @@ iconv_config = --with-iconv=shared
 msgpack_config = --with-msgpack=shared
 dbase_config = --enable-dbase=shared
 stats_config = --enable-stats=shared
+lzf_config = --enable-lzf
 "
 
 extlist="parallel sync"
