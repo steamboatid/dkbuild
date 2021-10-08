@@ -17,6 +17,10 @@ export TODATE=$(date +%Y%m%d)
 source /tb2/build/dk-build-0libs.sh
 
 
+# global config
+get_update_new_github
+
+
 get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"
 get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache"
 get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core"

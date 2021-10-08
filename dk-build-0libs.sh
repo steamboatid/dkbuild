@@ -245,6 +245,12 @@ chown_apt() {
 	chmod -f 700 /var/cache/apt/archives/partial/
 }
 
+global_git_config() {
+	mkdir -p ~/.git
+	rm -rf ~/.gitconfig.lock
+	git config  --global pull.ff only  >/dev/null 2>&1
+}
+
 update_existing_git() {
 	URL=$2
 	DST=$1
@@ -255,10 +261,6 @@ update_existing_git() {
 	mkdir -p $DST
 	cd $DST
 	printf "\n---updating $PWD \n"
-
-	mkdir -p ~/.git
-	rm -rf ~/.gitconfig.lock
-	git config  --global pull.ff only  >/dev/null 2>&1
 
 	if git reset --hard  >/dev/null 2>&1; then
 		git rm -r --cached . >/dev/null 2>&1

@@ -16,6 +16,10 @@ export TODATE=$(date +%Y%m%d)
 
 source /tb2/build/dk-build-0libs.sh
 
+
+# global config
+get_update_new_github
+
 # chown apt
 chown_apt
 
