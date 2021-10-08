@@ -18,7 +18,7 @@ source /tb2/build/dk-build-0libs.sh
 
 
 # global config
-global_git_config
+global_git_config  &
 
 # chown apt
 chown_apt
