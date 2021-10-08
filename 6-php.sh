@@ -181,7 +181,7 @@ cd $BASE
 # --enable-shared=http --disable-option-checking
 
 
-commonlist="gearman mcrypt uuid vips imagick apcu msgpack dbase stats iconv lzf"
+commonlist="gearman mcrypt uuid vips imagick apcu msgpack dbase stats iconv lzf raphf"
 commonconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
 uuid_config = --with-uuid=shared
@@ -193,6 +193,7 @@ msgpack_config = --with-msgpack=shared
 dbase_config = --enable-dbase=shared
 stats_config = --enable-stats=shared
 lzf_config = --enable-lzf=shared
+raphf_config = --enable-raphf=shared
 "
 
 extlist="parallel sync"

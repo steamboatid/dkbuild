@@ -29,7 +29,7 @@ get_update_new_github "steamboatid/db4" "/root/org.src/db4/git-db4" &
 
 
 get_update_new_github "php/pecl-networking-gearman" "/root/org.src/git-gearman" &
-get_update_new_github "m6w6/ext-http" "/root/org.src/git-http" &
+get_update_new_github "steamboatid/ext-http" "/root/org.src/git-http" &
 
 get_update_new_github "steamboatid/phpredis" "/root/org.src/git-redis" &
 
