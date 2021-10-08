@@ -173,7 +173,7 @@ cd $BASE
 # --enable-shared=http --disable-option-checking
 # http_config = --with-http=shared --without-http-shared-deps
 
-commonlist="gearman mcrypt uuid vips imagick apcu dbase stats lzf iconv raphf http msgpack redis"
+commonlist="gearman mcrypt uuid vips imagick apcu dbase stats lzf iconv raphf msgpack redis"
 commonconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
 uuid_config = --with-uuid=shared
@@ -191,10 +191,6 @@ export iconv_PRIORITY
 raphf_config = --enable-raphf=shared
 raphf_PRIORITY := 40
 export raphf_PRIORITY
-
-http_config = --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps
-http_PRIORITY := 90
-export http_PRIORITY
 
 msgpack_config = --with-msgpack=shared
 msgpack_PRIORITY := 30
