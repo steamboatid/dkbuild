@@ -29,7 +29,6 @@ get_update_new_github "steamboatid/db4" "/root/org.src/db4/git-db4" &
 
 
 get_update_new_github "php/pecl-networking-gearman" "/root/org.src/git-gearman" &
-get_update_new_github "steamboatid/ext-http" "/root/org.src/git-http"
 
 get_update_new_github "steamboatid/phpredis" "/root/org.src/git-redis" &
 
@@ -54,6 +53,8 @@ ln -sf /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf
 ln -sf /root/org.src/git-raphf/src/php_raphf_api.c /root/org.src/git-raphf/php_raphf_api.c
 ln -sf /root/org.src/git-raphf/src/php_raphf_api.h /root/org.src/git-raphf/php_raphf_api.h
 rm -rf /root/org.src/git-raphf/src/php_raphf_test.c
+
+get_update_new_github "steamboatid/ext-http" "/root/org.src/git-http"
 
 
 #--- wait
