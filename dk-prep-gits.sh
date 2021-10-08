@@ -58,8 +58,10 @@ rm -rf /root/org.src/git-raphf/src/php_raphf_test.c
 
 #--- wait
 #-------------------------------------------
-printf "\n\n wait for all background process...\n"
+printf "\n\n wait for all background process... \n"
 wait
+printf "\n\n wait finished... \n\n\n"
+
 
 #--- sync to src
 #-------------------------------------------
