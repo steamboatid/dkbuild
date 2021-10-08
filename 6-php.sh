@@ -169,31 +169,62 @@ cd $BASE
 
 
 # http
-# http_config = --with-http=shared \
+# http_config = --with-http=shared --without-http-shared-deps \
 # --enable-raphf \
 # --with-iconv \
-# --without-http-shared-deps \
 # --enable-shared=http --disable-option-checking
+# http_config = --with-http=shared --without-http-shared-deps
 
-
-commonlist="gearman mcrypt uuid vips imagick apcu msgpack dbase stats iconv lzf raphf"
+commonlist="gearman mcrypt uuid vips imagick apcu dbase stats lzf iconv raphf http msgpack redis"
 commonconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
 uuid_config = --with-uuid=shared
 vips_config = --with-vips=shared
 imagick_config = --with-imagick=shared
 apcu_config = --enable-apcu=shared
-iconv_config = --with-iconv=shared
-msgpack_config = --with-msgpack=shared
 dbase_config = --enable-dbase=shared
 stats_config = --enable-stats=shared
 lzf_config = --enable-lzf=shared
+
+iconv_config = --with-iconv=shared
+iconv_PRIORITY := 30
+export iconv_PRIORITY
+
 raphf_config = --enable-raphf=shared
+raphf_PRIORITY := 40
+export raphf_PRIORITY
+
+http_config = --with-http=shared
+http_PRIORITY := 90
+export http_PRIORITY
+
+msgpack_config = --with-msgpack=shared
+msgpack_PRIORITY := 30
+export msgpack_PRIORITY
+
+redis_config = --enable-redis=shared \
+--enable-redis-zstd \
+--with-liblz4=/usr \
+--with-liblzf=/usr \
+--enable-redis-lz4 \
+--with-msgpack=shared --enable-redis-msgpack
+redis_PRIORITY := 90
+export redis_PRIORITY
 "
 
-extlist="parallel sync"
+extlist="parallel sync http memcached"
 extconf="parallel_config = --enable-zts --enable-parallel=shared
 sync_config = --enable-sync=shared
+
+http_config = --with-http=shared --without-http-shared-deps
+http_PRIORITY := 90
+export http_PRIORITY
+
+memcached_config = --enable-memcached=shared --with-libmemcached-dir=/usr \
+--enable-memcached-session --enable-memcached-json \
+--enable-memcached-msgpack --enable-memcached-sasl
+memcached_PRIORITY := 90
+export memcached_PRIORITY
 "
 
 echo \
@@ -259,13 +290,15 @@ export extramods_DESCRIPTION
 fi
 
 
+# --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps \
 # --enable-shared=http,raphf,iconv,memcached,redis,msgpack,gearman,mcrypt,uuid,vips,imagick,apcu \
 
 # static build
 #---------------------------------------------------
-DKCONF="DK_CONFIG \:\= --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps \
---enable-memcached --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json \
---enable-memcached-msgpack \
+DKCONF="DK_CONFIG \:\= \
+--enable-memcached=shared --with-libmemcached-dir=/usr --enable-memcached-session --enable-memcached-json \
+--enable-memcached-msgpack --enable-memcached-sasl \
+--with-http=shared --without-http-shared-deps \
 --disable-option-checking --enable-shared=http --enable-zts \
 \n\n"
 sed -i -r "s/^COMMON_CONFIG/${DKCONF} \nCOMMON_CONFIG/g" debian/rules
