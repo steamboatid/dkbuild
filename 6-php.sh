@@ -50,6 +50,7 @@ prepare_source() {
 	done
 
 	amod="tensor"
+	printf "\n-- rsync $amod \n"
 	mkdir -p $BASE/ext/$amod/
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 	--delete --exclude '.git' \

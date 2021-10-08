@@ -30,8 +30,6 @@ get_update_new_github "steamboatid/db4" "/root/org.src/db4/git-db4"
 
 get_update_new_github "php/pecl-networking-gearman" "/root/org.src/git-gearman"
 get_update_new_github "m6w6/ext-http" "/root/org.src/git-http"
-rm -rf /root/org.src/git-raph
-get_update_new_github "m6w6/ext-raphf" "/root/org.src/git-raphf"
 
 rm -rf /root/org.src/git-raph
 get_update_new_github "m6w6/ext-raphf" "/root/org.src/git-raphf"
