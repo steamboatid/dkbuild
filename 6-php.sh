@@ -187,8 +187,11 @@ cd $BASE
 # --without-http-shared-deps \
 # --enable-shared=http --disable-option-checking
 
+# tensor_config = --enable-zts --enable-tensor
+# lzf_config = --enable-lzf
 
-commonlist="gearman mcrypt uuid vips imagick apcu msgpack dbase stats iconv lzf"
+
+commonlist="gearman mcrypt uuid vips imagick apcu msgpack dbase stats iconv"
 commonconf="gearman_config = --with-gearman=shared
 mcrypt_config = --with-mcrypt=shared
 uuid_config = --with-uuid=shared
@@ -199,13 +202,11 @@ iconv_config = --with-iconv=shared
 msgpack_config = --with-msgpack=shared
 dbase_config = --enable-dbase=shared
 stats_config = --enable-stats=shared
-lzf_config = --enable-lzf
 "
 
-extlist="parallel sync tensor"
+extlist="parallel sync"
 extconf="parallel_config = --enable-zts --enable-parallel=shared
 sync_config = --enable-zts --enable-sync=shared
-tensor_config = --enable-zts --enable-tensor
 "
 
 echo \
