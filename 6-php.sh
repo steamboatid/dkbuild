@@ -205,7 +205,7 @@ lzf_config = --enable-lzf
 extlist="parallel sync tensor"
 extconf="parallel_config = --enable-zts --enable-parallel=shared
 sync_config = --enable-zts --enable-sync=shared
-tensor_config--enable-tensor
+tensor_config = --enable-zts --enable-tensor
 "
 
 echo \
@@ -259,7 +259,7 @@ Description: Extra modules for PHP.
 ">>debian/control
 
 	echo \
-"ext_PACKAGES      += extramods
+"ext_PACKAGES         += extramods
 extramods_DESCRIPTION := extra modules
 extramods_EXTENSIONS  := ${extlist}
 
