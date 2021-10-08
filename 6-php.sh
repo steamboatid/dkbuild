@@ -192,7 +192,7 @@ raphf_config = --enable-raphf=shared
 "
 
 extlist="parallel sync"
-extconf="parallel_config = --enable-parallel=shared
+extconf="parallel_config = --enable-zts --enable-parallel=shared
 sync_config = --enable-sync=shared
 "
 
