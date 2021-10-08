@@ -202,7 +202,7 @@ iconv_config = --with-iconv=shared
 msgpack_config = --with-msgpack=shared
 dbase_config = --enable-dbase=shared
 stats_config = --enable-stats=shared
-lzf_config = --enable-lzf
+lzf_config = --enable-lzf=shared
 "
 
 extlist="parallel sync"
