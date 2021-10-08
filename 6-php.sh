@@ -209,19 +209,19 @@ redis_PRIORITY := 90
 export redis_PRIORITY
 "
 
-extlist="parallel sync http"
+# http_config = --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps
+# http_PRIORITY := 90
+# export http_PRIORITY
+
+# memcached_config = --enable-memcached=shared --with-libmemcached-dir=/usr \
+# --enable-memcached-session --enable-memcached-json \
+# --enable-memcached-msgpack --enable-memcached-sasl
+# memcached_PRIORITY := 90
+# export memcached_PRIORITY
+
+extlist="parallel sync"
 extconf="parallel_config = --enable-zts --enable-parallel=shared
 sync_config = --enable-sync=shared
-
-http_config = --with-http=shared --enable-raphf --with-iconv --without-http-shared-deps
-http_PRIORITY := 90
-export http_PRIORITY
-
-memcached_config = --enable-memcached=shared --with-libmemcached-dir=/usr \
---enable-memcached-session --enable-memcached-json \
---enable-memcached-msgpack --enable-memcached-sasl
-memcached_PRIORITY := 90
-export memcached_PRIORITY
 "
 
 echo \
