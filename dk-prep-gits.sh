@@ -73,24 +73,22 @@ get_update_new_github "libfuse/sshfs" "/root/org.src/git-sshfs"  >/dev/null 2>&1
 #-------------------------------------------
 printf "\n\n wait for all background process... \n"
 while :; do
-	nums=$(jobs -r | grep -iv "find\|chmod\|chown" | grep git | wc -l)
+	nums=$(jobs -r | grep -iv "find\|chmod\|chown" | grep "git\|bit" | wc -l)
 	printf ".$nums "
 	if [[ $nums -lt 1 ]]; then break; fi
 	sleep 1
 done
 
-jobs -r | grep -iv "find\|chmod\|chown"
-jobs
 wait
 printf "\n\n wait finished... \n\n\n"
 
 
 #--- sync to src
 #-------------------------------------------
-# printf "\n-- sync to src ALL \n"
-# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-# --exclude ".git" \
-# /root/org.src/ /root/src/
+printf "\n-- sync to src ALL \n"
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+--exclude ".git" \
+/root/org.src/ /root/src/
 
 
 #--- last
