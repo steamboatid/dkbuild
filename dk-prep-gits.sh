@@ -18,7 +18,7 @@ source /tb2/build/dk-build-0libs.sh
 
 
 # global config
-global_git_config  &
+global_git_config
 
 
 get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx" &
@@ -72,6 +72,13 @@ get_update_new_github "libfuse/sshfs" "/root/org.src/git-sshfs" &
 #--- wait
 #-------------------------------------------
 printf "\n\n wait for all background process... \n"
+while :; do
+	nums=$(jobs -r | grep -iv "find\|chmod\|chown" | grep git | wc -l)
+	printf ".$nums "
+	if [[ $nums -lt 1 ]]; then break; fi
+	sleep 1
+done
+
 wait
 printf "\n\n wait finished... \n\n\n"
 
