@@ -89,7 +89,7 @@ sleep 2
 #-------------------------------------------
 cd /root/src/db4
 apt purge -fy libdb5*dev libdb++-dev libdb5.3-tcl
-dpkg -i --force-all *deb
+# dpkg -i --force-all *deb
 
 
 # delete unneeded packages
