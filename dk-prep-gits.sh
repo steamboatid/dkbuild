@@ -59,7 +59,7 @@ get_update_new_github "php-memcached-dev/php-memcached" "/root/org.src/git-memca
 # fuse,  https://github.com/libfuse/libfuse
 # sshfs, https://github.com/libfuse/sshfs
 get_update_new_github "libfuse/libfuse" "/root/org.src/git-fuse"  >/dev/null 2>&1 &
-get_update_new_github "libfuse/sshfs" "/root/org.src/git-sshfs"
+get_update_new_github "libfuse/sshfs" "/root/org.src/git-sshfs"  >/dev/null 2>&1 &
 
 
 
