@@ -85,58 +85,58 @@ time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 --no-lintian --no-tgz-check --no-sign -b -uc -us -d 2>&1 | tee dkbuild.log
 
 
-isdeps=$(cat dkbuild.log | grep -i "unmet build dependencies" | wc -l)
-if [[ $isdeps -gt 0 ]]; then
-	cat dkbuild.log | grep -i "unmet build dependencies" | \
-	sed "s/dpkg-checkbuilddeps: //g" |
-	sed "s/error: //g" |
-	sed "s/Unmet build dependencies: //g" | sed "s/|//g" >> ~/build.deps
-	cat ~/build.deps
-fi
+# isdeps=$(cat dkbuild.log | grep -i "unmet build dependencies" | wc -l)
+# if [[ $isdeps -gt 0 ]]; then
+# 	cat dkbuild.log | grep -i "unmet build dependencies" | \
+# 	sed "s/dpkg-checkbuilddeps: //g" |
+# 	sed "s/error: //g" |
+# 	sed "s/Unmet build dependencies: //g" | sed "s/|//g" >> ~/build.deps
+# 	cat ~/build.deps
+# fi
 
-isfail=$(tail -n100 dkbuild.log | grep -i failed | wc -l)
-if [[ $isfail -gt 0 ]]; then
-	>dkbuild.log
-	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
-	export DH_VERBOSE=1; \
-	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
-	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
-	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
-	--no-lintian --no-tgz-check --no-sign -b -uc -us -D 2>&1 | tee dkbuild.log
-fi
+# isfail=$(tail -n100 dkbuild.log | grep -i failed | wc -l)
+# if [[ $isfail -gt 0 ]] && [[ $isdeps -gt 0 ]]; then
+# 	>dkbuild.log
+# 	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
+# 	export DH_VERBOSE=1; \
+# 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
+# 	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
+# 	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
+# 	--no-lintian --no-tgz-check --no-sign -b -uc -us -D 2>&1 | tee dkbuild.log
+# fi
 
-isflict=$(tail -n100 dkbuild.log | grep -i conflict | wc -l)
-isfail=$(tail -n100 dkbuild.log | grep -i failed | wc -l)
-if [[ $isfail -gt 0 ]] && [[ $isflict -gt 0 ]]; then
-	>dkbuild.log
-	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
-	export DH_VERBOSE=1; \
-	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
-	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
-	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
-	--no-lintian --no-tgz-check --no-sign -b -uc -us -d 2>&1 | tee dkbuild.log
-fi
+# isflict=$(tail -n100 dkbuild.log | grep -i conflict | wc -l)
+# isfail=$(tail -n100 dkbuild.log | grep -i failed | wc -l)
+# if [[ $isfail -gt 0 ]] && [[ $isflict -gt 0 ]]; then
+# 	>dkbuild.log
+# 	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
+# 	export DH_VERBOSE=1; \
+# 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
+# 	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
+# 	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
+# 	--no-lintian --no-tgz-check --no-sign -b -uc -us -d 2>&1 | tee dkbuild.log
+# fi
 
-if [[ $isdeps -gt 0 ]]; then
-	printf "\n\n ${red}unmet build dependencies: ${end}"
-	ATMP=$(mktemp)
-	cat ~/build.deps | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | \
-	sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g" | sort -u | sort > $ATMP
-	mv $ATMP ~/build.deps
-	cat ~/build.deps
-	cat ~/build.deps | xargs aptold install -fy 2>&1 | grep --color=auto "Depends"
-	printf "\n\n"
-	exit 1;
-fi
+# if [[ $isdeps -gt 0 ]]; then
+# 	printf "\n\n ${red}unmet build dependencies: ${end}"
+# 	ATMP=$(mktemp)
+# 	cat ~/build.deps | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | \
+# 	sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g" | sort -u | sort > $ATMP
+# 	mv $ATMP ~/build.deps
+# 	cat ~/build.deps
+# 	cat ~/build.deps | xargs aptold install -fy 2>&1 | grep --color=auto "Depends"
+# 	printf "\n\n"
+# 	exit 1;
+# fi
 
-isflict=$(tail -n100 dkbuild.log | grep -i conflict | wc -l)
-isfail=$(tail -n100 dkbuild.log | grep -i failed | wc -l)
-if [[ $isfail -gt 0 ]] || [[ $isflict -gt 0 ]]; then
-	exit 2;
-fi
+# isflict=$(tail -n100 dkbuild.log | grep -i conflict | wc -l)
+# isfail=$(tail -n100 dkbuild.log | grep -i failed | wc -l)
+# if [[ $isfail -gt 0 ]] || [[ $isflict -gt 0 ]]; then
+# 	exit 2;
+# fi
 
-# if no error, then success
-isok=$(tail -n100 dkbuild.log | grep -i "binary\-only" | wc -l)
-if [[ $isok -gt 0 ]]; then
-	exit 0;
-fi
+# # if no error, then success
+# isok=$(tail -n100 dkbuild.log | grep -i "binary\-only" | wc -l)
+# if [[ $isok -gt 0 ]]; then
+# 	exit 0;
+# fi
