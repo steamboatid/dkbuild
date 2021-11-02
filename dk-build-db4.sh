@@ -42,7 +42,7 @@ rm -rf /root/src/db4/*deb
 #-------------------------------------------
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 --exclude ".git" \
-/root/org.src/db4/git-db4/ /root/src/db4/git-db4/
+/root/org.src/db4/ /root/src/db4/
 
 
 # build
