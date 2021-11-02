@@ -38,6 +38,13 @@ mkdir -p /root/src/db4
 rm -rf /root/src/db4/*deb
 
 
+# get source
+#-------------------------------------------
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+--exclude ".git" \
+/root/org.src/db4/git-db4/ /root/src/db4/git-db4/
+
+
 # build
 #-------------------------------------------
 cd /root/src/db4/git-db4
