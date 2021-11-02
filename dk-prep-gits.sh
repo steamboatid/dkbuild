@@ -86,22 +86,22 @@ printf "\n\n wait finished... \n\n\n"
 
 #--- sync to src
 #-------------------------------------------
-printf "\n-- sync to src ALL \n"
-rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
---exclude ".git" \
-/root/org.src/ /root/src/
+# printf "\n-- sync to src ALL \n"
+# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+# --exclude ".git" \
+# /root/org.src/ /root/src/
 
 
 #--- last
 #-------------------------------------------
-save_local_debs
-aptold install -fy --auto-remove --purge \
-	2>&1 | grep --color=auto "Depends"
+# save_local_debs
+# aptold install -fy --auto-remove --purge \
+# 	2>&1 | grep --color=auto "Depends"
 
-rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
-rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
-find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
-find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+# rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
+# rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
+# find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+# find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 
 printf "\n\n\n"
 exit 0;
