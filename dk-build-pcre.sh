@@ -47,6 +47,11 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/pcre/ /root/src/pcre/
 
 
+# delete old debs
+#-------------------------------------------
+rm -rf /root/src/pcre/*deb
+
+
 # build
 #-------------------------------------------
 find /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*" | head -n1 |

@@ -28,11 +28,22 @@ reset_build_flags
 prepare_build_flags
 
 
-# delete old debs
+# prepare dirs
 #-------------------------------------------
 mkdir -p /tb2/build/$RELNAME-keydb
 rm -rf /tb2/build/$RELNAME-keydb/*deb
 mkdir -p /root/src/keydb
+
+
+# get source
+#-------------------------------------------
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+--exclude ".git" \
+/root/org.src/keydb/ /root/src/keydb/
+
+
+# delete old debs
+#-------------------------------------------
 rm -rf /root/src/keydb/*deb
 
 

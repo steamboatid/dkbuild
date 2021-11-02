@@ -30,11 +30,22 @@ reset_build_flags
 prepare_build_flags
 
 
-# delete old debs
+# prepare dirs
 #-------------------------------------------
 mkdir -p /tb2/build/$RELNAME-lua-resty-core
 rm -rf /tb2/build/$RELNAME-lua-resty-core/*deb
 mkdir -p /root/src/lua-resty-core
+
+
+# get source
+#-------------------------------------------
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+--exclude ".git" \
+/root/org.src/lua-resty-core/ /root/src/lua-resty-core/
+
+
+# delete old debs
+#-------------------------------------------
 rm -rf /root/src/lua-resty-core/*deb
 
 

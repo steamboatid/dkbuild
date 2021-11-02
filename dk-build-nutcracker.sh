@@ -29,11 +29,22 @@ reset_build_flags
 prepare_build_flags
 
 
-# delete old debs
+# prepare dirs
 #-------------------------------------------
 mkdir -p /tb2/build/$RELNAME-nutcracker
 rm -rf /tb2/build/$RELNAME-nutcracker/*deb
 mkdir -p /root/src/nutcracker
+
+
+# get source
+#-------------------------------------------
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+--exclude ".git" \
+/root/org.src/nutcracker/ /root/src/nutcracker/
+
+
+# delete old debs
+#-------------------------------------------
 rm -rf /root/src/nutcracker/*deb
 
 

@@ -30,6 +30,13 @@ reset_build_flags
 prepare_build_flags
 
 
+# prepare dirs
+#-------------------------------------------
+mkdir -p /tb2/build/$RELNAME-db4
+rm -rf /tb2/build/$RELNAME-db4/*deb
+mkdir -p /root/src/db4
+
+
 # get source
 #-------------------------------------------
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
@@ -39,9 +46,6 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 
 # delete old debs
 #-------------------------------------------
-mkdir -p /tb2/build/$RELNAME-db4
-rm -rf /tb2/build/$RELNAME-db4/*deb
-mkdir -p /root/src/db4
 rm -rf /root/src/db4/*deb
 
 
@@ -92,19 +96,19 @@ sleep 2
 /bin/bash /tb2/build/dk-build-full.sh
 
 
-# install all after build
-#-------------------------------------------
-cd /root/src/db4
-apt purge -fy libdb5*dev libdb++-dev libdb5.3-tcl
-# dpkg -i --force-all *deb
-
-
 # delete unneeded packages
 #-------------------------------------------
 mkdir -p /root/src/db4
 cd /root/src/db4
 find /root/src/db4 -type f -iname "*udeb" -delete
 find /root/src/db4 -type f -iname "*dbgsym*deb" -delete
+
+
+# install all after build
+#-------------------------------------------
+cd /root/src/db4
+apt purge -fy libdb5*dev libdb++-dev libdb5.3-tcl
+dpkg -i --force-all *deb
 
 
 # upload to /tb2/build/{$RELNAME}-nginx

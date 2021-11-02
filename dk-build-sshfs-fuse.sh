@@ -47,11 +47,24 @@ prepare_build_flags
 # apt source -y libsshfs3
 
 
-#--- sync to src
+# prepare dirs
 #-------------------------------------------
-# printf "\n-- sync to src sshfs \n"
-# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
-# /root/org.src/sshfs/ /root/src/sshfs/
+mkdir -p /tb2/build/$RELNAME-sshfs
+rm -rf /tb2/build/$RELNAME-sshfs/*deb
+mkdir -p /root/src/sshfs
+
+
+#--- get source
+#-------------------------------------------
+printf "\n-- sync to src sshfs \n"
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+/root/org.src/sshfs/ /root/src/sshfs/
+
+
+# delete old debs
+#-------------------------------------------
+rm -rf /root/src/sshfs/*deb
+
 
 
 do_build_sshfs_fuse() {
@@ -138,4 +151,4 @@ ls -la /tb2/build/$RELNAME-sshfs/
 
 # rebuild the repo
 #-------------------------------------------
-# ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &"
+ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &"
