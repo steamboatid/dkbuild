@@ -115,7 +115,7 @@ do_build_sshfs_fuse() {
 
 # build FUSE
 #-------------------------------------------
-dirname=$(find /root/src/sshfs -maxdepth 1 -type d -iname "fuse*" | head -n1)
+dirname=$(find /root/src/sshfs -maxdepth 1 -type d -iname "*fuse" | head -n1)
 cd $dirname
 pwd
 do_build_sshfs_fuse
@@ -123,7 +123,7 @@ do_build_sshfs_fuse
 
 # build SSHFS
 #-------------------------------------------
-dirname=$(find /root/src/sshfs -mindepth 1 -maxdepth 1 -type d -iname "ssh*fuse*" | head -n1)
+dirname=$(find /root/src/sshfs -mindepth 1 -maxdepth 1 -type d -iname "*sshfs" | head -n1)
 cd $dirname
 pwd
 # hack iosize
