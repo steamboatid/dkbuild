@@ -34,6 +34,11 @@ mkdir -p /root/org.src /root/src
 find /root/org.src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
 find /root/src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
 
+#  kill slow git
+ps axww | grep -v grep | grep git | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
+ps axww | grep -v grep | grep git | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
+
+
 # prepare basic need: apt configs, sources list, etc
 #-------------------------------------------
 /bin/bash /tb2/build/dk-config-gen.sh
@@ -326,9 +331,17 @@ get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
 
 #--- wait
 #-------------------------------------------
-printf "\n\n wait for all background process... \n"
+bname=$(basename $0)
+printf "\n\n --- wait for all background process...  [$bname] "
+while :; do
+	nums=$(jobs -r | grep -iv "find\|chmod\|chown" | wc -l)
+	printf ".$nums "
+	if [[ $nums -lt 1 ]]; then break; fi
+	sleep 1
+done
+
 wait
-printf "\n\n wait finished... \n\n\n"
+printf "\n\n --- wait finished... \n\n\n"
 
 
 

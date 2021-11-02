@@ -51,13 +51,8 @@ get_update_new_github "php/pecl-file_formats-lzf" "/root/org.src/git-lzf"  >/dev
 get_update_new_github "RubixML/Tensor" "/root/org.src/git-tensor"  >/dev/null 2>&1 &
 
 
-rm -rf /root/org.src/git-raph
-get_update_new_github "m6w6/ext-raphf" "/root/org.src/git-raphf"  >/dev/null 2>&1
-ln -sf /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
-ln -sf /root/org.src/git-raphf/src/php_raphf_api.c /root/org.src/git-raphf/php_raphf_api.c
-ln -sf /root/org.src/git-raphf/src/php_raphf_api.h /root/org.src/git-raphf/php_raphf_api.h
-rm -rf /root/org.src/git-raphf/src/php_raphf_test.c
-
+# rm -rf /root/org.src/git-raph
+get_update_new_github "m6w6/ext-raphf" "/root/org.src/git-raphf"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/ext-http" "/root/org.src/git-http"  >/dev/null 2>&1 &
 get_update_new_github "php-memcached-dev/php-memcached" "/root/org.src/git-memcached"  >/dev/null 2>&1 &
 
@@ -71,8 +66,10 @@ get_update_new_github "libfuse/sshfs" "/root/org.src/git-sshfs"  >/dev/null 2>&1
 
 #--- wait
 #-------------------------------------------
-printf "\n\n wait for all background process... "
+bname=$(basename $0)
+printf "\n\n wait for all background process... [$bname] "
 while :; do
+	# jobs -r | grep -iv "find\|chmod\|chown" | grep "git\|bit"
 	nums=$(jobs -r | grep -iv "find\|chmod\|chown" | grep "git\|bit" | wc -l)
 	printf ".$nums "
 	if [[ $nums -lt 1 ]]; then break; fi
@@ -80,8 +77,15 @@ while :; do
 done
 
 wait
-printf "\n\n wait finished... \n\n\n"
+printf "\n\n --- wait finished... \n\n\n"
 
+
+# fix raphf
+ln -sf /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
+ls -lah /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
+ln -sf /root/org.src/git-raphf/src/php_raphf_api.c /root/org.src/git-raphf/php_raphf_api.c
+ln -sf /root/org.src/git-raphf/src/php_raphf_api.h /root/org.src/git-raphf/php_raphf_api.h
+rm -rf /root/org.src/git-raphf/src/php_raphf_test.c
 
 #--- sync to src
 #-------------------------------------------
