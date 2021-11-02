@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-ssh argo "rm -rf /tb2/build/dk-prep*sh"
+# ssh argo "rm -rf /tb2/build/dk-prep*sh"
 
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 /tb2/build/*sh root@argo:/tb2/build/
@@ -74,4 +74,4 @@ ssh argo "lxc-start -qn eye >/dev/null 2>&1 &"
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/6-php.sh
 
 
-ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-gits.sh
+ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-all.sh
