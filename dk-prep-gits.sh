@@ -52,7 +52,7 @@ get_update_new_github "RubixML/Tensor" "/root/org.src/git-tensor"  >/dev/null 2>
 
 
 rm -rf /root/org.src/git-raph
-get_update_new_github "m6w6/ext-raphf" "/root/org.src/git-raphf"
+get_update_new_github "m6w6/ext-raphf" "/root/org.src/git-raphf"  >/dev/null 2>&1
 ln -sf /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
 ln -sf /root/org.src/git-raphf/src/php_raphf_api.c /root/org.src/git-raphf/php_raphf_api.c
 ln -sf /root/org.src/git-raphf/src/php_raphf_api.h /root/org.src/git-raphf/php_raphf_api.h
