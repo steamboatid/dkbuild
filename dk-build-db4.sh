@@ -30,19 +30,19 @@ reset_build_flags
 prepare_build_flags
 
 
+# get source
+#-------------------------------------------
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+--exclude ".git" \
+/root/org.src/db4/ /root/src/db4/
+
+
 # delete old debs
 #-------------------------------------------
 mkdir -p /tb2/build/$RELNAME-db4
 rm -rf /tb2/build/$RELNAME-db4/*deb
 mkdir -p /root/src/db4
 rm -rf /root/src/db4/*deb
-
-
-# get source
-#-------------------------------------------
-rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
---exclude ".git" \
-/root/org.src/db4/ /root/src/db4/
 
 
 # build
