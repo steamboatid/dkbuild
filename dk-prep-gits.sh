@@ -80,6 +80,7 @@ while :; do
 done
 
 jobs -r | grep -iv "find\|chmod\|chown"
+jobs -r
 wait
 printf "\n\n wait finished... \n\n\n"
 
