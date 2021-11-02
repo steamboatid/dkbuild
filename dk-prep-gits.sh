@@ -71,7 +71,7 @@ get_update_new_github "libfuse/sshfs" "/root/org.src/git-sshfs"  >/dev/null 2>&1
 
 #--- wait
 #-------------------------------------------
-printf "\n\n wait for all background process... \n"
+printf "\n\n wait for all background process... "
 while :; do
 	nums=$(jobs -r | grep -iv "find\|chmod\|chown" | grep "git\|bit" | wc -l)
 	printf ".$nums "
@@ -93,14 +93,14 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 
 #--- last
 #-------------------------------------------
-# save_local_debs
-# aptold install -fy --auto-remove --purge \
-# 	2>&1 | grep --color=auto "Depends"
+save_local_debs
+aptold install -fy --auto-remove --purge \
+	2>&1 | grep --color=auto "Depends"
 
-# rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
-# rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
-# find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
-# find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
+rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
+find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 
 printf "\n\n\n"
 exit 0;
