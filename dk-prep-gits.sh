@@ -21,34 +21,34 @@ source /tb2/build/dk-build-0libs.sh
 global_git_config
 
 
-get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx" &
-get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache" &
-get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core" &
+get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"  >/dev/null 2>&1 &
+get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache"  >/dev/null 2>&1 &
+get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core"  >/dev/null 2>&1 &
 
-get_update_new_github "steamboatid/phpredis" "/root/org.src/php8/git-phpredis" &
-get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb" &
-get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker" &
-get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip" &
-get_update_new_github "steamboatid/db4" "/root/org.src/db4/git-db4" &
+get_update_new_github "steamboatid/phpredis" "/root/org.src/php8/git-phpredis"  >/dev/null 2>&1 &
+get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"  >/dev/null 2>&1 &
+get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"  >/dev/null 2>&1 &
+get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"  >/dev/null 2>&1 &
+get_update_new_github "steamboatid/db4" "/root/org.src/db4/git-db4"  >/dev/null 2>&1 &
 
 
-get_update_new_github "php/pecl-networking-gearman" "/root/org.src/git-gearman" &
+get_update_new_github "php/pecl-networking-gearman" "/root/org.src/git-gearman"  >/dev/null 2>&1 &
 
-get_update_new_github "steamboatid/phpredis" "/root/org.src/git-redis" &
+get_update_new_github "steamboatid/phpredis" "/root/org.src/git-redis"  >/dev/null 2>&1 &
 
-get_update_new_github "krakjoe/parallel" "/root/org.src/git-parallel" &
-get_update_new_github "rosmanov/pecl-eio" "/root/org.src/git-eio" &
-get_update_new_bitbucket "osmanov/pecl-ev.git" "/root/org.src/git-ev" &
+get_update_new_github "krakjoe/parallel" "/root/org.src/git-parallel"  >/dev/null 2>&1 &
+get_update_new_github "rosmanov/pecl-eio" "/root/org.src/git-eio"  >/dev/null 2>&1 &
+get_update_new_bitbucket "osmanov/pecl-ev.git" "/root/org.src/git-ev"  >/dev/null 2>&1 &
 
-get_update_new_github "php/pecl-database-dbase" "/root/org.src/git-dbase" &
-get_update_new_github "php/pecl-caching-memcache" "/root/org.src/git-memcache" &
-get_update_new_github "php/pecl-math-stats" "/root/org.src/git-mathstats" &
-get_update_new_github "php/pecl-system-sync" "/root/org.src/git-sync" &
-get_update_new_github "laruence/taint" "/root/org.src/git-taint" &
-get_update_new_github "phpv8/php-v8" "/root/org.src/git-phpv8" &
+get_update_new_github "php/pecl-database-dbase" "/root/org.src/git-dbase"  >/dev/null 2>&1 &
+get_update_new_github "php/pecl-caching-memcache" "/root/org.src/git-memcache"  >/dev/null 2>&1 &
+get_update_new_github "php/pecl-math-stats" "/root/org.src/git-mathstats"  >/dev/null 2>&1 &
+get_update_new_github "php/pecl-system-sync" "/root/org.src/git-sync"  >/dev/null 2>&1 &
+get_update_new_github "laruence/taint" "/root/org.src/git-taint"  >/dev/null 2>&1 &
+get_update_new_github "phpv8/php-v8" "/root/org.src/git-phpv8"  >/dev/null 2>&1 &
 
-get_update_new_github "php/pecl-file_formats-lzf" "/root/org.src/git-lzf" &
-get_update_new_github "RubixML/Tensor" "/root/org.src/git-tensor" &
+get_update_new_github "php/pecl-file_formats-lzf" "/root/org.src/git-lzf"  >/dev/null 2>&1 &
+get_update_new_github "RubixML/Tensor" "/root/org.src/git-tensor"  >/dev/null 2>&1 &
 
 
 rm -rf /root/org.src/git-raph
@@ -58,13 +58,13 @@ ln -sf /root/org.src/git-raphf/src/php_raphf_api.c /root/org.src/git-raphf/php_r
 ln -sf /root/org.src/git-raphf/src/php_raphf_api.h /root/org.src/git-raphf/php_raphf_api.h
 rm -rf /root/org.src/git-raphf/src/php_raphf_test.c
 
-get_update_new_github "steamboatid/ext-http" "/root/org.src/git-http" &
-get_update_new_github "php-memcached-dev/php-memcached" "/root/org.src/git-memcached" &
+get_update_new_github "steamboatid/ext-http" "/root/org.src/git-http"  >/dev/null 2>&1 &
+get_update_new_github "php-memcached-dev/php-memcached" "/root/org.src/git-memcached"  >/dev/null 2>&1 &
 
 # fuse,  https://github.com/libfuse/libfuse
 # sshfs, https://github.com/libfuse/sshfs
-get_update_new_github "libfuse/libfuse" "/root/org.src/git-fuse" &
-get_update_new_github "libfuse/sshfs" "/root/org.src/git-sshfs" &
+get_update_new_github "libfuse/libfuse" "/root/org.src/git-fuse"  >/dev/null 2>&1 &
+get_update_new_github "libfuse/sshfs" "/root/org.src/git-sshfs"  >/dev/null 2>&1 &
 
 
 
@@ -80,7 +80,7 @@ while :; do
 done
 
 jobs -r | grep -iv "find\|chmod\|chown"
-jobs -r
+jobs
 wait
 printf "\n\n wait finished... \n\n\n"
 
