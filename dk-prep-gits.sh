@@ -21,34 +21,34 @@ source /tb2/build/dk-build-0libs.sh
 global_git_config  &
 
 
-get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"
-get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache"
-get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core"
+get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx" &
+get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache" &
+get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core" &
 
-get_update_new_github "steamboatid/phpredis" "/root/org.src/php8/git-phpredis"
-get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"
-get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"
-get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
-get_update_new_github "steamboatid/db4" "/root/org.src/db4/git-db4"
+get_update_new_github "steamboatid/phpredis" "/root/org.src/php8/git-phpredis" &
+get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb" &
+get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker" &
+get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip" &
+get_update_new_github "steamboatid/db4" "/root/org.src/db4/git-db4" &
 
 
-get_update_new_github "php/pecl-networking-gearman" "/root/org.src/git-gearman"
+get_update_new_github "php/pecl-networking-gearman" "/root/org.src/git-gearman" &
 
-get_update_new_github "steamboatid/phpredis" "/root/org.src/git-redis"
+get_update_new_github "steamboatid/phpredis" "/root/org.src/git-redis" &
 
-get_update_new_github "krakjoe/parallel" "/root/org.src/git-parallel"
-get_update_new_github "rosmanov/pecl-eio" "/root/org.src/git-eio"
-get_update_new_bitbucket "osmanov/pecl-ev.git" "/root/org.src/git-ev"
+get_update_new_github "krakjoe/parallel" "/root/org.src/git-parallel" &
+get_update_new_github "rosmanov/pecl-eio" "/root/org.src/git-eio" &
+get_update_new_bitbucket "osmanov/pecl-ev.git" "/root/org.src/git-ev" &
 
-get_update_new_github "php/pecl-database-dbase" "/root/org.src/git-dbase"
-get_update_new_github "php/pecl-caching-memcache" "/root/org.src/git-memcache"
-get_update_new_github "php/pecl-math-stats" "/root/org.src/git-mathstats"
-get_update_new_github "php/pecl-system-sync" "/root/org.src/git-sync"
-get_update_new_github "laruence/taint" "/root/org.src/git-taint"
-get_update_new_github "phpv8/php-v8" "/root/org.src/git-phpv8"
+get_update_new_github "php/pecl-database-dbase" "/root/org.src/git-dbase" &
+get_update_new_github "php/pecl-caching-memcache" "/root/org.src/git-memcache" &
+get_update_new_github "php/pecl-math-stats" "/root/org.src/git-mathstats" &
+get_update_new_github "php/pecl-system-sync" "/root/org.src/git-sync" &
+get_update_new_github "laruence/taint" "/root/org.src/git-taint" &
+get_update_new_github "phpv8/php-v8" "/root/org.src/git-phpv8" &
 
-get_update_new_github "php/pecl-file_formats-lzf" "/root/org.src/git-lzf"
-get_update_new_github "RubixML/Tensor" "/root/org.src/git-tensor"
+get_update_new_github "php/pecl-file_formats-lzf" "/root/org.src/git-lzf" &
+get_update_new_github "RubixML/Tensor" "/root/org.src/git-tensor" &
 
 
 rm -rf /root/org.src/git-raph
@@ -58,8 +58,15 @@ ln -sf /root/org.src/git-raphf/src/php_raphf_api.c /root/org.src/git-raphf/php_r
 ln -sf /root/org.src/git-raphf/src/php_raphf_api.h /root/org.src/git-raphf/php_raphf_api.h
 rm -rf /root/org.src/git-raphf/src/php_raphf_test.c
 
-get_update_new_github "steamboatid/ext-http" "/root/org.src/git-http"
-get_update_new_github "php-memcached-dev/php-memcached" "/root/org.src/git-memcached"
+get_update_new_github "steamboatid/ext-http" "/root/org.src/git-http" &
+get_update_new_github "php-memcached-dev/php-memcached" "/root/org.src/git-memcached" &
+
+# fuse,  https://github.com/libfuse/libfuse
+# sshfs, https://github.com/libfuse/sshfs
+get_update_new_github "libfuse/libfuse" "/root/org.src/git-fuse" &
+get_update_new_github "libfuse/sshfs" "/root/org.src/git-sshfs" &
+
+
 
 
 #--- wait
@@ -73,6 +80,7 @@ printf "\n\n wait finished... \n\n\n"
 #-------------------------------------------
 printf "\n-- sync to src ALL \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+--exclude ".git" \
 /root/org.src/ /root/src/
 
 
@@ -81,3 +89,11 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 save_local_debs
 aptold install -fy --auto-remove --purge \
 	2>&1 | grep --color=auto "Depends"
+
+rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
+rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
+find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+
+printf "\n\n\n"
+exit 0;

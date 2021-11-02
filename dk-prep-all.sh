@@ -324,6 +324,13 @@ rm -rf /root/src/libzip/*deb
 get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
 
 
+#--- wait
+#-------------------------------------------
+printf "\n\n wait for all background process... \n"
+wait
+printf "\n\n wait finished... \n\n\n"
+
+
 
 #--- final delete all *deb
 #-------------------------------------------
@@ -334,6 +341,7 @@ find /root/src -type f -iname "*.deb" -delete
 #-------------------------------------------
 printf "\n-- sync to src ALL \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+--exclude ".git" \
 /root/org.src/ /root/src/
 
 
@@ -341,3 +349,11 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 save_local_debs
 aptold install -fy --auto-remove --purge \
 	2>&1 | grep --color=auto "Depends"
+
+rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
+rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
+find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+
+printf "\n\n\n"
+exit 0;

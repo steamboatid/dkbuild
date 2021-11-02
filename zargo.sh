@@ -1,6 +1,8 @@
 #!/bin/bash
 
 
+ssh argo "rm -rf /tb2/build/dk*sh"
+
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 /tb2/build/*sh root@argo:/tb2/build/
 
@@ -16,10 +18,10 @@ rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 
 ssh argo "nohup chmod +x /usr/local/sbin/* /tb2/build/*sh 2>&1 >/dev/null &"
 
-ssh argo "lxc-start -n tbus >/dev/null 2>&1 &"
-ssh argo "lxc-start -n teye >/dev/null 2>&1 &"
-ssh argo "lxc-start -n bus >/dev/null 2>&1 &"
-ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
+ssh argo "lxc-start -qn tbus >/dev/null 2>&1 &"
+ssh argo "lxc-start -qn teye >/dev/null 2>&1 &"
+ssh argo "lxc-start -qn bus >/dev/null 2>&1 &"
+ssh argo "lxc-start -qn eye >/dev/null 2>&1 &"
 
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-purge-packages.sh
 
@@ -69,4 +71,7 @@ ssh argo "lxc-start -n eye >/dev/null 2>&1 &"
 
 
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-gits.sh
-ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/6-php.sh
+# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/6-php.sh
+
+
+ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-all.sh

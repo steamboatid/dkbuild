@@ -52,6 +52,7 @@ doback_bash /tb2/build/dk-build-pcre.sh &
 doback_bash /tb2/build/dk-build-lua-resty-lrucache.sh &
 doback_bash /tb2/build/dk-build-lua-resty-core.sh &
 doback_bash /tb2/build/dk-build-libzip.sh &
+doback_bash /tb2/build/dk-build-sshfs-fuse.sh &
 
 
 # some job at foreground

@@ -137,10 +137,18 @@ for apkg in $(cat $FSRC | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort); do
 done
 
 
+#--- wait
+#-------------------------------------------
+printf "\n\n wait for all background process... \n"
+wait
+printf "\n\n wait finished... \n\n\n"
+
+
 #--- sync to src
 #-------------------------------------------
 printf "\n-- sync to src php8 \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+--exclude ".git" \
 /root/org.src/php8/ /root/src/php8/
 
 
@@ -150,3 +158,11 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 save_local_debs
 aptold install -fy --auto-remove --purge \
 	2>&1 | grep --color=auto "Depends"
+
+rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
+rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
+find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+
+printf "\n\n\n"
+exit 0;

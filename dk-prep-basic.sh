@@ -234,8 +234,23 @@ sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g"  >>  /tmp/deps.pkgs
 cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | xargs aptold install -y --ignore-missing
 
 
+#--- wait
+#-------------------------------------------
+printf "\n\n wait for all background process... \n"
+wait
+printf "\n\n wait finished... \n\n\n"
+
+
 #--- last
 #-------------------------------------------
 save_local_debs
 aptold install -fy --auto-remove --purge \
 	2>&1 | grep --color=auto "Depends"
+
+rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
+rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
+find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+
+printf "\n\n\n"
+exit 0;

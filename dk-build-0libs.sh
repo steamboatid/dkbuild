@@ -33,6 +33,11 @@ export cyan=$'\e[1;36m'
 export end=$'\e[0m'
 
 
+# apt bug
+chown -Rf _apt:root /var/cache/apt  >/dev/null 2>&1 &
+chmod -Rf 770 /var/cache/apt  >/dev/null 2>&1 &
+
+
 
 # aptold create and check (version6)
 #-------------------------------------------

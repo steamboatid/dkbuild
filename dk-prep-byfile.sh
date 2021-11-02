@@ -40,10 +40,18 @@ fetch_url "https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db
 dpkg-source --no-check --ignore-bad-version -x db4_4.8.30-buster1.dsc
 
 
+#--- wait
+#-------------------------------------------
+printf "\n\n wait for all background process... \n"
+wait
+printf "\n\n wait finished... \n\n\n"
+
+
 #--- sync to src
 #-------------------------------------------
 printf "\n-- sync to src db4 \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+--exclude ".git" \
 /root/org.src/db4/ /root/src/db4/
 
 #--- last
@@ -51,3 +59,11 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 save_local_debs
 aptold install -fy --auto-remove --purge \
 	2>&1 | grep --color=auto "Depends"
+
+rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
+rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
+find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+
+printf "\n\n\n"
+exit 0;
