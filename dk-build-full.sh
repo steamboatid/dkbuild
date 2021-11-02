@@ -96,6 +96,7 @@ fi
 
 isfail=$(tail -n100 dkbuild.log | grep -i failed | wc -l)
 if [[ $isfail -gt 0 ]]; then
+	>dkbuild.log
 	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
 	export DH_VERBOSE=1; \
 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
@@ -107,6 +108,7 @@ fi
 isflict=$(tail -n100 dkbuild.log | grep -i conflict | wc -l)
 isfail=$(tail -n100 dkbuild.log | grep -i failed | wc -l)
 if [[ $isfail -gt 0 ]] && [[ $isflict -gt 0 ]]; then
+	>dkbuild.log
 	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
 	export DH_VERBOSE=1; \
 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
