@@ -72,11 +72,11 @@ printf "\n\n wait for all background process... [$bname] "
 numo=0
 while :; do
 	# jobs -r | grep -iv "find\|chmod\|chown" | grep "git\|bit"
-	nums=$(jobs -r | grep -iv "find\|chmod\|chown" | grep "git\|bit" | wc -l)
+	nums=$(jobs -r | grep -iv "find\|chmod\|chown" | grep -iv "dk-prep-gits.sh" | grep "git\|bit" | wc -l)
 	if [[ $nums -lt $numo ]]; then
 		printf "."
 	else
-		jobs -r | grep -iv "find\|chmod\|chown" | grep "git\|bit" | sed -r "s/\s+/ /g" | cut -d" " -f4 | sort -u | sort
+		jobs -r | grep -iv "find\|chmod\|chown" | grep -iv "dk-prep-gits.sh" | grep "git\|bit" | sed -r "s/\s+/ /g" | cut -d" " -f4 | sort -u | sort
 		printf ".$nums "
 		numo=$nums
 	fi
