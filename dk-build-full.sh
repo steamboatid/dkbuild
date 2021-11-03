@@ -44,6 +44,14 @@ if [ -e debian/rules ]; then
 	chmod +x debian/rules
 fi
 
+if [[ -d debian/rules.d ]]; then
+	echo "
+override_dh_shlibdeps:
+	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 --ignore-missing-info
+">debian/rules.d/ovr-shlibdeps.mk
+fi
+
+
 if [ -e "debian/libnginx-mod-http-ndk.nginx" ]; then
 	chmod +x debian/libnginx-mod*nginx
 	chmod -x debian/libnginx-mod-http-ndk.nginx
