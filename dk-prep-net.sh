@@ -70,7 +70,8 @@ grep -iv "api\|perl\|debconf\|nginx-full\|nginx-light\|nginx-core\|nginx-extras"
 grep -iv "|" | cut -d":" -f1  >  /tmp/deps.pkgs
 
 echo "perl-base"  >> /tmp/deps.pkgs
-cat /tmp/deps.pkgs | tr "\n" " " | xargs aptold install -my
+cat /tmp/deps.pkgs | tr "\n" " " | xargs aptold install -my \
+	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
 # exit 0;
 
 
@@ -158,7 +159,7 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 #-------------------------------------------
 save_local_debs
 aptold install -fy --auto-remove --purge \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
 
 rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
 rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
