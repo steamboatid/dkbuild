@@ -154,16 +154,21 @@ sed -i '/keydb/d' /var/lib/dpkg/statoverride
 
 # short install
 aptnew install --no-install-recommends --fix-missing --reinstall -fy \
-libzip4 nutcracker keydb-server keydb-tools nginx-extras php8.0-fpm php8.0-cli php8.0-zip; \
+libzip4 libdb4.8; \
+aptnew install --no-install-recommends --fix-missing --reinstall -fy \
+nutcracker keydb-server keydb-tools nginx-extras php8.0-fpm php8.0-cli php8.0-zip; \
 aptnew install -y; \
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 
 sed -i '/keydb/d' /var/lib/dpkg/statoverride
 
-[[ -e /usr/lib/x86_64-linux-gnu/libzip.so ]] && \
+if [[ -e /usr/lib/x86_64-linux-gnu/libzip.so ]]; then
 	ln -s /usr/lib/x86_64-linux-gnu/libzip.so /usr/lib/x86_64-linux-gnu/libzip.so.4
+elif [[ -e /usr/lib/x86_64-linux-gnu/libzip.so.5 ]]; then
+	ln -s /usr/lib/x86_64-linux-gnu/libzip.so.5 /usr/lib/x86_64-linux-gnu/libzip.so.4
+fi
 
-[[ -f /usr/share/nginx/modules-available/mod-http-lua.conf ]] && \
+[[ -e /usr/share/nginx/modules-available/mod-http-lua.conf ]] && \
 	sed -i -r "s/^load/\#load/g" /usr/share/nginx/modules-available/mod-http-lua.conf
 
 # workaround for keydb-server
