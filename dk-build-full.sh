@@ -46,6 +46,8 @@ fi
 
 if [[ -d debian/rules.d ]]; then
 	echo "
+#-- override dh_shlibdeps
+
 override_dh_shlibdeps:
 	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 --ignore-missing-info
 ">debian/rules.d/ovr-shlibdeps.mk
