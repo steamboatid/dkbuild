@@ -29,8 +29,8 @@ find /root/org.src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
 find /root/src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
 
 #  kill slow git
-ps axww | grep -v grep | grep git | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
-ps axww | grep -v grep | grep git | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
+ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
+ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
 
 
 # prepare basic need: apt configs, sources list, etc

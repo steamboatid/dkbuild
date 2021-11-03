@@ -16,6 +16,10 @@ export TODATE=$(date +%Y%m%d)
 
 source /tb2/build/dk-build-0libs.sh
 
+#  kill slow git
+ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
+ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
+
 
 
 get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"  >/dev/null 2>&1 &
@@ -90,7 +94,7 @@ ln -sf /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf
 # ls -lah /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
 ln -sf /root/org.src/git-raphf/src/php_raphf_api.c /root/org.src/git-raphf/php_raphf_api.c
 ln -sf /root/org.src/git-raphf/src/php_raphf_api.h /root/org.src/git-raphf/php_raphf_api.h
-rm -rf /root/org.src/git-raphf/src/php_raphf_test.c
+rm -rf /root/org.src/git-raphf/src/php_raphf_test.c /root/src/git-raphf/src/php_raphf_test.c
 
 #--- sync to src
 #-------------------------------------------
