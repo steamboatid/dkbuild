@@ -137,7 +137,8 @@ systemctl daemon-reload; aptold purge --auto-remove --purge  -fy keydb*; \
 aptold update; aptnew full-upgrade --auto-remove --purge -fy; \
 aptnew install --reinstall -fy keydb-server keydb-tools; \
 netstat -nlpat | grep --color keydb-server
-exit 0
+
+sed -i '/keydb/d' /var/lib/dpkg/statoverride
 
 
 # cd `mktemp -d`; \
@@ -156,6 +157,8 @@ aptnew install --no-install-recommends --fix-missing --reinstall -fy \
 libzip4 nutcracker keydb-server keydb-tools nginx-extras php8.0-fpm php8.0-cli php8.0-zip; \
 aptnew install -y; \
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
+
+sed -i '/keydb/d' /var/lib/dpkg/statoverride
 
 [[ -e /usr/lib/x86_64-linux-gnu/libzip.so ]] && \
 	ln -s /usr/lib/x86_64-linux-gnu/libzip.so /usr/lib/x86_64-linux-gnu/libzip.so.4
@@ -190,12 +193,12 @@ cat /tmp/pkg-nginx2.txt | xargs aptnew install -y --no-install-recommends --fix-
 
 # complete install PHP8.0
 apt-cache search php8.0* | awk '{print $1}' | grep -v "apache\|embed\|php8.1" |\
-grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache" |\
+grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache\|enchant" |\
 grep "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|common\|fpm\|cli" \
 > /tmp/pkg-php0.txt
 
 apt-cache search php8.0* | awk '{print $1}' | grep -v "apache\|embed\|php8.1" |\
-grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache" |\
+grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache\|enchant" |\
 grep "bcmath\|bz2\|gmp\|mbstring\|mysql\|opcache\|readline\|xdebug\|zip" \
 >> /tmp/pkg-php0.txt
 
@@ -204,7 +207,7 @@ cat /tmp/pkg-php1.txt | grep -v "php8.1" | tr "\n" " " > /tmp/pkg-php2.txt
 cat /tmp/pkg-php2.txt | xargs aptnew install -y --no-install-recommends --fix-missing
 
 # install all
-apt-cache search php8.0 | grep -v "apache\|debug\|dbg\|cgi\|embed\|gmagick\|yac\|-dev" |\
+apt-cache search php8.0 | grep -v "apache\|debug\|dbg\|cgi\|embed\|gmagick\|yac\|-dev\|enchant" |\
 cut -d" " -f1 | tr "\n" " " | xargs aptnew install -y --no-install-recommends
 
 # fix arginfo on uploadprogress
