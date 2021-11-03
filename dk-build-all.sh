@@ -143,3 +143,6 @@ cat /tmp/all.git | grep "http" | sort -u | sort >/root/all.git
 # rebuild the repo
 #-------------------------------------------
 nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
+
+
+printf "\n\n --- done \n\n\n"

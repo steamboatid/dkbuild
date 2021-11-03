@@ -122,6 +122,10 @@ aptold autoclean; aptold clean; aptold update
 aptold full-upgrade --auto-remove --purge -fy
 
 
+# purge packages
+cd `mktemp -d`; \
+apt purge -fy nginx* php* keydb* nutc* fuse* libfuse* sshfs* lua* db4*
+
 
 # special steps for keydb only
 cd `mktemp -d`; \
@@ -129,7 +133,7 @@ rm -rf /etc/keydb /etc/systemd /lib/systemd/system/keydb*; \
 systemctl daemon-reload; aptold purge --auto-remove --purge  -fy keydb*; \
 aptold update; aptnew full-upgrade --auto-remove --purge -fy; \
 aptnew install --reinstall -fy keydb-server keydb-tools; \
-netstat -nlpat |grep --color keydb-server
+netstat -nlpat | grep --color keydb-server
 
 
 # cd `mktemp -d`; \
@@ -148,6 +152,12 @@ aptnew install --no-install-recommends --fix-missing --reinstall -fy \
 libzip4 nutcracker keydb-server keydb-tools nginx-extras php8.0-fpm php8.0-cli php8.0-zip; \
 aptnew install -y; \
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
+
+[[ -e /usr/lib/x86_64-linux-gnu/libzip.so ]] && \
+	ln -s /usr/lib/x86_64-linux-gnu/libzip.so /usr/lib/x86_64-linux-gnu/libzip.so.4
+
+[[ -f /usr/share/nginx/modules-available/mod-http-lua.conf ]] && \
+	sed -i -r "s/^load/\#load/g" /usr/share/nginx/modules-available/mod-http-lua.conf
 
 # workaround for keydb-server
 if [[ $(dpkg -l | grep "^ii" | grep "keydb\-server" | wc -l) -lt 1 ]]; then
