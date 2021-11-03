@@ -18,6 +18,7 @@ source /tb2/build/dk-build-0libs.sh
 
 
 
+
 # special version
 #-------------------------------------------
 #--- file: meson.build --- looking for: version
@@ -41,10 +42,9 @@ prepare_build_flags
 
 # get source
 #-------------------------------------------
-# mkdir -p /root/org.src/sshfs /root/src/sshfs
-# cd /root/org.src/sshfs
-# chown_apt
-# apt source -y libsshfs3
+mkdir -p /root/org.src/sshfs /root/src/sshfs
+cd /root/org.src/sshfs
+apt source -y sshfs libfuse3-dev
 
 
 # prepare dirs
@@ -151,4 +151,4 @@ ls -la /tb2/build/$RELNAME-sshfs/
 
 # rebuild the repo
 #-------------------------------------------
-ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &"
+nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &

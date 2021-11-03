@@ -17,6 +17,9 @@ export TODATE=$(date +%Y%m%d)
 
 source /tb2/build/dk-build-0libs.sh
 
+
+
+
 # gen config
 #-------------------------------------------
 /bin/bash /tb2/build/dk-config-gen.sh

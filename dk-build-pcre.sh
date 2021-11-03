@@ -18,6 +18,7 @@ source /tb2/build/dk-build-0libs.sh
 
 
 
+
 # delete old debs
 #-------------------------------------------
 mkdir -p /tb2/build/$RELNAME-pcre
@@ -36,7 +37,6 @@ prepare_build_flags
 #-------------------------------------------
 mkdir -p /root/org.src/pcre /root/src/pcre
 cd /root/org.src/pcre
-chown_apt
 apt source -y libpcre3
 
 
@@ -110,4 +110,4 @@ ls -la /tb2/build/$RELNAME-pcre/
 
 # rebuild the repo
 #-------------------------------------------
-ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &"
+nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &

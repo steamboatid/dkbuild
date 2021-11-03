@@ -17,9 +17,6 @@ export TODATE=$(date +%Y%m%d)
 source /tb2/build/dk-build-0libs.sh
 
 
-# global config
-global_git_config
-
 
 get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache"  >/dev/null 2>&1 &
@@ -68,10 +65,18 @@ get_update_new_github "steamboatid/sshfs" "/root/org.src/sshfs/git-sshfs"  >/dev
 #-------------------------------------------
 bname=$(basename $0)
 printf "\n\n wait for all background process... [$bname] "
+numo=0
 while :; do
 	# jobs -r | grep -iv "find\|chmod\|chown" | grep "git\|bit"
 	nums=$(jobs -r | grep -iv "find\|chmod\|chown" | grep "git\|bit" | wc -l)
-	printf ".$nums "
+	if [[ $nums -lt $numo ]]; then
+		printf "."
+	else
+		jobs -r | grep -iv "find\|chmod\|chown" | grep "git\|bit" | sed -r "s/\s+/ /g" | cut -d" " -f4 | sort -u | sort
+		printf ".$nums "
+		numo=$nums
+	fi
+
 	if [[ $nums -lt 1 ]]; then break; fi
 	sleep 1
 done
@@ -99,7 +104,7 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 #-------------------------------------------
 save_local_debs
 aptold install -fy --auto-remove --purge \
-	2>&1 | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
 rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan

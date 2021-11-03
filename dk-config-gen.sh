@@ -20,6 +20,7 @@ source /tb2/build/dk-build-0libs.sh
 
 
 
+
 #--- check .bashrc
 if [ `cat ~/.bashrc | grep alias | grep "find -L" | wc -l` -lt 1 ]; then
 	# echo "find alias not found"

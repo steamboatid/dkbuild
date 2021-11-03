@@ -17,6 +17,7 @@ export TODATE=$(date +%Y%m%d)
 source /tb2/build/dk-build-0libs.sh
 
 
+
 # reset default build flags
 #-------------------------------------------
 reset_build_flags
@@ -124,7 +125,7 @@ time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 # 	sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g" | sort -u | sort > $ATMP
 # 	mv $ATMP ~/build.deps
 # 	cat ~/build.deps
-# 	cat ~/build.deps | xargs aptold install -fy 2>&1 | grep --color=auto "Depends"
+# 	cat ~/build.deps | xargs aptold install -fy 2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 # 	printf "\n\n"
 # 	exit 1;
 # fi

@@ -17,6 +17,7 @@ export TODATE=$(date +%Y%m%d)
 source /tb2/build/dk-build-0libs.sh
 
 
+
 # special version
 #-------------------------------------------
 VEROVR="6.2.0.1"
@@ -112,4 +113,4 @@ ls -la /tb2/build/$RELNAME-keydb/
 
 # rebuild the repo
 #-------------------------------------------
-ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &"
+nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &

@@ -17,6 +17,7 @@ export TODATE=$(date +%Y%m%d)
 source /tb2/build/dk-build-0libs.sh
 
 
+
 doback(){
 	/usr/bin/nohup /bin/bash /tb2/build/dk-build-full.sh 2>&1 >/dev/null 2>&1 &
 	printf "\n\n\n"
@@ -157,4 +158,4 @@ ls -la /tb2/build/$RELNAME-php8/
 
 # rebuild the repo
 #-------------------------------------------
-ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &"
+nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &

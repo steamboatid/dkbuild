@@ -17,6 +17,7 @@ export TODATE=$(date +%Y%m%d)
 source /tb2/build/dk-build-0libs.sh
 
 
+
 # https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/libdb4_4.8.30-buster1_amd64.deb
 # https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/libdb4-tcl_4.8.30-buster1_amd64.deb
 # https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/libdb4-dev_4.8.30-buster1_amd64.deb
@@ -66,7 +67,7 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 #-------------------------------------------
 save_local_debs
 aptold install -fy --auto-remove --purge \
-	2>&1 | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
 rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan

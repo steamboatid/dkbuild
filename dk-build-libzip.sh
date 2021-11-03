@@ -18,6 +18,7 @@ source /tb2/build/dk-build-0libs.sh
 
 
 
+
 # special version
 #-------------------------------------------
 #--- file: lib/resty/core/base.lua --- looking for: _M.version
@@ -115,4 +116,4 @@ ls -la /tb2/build/$RELNAME-libzip/
 
 # rebuild the repo
 #-------------------------------------------
-ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &"
+nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &

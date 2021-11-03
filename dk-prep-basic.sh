@@ -16,8 +16,6 @@ export TODATE=$(date +%Y%m%d)
 
 source /tb2/build/dk-build-0libs.sh
 
-#--- chown apt
-chown_apt
 
 
 
@@ -174,21 +172,23 @@ deb-src http://repo.aisits.id/keydb-server/ubuntu bionic main
 # /usr/bin/wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 
 
-cd `mktemp -d`; \
-aptold update;\
-dpkg --configure -a; \
+cd `mktemp -d`
+aptold update
+dpkg --configure -a
 aptold install -y locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
-gnupg2 apt-utils tzdata curl ssh rsync libxmlrpc* && \
-echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen &&\
+gnupg2 apt-utils tzdata curl ssh rsync libxmlrpc* \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen
 
-apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys &&\
+apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys | grep -iv "not changed"
 
 aptold update; aptold full-upgrade --auto-remove --purge -fy
 
 #--- just incase needed
 #-------------------------------------------
 dpkg --configure -a; \
-aptold install -y linux-image-amd64 linux-headers-amd64
+aptold install -y linux-image-amd64 linux-headers-amd64 \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 #--- remove unneeded packages
 #-------------------------------------------
@@ -253,7 +253,7 @@ printf "\n\n --- wait finished... \n\n\n"
 #-------------------------------------------
 save_local_debs
 aptold install -fy --auto-remove --purge \
-	2>&1 | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
 rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan

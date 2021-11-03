@@ -19,6 +19,7 @@ source /tb2/build/dk-build-0libs.sh
 
 
 
+
 # gen config
 #-------------------------------------------
 /bin/bash /tb2/build/dk-config-gen.sh
@@ -29,7 +30,8 @@ if [[ ! -e /run/done.init.dkbuild.txt ]]; then
 
 	# tweaks
 	echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
-	aptold install -y eatmydata lsb-release nano rsync
+	aptold install -y eatmydata lsb-release nano rsync \
+		2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 
 	echo \
@@ -93,13 +95,14 @@ export LANGUAGE=en_US.UTF-8
 	>/etc/apt/sources.list.d/keydb-ppa.list
 
 
-	cd `mktemp -d`; \
-	aptold update;\
-	dpkg --configure -a; \
+	cd `mktemp -d`
+	aptold update
+	dpkg --configure -a
 	aptold install -y locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
-	gnupg2 apt-utils tzdata curl && \
-	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen &&\
-	apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys &&\
+	gnupg2 apt-utils tzdata curl \
+		2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen
+	apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys | grep -iv "not changed"
 	aptold update; aptold full-upgrade -fy
 
 	echo "1" > /run/done.init.dkbuild.txt

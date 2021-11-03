@@ -17,12 +17,6 @@ export TODATE=$(date +%Y%m%d)
 source /tb2/build/dk-build-0libs.sh
 
 
-# global config
-global_git_config  &
-
-# chown apt
-chown_apt
-
 # fix keydb perm
 fix_keydb_permission_problem
 
@@ -62,10 +56,13 @@ libmaxminddb-dev libexpat-dev libldap2-dev libedit-dev openssl clang \
 libpcre3 build-essential libpcre3 libpcre3-dev zlib1g-dev \
 webp libwebp-dev libgeoip-dev lua-geoip-dev \
 libluajit*dev luajit \
-webp libwebp-dev libgeoip-dev lua-geoip-dev libsodium-dev
+webp libwebp-dev libgeoip-dev lua-geoip-dev libsodium-dev meson \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
-aptold build-dep -fydu nginx lua-resty-core lua-resty-lrucache libpcre3 libsodium-dev
-aptold install -fydu --fix-broken  --allow-downgrades --allow-change-held-packages
+aptold build-dep -fydu nginx lua-resty-core lua-resty-lrucache libpcre3 libsodium-dev \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+aptold install -fydu --fix-broken  --allow-downgrades --allow-change-held-packages \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 save_local_debs
 
 
@@ -87,7 +84,6 @@ get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core
 
 mkdir -p /root/org.src/pcre /root/src/pcre
 cd /root/org.src/pcre
-chown_apt
 apt source -y libpcre3
 
 
@@ -107,16 +103,16 @@ aptold install -fy --fix-broken
 # apt-cache search libmagickwand  2>&1 | awk '{print $1}' | grep dev | xargs aptold install -y
 
 
-aptold install -fy pkg-config build-essential autoconf bison re2c \
+aptold install -fy pkg-config build-essential autoconf bison re2c meson \
 libxml2-dev libsqlite3-dev curl make gcc devscripts debhelper dh-apache2 apache2-dev libc-client-dev \
-	2>&1 | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 aptold install -fy libwebp-dev \
-	2>&1 | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 aptold install -fy libwebp-dev libwebp6 libgd-dev \
-	2>&1 | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 aptold install -fy libgd-dev libgd3 \
-	2>&1 | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
@@ -134,7 +130,7 @@ php8.0-bcmath php8.0-bz2 php8.0-gmp php8.0-ldap php8.0-mbstring php8.0-mysql \
 php8.0-opcache php8.0-readline php8.0-soap php8.0-tidy php8.0-xdebug php8.0-xml php8.0-xsl php8.0-zip \
 php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu \
 pkg-php-tools libdistro-info-perl php-all-dev \
-	2>&1 | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
 devscripts build-essential lintian debhelper git git-extras wget axel dh-make dh-php ccache \
@@ -158,15 +154,15 @@ libwrap0-dev libxml2-dev libxmltok1-dev libxslt1-dev libzip-dev locales-all netb
 libxml2-dev libpcre3-dev libbz2-dev libcurl4-openssl-dev libjpeg-dev libxpm-dev libfreetype6-dev libmysqlclient-dev postgresql-server-dev-all \
 libgmp-dev libsasl2-dev libmhash-dev unixodbc-dev freetds-dev libpspell-dev libsnmp-dev libtidy-dev libxslt1-dev libmcrypt-dev \
 libpng*dev libdb5*-dev libfreetype*dev libxft*dev libgdchart-gd2-xpm-dev freetds-dev libldb-dev libldap2-dev \
-libdb5*dev libdb4*dev libdn*dev libidn*dev libomp-dev \
-	2>&1 | grep --color=auto "Depends"
+libdb5*dev libdb4*dev libdn*dev libidn*dev libomp-dev meson \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 apt-cache search libdb | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
 xargs aptold install -fy  --no-install-recommends  --allow-downgrades \
-	2>&1 | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 apt-cache search db5 | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
 xargs aptold install -fy  --no-install-recommends  --allow-downgrades \
-	2>&1 | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
 default-jdk libx11-dev xorg-dev libcurl4-openssl-dev \
@@ -178,7 +174,7 @@ libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
 php-dev libc6-dev libticonv-dev libiconv-hook-dev \
 libghc-iconv-dev libiconv-hook-dev libc-bin \
 libqdbm* libgdbm* libxqdbm* libxmlrpc-c*dev xmlrpc-api-utils \
-	2>&1 | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
 apache2-dev autotools-dev *clang*dev default-libmysqlclient-dev devscripts dpkg-dev \
@@ -212,7 +208,7 @@ php-dev php-igbinary-all-dev php-memcached-all-dev \
 postgresql-server-dev-* postgresql-server-dev-all slapi-dev \
 systemtap-sdt-dev tcl-dev unixodbc-dev uuid-dev xorg-dev \
 zlib1g*dev zlib1g-dev \
-	2>&1 | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 aptold install -fy \
 libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
@@ -220,7 +216,7 @@ libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev \
 libssl-dev libxml2-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
 pkg-config build-essential autoconf bison re2c libxml2-dev libsqlite3-dev freetds-dev \
 libmagickwand-dev libmagickwand-6*dev libgraphicsmagick1-dev libmagickcore-6-arch-config \
-	2>&1 | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 
 aptold build-dep -fy php8.0 php-defaults \
@@ -228,7 +224,7 @@ php8.0-cli php8.0-fpm php8.0-common php8.0-curl php8.0-fpm php8.0-gd \
 php8.0-bcmath php8.0-bz2 php8.0-gmp php8.0-ldap php8.0-mbstring php8.0-mysql \
 php8.0-opcache php8.0-readline php8.0-soap php8.0-tidy php8.0-xdebug php8.0-xml php8.0-xsl php8.0-zip \
 php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu \
-	2>&1 | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 #--- recreate dir, delete debs
 #-------------------------------------------
@@ -237,7 +233,6 @@ rm -rf /root/src/php8/*deb
 
 #--- fetch default source package
 #-------------------------------------------
-chown_apt
 cd /root/org.src/php8
 apt source -y php-defaults \
 php8.0 php8.0-apcu php8.0-ast php8.0-bcmath php8.0-bz2 php8.0-cli php8.0-common \
@@ -266,9 +261,13 @@ get_update_new_github "steamboatid/phpredis" "/root/org.src/php8/git-phpredis"
 # KEYDB, source via git
 #-------------------------------------------
 killall -9 keydb-server 2>&1 >/dev/null
-aptold install -fy build-essential nasm autotools-dev autoconf libjemalloc-dev tcl tcl-dev uuid-dev libcurl4-openssl-dev
-aptold build-dep -fy keydb-server keydb-tools
-aptold install -fy keydb-server keydb-tools
+aptold install -fy build-essential nasm autotools-dev autoconf libjemalloc-dev tcl tcl-dev \
+uuid-dev libcurl4-openssl-dev \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+aptold build-dep -fy keydb-server keydb-tools \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+aptold install -fy keydb-server keydb-tools \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 # fix keyd perm
 fix_keydb_permission_problem
@@ -300,8 +299,10 @@ get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"
 
 # NUTCRACKER, source via git
 #-------------------------------------------
-aptold install -fy build-essential fakeroot devscripts libyaml-dev libyaml-0* doxygen nutcracker
-aptold build-dep -fy nutcracker
+aptold install -fy build-essential fakeroot devscripts libyaml-dev libyaml-0* doxygen nutcracker \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+aptold build-dep -fy nutcracker \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 #--- recreate dir, delete debs
 #-------------------------------------------
@@ -316,8 +317,10 @@ get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nut
 
 # libzip, source via git
 #-------------------------------------------
-aptold install -fy build-essential fakeroot devscripts liblzma*dev zlib1g*dev bzip2 libzip-dev libzip-dev
-aptold build-dep -fy libzip4
+aptold install -fy build-essential fakeroot devscripts liblzma*dev zlib1g*dev bzip2 libzip-dev libzip-dev \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+aptold build-dep -fy libzip4 \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 #--- recreate dir, delete debs
 #-------------------------------------------
@@ -327,6 +330,14 @@ rm -rf /root/src/libzip/*deb
 # get source if not exists via github
 #-------------------------------------------
 get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
+
+
+# sshfs, libfuse
+#-------------------------------------------
+mkdir -p /root/org.src/sshfs /root/src/sshfs
+cd /root/org.src/sshfs
+apt source -y sshfs libfuse3-dev
+
 
 
 #--- wait
@@ -361,7 +372,7 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 #--- last
 save_local_debs
 aptold install -fy --auto-remove --purge \
-	2>&1 | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
 rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan

@@ -33,18 +33,13 @@ export cyan=$'\e[1;36m'
 export end=$'\e[0m'
 
 
-# apt bug
-chown -Rf _apt:root /var/cache/apt  >/dev/null 2>&1 &
-chmod -Rf 770 /var/cache/apt  >/dev/null 2>&1 &
 
-
-
-# aptold create and check (version6)
+# aptold create and check (version7)
 #-------------------------------------------
 create_aptold() {
 	echo \
 '#!/bin/bash
-# version6
+# version7
 
 save_local_debs() {
 	mkdir -p /tb2/tmp/cachedebs/
@@ -56,6 +51,9 @@ save_local_debs() {
 		fi
 	fi
 }
+
+chown -Rf _apt:root /var/cache/apt/archives/partial/
+chmod -Rf 700 /var/cache/apt/archives/partial/
 
 str="$*"
 exs=0
@@ -79,19 +77,19 @@ fi
 
 if [ ! -e /usr/local/sbin/aptold ]; then
 	create_aptold
-elif [[ $(grep "version6" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version7" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
 	create_aptold
 fi
 chmod +x /usr/local/sbin/aptold
 
 
 
-# aptnew create and check (version6)
+# aptnew create and check (version7)
 #-------------------------------------------
 create_aptnew() {
 	echo \
 '#!/bin/bash
-# version6
+# version7
 
 save_local_debs() {
 	mkdir -p /tb2/tmp/cachedebs/
@@ -103,6 +101,9 @@ save_local_debs() {
 		fi
 	fi
 }
+
+chown -Rf _apt:root /var/cache/apt/archives/partial/
+chmod -Rf 700 /var/cache/apt/archives/partial/
 
 str="$*"
 exs=0
@@ -126,7 +127,7 @@ fi
 
 if [ ! -e /usr/local/sbin/aptnew ]; then
 	create_aptnew
-elif [[ $(grep "version6" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version7" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
 	create_aptnew
 fi
 chmod +x /usr/local/sbin/aptnew
@@ -247,7 +248,7 @@ check_build_log() {
 
 chown_apt() {
 	chown -Rf _apt:root /var/cache/apt/archives/partial/
-	chmod -f 700 /var/cache/apt/archives/partial/
+	chmod -Rf 700 /var/cache/apt/archives/partial/
 }
 
 global_git_config() {
@@ -509,3 +510,13 @@ db4_install() {
 		fi
 	fi
 }
+
+init_dkbuild() {
+	# global config
+	global_git_config  &
+
+	# chown apt
+	chown_apt &
+}
+# automatically call init
+init_dkbuild >/dev/null 2>&1 &
