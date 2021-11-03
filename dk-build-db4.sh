@@ -103,7 +103,7 @@ mkdir -p /root/src/db4
 cd /root/src/db4
 find /root/src/db4 -type f -iname "*udeb" -delete
 find /root/src/db4 -type f -iname "*dbgsym*deb" -delete
-find /root/src/db4 -type f -iname "*doc*" -delete
+# find /root/src/db4 -type f -iname "*doc*" -delete
 
 
 # install all after build
