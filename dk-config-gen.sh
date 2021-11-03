@@ -45,47 +45,47 @@ source ~/.bashrc
 #--- systemd
 LINE='DefaultTimeoutStartSec=3s'
 FILE='/etc/systemd/user.conf'
-grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
+[[ -f $FILE ]] && grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
 
 LINE='DefaultTimeoutStopSec=3s'
 FILE='/etc/systemd/user.conf'
-grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
+[[ -f $FILE ]] && grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
 
 LINE='DefaultTasksMax=infinity'
 FILE='/etc/systemd/user.conf'
-grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
+[[ -f $FILE ]] && grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
 
 LINE='DefaultLimitNOFILE=1048576'
 FILE='/etc/systemd/user.conf'
-grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
+[[ -f $FILE ]] && grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
 
 
 
 LINE='DefaultTimeoutStartSec=3s'
 FILE='/etc/systemd/system.conf'
-grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
+[[ -f $FILE ]] && grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
 
 LINE='DefaultTimeoutStopSec=3s'
 FILE='/etc/systemd/system.conf'
-grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
+[[ -f $FILE ]] && grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
 
 LINE='DefaultTasksMax=infinity'
 FILE='/etc/systemd/system.conf'
-grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
+[[ -f $FILE ]] && grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
 
 LINE='DefaultLimitNOFILE=1048576'
 FILE='/etc/systemd/system.conf'
-grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
+[[ -f $FILE ]] && grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
 
 
 #-- ssh
 LINE='   StrictHostKeyChecking no'
 FILE='/etc/ssh/ssh_config'
-grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
+[[ -f $FILE ]] && grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
 
 LINE='   CheckHostIP no'
 FILE='/etc/ssh/ssh_config'
-grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
+[[ -f $FILE ]] && grep -qxF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
 
 
 #-- keydb server
