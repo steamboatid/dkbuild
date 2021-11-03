@@ -80,4 +80,5 @@ ssh argo -- lxca teye -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
 
 
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-all.sh
-ssh argo -- lxc-attach -n teye -- /bin/bash /tb2/build/dk-install-all.sh
+# ssh argo -- lxc-attach -n teye -- /bin/bash /tb2/build/dk-install-all.sh
+ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/dk-install-all.sh

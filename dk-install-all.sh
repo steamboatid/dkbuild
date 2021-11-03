@@ -239,11 +239,11 @@ php -v
 [ -x /etc/init.d/php8.0-fpm ] && mkdir -p /run/php && /etc/init.d/php8.0-fpm restart
 
 # check netstat
-printf "\n--- Output of ${yel}netstat${end} \n"
+printf "\n--- Output of ${yel}netstat${end} -- nginx-keydb-nutcracker-php \n"
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 
 # check netstat
-printf "\n--- Output of ${yel}ps${end} \n"
+printf "\n--- Output of ${yel}ps${end} -- nginx-keydb-nutcracker-php \n"
 ps -e -o command | grep -v "grep\|pool\|worker" | sort -u | grep --color "nginx\|keydb\|nutcracker\|php"
 
 # check php custom
