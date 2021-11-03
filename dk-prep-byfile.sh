@@ -32,7 +32,7 @@ source /tb2/build/dk-build-0libs.sh
 
 mkdir -p /root/org.src/db4 /root/src/db4
 cd /root/org.src/db4
-find /root/org.src/db4 -mindepth 1 -type d -exec rm -rf {} \;
+# find /root/org.src/db4 -mindepth 1 -type d -exec rm -rf {} \;
 
 fetch_url "https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db4_4.8.30.orig.tar.gz"
 fetch_url "https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db4_4.8.30-buster1.dsc"

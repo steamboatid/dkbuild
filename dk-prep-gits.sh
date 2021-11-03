@@ -31,6 +31,7 @@ get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"  >/dev
 get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/db4" "/root/org.src/db4/git-db4"  >/dev/null 2>&1 &
+get_update_new_github "steamboatid/debs-db4" "/root/org.src/db4/git-debs-db4"  >/dev/null 2>&1 &
 
 
 get_update_new_github "php/pecl-networking-gearman" "/root/org.src/git-gearman"  >/dev/null 2>&1 &
