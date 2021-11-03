@@ -34,7 +34,6 @@ prepare_build_flags
 # prepare dirs
 #-------------------------------------------
 mkdir -p /tb2/build/$RELNAME-db4
-rm -rf /tb2/build/$RELNAME-db4/*deb
 mkdir -p /root/src/db4
 
 
@@ -47,6 +46,7 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 
 # delete old debs
 #-------------------------------------------
+rm -rf /tb2/build/$RELNAME-db4/*deb
 rm -rf /root/src/db4/*deb
 
 
@@ -103,6 +103,7 @@ mkdir -p /root/src/db4
 cd /root/src/db4
 find /root/src/db4 -type f -iname "*udeb" -delete
 find /root/src/db4 -type f -iname "*dbgsym*deb" -delete
+find /root/src/db4 -type f -iname "*doc*" -delete
 
 
 # install all after build
