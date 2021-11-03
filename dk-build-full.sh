@@ -38,31 +38,31 @@ if [ -e debian/rules ]; then
 
 	if [[ $(cat debian/rules | grep "dpkg\-shlibdeps" | wc -l) -gt 0 ]]; then
 		if [[ $(cat debian/rules | grep "dpkg\-shlibdeps" | grep "warnings\|missing" | wc -l) -lt 1 ]]; then
-			sed -i -r "s/dpkg-shlibdeps /dpkg-shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 --ignore-missing-info /g" debian/rules
+			sed -i -r "s/dpkg-shlibdeps /dpkg-shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info /g" debian/rules
 		fi
 	fi
 
 	if [[ $(cat debian/rules | grep "override_dh_shlibdeps" | wc -l) -lt 1 ]]; then
 		ovr_shlibs="\
 override_dh_shlibdeps\: \\n\
-	dh_shlibdeps --dpkg-shlibdeps-params\=--ignore-missing-info --warnings\=0 --ignore-missing-info "
-	# dh_shlibdeps --dpkg-shlibdeps-params\=--ignore-missing-info --warnings\=0 --ignore-missing-info
+	dh_shlibdeps --dpkg-shlibdeps-params\=--ignore-missing-info "
 		sed -i -r "s/\.PHONY/\n\n$ovr_shlibs\n\n\n\.PHONY/" debian/rules
 	fi
 
 	chmod +x debian/rules
-	# cat debian/rules | grep shlib; exit 0;
+	cat debian/rules | grep shlib; exit 0;
 fi
 
 if [[ -d debian/rules.d ]]; then
 	echo "
 #-- override dh_shlibdeps
 override_dh_shlibdeps:
-	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 --ignore-missing-info
+	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info
 ">debian/rules.d/ovr-shlibdeps.mk
 fi
 
-alias dpkg-shlibdeps="dpkg-shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 --ignore-missing-info"
+# alias dpkg-shlibdeps="dpkg-shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 --ignore-missing-info"
+unalias dpkg-shlibdeps
 
 
 
