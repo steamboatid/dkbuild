@@ -58,8 +58,8 @@ get_update_new_github "php-memcached-dev/php-memcached" "/root/org.src/git-memca
 
 # fuse,  https://github.com/libfuse/libfuse
 # sshfs, https://github.com/libfuse/sshfs
-get_update_new_github "libfuse/libfuse" "/root/org.src/sshfs/git-fuse"  >/dev/null 2>&1 &
-get_update_new_github "libfuse/sshfs" "/root/org.src/sshfs/git-sshfs"  >/dev/null 2>&1 &
+get_update_new_github "steamboatid/libfuse" "/root/org.src/sshfs/git-fuse"  >/dev/null 2>&1 &
+get_update_new_github "steamboatid/sshfs" "/root/org.src/sshfs/git-sshfs"  >/dev/null 2>&1 &
 
 
 
