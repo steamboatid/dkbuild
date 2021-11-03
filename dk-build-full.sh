@@ -62,6 +62,9 @@ override_dh_shlibdeps:
 ">debian/rules.d/ovr-shlibdeps.mk
 fi
 
+alias dpkg-shlibdeps="dpkg-shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 --ignore-missing-info"
+
+
 
 if [ -e "debian/libnginx-mod-http-ndk.nginx" ]; then
 	chmod +x debian/libnginx-mod*nginx
