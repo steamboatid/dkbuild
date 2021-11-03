@@ -23,6 +23,11 @@ ssh argo "lxc-start -qn teye >/dev/null 2>&1 &"
 ssh argo "lxc-start -qn bus >/dev/null 2>&1 &"
 ssh argo "lxc-start -qn eye >/dev/null 2>&1 &"
 
+ssh argo -- lxca eye  -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
+ssh argo -- lxca bus  -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
+ssh argo -- lxca tbus -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
+ssh argo -- lxca teye -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
+
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-purge-packages.sh
 
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-check-log.sh
