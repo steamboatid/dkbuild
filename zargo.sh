@@ -14,7 +14,7 @@ rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 # /var/lib/lxc/bus/rootfs/root/db4-debs/ argo:/tb2/build/buster-db4/
 
 # nohup /bin/bash /tb2/build/zgit-auto.sh >/dev/null 2>&1 &
-/bin/bash /tb2/build/zgit-auto.sh
+/bin/bash /tb2/build/zgit-auto.sh &
 
 ssh argo "nohup chmod +x /usr/local/sbin/* /tb2/build/*sh 2>&1 >/dev/null &"
 
