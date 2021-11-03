@@ -127,6 +127,8 @@ cd `mktemp -d`; \
 apt purge -fy nginx* php* keydb* nutc* fuse* libfuse* sshfs* lua* db4* | grep -iv "not installed"; \
 apt purge -fy nginx* php* keydb* nutc* fuse* libfuse* sshfs* lua* db4* | grep -iv "not installed"
 
+sed -i '/keydb/d' /var/lib/dpkg/statoverride
+
 
 # special steps for keydb only
 cd `mktemp -d`; \
