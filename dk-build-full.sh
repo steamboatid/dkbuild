@@ -37,8 +37,8 @@ if [ -e debian/rules ]; then
 	sed -i -r "s/\-Wall//g" debian/rules
 
 	if [[ $(cat debian/rules | grep "dpkg\-shlibdeps" | wc -l) -gt 0 ]]; then
-		if [[ $(cat debian/rules | grep "dpkg\-shlibdeps" | grep "warnings" | wc -l) -lt 1 ]]; then
-			sed -i -r "s/dpkg-shlibdeps/dpkg-shlibdeps --warnings=0/g" debian/rules
+		if [[ $(cat debian/rules | grep "dpkg\-shlibdeps" | grep "warnings\|missing" | wc -l) -lt 1 ]]; then
+			sed -i -r "s/dpkg-shlibdeps/dpkg-shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 --ignore-missing-info/g" debian/rules
 		fi
 	fi
 	chmod +x debian/rules

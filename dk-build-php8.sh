@@ -82,6 +82,14 @@ while read adir; do
 	# backup changelog
 	cp debian/changelog debian/changelog.1 -fa
 
+	
+	if [[ -d rules.d ]]; then
+		echo \
+"override_dh_shlibdeps:
+    dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info
+">ovr-shlibdeps.mk
+	fi
+
 
 	# override version from source
 	#-------------------------------------------
