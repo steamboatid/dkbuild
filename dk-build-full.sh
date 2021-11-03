@@ -50,7 +50,7 @@ override_dh_shlibdeps\: \\n\
 	fi
 
 	chmod +x debian/rules
-	cat debian/rules | grep shlib; exit 0;
+	# cat debian/rules | grep shlib; exit 0;
 fi
 
 if [[ -d debian/rules.d ]]; then

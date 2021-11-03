@@ -201,7 +201,6 @@ prepare_build_flags() {
 
 
 	alias cd="cd -P"
-	alias dpkg-shlibdeps="dpkg-shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 --ignore-missing-info"
 	export CCACHE_SLOPPINESS=include_file_mtime
 	export CC="/usr/bin/ccache /usr/bin/gcc"
 
