@@ -72,7 +72,7 @@ grep -iv "|" | cut -d":" -f1  >  /tmp/deps.pkgs
 echo "perl-base"  >> /tmp/deps.pkgs
 cat /tmp/deps.pkgs | tr "\n" " " | xargs aptold install -my \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
-# exit 0;
+exit 0;
 
 
 #--- PHP
