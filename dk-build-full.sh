@@ -46,7 +46,7 @@ if [ -e debian/rules ]; then
 		ovr_shlibs="#-- override dh_shlibdeps
 override_dh_shlibdeps:
 	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 --ignore-missing-info"
-		sed -i -r "s/\.PHONY/\n\n${ovr_shlibs}\n\n\.PHONY/g"
+		sed -i -r "s/\.PHONY/\n\n${ovr_shlibs}\n\n\.PHONY/g" debian/rules
 	fi
 
 	chmod +x debian/rules
