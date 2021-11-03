@@ -126,7 +126,6 @@ aptold full-upgrade --auto-remove --purge -fy
 cd `mktemp -d`; \
 apt purge -fy nginx* php* keydb* nutc* fuse* libfuse* sshfs* lua* db4* | grep -iv "not installed"; \
 apt purge -fy nginx* php* keydb* nutc* fuse* libfuse* sshfs* lua* db4* | grep -iv "not installed"
-exit 0
 
 
 # special steps for keydb only
@@ -136,6 +135,7 @@ systemctl daemon-reload; aptold purge --auto-remove --purge  -fy keydb*; \
 aptold update; aptnew full-upgrade --auto-remove --purge -fy; \
 aptnew install --reinstall -fy keydb-server keydb-tools; \
 netstat -nlpat | grep --color keydb-server
+exit 0
 
 
 # cd `mktemp -d`; \
