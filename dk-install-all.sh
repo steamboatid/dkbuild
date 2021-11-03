@@ -126,6 +126,7 @@ aptold full-upgrade --auto-remove --purge -fy
 cd `mktemp -d`; \
 apt purge -fy nginx* php* keydb* nutc* fuse* libfuse* sshfs* lua* db4*; \
 apt purge -fy nginx* php* keydb* nutc* fuse* libfuse* sshfs* lua* db4*
+exit 0
 
 
 # special steps for keydb only
