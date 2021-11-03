@@ -87,7 +87,7 @@ printf "\n\n --- wait finished... \n\n\n"
 
 # fix raphf
 ln -sf /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
-ls -lah /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
+# ls -lah /root/org.src/git-raphf/php_raphf.h /root/org.src/git-raphf/src/php_raphf.h
 ln -sf /root/org.src/git-raphf/src/php_raphf_api.c /root/org.src/git-raphf/php_raphf_api.c
 ln -sf /root/org.src/git-raphf/src/php_raphf_api.h /root/org.src/git-raphf/php_raphf_api.h
 rm -rf /root/org.src/git-raphf/src/php_raphf_test.c
