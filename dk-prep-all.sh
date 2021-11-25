@@ -57,6 +57,8 @@ libpcre3 build-essential libpcre3 libpcre3-dev zlib1g-dev \
 webp libwebp-dev libgeoip-dev lua-geoip-dev \
 libluajit*dev luajit \
 webp libwebp-dev libgeoip-dev lua-geoip-dev libsodium-dev meson \
+liblua5*-dev libluajit-5*-dev libtexluajit-dev luajit uthash-dev \
+libtexluajit*dev libluajit-*dev libxslt*-dev libxslt1.1 \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 aptold build-dep -fydu nginx lua-resty-core lua-resty-lrucache libpcre3 libsodium-dev \

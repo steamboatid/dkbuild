@@ -99,7 +99,7 @@ init_apt_keys() {
 	echo \
 'Acquire::Queue-Mode "host";
 Acquire::Languages "none";
-Acquire::http { Pipeline-Depth "200"; };
+Acquire::http { Pipeline-Depth "1"; };
 Acquire::https { Verify-Peer false; };
 '>/etc/apt/apt.conf.d/99translations
 
@@ -143,15 +143,26 @@ export LANGUAGE=en_US.UTF-8
 	export PATH=$PATH:/usr/sbin
 	timedatectl set-timezone Asia/Jakarta
 
+	apkg=""
+	if [[ "${RELNAME}" = "buster" ]]; then
+		apkg="gnupg2"
+	elif [[ "${RELNAME}" = "bullseye" ]]; then
+		apkg="gnupg2 gpgv"
+	fi
+
+
+	apt update; \
 	pkgs=(locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
-	gnupg2 apt-utils tzdata curl rsync lsb-release eatmydata nano)
-	install_old $pkgs && \
+	$apkg apt-utils tzdata curl rsync lsb-release eatmydata nano)
+	install_old $pkgs \
+		2>&1 | grep -iv "newest\|reading\|building\|stable CLI"
 
 	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && dpkg-reconfigure locales &&\
-	apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys 2>&1 | grep --color "processed" &&\
+	apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys 2>&1 | grep --color "processed"
 
-	apt update >/dev/null 2>&1
-	aptold full-upgrade --auto-remove --purge -fy >/dev/null 2>&1
+	aptold update 2>&1
+	aptold full-upgrade --auto-remove --purge -fy  \
+		2>&1 | grep -iv "newest\|reading\|building\|stable CLI"
 }
 
 init_ssh() {
@@ -159,7 +170,7 @@ init_ssh() {
 	install_new $pkgs
 
 	if [[ $(grep "^PermitRootLogin" /etc/ssh/sshd_config | wc -l) -lt 1 ]]; then
-		sed -i "s/\#PermitRootLogin prohibit-password/PermitRootLogin yes\n#PermitRootLogin prohibit-password/g" /etc/ssh/sshd_config
+		sed -i -r "s/\#PermitRootLogin prohibit-password/PermitRootLogin yes\n#PermitRootLogin prohibit-password/g" /etc/ssh/sshd_config
 		cat /etc/ssh/sshd_config | grep -i permitroot
 		/etc/init.d/ssh restart
 	fi
@@ -170,15 +181,16 @@ init_ssh() {
 }
 
 init_basic_packages() {
-	pkgs=(eatmydata nano rsync libterm-readline-gnu-perl apt-utils lsb-release locales locales-all net-tools dnsutils)
+	pkgs=(eatmydata nano rsync libterm-readline-gnu-perl apt-utils lsb-release \
+	locales locales-all net-tools dnsutils \
+	apt aptitude apt-utils nload)
 	install_old $pkgs
 }
 
 
-
-
 # main
 #-------------------------------------------
+apt autoclean >/dev/null 2>&1; apt clean >/dev/null 2>&1
 init_resolver
 
 if [[ "${RELNAME}" = "buster" ]]; then
@@ -191,3 +203,6 @@ cat /etc/apt/sources.list
 init_apt_keys
 init_ssh
 init_basic_packages
+
+#--- saving
+save_local_debs >/dev/null 2>&1 &

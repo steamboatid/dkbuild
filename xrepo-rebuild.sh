@@ -77,26 +77,28 @@ printf "\n\n create Release files at binary-amd64 folder"
 cd /tb2/phideb/dists/buster/main/binary-amd64
 gzip -kf Packages
 xz -kfz Packages
-echo \
-'Archive: stable
+
+cat <<\EOT >Release
+Archive: stable
 Origin: phideb
 Label: phideb
 Version: 0.1
 Component: main
 Architecture: amd64
-'>Release
+EOT
 
 cd /tb2/phideb/dists/bullseye/main/binary-amd64
 gzip -kf Packages
 xz -kfz Packages
-echo \
-'Archive: stable
+
+cat <<\EOT >Release
+Archive: stable
 Origin: phideb
 Label: phideb
 Version: 0.1
 Component: main
 Architecture: amd64
-'>Release
+EOT
 
 
 printf "\n\n create Release files at distribution folder"

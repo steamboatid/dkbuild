@@ -19,11 +19,6 @@ source /tb2/build/dk-build-0libs.sh
 
 
 
-# reset default build flags
-#-------------------------------------------
-reset_build_flags
-prepare_build_flags
-
 
 # gen config
 #-------------------------------------------
@@ -31,7 +26,17 @@ prepare_build_flags
 
 
 
-# check if any fails
-#-------------------------------------------
-# dpkg-buildpackage: info: binary-only upload (no source included)
-check_build_log
+find /var/lib/apt/lists/ -type f -delete; \
+find /var/cache/apt/ -type f -delete; \
+rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
+/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/ \
+/etc/apt/preferences.d/00-revert-stable \
+/var/cache/debconf/ /var/lib/apt/lists/* \
+/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/; \
+mkdir -p /root/.local/share/nano/ /root/.config/procps/
+
+apt autoclean
+apt clean
+apt update --allow-unauthenticated
+
+aptold full-upgrade --auto-remove --purge --fix-missing -fy

@@ -62,7 +62,7 @@ override_dh_shlibdeps:
 fi
 
 # alias dpkg-shlibdeps="dpkg-shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info --warnings=0 --ignore-missing-info"
-unalias dpkg-shlibdeps
+unalias dpkg-shlibdeps >/dev/null 2>&1 &
 
 
 

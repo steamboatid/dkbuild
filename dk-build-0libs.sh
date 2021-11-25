@@ -33,21 +33,109 @@ export cyan=$'\e[1;36m'
 export end=$'\e[0m'
 
 
+source ~/.bashrc
 
-# aptold create and check (version7)
+
+
+
+
+wait_backs() {
+	patt="$1"
+
+	bname=$(basename $0)
+	printf "\n\n --- wait for all background process...  [$bname] [$patt] "
+	numo=0
+	while :; do
+		nums=$(jobs -r | grep -iv "find\|chmod\|chown" | grep "${patt}" | wc -l)
+		if [[ $nums -eq $numo ]]; then
+			printf "."
+		else
+			printf ".$nums "
+			numo=$((nums))
+		fi
+
+		if [[ $nums -lt 1 ]]; then break; fi
+		sleep 1
+	done
+
+	wait
+	printf "\n --- ${blue}wait finished...${end} \n\n\n"
+}
+
+fill_up_apt_cache() {
+	printf "\n --- fill_up_apt_cache "
+
+	mkdir -p /var/cache/apt/archives/partial/
+	chown -Rf _apt:root /var/cache/apt/archives/
+	chmod -Rf 700 /var/cache/apt/archives/partial/
+
+	procs=$(( $(nproc)*8 ))
+	nums=0
+	for afile in $(find -L /tb2/tmp/cachedebs -type f -iname "*.deb" -mtime -1 | head -n 100); do
+		while :; do
+			nums=$(ps auxw | grep -v grep | grep rsync | grep deb | wc -l)
+			if [[ $nums -lt $procs ]]; then break; fi
+			sleep 3
+			printf ".$nums"
+		done
+
+		rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+		"$afile" /var/cache/apt/archives/ >/dev/null 2>&1 &
+	done
+
+	wait_backs "rsync"
+	chown -Rf _apt:root /var/cache/apt/archives/
+	chmod -Rf 700 /var/cache/apt/archives/partial/
+}
+
+save_clean_apt_cache() {
+	printf "\n --- save & clean_apt_cache \n"
+	save_local_debs
+
+	apt autoclean >/dev/null 2>&1
+	apt clean >/dev/null 2>&1
+}
+
+
+
+install_aptfast() {
+cat <<\EOT >/etc/apt/sources.list.d/apt-fast.list
+deb http://ppa.launchpad.net/apt-fast/stable/ubuntu bionic main
+EOT
+	apt-key adv --keyserver keyserver.ubuntu.com \
+	--recv-keys A2166B8DE8BDC3367D1901C11EE2FF37CA8DA16B \
+		2>&1 | grep --color "processed"
+
+	apt update \
+		2>&1 | grep -iv "newest\|reading\|building\|stable CLI"
+
+	DEBIAN_FRONTEND=noninteractive apt install -fy apt-fast \
+		2>&1 | grep -iv "newest\|reading\|building\|stable CLI"
+
+	echo debconf apt-fast/maxdownloads string 16 | debconf-set-selections
+	echo debconf apt-fast/dlflag boolean true | debconf-set-selections
+	echo debconf apt-fast/aptmanager string apt-get | debconf-set-selections
+}
+
+
+# aptold create and check (version13)
 #-------------------------------------------
 create_aptold() {
 	echo \
 '#!/bin/bash
-# version7
+# version13
 
 save_local_debs() {
 	mkdir -p /tb2/tmp/cachedebs/
 	if [ -e /var/cache/apt/archives ]; then
+		find -L /var/cache/apt/archives/ -type f -iname "*.deb" -exec touch {} \;  \
+			>/dev/null 2>&1 &
+
 		DNUMS=$(find -L /var/cache/apt/archives/ -type f -iname "*.deb" | wc -l)
 		if [[ $DNUMS -gt 0 ]]; then
 			rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-			/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
+			/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/ \
+			>/dev/null 2>&1 &
 		fi
 	fi
 }
@@ -66,38 +154,42 @@ if [[ $str == *"duyf"* ]]; then exs=1; fi
 
 if [[ $exs -lt 1 ]]; then
 	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@" -du
-	save_local_debs
+	save_local_debs &
 	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@"
 else
 	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@"
-	save_local_debs
+	save_local_debs &
 fi
 '>/usr/local/sbin/aptold
 }
 
 if [ ! -e /usr/local/sbin/aptold ]; then
 	create_aptold
-elif [[ $(grep "version7" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version13" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
 	create_aptold
 fi
 chmod +x /usr/local/sbin/aptold
 
 
 
-# aptnew create and check (version7)
+# aptnew create and check (version13)
 #-------------------------------------------
 create_aptnew() {
 	echo \
 '#!/bin/bash
-# version7
+# version13
 
 save_local_debs() {
 	mkdir -p /tb2/tmp/cachedebs/
 	if [ -e /var/cache/apt/archives ]; then
+		find -L /var/cache/apt/archives/ -type f -iname "*.deb" -exec touch {} \; \
+		>/dev/null 2>&1 &
+
 		DNUMS=$(find -L /var/cache/apt/archives/ -type f -iname "*.deb" | wc -l)
 		if [[ $DNUMS -gt 0 ]]; then
 			rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-			/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
+			/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/ \
+			>/dev/null 2>&1 &
 		fi
 	fi
 }
@@ -116,18 +208,18 @@ if [[ $str == *"duyf"* ]]; then exs=1; fi
 
 if [[ $exs -lt 1 ]]; then
 	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@" -du
-	save_local_debs
+	save_local_debs &
 	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@"
 else
 	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@"
-	save_local_debs
+	save_local_debs &
 fi
 '>/usr/local/sbin/aptnew
 }
 
 if [ ! -e /usr/local/sbin/aptnew ]; then
 	create_aptnew
-elif [[ $(grep "version7" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version13" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
 	create_aptnew
 fi
 chmod +x /usr/local/sbin/aptnew
@@ -247,7 +339,8 @@ check_build_log() {
 
 
 chown_apt() {
-	chown -Rf _apt:root /var/cache/apt/archives/partial/
+	mkdir -p /var/cache/apt/archives/partial/
+	chown -Rf _apt:root /var/cache/apt/archives/
 	chmod -Rf 700 /var/cache/apt/archives/partial/
 }
 
@@ -444,10 +537,14 @@ install_new() {
 save_local_debs() {
 	mkdir -p /tb2/tmp/cachedebs/
 	if [ -e /var/cache/apt/archives ]; then
+		find -L /var/cache/apt/archives/ -type f -iname "*.deb" -exec touch {} \; \
+		>/dev/null 2>&1 &
+
 		DNUMS=$(find -L /var/cache/apt/archives/ -type f -iname "*.deb" | wc -l)
 		if [[ $DNUMS -gt 0 ]]; then
 			rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-			/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/
+			/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/ \
+			>/dev/null 2>&1 &
 		fi
 	fi
 }
