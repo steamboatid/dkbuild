@@ -17,11 +17,11 @@ export TODATE=$(date +%Y%m%d)
 source /tb2/build/dk-build-0libs.sh
 
 
-# fix keydb perm
+# fix keydb perm, purge pendings, del locks
+delete_apt_lock
 fix_keydb_permission_problem
-
-# purge pendings
 purge_pending_installs
+
 
 # delete unpacked folders
 mkdir -p /root/org.src /root/src
@@ -93,7 +93,7 @@ get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core
 
 mkdir -p /root/org.src/pcre /root/src/pcre
 cd /root/org.src/pcre
-apt source -y libpcre3
+aptold source -y libpcre3
 
 
 #--- sync to src
@@ -186,7 +186,7 @@ get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
 #-------------------------------------------
 mkdir -p /root/org.src/sshfs /root/src/sshfs
 cd /root/org.src/sshfs
-apt source -y sshfs libfuse3-dev
+aptold source -y sshfs libfuse3-dev
 
 
 

@@ -486,6 +486,17 @@ fix_keydb_permission_problem() {
 	fi
 }
 
+delete_apt_lock() {
+	find /var/lib/apt/lists/ -type f -delete; \
+	find /var/cache/apt/ -type f -delete; \
+	rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
+	/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/ \
+	/etc/apt/preferences.d/00-revert-stable \
+	/var/cache/debconf/ /var/lib/apt/lists/* \
+	/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/; \
+	mkdir -p /root/.local/share/nano/ /root/.config/procps/
+}
+
 purge_pending_installs() {
 	dpkg -l | grep -v "^ii" | grep "^i" | sed -r "s/\s+/ /g" | cut -d" " -f2 > /tmp/pendings
 
