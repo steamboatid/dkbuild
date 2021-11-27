@@ -81,7 +81,7 @@ cat /tmp/deps.pkgs | tr "\n" " " | xargs aptold install -fy \
 
 #--- sync to src
 #-------------------------------------------
-printf "\n-- sync to src: nginx \n"
+printf "\n-- sync to src: ${yel}nginx${end} \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 --exclude ".git" \
 /root/org.src/nginx/ /root/src/nginx/

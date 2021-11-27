@@ -153,7 +153,7 @@ printf "\n\n --- wait finished... \n\n\n"
 
 #--- sync to src
 #-------------------------------------------
-printf "\n-- sync to src $PHPV \n"
+printf "\n-- sync to src: ${yel}$PHPV ${end}\n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 --exclude ".git" \
 /root/org.src/$PHPV/ /root/src/$PHPV/
