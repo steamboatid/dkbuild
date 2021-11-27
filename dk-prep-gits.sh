@@ -20,6 +20,10 @@ source /tb2/build/dk-build-0libs.sh
 ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
 ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
 
+get_update_new_github "steamboatid/phpredis" "/root/org.src/php8.0/git-phpredis"
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+/root/org.src/php8.0/git-phpredis/ /root/org.src/php8.1/git-phpredis/
+exit 0;
 
 
 get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"  >/dev/null 2>&1 &
@@ -64,6 +68,7 @@ get_update_new_github "steamboatid/sshfs" "/root/org.src/sshfs/git-sshfs"  >/dev
 
 # phpredis
 get_update_new_github "steamboatid/phpredis" "/root/org.src/php8.0/git-phpredis"
+wait
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 /root/org.src/php8.0/git-phpredis/ /root/org.src/php8.1/git-phpredis/
 
