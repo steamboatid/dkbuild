@@ -111,6 +111,9 @@ apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 cat $FNOW | sort -u | sort | tr "\n" " " | \
 	xargs aptold build-dep -y --ignore-missing | tee $FSRC
 
+cat $FSRC
+exit 0;
+
 for apkg in $(cat $FSRC | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort); do
 	apt source -y --ignore-missing $apkg || echo "failed for $apkg"
 done
