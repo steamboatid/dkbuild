@@ -150,7 +150,7 @@ deb-src https://packages.sury.org/php/ ${RELNAME} main
 ">/etc/apt/sources.list.d/php-sury.list
 
 echo \
-"deb http://repo.aisits.id/php/ ${RELNAME} main
+"# deb http://repo.aisits.id/php/ ${RELNAME} main
 # deb-src http://repo.aisits.id/php/ ${RELNAME} main
 ">/etc/apt/sources.list.d/php-aisits.list
 
