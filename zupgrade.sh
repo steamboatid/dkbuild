@@ -2,7 +2,7 @@
 
 
 upgrade_host() {
-	ahost=$1
+	ahost="$1"
 	ssh $ahost "mkdir -p /tb2/build"
 
 	rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \

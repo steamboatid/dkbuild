@@ -39,7 +39,7 @@ source ~/.bashrc
 
 
 
-wait_backs() {
+wait_backs(){
 	patt="$1"
 
 	bname=$(basename $0)
@@ -62,7 +62,7 @@ wait_backs() {
 	printf "\n --- ${blue}wait finished...${end} \n\n\n"
 }
 
-fill_up_apt_cache() {
+fill_up_apt_cache(){
 	printf "\n --- fill_up_apt_cache "
 
 	mkdir -p /var/cache/apt/archives/partial/
@@ -88,7 +88,7 @@ fill_up_apt_cache() {
 	chmod -Rf 700 /var/cache/apt/archives/partial/
 }
 
-save_clean_apt_cache() {
+save_clean_apt_cache(){
 	printf "\n --- save & clean_apt_cache \n"
 	save_local_debs
 
@@ -98,7 +98,7 @@ save_clean_apt_cache() {
 
 
 
-install_aptfast() {
+install_aptfast(){
 cat <<\EOT >/etc/apt/sources.list.d/apt-fast.list
 deb http://ppa.launchpad.net/apt-fast/stable/ubuntu bionic main
 EOT
@@ -120,12 +120,12 @@ EOT
 
 # aptold create and check (version14)
 #-------------------------------------------
-create_aptold() {
+create_aptold(){
 	echo \
 '#!/bin/bash
 # version14
 
-save_local_debs() {
+save_local_debs(){
 	mkdir -p /tb2/tmp/cachedebs/
 	if [ -e /var/cache/apt/archives ]; then
 		find -L /var/cache/apt/archives/ -type f -iname "*.deb" -exec touch {} \;  \
@@ -166,12 +166,12 @@ apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$
 
 # aptnew create and check (version14)
 #-------------------------------------------
-create_aptnew() {
+create_aptnew(){
 	echo \
 '#!/bin/bash
 # version14
 
-save_local_debs() {
+save_local_debs(){
 	mkdir -p /tb2/tmp/cachedebs/
 	if [ -e /var/cache/apt/archives ]; then
 		find -L /var/cache/apt/archives/ -type f -iname "*.deb" -exec touch {} \; \
@@ -213,7 +213,7 @@ apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$
 
 # reset default build flags
 #-------------------------------------------
-reset_build_flags() {
+reset_build_flags(){
 	unused="-Wno-error -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-unused-const-variable"
 	# libsld="-ldl -lstdc++ -lm -lresolv -lpthread"
 	# libsld="-largon2 -lresolv -lcrypt -lrt -lstdc++ -lutil -lrt -lm -ldl  -lxml2 -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err -lssl -lcrypto -lpcre2-8 -lz -lsodium -largon2"
@@ -237,7 +237,7 @@ PREPEND CXXFLAGS -O3 ${libsld}
 # PREPEND LDFLAGS -Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lpthread
 }
 
-prepare_build_flags() {
+prepare_build_flags(){
 	unused="-Wno-error -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-unused-const-variable"
 	# libsld="-ldl -lstdc++ -lm -lresolv"
 	# libsld="-largon2 -lresolv -lcrypt -lrt -lstdc++ -lutil -lrt -lm -ldl  -lxml2 -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err -lssl -lcrypto -lpcre2-8 -lz -lsodium -largon2"
@@ -290,15 +290,16 @@ prepare_build_flags() {
 # exec bash script at back
 #-------------------------------------------
 doback_bash(){
-	/usr/bin/nohup /bin/bash $1 >/dev/null 2>&1 &
-	printf "\n\n exec back: $1 \n\n\n"
+	app="$1"
+	/usr/bin/nohup /bin/bash "$app" >/dev/null 2>&1 &
+	printf "\n\n exec back: "$app" \n\n\n"
 	sleep 1
 }
 
 
 # check if any fails
 #-------------------------------------------
-check_build_log() {
+check_build_log(){
 	printf "\n\n---check dkbuild.log \n"
 	export TOTFAIL=0
 	for alog in $(find /root/src -maxdepth 3 -type f -iname "dkbuild.log" | sort -u); do
@@ -322,29 +323,29 @@ check_build_log() {
 }
 
 
-chown_apt() {
+chown_apt(){
 	mkdir -p /var/cache/apt/archives/partial/
 	chown -Rf _apt:root /var/cache/apt/
 	chmod -Rf 700 /var/cache/apt/archives/partial/ /var/cache/apt/archives/ \
 		/var/cache/apt/
 }
 
-global_git_config() {
+global_git_config(){
 	mkdir -p ~/.git
 	rm -rf ~/.gitconfig.lock
 	git config  --global pull.ff only  >/dev/null 2>&1
 }
 
-update_existing_git() {
-	URL=$2
-	DST=$1
-	FURL=$3
-	BRA=$4
+update_existing_git(){
+	URL="$2"
+	DST="$1"
+	FURL="$3"
+	BRA="$4"
 
 	PDIR=$PWD
-	mkdir -p $DST
-	cd $DST
-	printf "\n---updating $PWD \n"
+	mkdir -p "$DST"
+	cd "$DST"
+	printf "\n---updating $DST \n"
 
 	if git reset --hard  >/dev/null 2>&1; then
 		git rm -r --cached . >/dev/null 2>&1
@@ -364,7 +365,7 @@ update_existing_git() {
 		else
 			if ! git pull origin $(git rev-parse --abbrev-ref HEAD) --rebase; then
 				cd ..
-				rm -rf ${DST}
+				rm -rf "$DST"
 				printf "\n\n ${red} >>> git update at $1 is failed. please re-execute $0 again ${end} \n"
 				# exit 1; # exit as error
 
@@ -375,11 +376,11 @@ update_existing_git() {
 
 				if [ ! -z $FURL ]; then
 					printf "\n Recloning: ${blu} ${FURL} ${OPS} ${end} \n\n"
-					git clone $FURL $OPS $DST
+					git clone "$FURL" "$OPS" "$DST"
 				elif [ ! -z $ORIGIN ]; then
 					ADOM=$(echo ${ORIGIN} | awk -F[/:] '{print $4}')
 					printf "\n Recloning: ${blu} https://${ADOM}/${URL} ${OPS} ${end} \n\n"
-					git clone https://${ADOM}/${URL} $OPS $DST
+					git clone "https://${ADOM}/${URL}" "$OPS" "$DST"
 				else
 					#--- failed
 					printf "\n\n\n\n"
@@ -393,67 +394,71 @@ update_existing_git() {
 }
 
 # get_update_new_github $url $dst_dir $branch
+# BRA= branch, DST= destination folder, URL= source url
 get_update_new_github(){
-	URL=$1
-	DST=$2
-	BRA=$3
+	URL="$1"
+	DST="$2"
+	BRA="$3"
 
 	if [ ! -d ${DST} ]; then
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 		printf "\n---new clone to: $DST \n---from: https://github.com/${URL} $OPS $DST \n"
-		git clone https://github.com/${URL} $OPS $DST
+		git clone "https://github.com/${URL}" "$OPS" "$DST"
 	else
 		FURL="https://github.com/${URL}"
-		update_existing_git $DST $URL $FURL $BRA  &
+		update_existing_git "$DST" "$URL" "$FURL" "$BRA"  &
 	fi
 }
 
+# BRA= branch, DST= destination folder, URL= source url
 get_update_new_gitlab(){
-	URL=$1
-	DST=$2
-	BRA=$3
+	URL="$1"
+	DST="$2"
+	BRA="$3"
 
 	if [ ! -d ${DST} ]; then
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 		printf "\n---new clone to: $DST \n---from: https://gitlab.com/${URL} $OPS $DST \n"
-		git clone https://gitlab.com/${URL} $OPS $DST
+		git clone "https://gitlab.com/${URL}" "$OPS" "$DST"
 	else
 		FURL="https://gitlab.com/${URL}"
-		update_existing_git $DST $URL $FURL $BRA  &
+		update_existing_git "$DST" "$URL" "$FURL" "$BRA"  &
 	fi
 }
 
+# BRA= branch, DST= destination folder, URL= source url
 get_update_new_bitbucket(){
-	URL=$1
-	DST=$2
-	BRA=$3
+	URL="$1"
+	DST="$2"
+	BRA="$3"
 
 	if [ ! -d ${DST} ]; then
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 		printf "\n---new clone to: $DST \n---from: https://bitbucket.org/${URL} $OPS $DST \n"
-		git clone https://bitbucket.org/${URL} $OPS $DST
+		git clone "https://bitbucket.org/${URL}" "$OPS" "$DST"
 	else
 		FURL="https://bitbucket.org/${URL}"
-		update_existing_git $DST $URL $FURL $BRA  &
+		update_existing_git "$DST" "$URL" "$FURL" "$BRA"  &
 	fi
 }
 
+# BRA= branch, DST= destination folder, URL= source url
 get_update_new_salsa(){
-	URL=$1
-	DST=$2
-	BRA=$3
+	URL="$1"
+	DST="$2"
+	BRA="$3"
 
 	if [ ! -d ${DST} ]; then
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 		printf "\n---new clone to: $DST \n---from: https://salsa.debian.org/${URL} $OPS $DST \n"
-		git clone https://salsa.debian.org/${URL} $OPS $DST
+		git clone "https://salsa.debian.org/${URL}" "$OPS" "$DST"
 	else
 		FURL="https://salsa.debian.org/${URL}"
-		update_existing_git $DST $URL $FURL $BRA
+		update_existing_git "$DST" "$URL" "$FURL" "$BRA"  &
 	fi
 }
 
-fix_keydb_permission_problem() {
+fix_keydb_permission_problem(){
 	# return if not installed yet
 	if [ `dpkg -l | grep keydb | grep -v "^ii" | wc -l` -lt 1 ]; then return 0; fi
 
@@ -486,7 +491,7 @@ fix_keydb_permission_problem() {
 	fi
 }
 
-delete_apt_lock() {
+delete_apt_lock(){
 	find /var/lib/apt/lists/ -type f -delete; \
 	find /var/cache/apt/ -type f -delete; \
 	rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
@@ -497,7 +502,7 @@ delete_apt_lock() {
 	mkdir -p /root/.local/share/nano/ /root/.config/procps/
 }
 
-purge_pending_installs() {
+purge_pending_installs(){
 	dpkg -l | grep -v "^ii" | grep "^i" | sed -r "s/\s+/ /g" | cut -d" " -f2 > /tmp/pendings
 
 	# install it all
@@ -505,7 +510,8 @@ purge_pending_installs() {
 	cat /tmp/pendings | while read aline; do apt purge -fy $aline; done
 }
 
-install_old() {
+# pkgs = array
+install_old(){
 	pkgs=$1
 	dopkg=""
 	for apkg in "${pkgs[@]}"; do
@@ -517,7 +523,8 @@ install_old() {
 	aptold install -fy $dopkg 2>&1
 }
 
-install_new() {
+# pkgs = array
+install_new(){
 	pkgs=$1
 	dopkg=""
 	for apkg in "${pkgs[@]}"; do
@@ -530,7 +537,7 @@ install_new() {
 }
 
 
-save_local_debs() {
+save_local_debs(){
 	mkdir -p /tb2/tmp/cachedebs/
 	if [ -e /var/cache/apt/archives ]; then
 		find -L /var/cache/apt/archives/ -type f -iname "*.deb" -exec touch {} \; \
@@ -546,7 +553,7 @@ save_local_debs() {
 }
 
 
-alter_berkeley_dbh() {
+alter_berkeley_dbh(){
 	if [ ! -e /usr/include ]; then
 		apt-cache search db5 | grep -i "berkeley" | cut -d" " -f1 | grep -v "dbg\|sym" | xargs aptold install -fy
 	fi
@@ -563,14 +570,14 @@ alter_berkeley_dbh() {
 	# cat /tmp/db.h | grep "DB_VERSION"; exit 0;
 }
 
-fetch_url() {
-	URL=$1
-	BNAME=$(basename $URL)
-	curl -sS -fkL $URL > $BNAME
-	wget -kc $URL
+fetch_url(){
+	URL="$1"
+	BNAME=$(basename "$URL")
+	curl -sS -fkL "$URL" > "$BNAME"
+	wget -kc "$URL"
 }
 
-fix_usr_lib_symlinks() {
+fix_usr_lib_symlinks(){
 	PREV=$PWD
 	cd /usr/lib
 
@@ -591,7 +598,7 @@ fix_usr_lib_symlinks() {
 	cd $PREV
 }
 
-db4_install() {
+db4_install(){
 	DB4NUM=$(dpkg -l | grep libdb4.8 | grep "^ii" | wc -l)
 	if [[ $DB4NUM -lt 1 ]]; then
 		apt purge -fy libdb5*dev libdb++-dev libdb-dev libdb5.3-tcl  >/dev/null
@@ -604,7 +611,7 @@ db4_install() {
 	fi
 }
 
-init_dkbuild() {
+init_dkbuild(){
 	# global config
 	global_git_config  &
 
