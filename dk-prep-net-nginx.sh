@@ -74,7 +74,7 @@ grep -iv "api\|perl\|debconf\|nginx-full\|nginx-light\|nginx-core\|nginx-extras"
 grep -iv "|" | cut -d":" -f1  >  /tmp/deps.pkgs
 
 echo "perl-base"  >> /tmp/deps.pkgs
-cat /tmp/deps.pkgs
+cat /tmp/deps.pkgs | sort -u | sort
 exit 0;
 
 cat /tmp/deps.pkgs | tr "\n" " " | xargs aptold install -my \
