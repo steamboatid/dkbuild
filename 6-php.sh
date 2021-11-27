@@ -18,7 +18,7 @@ source /tb2/build/dk-build-0libs.sh
 
 
 # find php8.0 folder
-BNAME=$(basename $(find /root/src/php8 -mindepth 1 -maxdepth 1 -type d -name "php8.0*"))
+BNAME=$(basename $(find /root/src/php8.0 -mindepth 1 -maxdepth 1 -type d -name "php8.0*"))
 BASE="/root/src/php8/$BNAME"
 BORG="/root/org.src/php8/$BNAME"
 mkdir -p $BASE
@@ -94,7 +94,7 @@ cut -d" " -f1 | tr "\n" " ")
 copy_extra_mods() {
 	mods=(mcrypt vips uuid apcu imagick msgpack igbinary memcached)
 
-	finds=$(find /root/org.src/php8 -mindepth 2 -maxdepth 2 -type d | grep -v "debian\|\.pc\|bc" | sed -r "s/\s/\n/g" | sort)
+	finds=$(find /root/org.src/php8.0 -mindepth 2 -maxdepth 2 -type d | grep -v "debian\|\.pc\|bc" | sed -r "s/\s/\n/g" | sort)
 
 	for adir in "${mods[@]}"; do
 		adir=$(basename $adir)

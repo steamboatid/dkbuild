@@ -35,6 +35,11 @@ dofore(){
 
 
 
+# print php version
+#-------------------------------------------
+printf "\n\n --- php version: ${yel}$PHPV${end} [$PHPVNUM] \n\n"
+
+
 # special version
 #-------------------------------------------
 VEROVR=""

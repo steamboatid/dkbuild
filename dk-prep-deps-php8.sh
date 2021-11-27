@@ -52,6 +52,11 @@ get_package_file_gz(){
 
 
 
+# print php version
+#-------------------------------------------
+printf "\n\n --- php version: ${yel}$PHPV${end} [$PHPVNUM] \n\n"
+
+
 #--- PHP
 #-------------------------------------------
 rm -rf /tmp/$PHPV
