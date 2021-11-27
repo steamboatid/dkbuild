@@ -29,3 +29,5 @@ ssh argo -- lxca tbus -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
 ssh argo -- lxca teye -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
 
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-purge-packages.sh
+
+ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-net-php8.sh
