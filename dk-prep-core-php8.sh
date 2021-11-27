@@ -180,7 +180,7 @@ php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu
 
 #--- sync to src
 #-------------------------------------------
-printf "\n-- sync to src: $PHPV \n"
+printf "\n-- sync to src: ${yel}$PHPV ${end}\n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/$PHPV/ /root/src/$PHPV/
 
