@@ -406,7 +406,7 @@ get_update_new_github(){
 		git clone "https://github.com/${URL}" "$OPS" "$DST"
 	else
 		FURL="https://github.com/${URL}"
-		update_existing_git "$DST" "$URL" "$FURL" "$BRA"  &
+		update_existing_git "$DST" "$URL" "$FURL" "$BRA"
 	fi
 }
 
@@ -422,7 +422,7 @@ get_update_new_gitlab(){
 		git clone "https://gitlab.com/${URL}" "$OPS" "$DST"
 	else
 		FURL="https://gitlab.com/${URL}"
-		update_existing_git "$DST" "$URL" "$FURL" "$BRA"  &
+		update_existing_git "$DST" "$URL" "$FURL" "$BRA"
 	fi
 }
 
@@ -438,7 +438,7 @@ get_update_new_bitbucket(){
 		git clone "https://bitbucket.org/${URL}" "$OPS" "$DST"
 	else
 		FURL="https://bitbucket.org/${URL}"
-		update_existing_git "$DST" "$URL" "$FURL" "$BRA"  &
+		update_existing_git "$DST" "$URL" "$FURL" "$BRA"
 	fi
 }
 
@@ -454,7 +454,7 @@ get_update_new_salsa(){
 		git clone "https://salsa.debian.org/${URL}" "$OPS" "$DST"
 	else
 		FURL="https://salsa.debian.org/${URL}"
-		update_existing_git "$DST" "$URL" "$FURL" "$BRA"  &
+		update_existing_git "$DST" "$URL" "$FURL" "$BRA"
 	fi
 }
 
