@@ -77,7 +77,7 @@ echo "perl-base"  >> /tmp/deps.pkgs
 
 cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
 	xargs aptold install -my \
-	2>&1 | grep -iv "picking\|reading\|building" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
 
 
 
