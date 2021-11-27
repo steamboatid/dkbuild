@@ -124,7 +124,10 @@ cat $FSRC1 | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
 >$FSRC1
 cat $FSRC2 | grep "php\-" >> $FSRC1
 cat $FSRC2 | grep "$PHPV" >> $FSRC1
+
+printf "\n\n $FSRC1 \n"
 cat $FSRC1
+exit 0;
 
 for apkg in $(cat $FSRC1 | sort -u | sort); do
 	chown_apt
