@@ -90,7 +90,8 @@ get_package_file $URL $FDST
 FNOW="/tb2/tmp/$PHPV-pkg-now.txt"
 FNOW1="/tb2/tmp/$PHPV-pkg-now-1.txt"
 FNOW2="/tb2/tmp/$PHPV-pkg-now-2.txt"
-FSRC="/tb2/tmp/$PHPV-pkg-src.txt"
+FSRC1="/tb2/tmp/$PHPV-pkg-src-1.txt"
+FSRC2="/tb2/tmp/$PHPV-pkg-src-2.txt"
 
 # search package from "Package:"
 #-------------------------------------------
@@ -109,9 +110,15 @@ apt-cache search $PHPV | awk '{print $1}' | grep "$PHPV" | \
 apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 	grep -v "dbgsym\|dbg\|apache" >> $FNOW
 cat $FNOW | sort -u | sort | tr "\n" " " | \
-	xargs aptold build-dep -y --ignore-missing | tee $FSRC
+	xargs aptold build-dep -y --ignore-missing | tee $FSRC1
 
-cat $FSRC
+# source packages
+cat $FSRC1 | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
+
+>$FSRC1
+cat $FSRC2 | grep "php\-" >> $FSRC1
+cat $FSRC2 | grep "$PHPV" >> $FSRC1
+cat $FSRC1
 exit 0;
 
 for apkg in $(cat $FSRC | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort); do
