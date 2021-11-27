@@ -118,8 +118,15 @@ apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 cat $FNOW | sort -u | sort | tr "\n" " " | \
 	xargs aptold build-dep -y --ignore-missing | tee $FSRC1
 
+printf "\n\n $FSRC1 \n"
+cat $FSRC1
+
 # source packages
 cat $FSRC1 | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
+
+printf "\n\n $FSRC2 \n"
+cat $FSRC2
+
 
 >$FSRC1
 cat $FSRC2 | grep "php\-" >> $FSRC1
