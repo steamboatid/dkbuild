@@ -324,8 +324,9 @@ check_build_log() {
 
 chown_apt() {
 	mkdir -p /var/cache/apt/archives/partial/
-	chown -Rf _apt:root /var/cache/apt/archives/
-	chmod -Rf 700 /var/cache/apt/archives/partial/
+	chown -Rf _apt:root /var/cache/apt/
+	chmod -Rf 700 /var/cache/apt/archives/partial/ /var/cache/apt/archives/ \
+		/var/cache/apt/
 }
 
 global_git_config() {
