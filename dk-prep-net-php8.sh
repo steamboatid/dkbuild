@@ -102,6 +102,7 @@ cat $FDST | grep "Package:\|Source:" | \
 	sort -u | sort > $FNOW
 
 cd /root/org.src/$PHPV
+chown_apt
 
 echo "php-phalcon3" >> $FNOW
 echo "libicu-dev" >> $FNOW
@@ -121,6 +122,7 @@ cat $FSRC2 | grep "$PHPV" >> $FSRC1
 cat $FSRC1
 
 for apkg in $(cat $FSRC1 | sort -u | sort); do
+	chown_apt
 	apt source -y --ignore-missing $apkg || echo "failed for $apkg"
 done
 
