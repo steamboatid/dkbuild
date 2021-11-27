@@ -134,12 +134,15 @@ cat $FSRC2 | grep "$PHPV" >> $FSRC1
 
 printf "\n\n $FSRC1 \n"
 cat $FSRC1
-exit 0;
 
-for apkg in $(cat $FSRC1 | sort -u | sort); do
-	chown_apt
-	apt source -y --ignore-missing $apkg || echo "failed for $apkg"
-done
+chown_apt
+cat $FSRC1 | tr "\n" " " | xargs apt source -y --ignore-missing \
+	2>&1 | grep -iv "skipping\|nable to locate\|not installed\|newest\|picking\|reading\|building\|stable CLI"
+
+# for apkg in $(cat $FSRC1 | sort -u | sort); do
+# 	chown_apt
+# 	apt source -y --ignore-missing $apkg || echo "failed for $apkg"
+# done
 
 
 #--- wait
