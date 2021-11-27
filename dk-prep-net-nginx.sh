@@ -74,7 +74,10 @@ grep -iv "api\|perl\|debconf\|nginx-full\|nginx-light\|nginx-core\|nginx-extras"
 grep -iv "|" | cut -d":" -f1  >  /tmp/deps.pkgs
 
 echo "perl-base"  >> /tmp/deps.pkgs
-cat /tmp/deps.pkgs | tr "\n" " " | xargs aptold install -fy \
+cat /tmp/deps.pkgs
+exit 0;
+
+cat /tmp/deps.pkgs | tr "\n" " " | xargs aptold install -my \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
 
 
