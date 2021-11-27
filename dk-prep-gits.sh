@@ -26,7 +26,6 @@ get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"  >/dev
 get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core"  >/dev/null 2>&1 &
 
-get_update_new_github "steamboatid/phpredis" "/root/org.src/php8/git-phpredis"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"  >/dev/null 2>&1 &
@@ -63,6 +62,9 @@ get_update_new_github "php-memcached-dev/php-memcached" "/root/org.src/git-memca
 get_update_new_github "steamboatid/libfuse" "/root/org.src/sshfs/git-fuse"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/sshfs" "/root/org.src/sshfs/git-sshfs"  >/dev/null 2>&1 &
 
+# phpredis
+get_update_new_github "steamboatid/phpredis" "/root/org.src/php8.0/git-phpredis"
+cp -Rfa /root/org.src/php8.0/git-phpredis /root/org.src/php8.1/git-phpredis
 
 
 
