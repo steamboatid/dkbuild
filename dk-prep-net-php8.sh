@@ -64,8 +64,10 @@ FDEPF="/tmp/$PHPV-deps-final.pkgs"
 
 URL="https://packages.sury.org/php/dists/bullseye/main/binary-amd64/Packages"
 URL="https://packages.sury.org/php/dists/buster/main/binary-amd64/Packages"
+URL="http://repo.aisits.id/php/dists/buster/main/binary-amd64/Packages"
 
 URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
+URL="http://repo.aisits.id/php/dists/${RELNAME}/main/binary-amd64/Packages"
 get_package_file $URL $FPKGS
 
 cat $FPKGS | grep "Depends:" | sed -r "s/Depends: //g"| \
@@ -87,6 +89,7 @@ FDST1="/tb2/tmp/$PHPV-pkg-org-1.txt"
 FDST2="/tb2/tmp/$PHPV-pkg-org-2.txt"
 
 URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
+URL="http://repo.aisits.id/php/dists/${RELNAME}/main/binary-amd64/Packages"
 get_package_file $URL $FDST
 
 FNOW="/tb2/tmp/$PHPV-pkg-now.txt"
