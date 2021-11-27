@@ -64,7 +64,8 @@ get_update_new_github "steamboatid/sshfs" "/root/org.src/sshfs/git-sshfs"  >/dev
 
 # phpredis
 get_update_new_github "steamboatid/phpredis" "/root/org.src/php8.0/git-phpredis"
-cp -Rfa /root/org.src/php8.0/git-phpredis /root/org.src/php8.1/git-phpredis
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+/root/org.src/php8.0/git-phpredis/ /root/org.src/php8.1/git-phpredis/
 
 
 
