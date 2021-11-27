@@ -34,3 +34,4 @@ ssh argo -- lxca teye -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-net-php8.sh "php8.0"
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-net-nginx.sh
 ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-php8.sh "php8.1"
+ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-php8.sh "php8.0"
