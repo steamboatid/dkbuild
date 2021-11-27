@@ -156,7 +156,9 @@ sed -i '/keydb/d' /var/lib/dpkg/statoverride
 aptnew install --no-install-recommends --fix-missing --reinstall -fy \
 libzip4 libdb4.8; \
 aptnew install --no-install-recommends --fix-missing --reinstall -fy \
-nutcracker keydb-server keydb-tools nginx-extras php8.0-fpm php8.0-cli php8.0-zip; \
+php8.0-fpm php8.0-cli php8.0-zip \
+php8.1-fpm php8.1-cli php8.1-zip \
+nutcracker keydb-server keydb-tools nginx-extras; \
 aptnew install -y; \
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 
@@ -196,52 +198,74 @@ cat /tmp/pkg-nginx1.txt | tr "\n" " " > /tmp/pkg-nginx2.txt
 cat /tmp/pkg-nginx2.txt | xargs aptnew install -y --no-install-recommends --fix-missing
 
 
-# complete install PHP8.0
-apt-cache search php8.0* | awk '{print $1}' | grep -v "apache\|embed\|php8.1" |\
-grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache\|enchant" |\
-grep "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|common\|fpm\|cli" \
-> /tmp/pkg-php0.txt
+# complete install PHP8.x
+complete_php_installs() {
+	phpv="$1"
+	vnum="$2"
+	> /tmp/pkg-php0.txt
 
-apt-cache search php8.0* | awk '{print $1}' | grep -v "apache\|embed\|php8.1" |\
-grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache\|enchant" |\
-grep "bcmath\|bz2\|gmp\|mbstring\|mysql\|opcache\|readline\|xdebug\|zip" \
->> /tmp/pkg-php0.txt
+	apt-cache search $phpv | grep -v "apache\|embed" |\
+	grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache\|enchant" |\
+	grep "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|common\|fpm\|cli" \
+	cut -d" " -f1  >> /tmp/pkg-php0.txt
 
-cat /tmp/pkg-php0.txt > /tmp/pkg-php1.txt
-cat /tmp/pkg-php1.txt | grep -v "php8.1" | tr "\n" " " > /tmp/pkg-php2.txt
-cat /tmp/pkg-php2.txt | xargs aptnew install -y --no-install-recommends --fix-missing
+	apt-cache search $phpv | grep -v "apache\|embed" |\
+	grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache\|enchant" |\
+	grep "bcmath\|bz2\|gmp\|mbstring\|mysql\|opcache\|readline\|xdebug\|zip" \
+	cut -d" " -f1  >> /tmp/pkg-php0.txt
 
-# install all
-apt-cache search php8.0 | grep -v "apache\|debug\|dbg\|cgi\|embed\|gmagick\|yac\|-dev\|enchant" |\
-cut -d" " -f1 | tr "\n" " " | xargs aptnew install -y --no-install-recommends
+	apt-cache search $phpv |\
+	grep -v "apache\|debug\|dbg\|cgi\|embed\|gmagick\|yac\|-dev\|enchant" |\
+	cut -d" " -f1  >> /tmp/pkg-php0.txt
 
-# fix arginfo on uploadprogress
-if [ -e /etc/php/8.0/mods-available/uploadprogress.ini ]; then
-	sed -i "s/^extension/\; extension/g" /etc/php/8.0/mods-available/uploadprogress.ini
-fi
+	cat /tmp/pkg-php0.txt | sort -u | sort | tr "\n" " " > /tmp/pkg-php1.txt
 
-printf "\n\naptnew install -y "
-cat /tmp/pkg-php2.txt
-printf "\n\n"
+	cat /tmp/pkg-php1.txt | xargs aptnew install -fy \
+		2>&1 | grep -iv "nable to locate\|not installed\|newest\|reading\|building\|stable CLI"
 
-# check PHP install
-php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis"
-NUMEXT=$(php8.0 -m | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis" | wc -l)
-if [[ $NUMEXT -lt 8 ]]; then
-	printf "\n--- ${red}php ext:NOT OK ${end}\n"
-else
-	printf "\n--- ${blu}php ext: OK ${end}\n"
-fi
+	# fix arginfo on uploadprogress
+	if [ -e /etc/php/$vnum/mods-available/uploadprogress.ini ]; then
+		sed -i "s/^extension/\; extension/g" /etc/php/$vnum/mods-available/uploadprogress.ini
+		aptnew install -fy
+	fi
 
-# check php version
-printf "\n--- Output of ${yel}php -v${end} \n"
-php -v
+	printf "\n\n --- packages list: \n"
+	cat /tmp/pkg-php0.txt
+}
+
+complete_php_installs "php8.0" "8.0"
+complete_php_installs "php8.1" "8.1"
+
+
+
+
+# check PHP8.x installs
+check_php_installs() {
+	phpv="$1"
+	eval "$phpv -m" | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis"
+	NUMEXT=$(eval "$phpv -m" | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis" | wc -l)
+	if [[ $NUMEXT -lt 8 ]]; then
+		printf "\n--- ${red}${phpv} ext:NOT OK ${end}\n"
+	else
+		printf "\n--- ${blu}${phpv} ext: OK ${end}\n"
+	fi
+
+	# check php version
+	printf "\n--- Output of ${yel}php -v${end} \n"
+	eval "$phpv -v"
+}
+check_php_installs "php8.0"
+check_php_installs "php8.1"
+
+
 
 # restart using rc
 [ -x /etc/init.d/nutcracker ] && /etc/init.d/nutcracker restart
 [ -x /etc/init.d/nginx ] && /etc/init.d/nginx restart
 [ -x /etc/init.d/keydb-server ] && /etc/init.d/keydb-server restart
 [ -x /etc/init.d/php8.0-fpm ] && mkdir -p /run/php && /etc/init.d/php8.0-fpm restart
+[ -x /etc/init.d/php8.1-fpm ] && mkdir -p /run/php && /etc/init.d/php8.1-fpm restart
+
 
 # check netstat
 printf "\n--- Output of ${yel}netstat${end} -- nginx-keydb-nutcracker-php \n"
@@ -252,6 +276,12 @@ printf "\n--- Output of ${yel}ps${end} -- nginx-keydb-nutcracker-php \n"
 ps -e -o command | grep -v "grep\|pool\|worker" | sort -u | grep --color "nginx\|keydb\|nutcracker\|php"
 
 # check php custom
-NUMNON=$(dpkg -l | grep "^ii" | grep php8 | grep -v aisits | wc -l)
-NUMCUS=$(dpkg -l | grep "^ii" | grep php8 | grep aisits | wc -l)
-printf "\n\n--- PHP packages: ${yel}default=$NUMNON  ${blu}CUSTOM=$NUMCUS ${end}\n"
+check_php_custom() {
+	phpv="$1"
+	NUMNON=$(dpkg -l | grep "^ii" | grep $phpv | grep -v aisits | wc -l)
+	NUMCUS=$(dpkg -l | grep "^ii" | grep $phpv | grep aisits | wc -l)
+	printf "\n\n--- ${cyan}$phpv packages${end}: ${yel}default=$NUMNON  ${blu}CUSTOM=$NUMCUS ${end}\n"
+}
+
+check_php_custom "php8.0"
+check_php_custom "php8.1"

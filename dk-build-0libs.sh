@@ -118,12 +118,12 @@ EOT
 }
 
 
-# aptold create and check (version13)
+# aptold create and check (version14)
 #-------------------------------------------
 create_aptold() {
 	echo \
 '#!/bin/bash
-# version13
+# version14
 
 save_local_debs() {
 	mkdir -p /tb2/tmp/cachedebs/
@@ -154,30 +154,22 @@ if [[ $str == *"duyf"* ]]; then exs=1; fi
 
 if [[ $exs -lt 1 ]]; then
 	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@" -du
-	save_local_debs &
-	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@"
-else
-	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@"
-	save_local_debs &
 fi
+
+save_local_debs &
+apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@"
+
 '>/usr/local/sbin/aptold
 }
 
-if [ ! -e /usr/local/sbin/aptold ]; then
-	create_aptold
-elif [[ $(grep "version13" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
-	create_aptold
-fi
-chmod +x /usr/local/sbin/aptold
 
 
-
-# aptnew create and check (version13)
+# aptnew create and check (version14)
 #-------------------------------------------
 create_aptnew() {
 	echo \
 '#!/bin/bash
-# version13
+# version14
 
 save_local_debs() {
 	mkdir -p /tb2/tmp/cachedebs/
@@ -208,21 +200,13 @@ if [[ $str == *"duyf"* ]]; then exs=1; fi
 
 if [[ $exs -lt 1 ]]; then
 	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@" -du
-	save_local_debs &
-	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@"
-else
-	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@"
-	save_local_debs &
 fi
+
+save_local_debs &
+apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@"
+
 '>/usr/local/sbin/aptnew
 }
-
-if [ ! -e /usr/local/sbin/aptnew ]; then
-	create_aptnew
-elif [[ $(grep "version13" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
-	create_aptnew
-fi
-chmod +x /usr/local/sbin/aptnew
 
 
 
@@ -615,5 +599,25 @@ init_dkbuild() {
 	# chown apt
 	chown_apt &
 }
-# automatically call init
+
+
+#--- automatically call init
 init_dkbuild >/dev/null 2>&1 &
+
+
+#--- update aptold
+if [ ! -e /usr/local/sbin/aptold ]; then
+	create_aptold
+elif [[ $(grep "version14" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
+	create_aptold
+fi
+chmod +x /usr/local/sbin/aptold
+
+
+#--- update aptnew
+if [ ! -e /usr/local/sbin/aptnew ]; then
+	create_aptnew
+elif [[ $(grep "version14" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
+	create_aptnew
+fi
+chmod +x /usr/local/sbin/aptnew

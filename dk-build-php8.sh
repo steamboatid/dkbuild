@@ -13,6 +13,10 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
+export PHPV_DEFAULT="php8.0"
+export PHPV="${1:-$PHPV_DEFAULT}"
+export PHPVNUM=$(echo $PHPV | sed 's/php//g')
+
 
 source /tb2/build/dk-build-0libs.sh
 
@@ -43,34 +47,38 @@ prepare_build_flags
 # alter_berkeley_dbh
 
 
+# remove old dirs
+#-------------------------------------------
+rm -rf /root/src/php8 /root/org.src/php8
+
 # prepare dirs
 #-------------------------------------------
-mkdir -p /tb2/build/$RELNAME-php8
-rm -rf /tb2/build/$RELNAME-php8/*deb
-mkdir -p /root/src/php8
+mkdir -p /tb2/build/$RELNAME-$PHPV
+rm -rf /tb2/build/$RELNAME-$PHPV/*deb
+mkdir -p /root/src/$PHPV
 
 
 # get source
 #-------------------------------------------
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 --exclude ".git" \
-/root/org.src/php8/ /root/src/php8/
+/root/org.src/$PHPV/ /root/src/$PHPV/
 
 
 # delete old debs
 #-------------------------------------------
-rm -rf /root/src/php8/*deb
+rm -rf /root/src/$PHPV/*deb
 
 
 # BUGGY libzip
 #-------------------------------------------
-# rm -rf /root/src/php8/libzip*
+# rm -rf /root/src/$PHPV/libzip*
 
 
 # Compiling all packages
 #-------------------------------------------
-cd /root/src/php8
-find /root/src/php8 -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" |
+cd /root/src/$PHPV
+find /root/src/$PHPV -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" |
 while read adir; do
 	cd $adir
 	pwd
@@ -129,7 +137,7 @@ override_dh_shlibdeps:
 	if [[ $adir == *"redis"* ]]; then
 		printf "\n\n\n --- its PHP-REDIS -- do rsync $adir \n"
 		rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-		/root/src/php8/git-phpredis $adir
+		/root/src/$PHPV/git-phpredis $adir
 		pwd
 		printf "\n\n\n"
 	fi
@@ -151,17 +159,17 @@ wait
 
 # delete unneeded packages
 #-------------------------------------------
-cd /root/src/php8
-find /root/src/php8/ -type f -iname "*udeb" -delete
-find /root/src/php8/ -type f -iname "*dbgsym*deb" -delete
+cd /root/src/$PHPV
+find /root/src/$PHPV/ -type f -iname "*udeb" -delete
+find /root/src/$PHPV/ -type f -iname "*dbgsym*deb" -delete
 
 
-# upload to /tb2/build/{$RELNAME}-php8
+# upload to /tb2/build/{$RELNAME}-php8.x
 #-------------------------------------------
 export RELNAME=$(lsb_release -sc)
-mkdir -p /tb2/build/$RELNAME-php8
-cp *.deb /tb2/build/$RELNAME-php8/ -Rfav
-ls -la /tb2/build/$RELNAME-php8/
+mkdir -p /tb2/build/$RELNAME-$PHPV
+cp *.deb /tb2/build/$RELNAME-$PHPV/ -Rfav
+ls -la /tb2/build/$RELNAME-$PHPV/
 
 
 # rebuild the repo

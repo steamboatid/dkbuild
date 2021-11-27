@@ -42,6 +42,10 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 --exclude ".git" \
 /root/org.src/keydb/ /root/src/keydb/
 
+# rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times --delete \
+# --exclude ".git" \
+# /tb2/root/github/keydb-git-unstable/ /root/src/keydb/git-keydb/
+
 
 # delete old debs
 #-------------------------------------------

@@ -68,7 +68,8 @@ if /bin/bash /tb2/build/dk-build-db4.sh; then
 	printf "\n\n\n"
 	sleep 1
 
-	/bin/bash /tb2/build/dk-build-php8.sh
+	/bin/bash /tb2/build/dk-build-php8.sh "php8.0" "8.0"
+	/bin/bash /tb2/build/dk-build-php8.sh "php8.1" "8.1"
 fi
 
 printf "\n\n\n"

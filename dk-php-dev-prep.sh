@@ -1,7 +1,7 @@
 #/bin/bash
 
 
-apt-cache search php8 | cut -d' ' -f1 | \
+apt-cache search php8.1 | cut -d' ' -f1 | \
 grep -iv "symfony\|cgi\|lib\|enchant\|dbg" | tr "\n" " " | \
 xargs aptold install -fy 2>&1 |
 	grep -iv "newest\|cli interface\|reading\|building"

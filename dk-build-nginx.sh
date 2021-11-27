@@ -39,9 +39,9 @@ mkdir -p /root/src/nginx
 
 # get source from org.src
 #-------------------------------------------
-# rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
-# --exclude ".git" \
-# /root/org.src/nginx/ /root/src/nginx/
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+--exclude ".git" \
+/root/org.src/nginx/ /root/src/nginx/
 
 
 # delete old debs
