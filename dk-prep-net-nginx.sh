@@ -50,7 +50,8 @@ get_package_file_gz(){
 #--- NGINX
 #-------------------------------------------
 rm -rf /tmp/nginx
-mkdir -p /tb2/tmp /root/src/nginx /tmp/nginx
+mkdir -p /root/org.src/nginx /root/src/nginx /tmp/nginx /tb2/tmp
+
 
 URL="http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu/dists/bionic/main/binary-amd64/Packages.gz"
 FDST="/tb2/tmp/nginx-pkg-org.txt"
@@ -61,7 +62,10 @@ get_package_file_gz $URL $FDST $FGZ
 cat $FDST | grep "Package:" | sed "s/Package\: //g" | \
 tr "\n" " " > $FNOW
 
-cd /root/src/nginx
+
+cd /root/org.src/nginx
+chown -Rf _apt:root /root/org.src/nginx
+
 cat $FNOW | xargs aptold build-dep -fy
 
 cat /tb2/tmp/nginx-pkg-org.txt | grep "Depends:" | sed -r "s/Depends: //g"| \
