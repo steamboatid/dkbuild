@@ -76,7 +76,8 @@ cut -d":" -f1  >  $FDEPS
 apt-cache search php | grep "\-dev" | \
 grep -v "php5\|php7\|yac\|gmagick\|xcache\|solr\|swoole" | cut -d" " -f1  >>  $FDEPS
 cat $FDEPS | sort -u | sort | sed -r 's/\|//g' | sed '/^$/d'  >>  $FDEPF
-cat $FDEPF | tr "\n" " " | xargs aptold install -my
+cat $FDEPF | tr "\n" " " | xargs aptold install -my \
+	2>&1 | grep -iv "nable to locate\|not installed\|newest\|picking\|reading\|building\|stable CLI"
 exit 0;
 
 
