@@ -119,9 +119,8 @@ cat $FSRC1 | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
 cat $FSRC2 | grep "php\-" >> $FSRC1
 cat $FSRC2 | grep "$PHPV" >> $FSRC1
 cat $FSRC1
-exit 0;
 
-for apkg in $(cat $FSRC | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort); do
+for apkg in $(cat $FSRC1 | sort -u | sort); do
 	apt source -y --ignore-missing $apkg || echo "failed for $apkg"
 done
 
