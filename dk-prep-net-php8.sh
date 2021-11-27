@@ -105,6 +105,7 @@ cat $FDST | grep "Package:\|Source:" | \
 	sort -u | sort > $FNOW
 
 cd /root/org.src/$PHPV
+chown -Rf _apt:root /root/org.src/$PHPV
 chown_apt
 
 echo "php-phalcon3" >> $FNOW
