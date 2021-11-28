@@ -64,7 +64,7 @@ php-memcached php-redis php-igbinary php-msgpack php-apcu \
 pkg-php-tools libdistro-info-perl php-all-dev \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
-aptold install -my $PHPV-http php-http php-raphf \
+aptold install -my php-http php-raphf \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
@@ -161,7 +161,7 @@ $PHPV-opcache $PHPV-readline $PHPV-soap $PHPV-tidy $PHPV-xdebug $PHPV-xml $PHPV-
 php-memcached php-redis php-igbinary php-msgpack php-apcu \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
-aptold build-dep -fy $PHPV-http php-http php-raphf \
+aptold build-dep -fy php-http php-raphf \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 #--- recreate dir, delete debs
@@ -183,7 +183,7 @@ $PHPV-sqlite3 $PHPV-sybase $PHPV-tidy $PHPV-xdebug $PHPV-xml \
 $PHPV-xsl $PHPV-zip \
 php-memcached php-redis php-igbinary php-msgpack php-apcu
 
-aptold source -my $PHPV-http php-http php-raphf
+aptold source -my php-http php-raphf
 
 #--- sync to src
 #-------------------------------------------
