@@ -170,6 +170,7 @@ wait
 cd /root/src/$PHPV
 find /root/src/$PHPV/ -type f -iname "*udeb" -delete
 find /root/src/$PHPV/ -type f -iname "*dbgsym*deb" -delete
+exit 0;
 
 
 # upload to /tb2/build/{$RELNAME}-php8.x
