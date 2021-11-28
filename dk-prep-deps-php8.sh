@@ -87,8 +87,9 @@ FDST="/tb2/tmp/$PHPV-pkg-org.txt"
 FDST1="/tb2/tmp/$PHPV-pkg-org-1.txt"
 FDST2="/tb2/tmp/$PHPV-pkg-org-2.txt"
 
-URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
-get_package_file $URL $FDST
+# URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
+# get_package_file $URL $FDST
+cp $FPKGS $FDST
 
 FNOW="/tb2/tmp/$PHPV-pkg-now.txt"
 FNOW1="/tb2/tmp/$PHPV-pkg-now-1.txt"
@@ -115,7 +116,7 @@ apt-cache search $PHPV | awk '{print $1}' | grep "$PHPV" | \
 apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 	grep -v "dbgsym\|dbg\|apache" >> $FNOW
 cat $FNOW | sort -u | sort | tr "\n" " " | \
-	xargs aptold build-dep -y --ignore-missing | tee $FSRC1
+	xargs aptold build-dep -my | tee $FSRC1
 
 
 # source packages
@@ -124,6 +125,9 @@ cat $FSRC1 | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
 >$FSRC1
 cat $FSRC2 | grep "php\-" >> $FSRC1
 cat $FSRC2 | grep "$PHPV" >> $FSRC1
+
+cat $FSRC1
+exit 0;
 
 chown_apt
 for apkg in $(cat $FSRC1 | sort -u | sort); do
