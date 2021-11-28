@@ -125,38 +125,22 @@ apt-cache search $PHPV | awk '{print $1}' | grep "$PHPV" | \
 apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 	grep -v "dbgsym\|dbg\|apache" >> $FNOW
 
+
 cat $FNOW | grep -i "$PHPV\|php\-" | \
 	sort -u | sort | \
 	sed 's/(\([^\)]*\))//g' | \
 	xargs aptold build-dep -my $apkg  2>&1 | tee $FSRC1
 
-cat $FSRC1
-exit 0;
-
-FTMP1=$(mktemp)
-cat $FNOW | grep -i "$PHPV\|php\-" | \
-	sort -u | sort | \
-	sed 's/(\([^\)]*\))//g' >> $FTMP1
-
-#-- check by apt-cache if exists
-FTMP2=$(mktemp)
->$FTMP2
-for apkg in $(cat $FTMP1); do
-	printf " $apkg "
-	if [[ $(apt-cache search $apkg | wc -l) -gt 0 ]]; then
-		echo $apkg >> $FTMP2
-	fi
-done
-exit 0;
-
-cat $FTMP2 | tr "\n" " " | xargs aptold build-dep -my $apkg | tee $FSRC1
-
 # source packages
-cat $FSRC1 | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
+cat $FSRC1 | grep -iv "unable" | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
 
 >$FSRC1
 cat $FSRC2 | grep "php\-" >> $FSRC1
 cat $FSRC2 | grep "$PHPV" >> $FSRC1
+
+# cat $FSRC1 | sort -u | sort | tr "\n" " " | xargs aptold source -my
+cat $FSRC1 | sort -u | sort
+exit 0;
 
 chown_apt
 FTMP3=$(mktemp)
