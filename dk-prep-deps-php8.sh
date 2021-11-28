@@ -139,6 +139,11 @@ cat $FSRC2 | grep "php\-" >> $FSRC1
 cat $FSRC2 | grep "$PHPV" >> $FSRC1
 
 cat $FSRC1 | sort -u | sort | tr "\n" " " | xargs aptold source -my
+
+dsc_num=T$(find /root/org.src/$PHPV -maxdepth 1 -type f -iname "*.dsc" | wc -l)
+dir_num=T$(find /root/org.src/$PHPV -maxdepth 1 -type d | wc -l)
+printf "\n\n\n --- DSC=${blue}$dsc_num ${end} --- DIR=${blue}$dir_num ${end} \n\n"
+
 exit 0;
 
 chown_apt
