@@ -142,7 +142,7 @@ override_dh_shlibdeps:
 	if [[ $adir == *"redis"* ]]; then
 		printf "\n\n\n --- its PHP-REDIS -- do rsync $adir \n"
 		rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-		/root/src/$PHPV/git-phpredis $adir
+		/root/src/git-phpredis $adir
 		pwd
 		printf "\n\n\n"
 	fi

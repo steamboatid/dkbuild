@@ -21,12 +21,6 @@ ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}
 ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
 
 
-# phpredis
-get_update_new_github "steamboatid/phpredis" "/root/org.src/php8.0/git-phpredis"
-rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-/root/org.src/php8.0/git-phpredis/ /root/org.src/php8.1/git-phpredis/
-
-
 get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core"  >/dev/null 2>&1 &
@@ -38,9 +32,9 @@ get_update_new_github "steamboatid/db4" "/root/org.src/db4/git-db4"  >/dev/null 
 get_update_new_github "steamboatid/debs-db4" "/root/org.src/db4/git-debs-db4"  >/dev/null 2>&1 &
 
 
+get_update_new_github "steamboatid/phpredis" "/root/org.src/git-phpredis"  >/dev/null 2>&1 &
 get_update_new_github "php/pecl-networking-gearman" "/root/org.src/git-gearman"  >/dev/null 2>&1 &
-
-get_update_new_github "steamboatid/phpredis" "/root/org.src/git-redis"  >/dev/null 2>&1 &
+# get_update_new_github "steamboatid/phpredis" "/root/org.src/git-redis"  >/dev/null 2>&1 &
 
 get_update_new_github "krakjoe/parallel" "/root/org.src/git-parallel"  >/dev/null 2>&1 &
 get_update_new_github "rosmanov/pecl-eio" "/root/org.src/git-eio"  >/dev/null 2>&1 &
@@ -82,7 +76,6 @@ while :; do
 		printf "."
 	else
 		jobs -r | grep -iv "find\|chmod\|chown" | grep -iv "dk-prep-gits.sh" | grep "git\|bit" | sed -r "s/\s+/ /g" | cut -d" " -f4 | sort -u | sort
-		# jobs -r | grep -iv "find\|chmod\|chown" | grep -iv "dk-prep-gits.sh" | grep "git\|bit" | sed -r "s/\s+/ /g" | sort -u | sort
 		printf ".$nums "
 		numo=$nums
 	fi
