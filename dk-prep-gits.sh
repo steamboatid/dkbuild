@@ -89,14 +89,15 @@ printf "\n\n --- wait finished... \n\n\n"
 
 
 # fix raphf
-tdir=$PWD
-cd /root/org.src/git-raphf
-[[ -e php_raphf.h ]] && ln -sf php_raphf.h src/php_raphf.h
-[[ -e src/php_raphf_api.c ]] && ln -sf src/php_raphf_api.c php_raphf_api.c
-[[ -e src/php_raphf_api.h ]] && ln -sf src/php_raphf_api.h php_raphf_api.h
-rm -rf src/php_raphf_test.c php_raphf_test.c
-cd $tdir
-
+if [[ -d /root/org.src/git-raphf ]]; then
+	tdir=$PWD
+	cd /root/org.src/git-raphf
+	[[ -e php_raphf.h ]] && ln -sf php_raphf.h src/php_raphf.h
+	[[ -e src/php_raphf_api.c ]] && ln -sf src/php_raphf_api.c php_raphf_api.c
+	[[ -e src/php_raphf_api.h ]] && ln -sf src/php_raphf_api.h php_raphf_api.h
+	rm -rf src/php_raphf_test.c php_raphf_test.c
+	cd $tdir
+fi
 
 #--- sync to src
 #-------------------------------------------
