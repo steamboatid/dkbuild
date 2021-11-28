@@ -83,6 +83,7 @@ rm -rf /root/src/$PHPV/*deb
 # Compiling all packages
 #-------------------------------------------
 cd /root/src/$PHPV
+pwd
 find /root/src/$PHPV -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip"
 exit 0;
 
