@@ -61,7 +61,6 @@ rm -rf /root/src/php8 /root/org.src/php8
 mkdir -p /tb2/build/$RELNAME-$PHPV
 rm -rf /tb2/build/$RELNAME-$PHPV/*deb
 mkdir -p /root/src/$PHPV
-exit 0;
 
 
 # get source
