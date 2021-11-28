@@ -113,7 +113,6 @@ cat $FDST | grep "Package:\|Source:" | \
 	grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | \
 	sort -u | sort > $FNOW
 
-cat $FNOW; exit 0;
 
 cd /root/org.src/$PHPV
 chown -Rf _apt:root /root/org.src/$PHPV
@@ -135,10 +134,12 @@ cat $FNOW | grep -i "$PHPV\|php\-" | \
 FTMP2=$(mktemp)
 >$FTMP2
 for apkg in $(cat $FTMP); do
+	printf " $apkg "
 	if [[ $(apt-cache search $apkg | wc -l) -gt 0 ]]; then
 		echo $apkg >> $FTMP2
 	fi
 done
+exit 0;
 
 cat $FTMP2 | tr "\n" " " | xargs aptold build-dep -my $apkg | tee $FSRC1
 

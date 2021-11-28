@@ -23,6 +23,11 @@ ssh argo "lxc-start -qn teye >/dev/null 2>&1 &"
 ssh argo "lxc-start -qn bus  >/dev/null 2>&1 &"
 ssh argo "lxc-start -qn eye  >/dev/null 2>&1 &"
 
+ssh argo -- lxca eye  -- rm -rf /usr/local/sbin/dk*sh
+ssh argo -- lxca bus  -- rm -rf /usr/local/sbin/dk*sh
+ssh argo -- lxca tbus -- rm -rf /usr/local/sbin/dk*sh
+ssh argo -- lxca teye -- rm -rf /usr/local/sbin/dk*sh
+
 ssh argo -- lxca eye  -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
 ssh argo -- lxca bus  -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
 ssh argo -- lxca tbus -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
