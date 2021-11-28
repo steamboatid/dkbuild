@@ -125,6 +125,11 @@ apt-cache search $PHPV | awk '{print $1}' | grep "$PHPV" | \
 apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 	grep -v "dbgsym\|dbg\|apache" >> $FNOW
 
+cat $FNOW | grep -i "$PHPV\|php\-" | \
+	sort -u | sort | \
+	sed 's/(\([^\)]*\))//g' | \
+	xargs aptold build-dep -my $apkg | tee $FSRC1
+exit 0;
 
 FTMP1=$(mktemp)
 cat $FNOW | grep -i "$PHPV\|php\-" | \
