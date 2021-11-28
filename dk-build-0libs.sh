@@ -403,7 +403,7 @@ get_update_new_github(){
 	if [ ! -d ${DST} ]; then
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 		printf "\n---new clone to: $DST \n---from: https://github.com/${URL} $OPS $DST "
-		printf "\n# git clone https://github.com/${URL} $OPS $DST \n"
+		printf "\n---# git clone https://github.com/${URL} $OPS $DST ---\n"
 		git clone "https://github.com/${URL}" "$OPS" "$DST"
 	else
 		FURL="https://github.com/${URL}"
@@ -420,7 +420,7 @@ get_update_new_gitlab(){
 	if [ ! -d ${DST} ]; then
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 		printf "\n---new clone to: $DST \n---from: https://gitlab.com/${URL} $OPS $DST "
-		printf "\n# git clone https://gitlab.com/${URL} $OPS $DST \n"
+		printf "\n---# git clone https://gitlab.com/${URL} $OPS $DST ---\n"
 		git clone "https://gitlab.com/${URL}" "$OPS" "$DST"
 	else
 		FURL="https://gitlab.com/${URL}"
@@ -437,7 +437,7 @@ get_update_new_bitbucket(){
 	if [ ! -d ${DST} ]; then
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 		printf "\n---new clone to: $DST \n---from: https://bitbucket.org/${URL} $OPS $DST "
-		printf "\n# git clone https://bitbucket.org/${URL} $OPS $DST \n"
+		printf "\n---# git clone https://bitbucket.org/${URL} $OPS $DST ---\n"
 		git clone "https://bitbucket.org/${URL}" "$OPS" "$DST"
 	else
 		FURL="https://bitbucket.org/${URL}"
@@ -454,7 +454,7 @@ get_update_new_salsa(){
 	if [ ! -d ${DST} ]; then
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 		printf "\n---new clone to: $DST \n---from: https://salsa.debian.org/${URL} $OPS $DST "
-		printf "\n# git clone https://salsa.debian.org/${URL} $OPS $DST \n"
+		printf "\n---# git clone https://salsa.debian.org/${URL} $OPS $DST ---\n"
 		git clone "https://salsa.debian.org/${URL}" "$OPS" "$DST"
 	else
 		FURL="https://salsa.debian.org/${URL}"
