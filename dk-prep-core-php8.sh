@@ -102,7 +102,7 @@ xargs aptold install -fy  --no-install-recommends  --allow-downgrades \
 aptold install -fy --no-install-recommends  --allow-downgrades \
 default-jdk libx11-dev xorg-dev libcurl4-openssl-dev \
 mandoc apache2-dev dh-apache2 libdb-dev \
-liblz4-dev lz4 liblz4-* libdirectfb-dev liblzf-dev liblzf-dev
+liblz4-dev lz4 liblz4-* libdirectfb-dev liblzf-dev liblzf-dev \
 libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
 libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev libssl-dev libxml2-dev \
 libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
@@ -185,8 +185,8 @@ $PHPV-xsl $PHPV-zip \
 php-memcached php-redis php-igbinary php-msgpack php-apcu \
 $PHPV-http php-http php-raphf)
 
-for apkg in "${pkgs[@]}"; do 
-	printf "\n\n --- ${blue}$apkg ${end} \n"
+for apkg in "${pkgs[@]}"; do
+	printf "\n\n --- apt source: ${blue}$apkg ${end} \n"
 	aptold source $apkg -my
 done
 
