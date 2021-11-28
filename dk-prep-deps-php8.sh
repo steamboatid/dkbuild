@@ -120,11 +120,10 @@ FTMP=$(mktemp)
 cat $FNOW | grep -i "$PHPV\|php\-" | \
 	sort -u | sort | \
 	sed 's/(\([^\)]*\))//g' >> $FTMP
-cat $FTMP; exit 0;
 
-cat $FNOW | tr "\n" " " | \
+cat $FTMP | tr "\n" " " | \
 	xargs aptold build-dep -my | tee $FSRC1
-
+rm -rf $FTMP
 
 # source packages
 cat $FSRC1 | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
