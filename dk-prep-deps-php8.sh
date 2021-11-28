@@ -104,6 +104,7 @@ cat $FDST | grep "Package:\|Source:" | \
 	grep -v "\-embed\|\-dbg\|dbgsym\|php5\|php7\|recode\|phalcon\|apache" | \
 	grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | \
 	sort -u | sort > $FNOW
+cat $FNOW; exit 0;
 
 cd /root/org.src/$PHPV
 chown -Rf _apt:root /root/org.src/$PHPV
