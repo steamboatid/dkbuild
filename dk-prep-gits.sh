@@ -27,9 +27,9 @@ get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-
 get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core"  >/dev/null 2>&1 &
 
 #-- taken from dk-prep-all.sh
-get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"
-get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"
-get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
+get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"  >/dev/null 2>&1 &
+get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"  >/dev/null 2>&1 &
+get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"  >/dev/null 2>&1 &
 
 
 
