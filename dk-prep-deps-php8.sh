@@ -121,12 +121,24 @@ cat $FNOW | grep -i "$PHPV\|php\-" | \
 	sort -u | sort | \
 	sed 's/(\([^\)]*\))//g' >> $FTMP
 
+FTMP2=$(mktemp)
+>$FTMP2
+for apkg in $(cat $FTMP); do
+	if [[ $(apt-cache search $apkg | wc -l) -gt 0 ]]; then
+		echo $apkg >> $FTMP2
+	fi
+done
+
+cat $FTMP2 | tr "\n" " " | xargs aptold build-dep -my $apkg | tee $FSRC1
+exit 0;
+
 >$FSRC1
 for apkg in $(cat $FTMP); do
 	printf "\n\n --- build-dep: ${yel}$apkg ${end} \n"
 	aptold build-dep -my $apkg | tee $FSRC1
 done
 rm -rf $FTMP
+exit 0;
 
 # source packages
 cat $FSRC1 | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
