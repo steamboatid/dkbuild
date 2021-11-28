@@ -130,6 +130,7 @@ FTMP1=$(mktemp)
 cat $FNOW | grep -i "$PHPV\|php\-" | \
 	sort -u | sort | \
 	sed 's/(\([^\)]*\))//g' >> $FTMP1
+exit 0;
 
 #-- check by apt-cache if exists
 FTMP2=$(mktemp)
