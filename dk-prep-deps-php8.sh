@@ -138,8 +138,7 @@ cat $FSRC1 | grep -iv "unable" | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sor
 cat $FSRC2 | grep "php\-" >> $FSRC1
 cat $FSRC2 | grep "$PHPV" >> $FSRC1
 
-# cat $FSRC1 | sort -u | sort | tr "\n" " " | xargs aptold source -my
-cat $FSRC1 | sort -u | sort
+cat $FSRC1 | sort -u | sort | tr "\n" " " | xargs aptold source -my
 exit 0;
 
 chown_apt
