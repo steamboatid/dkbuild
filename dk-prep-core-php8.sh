@@ -67,6 +67,10 @@ pkg-php-tools libdistro-info-perl php-all-dev \
 aptold install -my php-http php-raphf \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
+apt-cache search libsnmp | grep -iv "perl\|dbg\|pyth" | cut -d" " -f1 | \
+	xargs aptold install -fy \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
+
 aptold install -fy --no-install-recommends  --allow-downgrades \
 devscripts build-essential lintian debhelper git git-extras wget axel dh-make dh-php ccache \
 aspell aspell-en chrpath default-libmysqlclient-dev dictionaries-common emacsen-common firebird-dev firebird3.0-common firebird3.0-common-doc flex freetds-common \
