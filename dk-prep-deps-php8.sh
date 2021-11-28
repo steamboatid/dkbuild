@@ -128,7 +128,9 @@ apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 cat $FNOW | grep -i "$PHPV\|php\-" | \
 	sort -u | sort | \
 	sed 's/(\([^\)]*\))//g' | \
-	xargs aptold build-dep -my $apkg | tee $FSRC1
+	xargs aptold build-dep -my $apkg  2>&1 | tee $FSRC1
+
+cat $FSRC1
 exit 0;
 
 FTMP1=$(mktemp)
