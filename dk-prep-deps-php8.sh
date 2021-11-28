@@ -121,8 +121,11 @@ cat $FNOW | grep -i "$PHPV\|php\-" | \
 	sort -u | sort | \
 	sed 's/(\([^\)]*\))//g' >> $FTMP
 
-cat $FTMP | tr "\n" " " | \
-	xargs aptold build-dep -my | tee $FSRC1
+>$FSRC1
+for apkg in $(cat $FTMP); do
+	printf "\n\n --- build-dep: ${yel}$apkg ${end} \n"
+	aptold build-dep -my $apkg | tee $FSRC1
+done
 rm -rf $FTMP
 
 # source packages
@@ -132,12 +135,11 @@ cat $FSRC1 | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
 cat $FSRC2 | grep "php\-" >> $FSRC1
 cat $FSRC2 | grep "$PHPV" >> $FSRC1
 
-cat $FSRC1; exit 0;
-
 chown_apt
 for apkg in $(cat $FSRC1 | sort -u | sort); do
-	printf "\n\n --- apt source: ${yel}$apkg ${end} \n"
+	printf "\n\n --- source: ${yel}$apkg ${end} \n"
 	aptold source -my $apkg
+	aptold build-dep -my $apkg
 done
 
 
