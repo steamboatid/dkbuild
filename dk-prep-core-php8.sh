@@ -79,7 +79,7 @@ libenchant-dev libenchant1c2a libevent-* libevent-dev libfbclient2 libffi-dev \
 libgcrypt20-dev libglib2.0-bin libglib2.0-data libglib2.0-dev libglib2.0-dev-bin libgmp-dev libgmp3-dev libgmpxx4ldbl libgpg-error-dev libhunspell-1.7-0 libib-util \
 libkrb5-dev liblmdb-dev libltdl-dev libltdl7 libmagic-dev libmariadb-dev libmariadb-dev-compat libmhash-dev libmhash2 libmount-dev libncurses-dev libnss-myhostname \
 libodbc1 libonig-dev libonig5 libpci-dev libpcre2-32-0 libpcre2-dev libpq-dev libpq5 libpspell-dev libqdbm-dev libqdbm14 libsasl2-dev libselinux1-dev \
-libsensors4-dev libsepol1-dev libsnmp-base libsnmp-dev libsnmp40 libsodium-dev libsodium23 libsybdb5 libsystemd-dev libtext-iconv-perl libtidy-dev libtidy5deb1 \
+libsensors4-dev libsepol1-dev libsnmp-base libsnmp-dev libsodium-dev libsodium23 libsybdb5 libsystemd-dev libtext-iconv-perl libtidy-dev libtidy5deb1 \
 libtommath1 libudev-dev libwrap0-dev libxmltok1 libxmltok1-dev libxslt1-dev libzip-dev libzip4 locales-all netcat-openbsd odbcinst odbcinst1debian2 python3-distutils \
 python3-lib2to3 systemtap-sdt-dev unixodbc-dev libfl-dev \
 bison libbison-dev libc-client2007e libc-client2007e-dev libpam0g-dev libsqlite3-dev libwebpdemux2 mlock re2c \
@@ -190,7 +190,7 @@ php-memcached php-redis php-igbinary php-msgpack php-apcu \
 $PHPV-http php-http php-raphf)
 
 for apkg in "${pkgs[@]}"; do
-	printf "\n\n --- apt source: ${blue}$apkg ${end} \n"
+	printf "\n\n --- apt source: ${yel}$apkg ${end} \n"
 	aptold source $apkg -my
 done
 
