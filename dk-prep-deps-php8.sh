@@ -58,7 +58,7 @@ printf "\n\n --- php version: ${yel}$PHPV${end} [$PHPVNUM] \n\n"
 rm -rf /tmp/$PHPV
 mkdir -p /root/src/$PHPV /root/org.src/$PHPV /tmp/$PHPV /tb2/tmp
 cd /root/org.src/$PHPV
-pwd
+
 
 FPKGS="/tmp/$PHPV.pkgs"
 FDEPS="/tmp/$PHPV-deps.pkgs"
