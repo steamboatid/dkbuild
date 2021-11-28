@@ -29,7 +29,7 @@ get_package_file(){
 
 	DOGET=0
 	if [ ! -s "${DST}" ]; then DOGET=1; fi
-	if [ test `find "${DST}" -mtime +100` ]; then DOGET=1; fi
+	if [ test `find "${DST}" -mtime +10800` ]; then DOGET=1; fi
 	if [[ $DOGET -gt 0 ]]; then
 		curl -A "Aptly/1.0" -Ss "$URL" > "$DST"
 	fi
@@ -115,6 +115,8 @@ apt-cache search $PHPV | awk '{print $1}' | grep "$PHPV" | \
 	grep -v "dbgsym\|dbg\|apache" >> $FNOW
 apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 	grep -v "dbgsym\|dbg\|apache" >> $FNOW
+
+cat $FNOW; exit 0;
 cat $FNOW | sort -u | sort | tr "\n" " " | \
 	xargs aptold build-dep -my | tee $FSRC1
 
@@ -126,8 +128,7 @@ cat $FSRC1 | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
 cat $FSRC2 | grep "php\-" >> $FSRC1
 cat $FSRC2 | grep "$PHPV" >> $FSRC1
 
-cat $FSRC1
-exit 0;
+cat $FSRC1; exit 0;
 
 chown_apt
 for apkg in $(cat $FSRC1 | sort -u | sort); do
