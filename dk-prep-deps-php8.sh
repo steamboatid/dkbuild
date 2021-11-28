@@ -124,6 +124,7 @@ apt-cache search $PHPV | awk '{print $1}' | grep "$PHPV" | \
 	grep -v "dbgsym\|dbg\|apache" >> $FNOW
 apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 	grep -v "dbgsym\|dbg\|apache" >> $FNOW
+exit 0;
 
 FTMP1=$(mktemp)
 cat $FNOW | grep -i "$PHPV\|php\-" | \
