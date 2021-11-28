@@ -186,10 +186,8 @@ php-memcached php-redis php-igbinary php-msgpack php-apcu \
 $PHPV-http php-http php-raphf)
 
 for apkg in "${pkgs[@]}"; do 
-	printf "\n\n --- $apkg \n"
-	aptold source $apkg -my \
-		2>&1 | grep -iv "git\|please\|skipp\|reading\|unreleased\|picking\|stable cli" | \
-		sed '/^$/d'
+	printf "\n\n --- ${blue}$apkg ${end} \n"
+	aptold source $apkg -my
 done
 
 #--- sync to src
