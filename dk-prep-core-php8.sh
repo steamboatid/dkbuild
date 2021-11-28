@@ -37,14 +37,14 @@ aptold install -fy --fix-broken
 
 aptold install -fy pkg-config build-essential autoconf bison re2c meson \
 libxml2-dev libsqlite3-dev curl make gcc devscripts debhelper dh-apache2 apache2-dev libc-client-dev \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
 aptold install -fy libwebp-dev \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 aptold install -fy libwebp-dev libwebp6 libgd-dev \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 aptold install -fy libgd-dev libgd3 \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
@@ -62,10 +62,10 @@ $PHPV-bcmath $PHPV-bz2 $PHPV-gmp $PHPV-ldap $PHPV-mbstring $PHPV-mysql \
 $PHPV-opcache $PHPV-readline $PHPV-soap $PHPV-tidy $PHPV-xdebug $PHPV-xml $PHPV-xsl $PHPV-zip \
 php-memcached php-redis php-igbinary php-msgpack php-apcu \
 pkg-php-tools libdistro-info-perl php-all-dev \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
 aptold install -my php-http php-raphf \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
 devscripts build-essential lintian debhelper git git-extras wget axel dh-make dh-php ccache \
@@ -90,14 +90,14 @@ libxml2-dev libpcre3-dev libbz2-dev libcurl4-openssl-dev libjpeg-dev libxpm-dev 
 libgmp-dev libsasl2-dev libmhash-dev unixodbc-dev freetds-dev libpspell-dev libsnmp-dev libtidy-dev libxslt1-dev libmcrypt-dev \
 libpng*dev libdb5*-dev libfreetype*dev libxft*dev libgdchart-gd2-xpm-dev freetds-dev libldb-dev libldap2-dev \
 libdb5*dev libdb4*dev libdn*dev libidn*dev libomp-dev meson \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
 apt-cache search libdb | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
 xargs aptold install -fy  --no-install-recommends  --allow-downgrades \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 apt-cache search db5 | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
 xargs aptold install -fy  --no-install-recommends  --allow-downgrades \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
 default-jdk libx11-dev xorg-dev libcurl4-openssl-dev \
@@ -109,7 +109,7 @@ libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
 php-dev libc6-dev libticonv-dev libiconv-hook-dev \
 libghc-iconv-dev libiconv-hook-dev libc-bin \
 libqdbm* libgdbm* libxqdbm* libxmlrpc-c*dev xmlrpc-api-utils \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
 apache2-dev autotools-dev *clang*dev default-libmysqlclient-dev devscripts dpkg-dev \
@@ -143,7 +143,7 @@ php-dev php-igbinary-all-dev php-memcached-all-dev \
 postgresql-server-dev-* postgresql-server-dev-all slapi-dev \
 systemtap-sdt-dev tcl-dev unixodbc-dev uuid-dev xorg-dev \
 zlib1g*dev zlib1g-dev \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
 aptold install -fy \
 libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
@@ -222,7 +222,7 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 #-------------------------------------------
 save_local_debs
 aptold install -fy --auto-remove --purge \
-	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
 
 find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
