@@ -380,7 +380,7 @@ update_existing_git(){
 				elif [ ! -z $ORIGIN ]; then
 					ADOM=$(echo ${ORIGIN} | awk -F[/:] '{print $4}')
 					printf "\n Recloning: ${blu} https://${ADOM}/${URL} ${OPS} ${end} \n\n"
-					git clone "https://${ADOM}/${URL}" "$OPS" "$DST"
+					git clone "https://${ADOM}/${URL}" $OPS "$DST"
 				else
 					#--- failed
 					printf "\n\n\n\n"
@@ -421,7 +421,7 @@ get_update_new_gitlab(){
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 		printf "\n---new clone to: $DST \n---from: https://gitlab.com/${URL} $OPS $DST "
 		printf "\n---# git clone https://gitlab.com/${URL} $OPS $DST ---\n"
-		git clone "https://gitlab.com/${URL}" "$OPS" "$DST"
+		git clone "https://gitlab.com/${URL}" $OPS "$DST"
 	else
 		FURL="https://gitlab.com/${URL}"
 		update_existing_git "$DST" "$URL" "$FURL" "$BRA"
@@ -438,7 +438,7 @@ get_update_new_bitbucket(){
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 		printf "\n---new clone to: $DST \n---from: https://bitbucket.org/${URL} $OPS $DST "
 		printf "\n---# git clone https://bitbucket.org/${URL} $OPS $DST ---\n"
-		git clone "https://bitbucket.org/${URL}" "$OPS" "$DST"
+		git clone "https://bitbucket.org/${URL}" $OPS "$DST"
 	else
 		FURL="https://bitbucket.org/${URL}"
 		update_existing_git "$DST" "$URL" "$FURL" "$BRA"
@@ -455,7 +455,7 @@ get_update_new_salsa(){
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 		printf "\n---new clone to: $DST \n---from: https://salsa.debian.org/${URL} $OPS $DST "
 		printf "\n---# git clone https://salsa.debian.org/${URL} $OPS $DST ---\n"
-		git clone "https://salsa.debian.org/${URL}" "$OPS" "$DST"
+		git clone "https://salsa.debian.org/${URL}" $OPS "$DST"
 	else
 		FURL="https://salsa.debian.org/${URL}"
 		update_existing_git "$DST" "$URL" "$FURL" "$BRA"

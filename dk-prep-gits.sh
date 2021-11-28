@@ -21,25 +21,16 @@ ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}
 ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
 
 
-# delete unpacked folders
-mkdir -p /root/org.src /root/src
-find /root/org.src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
-find /root/src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
-
-
 #-- taken from dk-prep-all.sh
-get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"
-get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache"
-get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core"
+get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"  >/dev/null 2>&1 &
+get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache"  >/dev/null 2>&1 &
+get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core"  >/dev/null 2>&1 &
 
 #-- taken from dk-prep-all.sh
 get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"
 get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"
 get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
 
-get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"  >/dev/null 2>&1 &
-get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"  >/dev/null 2>&1 &
-get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"  >/dev/null 2>&1 &
 
 
 get_update_new_github "steamboatid/db4" "/root/org.src/db4/git-db4"  >/dev/null 2>&1 &
