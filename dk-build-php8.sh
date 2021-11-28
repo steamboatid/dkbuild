@@ -73,7 +73,6 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 # delete old debs
 #-------------------------------------------
 rm -rf /root/src/$PHPV/*deb
-exit 0;
 
 
 # BUGGY libzip
@@ -84,6 +83,7 @@ exit 0;
 # Compiling all packages
 #-------------------------------------------
 cd /root/src/$PHPV
+find /root/src/$PHPV -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip"
 
 for adir in $(find /root/src/$PHPV -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip"); do
 	cd $adir
