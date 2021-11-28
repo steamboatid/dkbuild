@@ -138,7 +138,7 @@ cat $FSRC1 | grep -iv "unable" | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sor
 cat $FSRC2 | grep "php\-" >> $FSRC1
 cat $FSRC2 | grep "$PHPV" >> $FSRC1
 
-cat $FSRC1 | sort -u | sort | tr "\n" " " | xargs aptold source -my
+cat $FSRC1 | sort -u | sort | tr "\n" " " | xargs apt source -my
 
 dsc_num=T$(find /root/org.src/$PHPV -maxdepth 1 -type f -iname "*.dsc" | wc -l)
 dir_num=T$(find /root/org.src/$PHPV -maxdepth 1 -type d | wc -l)
@@ -156,7 +156,7 @@ for apkg in $(cat $FSRC1 | sort -u | sort); do
 done
 
 printf "\n\n --- source: ${yel} $PHPV ${end} \n"
-cat $FTMP3 | tr "\n" " " | xargs aptold source -my
+cat $FTMP3 | tr "\n" " " | xargs apt source -my
 
 rm -rf $FTMP3 $FTMP2 $FTMP1
 
