@@ -147,12 +147,14 @@ override_dh_shlibdeps:
 		printf "\n\n\n"
 	fi
 
-	NUMINS=$(ps -e -o command | grep -v grep | grep "dk-build-full" | awk '{print $NF}' | wc -l)
-	if [[ $NUMINS -lt 3 ]]; then
-		doback
-	else
-		if [[ $adir == *"phalcon"* ]]; then doback; else dofore; fi
-	fi
+	# NUMINS=$(ps -e -o command | grep -v grep | grep "dk-build-full" | awk '{print $NF}' | wc -l)
+	# if [[ $NUMINS -lt 3 ]]; then
+	# 	doback
+	# else
+	# 	if [[ $adir == *"phalcon"* ]]; then doback; else dofore; fi
+	# fi
+
+	dofore
 done
 
 
