@@ -21,6 +21,12 @@ ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}
 ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
 
 
+# delete unpacked folders
+mkdir -p /root/org.src /root/src
+find /root/org.src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
+find /root/src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
+
+
 #-- taken from dk-prep-all.sh
 get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"
 get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache"
