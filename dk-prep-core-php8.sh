@@ -151,7 +151,7 @@ libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev \
 libssl-dev libxml2-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
 pkg-config build-essential autoconf bison re2c libxml2-dev libsqlite3-dev freetds-dev \
 libmagickwand-dev libmagickwand-6*dev libgraphicsmagick1-dev libmagickcore-6-arch-config \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
 
 aptold build-dep -fy $PHPV php-defaults \
@@ -159,10 +159,10 @@ $PHPV-cli $PHPV-fpm $PHPV-common $PHPV-curl $PHPV-fpm $PHPV-gd \
 $PHPV-bcmath $PHPV-bz2 $PHPV-gmp $PHPV-ldap $PHPV-mbstring $PHPV-mysql \
 $PHPV-opcache $PHPV-readline $PHPV-soap $PHPV-tidy $PHPV-xdebug $PHPV-xml $PHPV-xsl $PHPV-zip \
 php-memcached php-redis php-igbinary php-msgpack php-apcu \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
 aptold build-dep -fy php-http php-raphf \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
 #--- recreate dir, delete debs
 #-------------------------------------------
