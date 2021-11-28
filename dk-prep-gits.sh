@@ -21,13 +21,21 @@ ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}
 ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
 
 
-get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"  >/dev/null 2>&1 &
-get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache"  >/dev/null 2>&1 &
-get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core"  >/dev/null 2>&1 &
+#-- taken from dk-prep-all.sh
+get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"
+get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache"
+get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core"
+
+#-- taken from dk-prep-all.sh
+get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"
+get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"
+get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
 
 get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"  >/dev/null 2>&1 &
+
+
 get_update_new_github "steamboatid/db4" "/root/org.src/db4/git-db4"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/debs-db4" "/root/org.src/db4/git-debs-db4"  >/dev/null 2>&1 &
 
