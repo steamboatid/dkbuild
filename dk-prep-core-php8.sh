@@ -51,7 +51,7 @@ aptold install -fy --no-install-recommends  --allow-downgrades \
 $PHPV \
 $PHPV $PHPV-apcu $PHPV-ast $PHPV-bcmath $PHPV-bz2 $PHPV-cli $PHPV-common \
 $PHPV-curl $PHPV-dba $PHPV-dev $PHPV-enchant $PHPV-fpm $PHPV-gd $PHPV-gmp \
-$PHPV-http $PHPV-igbinary $PHPV-imagick $PHPV-imap $PHPV-interbase \
+$PHPV-igbinary $PHPV-imagick $PHPV-imap $PHPV-interbase \
 $PHPV-intl $PHPV-ldap $PHPV-mbstring $PHPV-memcached $PHPV-msgpack \
 $PHPV-mysql $PHPV-odbc $PHPV-opcache $PHPV-pgsql $PHPV-pspell $PHPV-raphf \
 $PHPV-readline $PHPV-redis $PHPV-snmp $PHPV-soap $PHPV-sqlite3 $PHPV-sybase \
@@ -60,8 +60,11 @@ $PHPV \
 $PHPV-cli $PHPV-fpm $PHPV-common $PHPV-curl $PHPV-fpm $PHPV-gd \
 $PHPV-bcmath $PHPV-bz2 $PHPV-gmp $PHPV-ldap $PHPV-mbstring $PHPV-mysql \
 $PHPV-opcache $PHPV-readline $PHPV-soap $PHPV-tidy $PHPV-xdebug $PHPV-xml $PHPV-xsl $PHPV-zip \
-php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu \
+php-memcached php-redis php-igbinary php-msgpack php-apcu \
 pkg-php-tools libdistro-info-perl php-all-dev \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+
+aptold install -my $PHPV-http php-http php-raphf \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
@@ -155,7 +158,10 @@ aptold build-dep -fy $PHPV php-defaults \
 $PHPV-cli $PHPV-fpm $PHPV-common $PHPV-curl $PHPV-fpm $PHPV-gd \
 $PHPV-bcmath $PHPV-bz2 $PHPV-gmp $PHPV-ldap $PHPV-mbstring $PHPV-mysql \
 $PHPV-opcache $PHPV-readline $PHPV-soap $PHPV-tidy $PHPV-xdebug $PHPV-xml $PHPV-xsl $PHPV-zip \
-php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu \
+php-memcached php-redis php-igbinary php-msgpack php-apcu \
+	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+
+aptold build-dep -fy $PHPV-http php-http php-raphf \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 
 #--- recreate dir, delete debs
@@ -169,14 +175,15 @@ cd /root/org.src/$PHPV
 aptold source -my php-defaults \
 $PHPV $PHPV-apcu $PHPV-ast $PHPV-bcmath $PHPV-bz2 $PHPV-cli $PHPV-common \
 $PHPV-curl $PHPV-dba $PHPV-dev $PHPV-enchant $PHPV-fpm $PHPV-gd $PHPV-gmp \
-$PHPV-http $PHPV-igbinary $PHPV-imagick $PHPV-imap $PHPV-interbase \
+$PHPV-igbinary $PHPV-imagick $PHPV-imap $PHPV-interbase \
 $PHPV-intl $PHPV-ldap $PHPV-mbstring $PHPV-memcached $PHPV-msgpack \
 $PHPV-mysql $PHPV-odbc $PHPV-opcache $PHPV-pgsql $PHPV-pspell \
 $PHPV-raphf $PHPV-readline $PHPV-redis $PHPV-snmp $PHPV-soap \
 $PHPV-sqlite3 $PHPV-sybase $PHPV-tidy $PHPV-xdebug $PHPV-xml \
 $PHPV-xsl $PHPV-zip \
-php-memcached php-redis php-igbinary php-msgpack php-http php-raphf php-apcu
+php-memcached php-redis php-igbinary php-msgpack php-apcu
 
+aptold source -my $PHPV-http php-http php-raphf
 
 #--- sync to src
 #-------------------------------------------
