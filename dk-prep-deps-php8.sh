@@ -76,16 +76,17 @@ cat $FPKGS | grep "Depends:" | sed -r "s/Depends: //g"| \
 sed "s/\,//g" | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | sed "s/\s/\n/g" | sed '/^$/d' | \
 grep -iv "\-embed\|\-dbg\|dbgsym\|libtiff-dev\|posix0" | \
 grep -iv "dictionary\|mysqlnd\|tmpfiles\|php-curl-all-dev\|\-ps\|\-json\|Pre-php-common\|yac" | \
+grep -iv "php5\|php7\|yac\|gmagick\|xcache\|solr\|swoole\|recode\|phalcon\|apache2" | \
 cut -d":" -f1 | sort -u | sort  >  $FDEPS
 
 apt-cache search php | grep "\-dev" | \
+grep -iv "php5\|php7\|yac\|gmagick\|xcache\|solr\|swoole\|recode\|phalcon\|apache2" | \
 cut -d" " -f1  >>  $FDEPS
 
 cat $FDEPS | sort -u | sort | sed -r 's/\|//g' | sed '/^$/d' | \
 grep -iv "php5\|php7\|yac\|gmagick\|xcache\|solr\|swoole\|recode\|phalcon\|apache2" | \
   >>  $FDEPF
 
-cat $FDEPF; exit 0;
 cat $FDEPF | tr "\n" " " | xargs aptold install -my \
 	2>&1 | grep -iv "nable to locate\|not installed\|newest\|picking\|reading\|building\|stable CLI"
 
