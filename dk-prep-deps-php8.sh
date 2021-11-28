@@ -48,7 +48,7 @@ get_package_file_gz(){
 
 
 
-# print php version
+# print PHP version
 #-------------------------------------------
 printf "\n\n --- php version: ${yel}$PHPV${end} [$PHPVNUM] \n\n"
 
@@ -58,6 +58,8 @@ printf "\n\n --- php version: ${yel}$PHPV${end} [$PHPVNUM] \n\n"
 rm -rf /tmp/$PHPV
 mkdir -p /root/src/$PHPV /root/org.src/$PHPV /tmp/$PHPV /tb2/tmp
 cd /root/org.src/$PHPV
+pwd
+exit 0;
 
 FPKGS="/tmp/$PHPV.pkgs"
 FDEPS="/tmp/$PHPV-deps.pkgs"
