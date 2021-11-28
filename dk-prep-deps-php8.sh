@@ -118,9 +118,10 @@ apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 
 FTMP=$(mktemp)
 cat $FNOW | grep -i "$PHPV\|php\-" | \
-	sort -u | sort >> $FTMP
+	sort -u | sort | \
+	sed 's/(\([^\)]*\))//g' >> $FTMP
 cat $FTMP; exit 0;
-	
+
 cat $FNOW | tr "\n" " " | \
 	xargs aptold build-dep -my | tee $FSRC1
 
