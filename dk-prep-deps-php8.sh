@@ -130,12 +130,11 @@ FTMP1=$(mktemp)
 cat $FNOW | grep -i "$PHPV\|php\-" | \
 	sort -u | sort | \
 	sed 's/(\([^\)]*\))//g' >> $FTMP1
-exit 0;
 
 #-- check by apt-cache if exists
 FTMP2=$(mktemp)
 >$FTMP2
-for apkg in $(cat $FTMP); do
+for apkg in $(cat $FTMP1); do
 	printf " $apkg "
 	if [[ $(apt-cache search $apkg | wc -l) -gt 0 ]]; then
 		echo $apkg >> $FTMP2
