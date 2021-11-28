@@ -172,7 +172,8 @@ rm -rf /root/src/$PHPV/*deb
 #--- fetch default source package
 #-------------------------------------------
 cd /root/org.src/$PHPV
-aptold source -my php-defaults \
+
+pkgs=(php-defaults \
 $PHPV $PHPV-apcu $PHPV-ast $PHPV-bcmath $PHPV-bz2 $PHPV-cli $PHPV-common \
 $PHPV-curl $PHPV-dba $PHPV-dev $PHPV-enchant $PHPV-fpm $PHPV-gd $PHPV-gmp \
 $PHPV-igbinary $PHPV-imagick $PHPV-imap $PHPV-interbase \
@@ -181,9 +182,14 @@ $PHPV-mysql $PHPV-odbc $PHPV-opcache $PHPV-pgsql $PHPV-pspell \
 $PHPV-raphf $PHPV-readline $PHPV-redis $PHPV-snmp $PHPV-soap \
 $PHPV-sqlite3 $PHPV-sybase $PHPV-tidy $PHPV-xdebug $PHPV-xml \
 $PHPV-xsl $PHPV-zip \
-php-memcached php-redis php-igbinary php-msgpack php-apcu
+php-memcached php-redis php-igbinary php-msgpack php-apcu \
+$PHPV-http php-http php-raphf)
 
-aptold source -my php-http php-raphf
+for apkg in "${pkgs[@]}"; do 
+	printf "\n\n --- $apkg \n"
+	aptold source $apkg -my \
+		2>&1 | grep -iv "git\|please"
+done
 
 #--- sync to src
 #-------------------------------------------
