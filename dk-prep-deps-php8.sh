@@ -127,7 +127,8 @@ cat $FSRC2 | grep "$PHPV" >> $FSRC1
 
 chown_apt
 for apkg in $(cat $FSRC1 | sort -u | sort); do
-	aptold source -y --ignore-missing $apkg || echo "failed for $apkg"
+	printf "\n\n --- apt source: ${yel}$apkg ${end} \n"
+	aptold source -my $apkg
 done
 
 

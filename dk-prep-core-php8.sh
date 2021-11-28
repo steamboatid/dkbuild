@@ -191,7 +191,7 @@ $PHPV-http php-http php-raphf)
 
 for apkg in "${pkgs[@]}"; do
 	printf "\n\n --- apt source: ${yel}$apkg ${end} \n"
-	aptold source $apkg -my
+	aptold source -my $apkg
 done
 
 #--- sync to src
