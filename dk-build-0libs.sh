@@ -404,7 +404,7 @@ get_update_new_github(){
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 		printf "\n---new clone to: $DST \n---from: https://github.com/${URL} $OPS $DST "
 		printf "\n---# git clone https://github.com/${URL} $OPS $DST ---\n"
-		git clone "$OPS" -- "https://github.com/${URL}" "$DST"
+		git clone "https://github.com/${URL}" $OPS "$DST"
 	else
 		FURL="https://github.com/${URL}"
 		update_existing_git "$DST" "$URL" "$FURL" "$BRA"
