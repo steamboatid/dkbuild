@@ -84,8 +84,8 @@ exit 0;
 # Compiling all packages
 #-------------------------------------------
 cd /root/src/$PHPV
-find /root/src/$PHPV -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" |
-while read adir; do
+
+for adir in $(find /root/src/$PHPV -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip"); do
 	cd $adir
 	pwd
 

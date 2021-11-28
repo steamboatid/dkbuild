@@ -226,3 +226,6 @@ install_update_npm
 install_composer
 
 npm install -g grunt-cli
+
+printf "\n\n\n"
+exit 0;

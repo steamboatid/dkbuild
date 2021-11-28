@@ -511,7 +511,7 @@ purge_pending_installs(){
 
 	# install it all
 	cat /tmp/pendings | tr "\n" " "| xargs apt purge -fy
-	cat /tmp/pendings | while read aline; do apt purge -fy $aline; done
+	for apkg in $(cat /tmp/pendings); do apt purge -fy $apkg; done
 }
 
 # pkgs = array

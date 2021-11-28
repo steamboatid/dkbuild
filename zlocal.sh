@@ -5,8 +5,7 @@ source /tb2/build/dk-build-0libs.sh
 
 printf "\n GIT repos behinds: \n"
 
-find /root/github/ -name ".git" | grep -v "_baks\|dkbuild" |
-while read adir; do
+for adir in $(find /root/github/ -name ".git" | grep -v "_baks\|dkbuild"); do
 	cd $adir/..
 	BEHIND=$(git rev-list HEAD..origin --count 2>&1 || 1)
 	BNAME=$(basename $PWD)

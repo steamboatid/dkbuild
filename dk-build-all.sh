@@ -101,8 +101,7 @@ rm -rf /tb2/build/$RELNAME-all/*deb
 #--- COPY to $RELNAME-all
 printf "\n\n\n-- copying files to /tb2/build/$RELNAME-all/ \n\n"
 
-find /root/src -type f -name "*deb" | sort -u | sort |
-while read afile; do
+for afile in $(find /root/src -type f -name "*deb" | sort -u | sort); do
 	printf "\n $afile "
 	cp $afile /tb2/build/$RELNAME-all/ -f
 done
@@ -133,8 +132,8 @@ printf "\n\n\n"
 #--- save all git for future used
 >/tmp/all.git
 >/root/all.git
-find /root/src -type f -name "*dsc" | sort -u | sort |
-while read afile; do
+
+for afile in $(find /root/src -type f -name "*dsc" | sort -u | sort); do
 	printf "\n $afile "
 	cat $afile | grep -i vcs | awk '{print $NF}' | sort -u >>/tmp/all.git
 done
