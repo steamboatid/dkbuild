@@ -166,7 +166,7 @@ rm -rf /root/src/$PHPV/*deb
 #--- fetch default source package
 #-------------------------------------------
 cd /root/org.src/$PHPV
-aptold source -y php-defaults \
+aptold source -my php-defaults \
 $PHPV $PHPV-apcu $PHPV-ast $PHPV-bcmath $PHPV-bz2 $PHPV-cli $PHPV-common \
 $PHPV-curl $PHPV-dba $PHPV-dev $PHPV-enchant $PHPV-fpm $PHPV-gd $PHPV-gmp \
 $PHPV-http $PHPV-igbinary $PHPV-imagick $PHPV-imap $PHPV-interbase \
