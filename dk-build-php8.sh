@@ -61,6 +61,7 @@ rm -rf /root/src/php8 /root/org.src/php8
 mkdir -p /tb2/build/$RELNAME-$PHPV
 rm -rf /tb2/build/$RELNAME-$PHPV/*deb
 mkdir -p /root/src/$PHPV
+exit 0;
 
 
 # get source
@@ -73,6 +74,7 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 # delete old debs
 #-------------------------------------------
 rm -rf /root/src/$PHPV/*deb
+exit 0;
 
 
 # BUGGY libzip
