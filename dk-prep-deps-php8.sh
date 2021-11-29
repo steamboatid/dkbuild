@@ -161,6 +161,7 @@ while :; do
 	if [[ $aloop -gt 100 ]]; then break; fi
 
 	cat $FNOW3 | xargs apt build-dep -my 2>&1 >$ftmp
+	cat $ftmp; exit 0;
 
 	anum=$(cat $ftmp | wc -l)
 	if [[ $anum -lt 1 ]]; then
