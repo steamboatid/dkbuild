@@ -173,6 +173,7 @@ while :; do
 
 	fixes=0
 	for bline in $(cat $FNOW3 | xargs apt build-dep -fy 2>&1 | grep -i "unable"); do
+		printf " \n $bline"
 		fixes=$(( $fixes + 1 ))
 		apkg=$(printf "$bline" | rev | cut -d" " -f1 | rev)
 		sed -i -r "/${apkg}/d" $FNOW3
