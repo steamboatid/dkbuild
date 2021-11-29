@@ -174,23 +174,26 @@ while :; do
 
 	cat $FNOW3 | xargs apt build-dep -fy 2>&1 | grep -i "unable" > $ftmp
 	echo "" >> $ftmp
-	cat $ftmp | wc -l
+	# cat $ftmp | wc -l
 
 	fixes=0
-	# for bline in ; do
-	# 	printf " \n $bline"
-	# 	fixes=$(( $fixes + 1 ))
-	# 	apkg=$(printf "$bline" | rev | cut -d" " -f1 | rev)
-	# 	sed -i -r "/${apkg}/d" $FNOW3
-	# 	line_num1=$(cat $FNOW3 | wc -l)
-	# 	printf "\n --- aloop=$aloop --- prev=$line_num0 --- now=$line_num1 --- $apkg --- $bline "
-	# done
+	for bline in $(cat $ftmp); do
+		if [[ -n $bline ]]; then break; fi
+		
+		printf " \n $bline"
+		fixes=$(( $fixes + 1 ))
+		apkg=$(printf "$bline" | rev | cut -d" " -f1 | rev)
+		sed -i -r "/${apkg}/d" $FNOW3
+		line_num1=$(cat $FNOW3 | wc -l)
+		printf "\n --- aloop=$aloop --- prev=$line_num0 --- now=$line_num1 --- $apkg --- $bline "
+	done
 
 	if [[ $fixes -lt 1 ]]; then
 		break
 	fi
 done
 
+rm -rf $ftmp
 line_num1=$(cat $FNOW3 | wc -l)
 printf "\n\n --- prev=$line_num0 --- now=$line_num1 \n\n"; exit 0;
 
