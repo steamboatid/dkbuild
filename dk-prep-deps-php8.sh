@@ -153,6 +153,7 @@ cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
 
 cat $FNOW2 | sort -u | sort > $FNOW3
 line_num0=$(cat $FNOW3 | wc -l)
+line_num1=$line_num0
 
 ftmp=$(mktemp)
 aloop=0
@@ -176,22 +177,29 @@ while :; do
 	echo "" >> $ftmp
 	cat $ftmp | wc -l
 
-	fixes=0
 	cat $ftmp | while read bline; do
 		printf "\n --- $bline"
 		if [[ ! -n $bline ]]; then break; fi
 
-		fixes=$(( $fixes + 1 ))
 		apkg=$(printf "$bline" | rev | cut -d" " -f1 | rev)
 		sed -i -r "/${apkg}/d" $FNOW3
 		line_num1=$(cat $FNOW3 | wc -l)
-		printf "\n --- aloop=$aloop --- prev=$line_num0 --- now=$line_num1 -- fixes=$fixes --- $apkg --- $bline "
+		printf "\n --- aloop=$aloop --- prev=$line_num0 --- now=$line_num1 --- $apkg --- $bline "
 	done
 
-	if [[ $fixes -lt 1 ]]; then
-		printf "\n --- aloop=$aloop -- fixes=$fixes \n"
+	line_num2=$(cat $FNOW3 | wc -l)
+	if [[ $line_num2 -eq $line_num1 ]]; then
+		printf "\n --- prev=$line_num0 --- now=$line_num1 "
 		break
 	fi
+
+	line_num1=$line_num2
+
+
+	# if [[ $fixes -lt 1 ]]; then
+	# 	printf "\n --- aloop=$aloop -- fixes=$fixes \n"
+	# 	break
+	# fi
 done
 
 rm -rf $ftmp
