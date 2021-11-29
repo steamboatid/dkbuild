@@ -154,6 +154,7 @@ cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
 cat $FNOW2 | sort -u | sort > $FNOW3
 line_num0=$(cat $FNOW3 | wc -l)
 
+ftmp=$(mktemp)
 aloop=0
 while :; do
 	aloop=$(( $aloop + 1 ))
@@ -171,8 +172,8 @@ while :; do
 	# 	break
 	# fi
 
-	cat $FNOW3 | xargs apt build-dep -fy 2>&1 | grep -i "unable" > /tmp/aaa
-	cat /tmp/aaa
+	cat $FNOW3 | xargs apt build-dep -fy 2>&1 | grep -i "unable" > $ftmp
+	cat $ftmp
 
 	fixes=0
 	# for bline in ; do
