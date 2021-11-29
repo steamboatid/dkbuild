@@ -57,7 +57,10 @@ printf "\n\n --- php version: ${yel}$PHPV${end} [$PHPVNUM] \n\n"
 #-------------------------------------------
 rm -rf /tmp/$PHPV
 mkdir -p /root/src/$PHPV /root/org.src/$PHPV /tmp/$PHPV /tb2/tmp
+
 cd /root/org.src/$PHPV
+chown -Rf _apt:root /root/org.src/$PHPV
+chown_apt
 
 
 FPKGS="/tmp/$PHPV.pkgs"
@@ -91,17 +94,18 @@ cat $FDEPF | tr "\n" " " | xargs aptold install -my \
 	2>&1 | grep -iv "nable to locate\|not installed\|newest\|picking\|reading\|building\|stable CLI"
 
 
-FDST="/tb2/tmp/$PHPV-pkg-org.txt"
 FDST1="/tb2/tmp/$PHPV-pkg-org-1.txt"
 FDST2="/tb2/tmp/$PHPV-pkg-org-2.txt"
+FDST3="/tb2/tmp/$PHPV-pkg-org-3.txt"
 
 # URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
 # get_package_file $URL $FDST
 cp $FPKGS $FDST
 
-FNOW="/tb2/tmp/$PHPV-pkg-now.txt"
 FNOW1="/tb2/tmp/$PHPV-pkg-now-1.txt"
 FNOW2="/tb2/tmp/$PHPV-pkg-now-2.txt"
+FNOW3="/tb2/tmp/$PHPV-pkg-now-3.txt"
+
 FSRC1="/tb2/tmp/$PHPV-pkg-src-1.txt"
 FSRC2="/tb2/tmp/$PHPV-pkg-src-2.txt"
 
@@ -111,31 +115,36 @@ cat $FDST | grep "Package:\|Source:" | \
 	sed "s/Package\: //g" | sed "s/Source\: //g" | \
 	grep -v "\-embed\|\-dbg\|dbgsym\|php5\|php7\|recode\|phalcon\|apache" | \
 	grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | \
-	sort -u | sort > $FNOW
+	sort -u | sort > $FNOW1
 
+tails=(gmagick solr swoole yac xmlrpc)
+for atail in "${tails[@]}"; do
+	apt-cache search "\-${atail}" | grep "php\-\|${PHPV}" | cut -d" " -f1
+done
+exit 0;
 
-cd /root/org.src/$PHPV
-chown -Rf _apt:root /root/org.src/$PHPV
-chown_apt
+echo "php-gmagick" >> $FNOW1
+echo "php-solr" >> $FNOW1
+echo "php-swoole" >> $FNOW1
+echo "php-yac" >> $FNOW1
+echo "php-xmlrpc" >> $FNOW1
 
-echo "php-gmagick" >> $FNOW
-echo "php-solr" >> $FNOW
-echo "php-swoole" >> $FNOW
-echo "php-yac" >> $FNOW
-echo "php-xmlrpc" >> $FNOW
-
-echo "php-phalcon4" >> $FNOW
-echo "libicu-dev" >> $FNOW
+echo "php-phalcon4" >> $FNOW1
+echo "libicu-dev" >> $FNOW1
 
 
 apt-cache search $PHPV | awk '{print $1}' | grep "$PHPV" | \
-	grep -v "dbgsym\|dbg\|apache" >> $FNOW
+	grep -v "dbgsym\|dbg\|apache" >> $FNOW1
 apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
-	grep -v "dbgsym\|dbg\|apache" >> $FNOW
+	grep -v "dbgsym\|dbg\|apache" >> $FNOW1
 
-cat $FNOW; exit 0;
+cat $FNOW1 | grep -i "$PHPV\|php\-" | \
+	sort -u | sort | \
+	sed 's/(\([^\)]*\))//g' >> $FNOW2
 
-cat $FNOW | grep -i "$PHPV\|php\-" | \
+cat $FNOW2; exit 0;
+
+cat $FNOW1 | grep -i "$PHPV\|php\-" | \
 	sort -u | sort | \
 	sed 's/(\([^\)]*\))//g' | \
 	xargs aptold build-dep -my $apkg  2>&1 | tee $FSRC1
