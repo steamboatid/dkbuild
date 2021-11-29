@@ -89,6 +89,28 @@ cd /root/src/$PHPV
 # exit 0;
 
 for adir in $(find /root/src/$PHPV -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort); do
+	#--- check average load
+	LOOPLOAD=0
+	LASTLOAD=0
+	while :; do
+		AVGL=$(cat /proc/loadavg | cut -d" " -f1 | cut -d"." -f1)
+		AVGL=$(( $AVGL + 1))
+		CORE=$(( `nproc` ))
+		if [[ $AVGL -lt $CORE ]]; then break; fi
+
+		if [[ $AVGL -ne $LASTLOAD ]]; then
+			printf " $AVGL"
+		else
+			printf "."
+		fi
+		LASTLOAD=$AVGL
+		LOOPLOAD=$(( $LOOPLOAD + 1 ))
+		sleep 3
+	done
+	[[ $LOOPLOAD -gt 2 ]] && printf "\n\n"
+
+
+	#--- starting building
 	cd $adir
 	pwd
 
@@ -150,26 +172,6 @@ override_dh_shlibdeps:
 		pwd
 		printf "\n\n\n"
 	fi
-
-	LOOPLOAD=0
-	LASTLOAD=0
-	while :; do
-		AVGL=$(cat /proc/loadavg | cut -d" " -f1 | cut -d"." -f1)
-		AVGL=$(( $AVGL + 1))
-		CORE=$(( `nproc` ))
-		if [[ $AVGL -lt $CORE ]]; then break; fi
-
-		if [[ $AVGL -ne $LASTLOAD ]]; then
-			printf " $AVGL"
-		else
-			printf "."
-		fi
-		LASTLOAD=$AVGL
-		LOOPLOAD=$(( $LOOPLOAD + 1 ))
-		sleep 3
-	done
-	[[ $LOOPLOAD -gt 2 ]] && printf "\n\n"
-
 
 	NUMINS=$(ps -e -o command | grep -v grep | grep "dk-build-full" | awk '{print $NF}' | wc -l)
 	if [[ $NUMINS -lt 5 ]]; then
