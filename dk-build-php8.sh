@@ -151,15 +151,17 @@ override_dh_shlibdeps:
 		printf "\n\n\n"
 	fi
 
-	printf "\n\n"
+	LOOPLOAD=0
 	while :; do
 		AVGL=$(cat /proc/loadavg | cut -d" " -f1 | cut -d"." -f1)
 		AVGL=$(( $AVGL + 1))
 		CORE=$(( `nproc` ))
 		if [[ $AVGL -lt $CORE ]]; then break; fi
 		printf "$AVGL>$CORE "
+		LOOPLOAD=$(( $LOOPLOAD + 1 ))
 	done
-	printf "\n\n"
+	[[ $LOOPLOAD -gt 2 ]] && printf "\n\n"
+
 
 	NUMINS=$(ps -e -o command | grep -v grep | grep "dk-build-full" | awk '{print $NF}' | wc -l)
 	if [[ $NUMINS -lt 5 ]]; then
