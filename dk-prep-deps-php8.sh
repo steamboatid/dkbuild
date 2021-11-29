@@ -146,12 +146,14 @@ apt-cache search "php" | awk '{print $1}' | grep "${PHPGREP}" | \
 apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 	grep -v "dbgsym\|dbg\|apache" >> $FNOW1
 
+cat $FNOW1; exit 0;
+
 cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
 	sort -u | sort | \
 	sed 's/(\([^\)]*\))//g' >> $FNOW2
 
 cat $FNOW2 | sort -u | sort | \
-	xargs apt build-dep -my 2>&1 | tee $FSRC1
+	xargs aptold build-dep -my 2>&1 | tee $FSRC1
 
 cat $FSRC1; exit 0;
 
