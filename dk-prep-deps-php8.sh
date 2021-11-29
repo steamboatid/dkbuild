@@ -154,21 +154,7 @@ dsc_num=$(find /root/org.src/$PHPV -maxdepth 1 -type f -iname "*.dsc" | wc -l)
 dir_num=$(find /root/org.src/$PHPV -maxdepth 1 -type d | wc -l)
 printf "\n\n\n --- DSC=${blue}$dsc_num ${end} --- DIR=${blue}$dir_num ${end} \n\n"
 
-exit 0;
 
-chown_apt
-FTMP3=$(mktemp)
->$FTMP3
-for apkg in $(cat $FSRC1 | sort -u | sort); do
-	if [[ $(apt-cache search $apkg | wc -l) -gt 0 ]]; then
-		echo $apkg >> $FTMP3
-	fi
-done
-
-printf "\n\n --- source: ${yel} $PHPV ${end} \n"
-cat $FTMP3 | tr "\n" " " | xargs apt source -my
-
-rm -rf $FTMP3 $FTMP2 $FTMP1
 
 #--- wait
 #-------------------------------------------
