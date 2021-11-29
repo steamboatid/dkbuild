@@ -123,6 +123,7 @@ FNOW3="/tb2/tmp/php-pkg-now-3.txt"
 
 FSRC1="/tb2/tmp/php-pkg-src-1.txt"
 FSRC2="/tb2/tmp/php-pkg-src-2.txt"
+FSRC3="/tb2/tmp/php-pkg-src-3.txt"
 
 # search package from "Package:"
 #-------------------------------------------
@@ -171,15 +172,15 @@ cat $FNOW2 | sort -u | sort | \
 cat $FSRC1; exit 0;
 
 # source packages
-cat $FSRC1 | grep -iv "unable" | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
+cat $FSRC1 | grep "Picking" | grep -iv "unable" | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
 
->$FSRC1
-cat $FSRC2 | grep "php\-" >> $FSRC1
-cat $FSRC2 | grep "${PHPGREP}" >> $FSRC1
-cat $FSRC1; exit 0;
+>$FSRC3
+cat $FSRC2 | grep "php\-" >> $FSRC3
+cat $FSRC2 | grep "${PHPGREP}" >> $FSRC3
+cat $FSRC3; exit 0;
 
-cat $FSRC1 | sort -u | sort | tr "\n" " " | xargs apt source -my
-cat $FSRC1 | sort -u | sort
+cat $FSRC3 | sort -u | sort | tr "\n" " " | xargs apt source -my
+cat $FSRC3 | sort -u | sort
 
 
 fixing_folders_by_dsc_files
