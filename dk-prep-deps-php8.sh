@@ -51,12 +51,13 @@ fixing_folders_by_dsc_files(){
 		ahead=$(printf "$bname" | cut -d"_" -f1)
 		if [[ $ahead = *"xmlrpc"* ]]; then continue; fi
 
-		anum=$(find /root/org.src/php -maxdepth 1 -type d -iname "${ahead}*" | wc -l)
+		adir=$(printf "$ahead" | sed -r 's/\_/\-/g')
+		anum=$(find /root/org.src/php -maxdepth 1 -type d -iname "${adir}*" | wc -l)
 		if [[ $anum -lt 1 ]]; then
-			printf "\n\n --- ${read}$ahead ${end} missing \n"
+			printf "\n\n --- Dir ${read}$adir ${end} missing \n"
 
-			aptold build-dep -my $ahead
-			apt source -my $ahead
+			aptold build-dep -my $adir
+			apt source -my $adir
 		fi
 	done
 }
