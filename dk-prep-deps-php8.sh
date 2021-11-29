@@ -117,19 +117,11 @@ cat $FDST1 | grep "Package:\|Source:" | \
 	grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | \
 	sort -u | sort > $FNOW1
 
-tails=(gmagick solr swoole yac xmlrpc)
+tails=(gmagick solr swoole yac xmlrpc phalcon4)
 for atail in "${tails[@]}"; do
-	apt-cache search "\-${atail}" | grep "php\-\|${PHPV}" | cut -d" " -f1
+	apt-cache search "\-${atail}" | grep "php\-\|${PHPV}" | cut -d" " -f1  >> $FNOW1
 done
-exit 0;
 
-echo "php-gmagick" >> $FNOW1
-echo "php-solr" >> $FNOW1
-echo "php-swoole" >> $FNOW1
-echo "php-yac" >> $FNOW1
-echo "php-xmlrpc" >> $FNOW1
-
-echo "php-phalcon4" >> $FNOW1
 echo "libicu-dev" >> $FNOW1
 
 
