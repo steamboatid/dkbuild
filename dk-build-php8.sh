@@ -152,12 +152,19 @@ override_dh_shlibdeps:
 	fi
 
 	LOOPLOAD=0
+	LASTLOAD=0
 	while :; do
 		AVGL=$(cat /proc/loadavg | cut -d" " -f1 | cut -d"." -f1)
 		AVGL=$(( $AVGL + 1))
 		CORE=$(( `nproc` ))
 		if [[ $AVGL -lt $CORE ]]; then break; fi
-		printf "$AVGL>$CORE "
+
+		if [[ $AVGL -ne $LASTLOAD ]]; then
+			printf " $AVGL"
+		else
+			printf "."
+		fi
+		LASTLOAD=$AVGL
 		LOOPLOAD=$(( $LOOPLOAD + 1 ))
 	done
 	[[ $LOOPLOAD -gt 2 ]] && printf "\n\n"
