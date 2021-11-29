@@ -150,7 +150,27 @@ cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
 	sort -u | sort | \
 	sed 's/(\([^\)]*\))//g' > $FNOW2
 
-cat $FNOW2 | wc -l; exit 0;
+
+cat $FNOW2 | sort -u | sort > $FNOW3
+line_num0=$(cat $FNOW3 | wc -l)
+aloop=0
+while :; do
+	aloop=$(( $aloop + 1))
+	if [[ $aloop -gt 100 ]]; then break; fi
+
+	anum=$(cat $FNOW3 | xargs apt build-dep -my 2>&1 | grep -i "unable" | wc -l)
+	if [[ $anum -lt 1 ]]; then
+		cp $FNOW3 $FNOW2
+		break
+	fi
+
+	for apkg in $(cat $FNOW3 | xargs apt build-dep -my 2>&1 | grep -i "unable"); do
+		sed -i "/${apkg}/d" $FNOW3
+	done
+done
+
+line_num1=$(cat $FNOW3 | wc -l)
+printf "\n\n --- prev=$line_num0 --- now=$line_num1 \n\n"; exit 0;
 
 cat $FNOW2 | sort -u | sort | \
 	xargs aptold build-dep -my 2>&1 | tee $FSRC1
