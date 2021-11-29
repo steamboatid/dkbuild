@@ -178,9 +178,9 @@ while :; do
 
 	fixes=0
 	for bline in $(cat $ftmp); do
+		printf "\n --- $bline"
 		if [[ -n $bline ]]; then break; fi
 
-		printf " \n $bline"
 		fixes=$(( $fixes + 1 ))
 		apkg=$(printf "$bline" | rev | cut -d" " -f1 | rev)
 		sed -i -r "/${apkg}/d" $FNOW3
