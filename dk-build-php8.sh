@@ -23,12 +23,16 @@ source /tb2/build/dk-build-0libs.sh
 
 
 doback(){
-	/usr/bin/nohup /bin/bash /tb2/build/dk-build-full.sh 2>&1 >/dev/null 2>&1 &
+	adir="$1"
+	cd "$adir"
+	/usr/bin/nohup /bin/bash /tb2/build/dk-build-full.sh -d "$adir" 2>&1 >/dev/null 2>&1 &
 	printf "\n\n\n"
 	sleep 1
 }
 dofore(){
-	/bin/bash /tb2/build/dk-build-full.sh
+	adir="$1"
+	cd "$adir"
+	/bin/bash /tb2/build/dk-build-full.sh -d "$adir"
 	printf "\n\n\n"
 	sleep 1
 }
@@ -38,6 +42,11 @@ dofore(){
 # print php version
 #-------------------------------------------
 printf "\n\n --- php version: ${yel}$PHPV${end} [$PHPVNUM] \n\n"
+
+
+# wait until average load is OK
+#-------------------------------------------
+wait_by_average_load
 
 
 # special version
@@ -89,26 +98,8 @@ cd /root/src/$PHPV
 # exit 0;
 
 for adir in $(find /root/src/$PHPV -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort); do
-	#--- check average load
-	LOOPLOAD=0
-	LASTLOAD=0
-	while :; do
-		AVGL=$(cat /proc/loadavg | cut -d" " -f1 | cut -d"." -f1)
-		AVGL=$(( $AVGL + 1))
-		CORE=$(( `nproc` ))
-		if [[ $AVGL -lt $CORE ]]; then break; fi
-
-		if [[ $AVGL -ne $LASTLOAD ]]; then
-			printf " $AVGL"
-		else
-			printf "."
-		fi
-		LASTLOAD=$AVGL
-		LOOPLOAD=$(( $LOOPLOAD + 1 ))
-		sleep 3
-	done
-	[[ $LOOPLOAD -gt 2 ]] && printf "\n\n"
-
+	#--- wait until average load is OK
+	wait_by_average_load
 
 	#--- starting building
 	cd $adir
@@ -173,18 +164,36 @@ override_dh_shlibdeps:
 		printf "\n\n\n"
 	fi
 
-	NUMINS=$(ps -e -o command | grep -v grep | grep "dk-build-full" | awk '{print $NF}' | wc -l)
-	if [[ $NUMINS -lt 5 ]]; then
-		doback
-	else
-		if [[ $adir == *"phalcon"* ]]; then doback; else dofore; fi
-	fi
+	# NUMINS=$(ps -e -o command | grep -v grep | grep "dk-build-full" | awk '{print $NF}' | wc -l)
+	# if [[ $NUMINS -lt 5 ]]; then
+	# 	doback "$adir"
+	# else
+	# 	if [[ $adir == *"phalcon"* ]]; then doback "$adir"; else dofore "$adir"; fi
+	# fi
+
+	# always do background, avg load already checked in the beginning loop
+	doback "$adir"
 done
 
 
 # wait all background jobs
 #-------------------------------------------
+printf "\n\n --- wait all background build jobs: "
+numo=0
+while :; do
+	numa=$(ps auxw | grep -v grep | grep "dk-build-full.sh" | wc -l)
+	if [[ $numa -ne $numo ]]; then
+		printf " $numa"
+		numo=$numa
+	else
+		printf "."
+	fi
+	sleep 3
+done
+
 wait
+sleep 1
+printf "\n\n"
 
 
 

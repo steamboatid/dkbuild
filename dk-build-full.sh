@@ -18,6 +18,25 @@ source /tb2/build/dk-build-0libs.sh
 
 
 
+# read command parameter
+#-------------------------------------------
+# while getopts d:y:a: flag
+while getopts d: flag
+do
+	case "${flag}" in
+		d) dir=${OPTARG};;
+	esac
+done
+
+if [ -z "${dir}" ]; then
+  printf "\n --- Usage: $0 ${red}-d <debian_build_directory>${end} "
+  dir=$PWD
+  printf "\n --- using current directory as build dir: $dir \n\n"
+else
+  printf "\n --- using build dir: $dir \n\n"
+fi
+
+
 # reset default build flags
 #-------------------------------------------
 reset_build_flags

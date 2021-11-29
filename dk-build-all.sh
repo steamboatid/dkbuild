@@ -78,6 +78,19 @@ sleep 1
 
 # wait all background jobs
 #-------------------------------------------
+printf "\n\n --- wait all background build jobs: "
+numo=0
+while :; do
+	numa=$(ps auxw | grep -v grep | grep "dk-build-full.sh" | wc -l)
+	if [[ $numa -ne $numo ]]; then
+		printf " $numa"
+		numo=$numa
+	else
+		printf "."
+	fi
+	sleep 3
+done
+
 wait
 sleep 1
 

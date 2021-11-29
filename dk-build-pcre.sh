@@ -19,6 +19,11 @@ source /tb2/build/dk-build-0libs.sh
 
 
 
+# wait until average load is OK
+#-------------------------------------------
+wait_by_average_load
+
+
 # delete old debs
 #-------------------------------------------
 mkdir -p /tb2/build/$RELNAME-pcre

@@ -18,6 +18,10 @@ source /tb2/build/dk-build-0libs.sh
 
 
 
+# wait until average load is OK
+#-------------------------------------------
+wait_by_average_load
+
 
 # special version
 #-------------------------------------------

@@ -615,6 +615,30 @@ db4_install(){
 	fi
 }
 
+
+wait_by_average_load(){
+	printf "\n --- average load checking: "
+	LOOPLOAD=0
+	LASTLOAD=0
+	while :; do
+		AVGL=$(cat /proc/loadavg | cut -d" " -f1 | cut -d"." -f1)
+		AVGL=$(( $AVGL + 1))
+		CORE=$(( `nproc` ))
+		if [[ $AVGL -lt $CORE ]]; then break; fi
+
+		if [[ $AVGL -ne $LASTLOAD ]]; then
+			printf " $AVGL"
+		else
+			printf "."
+		fi
+		LASTLOAD=$AVGL
+		LOOPLOAD=$(( $LOOPLOAD + 1 ))
+		sleep 3
+	done
+	[[ $LOOPLOAD -gt 2 ]] && printf "\n last load: $AVGL \n\n"
+}
+
+
 init_dkbuild(){
 	# global config
 	global_git_config  &

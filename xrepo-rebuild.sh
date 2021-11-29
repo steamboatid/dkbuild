@@ -1,5 +1,21 @@
 #!/bin/bash
 
+
+export DEBIAN_FRONTEND="noninteractive"
+
+export DEBFULLNAME="Dwi Kristianto"
+export DEBEMAIL="steamboatid@gmail.com"
+export EMAIL="steamboatid@gmail.com"
+
+export RELNAME=$(lsb_release -sc)
+export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
+
+export TODAY=$(date +%Y%m%d-%H%M)
+export TODATE=$(date +%Y%m%d)
+export PKGDATE=$(date -Ru)
+export VALIDDATE=$(date -d'+3 years' -Ru)
+
+
 # Directory structure
 #
 # --phideb
@@ -38,6 +54,7 @@ Architectures: amd64
 Components: main
 Description: phideb custom packages for ${RELNAME}
 Date: $(date -Ru)
+Valid-Until: $(date -d'+3 years' -Ru)
 EOF
 	do_hash "MD5Sum" "md5sum"
 	do_hash "SHA1" "sha1sum"
@@ -82,10 +99,11 @@ cat <<\EOT >Release
 Archive: stable
 Origin: phideb
 Label: phideb
-Version: 0.1
+Version: 0.2
 Component: main
 Architecture: amd64
 EOT
+
 
 cd /tb2/phideb/dists/bullseye/main/binary-amd64
 gzip -kf Packages
@@ -95,7 +113,7 @@ cat <<\EOT >Release
 Archive: stable
 Origin: phideb
 Label: phideb
-Version: 0.1
+Version: 0.2
 Component: main
 Architecture: amd64
 EOT
