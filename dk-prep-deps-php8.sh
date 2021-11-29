@@ -158,9 +158,9 @@ aloop=0
 while :; do
 	printf " aloop=$aloop "
 	aloop=$(( $aloop + 1 ))
-	# if [[ $aloop -gt 100 ]]; then break; fi
+	if [[ $aloop -gt 100 ]]; then break; fi
 
-	# rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1)
+	rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1)
 	# printf "$rets" | grep -i "unable"
 	# printf "$rets" | grep -i "unable" | wc -l
 
