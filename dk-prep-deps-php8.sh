@@ -159,6 +159,7 @@ ftmp=$(mktemp)
 aloop=0
 while :; do
 	aloop=$(( $aloop + 1 ))
+	printf " $aloop"
 	if [[ $aloop -gt 100 ]]; then break; fi
 
 	# rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1)
