@@ -154,22 +154,20 @@ cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
 cat $FNOW2 | sort -u | sort > $FNOW3
 line_num0=$(cat $FNOW3 | wc -l)
 
-ftmp=$(mktemp)
 aloop=0
 while :; do
 	aloop=$(( $aloop + 1))
 	if [[ $aloop -gt 100 ]]; then break; fi
 
-	rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1)
-	printf "$rets"; printf "$rets" | wc -l; exit 0;
+	rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1 | grep -i "unable")
 
-	anum=$(cat $ftmp | wc -l)
+	anum=$(printf "$rets" | wc -l)
 	if [[ $anum -lt 1 ]]; then
 		cp $FNOW3 $FNOW2
 		break
 	fi
 
-	for aline in $(cat $ftmp); do
+	for aline in $(printf "$rets"); do
 		apkg=$(printf "$aline" | rev | cut -d" " -f1 | rev)
 		sed -i "/${apkg}/d" $FNOW3
 		line_num1=$(cat $FNOW3 | wc -l)
