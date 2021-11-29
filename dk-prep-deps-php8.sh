@@ -154,14 +154,14 @@ cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
 cat $FNOW2 | sort -u | sort > $FNOW3
 
 >$FNOW2
+printf "\n\n missing packages: \n"
 for apkg in $(cat $FNOW3); do
 	if [[ $(apt-cache search "$apkg" | wc -l) -gt 0 ]]; then
 		echo "${apkg}" >> $FNOW2
 	else
-		printf "\n $apkg missing "
+		printf " --- $apkg \n"
 	fi
 done
-# cat $FNOW2; 
 exit 0;
 
 line_num0=$(cat $FNOW3 | wc -l)
