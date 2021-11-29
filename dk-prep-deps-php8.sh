@@ -117,10 +117,10 @@ cat $FDST | grep "Package:\|Source:" | \
 	grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | \
 	sort -u | sort > $FNOW1
 
-tails=(gmagick solr swoole yac xmlrpc)
-for atail in "${tails[@]}"; do
-	apt-cache search "\-${atail}" | grep "php\-\|${PHPV}" | cut -d" " -f1
-done
+# tails=(gmagick solr swoole yac xmlrpc)
+# for atail in "${tails[@]}"; do
+# 	apt-cache search "\-${atail}" | grep "php\-\|${PHPV}" | cut -d" " -f1
+# done
 exit 0;
 
 echo "php-gmagick" >> $FNOW1
