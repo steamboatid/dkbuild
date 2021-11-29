@@ -189,7 +189,7 @@ while :; do
 
 	line_num2=$(cat $FNOW3 | wc -l)
 	printf "\n --- aloop=$aloop --- prev1=$line_num1 --- now2=$line_num2 "
-	if [[ $line_num2 -eq $line_num1 ]]; then
+	if [[ "$line_num2" -eq "$line_num1" ]]; then
 		break
 	fi
 
