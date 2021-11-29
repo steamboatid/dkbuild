@@ -153,6 +153,8 @@ cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
 
 cat $FNOW2 | sort -u | sort > $FNOW3
 
+
+#--- check by apt-cache search
 >$FNOW2
 printf "\n\n missing packages: \n"
 for apkg in $(cat $FNOW3); do
@@ -162,58 +164,6 @@ for apkg in $(cat $FNOW3); do
 		printf " --- $apkg \n"
 	fi
 done
-exit 0;
-
-line_num0=$(cat $FNOW3 | wc -l)
-line_num1=$line_num0
-
-ftmp=$(mktemp)
-aloop=0
-while :; do
-	aloop=$(( $aloop + 1 ))
-	printf " $aloop"
-	if [[ $aloop -gt 100 ]]; then break; fi
-
-	# rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1)
-	# printf "$rets" | grep -i "unable"
-	# printf "$rets" | grep -i "unable" | wc -l
-
-	# anum=$(printf "$rets" | wc -l)
-	# printf "\n --- $anum "; exit 0;
-
-	# if [[ $anum -lt 1 ]]; then
-	# 	cp $FNOW3 $FNOW2
-	# 	break
-	# fi
-
-	cat $FNOW3 | xargs apt build-dep -fy 2>&1 | grep -i "unable" > $ftmp
-	echo "" >> $ftmp
-	cat $ftmp | wc -l
-
-	cat $ftmp | while read bline; do
-		printf "\n --- $bline"
-		if [[ ! -n $bline ]]; then break; fi
-
-		apkg=$(printf "$bline" | rev | cut -d" " -f1 | rev)
-		sed -i -r "/${apkg}/d" $FNOW3
-		line_num2=$(cat $FNOW3 | wc -l)
-		printf "\n --- aloop=$aloop --- prev=$line_num0 --- now=$line_num2 --- $apkg --- $bline "
-	done
-
-	line_num2=$(cat $FNOW3 | wc -l)
-	printf "\n --- aloop=$aloop --- prev1=$line_num1 --- now2=$line_num2 "
-	if [[ $line_num2 -lt $line_num1 ]]; then
-		line_num1=$line_num2
-	else
-		break
-	fi
-
-	line_num1=$line_num2
-done
-
-rm -rf $ftmp
-line_num1=$(cat $FNOW3 | wc -l)
-printf "\n\n --- prev=$line_num0 --- now=$line_num1 \n\n"; exit 0;
 
 cat $FNOW2 | sort -u | sort | \
 	xargs aptold build-dep -my 2>&1 | tee $FSRC1
@@ -222,7 +172,6 @@ cat $FSRC1; exit 0;
 
 # source packages
 cat $FSRC1 | grep -iv "unable" | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
-
 cat $FSRC2; exit 0;
 
 >$FSRC1
