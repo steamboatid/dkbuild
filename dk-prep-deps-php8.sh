@@ -63,6 +63,17 @@ chown -Rf _apt:root /root/org.src/$PHPV
 chown_apt
 
 
+for afile in $(find /root/org.src/$PHPV -maxdepth 1 -type f -iname "*.dsc"); do
+	bname=$(basename $afile)
+	ahead=$(printf "$bname" | cut -d"_" -f1)
+	anum=$(find /root/org.src/$PHPV -maxdepth 1 -type d -iname "${ahead}*" | wc -l)
+	if [[ $anum -lt 1 ]]; then
+		printf " $ahead \n"
+	fi
+done
+exit 0;
+
+
 FPKGS="/tmp/$PHPV.pkgs"
 FDEPS="/tmp/$PHPV-deps.pkgs"
 FDEPF="/tmp/$PHPV-deps-final.pkgs"
@@ -152,12 +163,6 @@ dir_num=$(find /root/org.src/$PHPV -maxdepth 1 -type d | wc -l)
 printf "\n\n\n --- DSC=${blue}$dsc_num ${end} --- DIR=${blue}$dir_num ${end} \n\n"
 
 
-for afile in $(find /root/org.src/$PHPV -maxdepth 1 -type f -iname "*.dsc"); do
-	bname=$(basename $afile)
-	ahead=$(printf "$bname" | cut -d"-" -f1)
-	# anum=$(find /root/org.src/$PHPV -maxdepth 1 -type f)
-done
-exit 0;
 
 
 #--- wait
