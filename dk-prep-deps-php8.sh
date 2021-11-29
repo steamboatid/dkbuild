@@ -189,7 +189,7 @@ while :; do
 	done
 
 	if [[ $fixes -lt 1 ]]; then
-		printf "\n --- aloop=$aloop \n"
+		printf "\n --- aloop=$aloop -- fixes=$fixes \n"
 		break
 	fi
 done
