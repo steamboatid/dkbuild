@@ -13,9 +13,8 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
-export PHPV_DEFAULT="php8.0"
-export PHPV="${1:-$PHPV_DEFAULT}"
-export PHPVNUM=$(echo $PHPV | sed 's/php//g')
+export PHPVERS=("php8.0" "php8.1")
+export PHPGREP=("php8.0\|php8.1")
 
 
 source /tb2/build/dk-build-0libs.sh
@@ -39,11 +38,6 @@ dofore(){
 
 
 
-# print php version
-#-------------------------------------------
-printf "\n\n --- php version: ${yel}$PHPV${end} [$PHPVNUM] \n\n"
-
-
 # wait until average load is OK
 #-------------------------------------------
 wait_by_average_load
@@ -63,41 +57,43 @@ prepare_build_flags
 
 # remove old dirs
 #-------------------------------------------
-rm -rf /root/src/php8 /root/org.src/php8
+rm -rf /root/src/php8 /root/org.src/php8 \
+/root/src/php8.0 /root/org.src/php8.0 \
+/root/src/php8.1 /root/org.src/php8.1
 
 # prepare dirs
 #-------------------------------------------
-mkdir -p /tb2/build/$RELNAME-$PHPV
-rm -rf /tb2/build/$RELNAME-$PHPV/*deb
-mkdir -p /root/src/$PHPV
+mkdir -p /tb2/build/$RELNAME-php
+rm -rf /tb2/build/$RELNAME-php/*deb
+mkdir -p /root/src/php
 
 
 # get source
 #-------------------------------------------
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 --exclude ".git" \
-/root/org.src/$PHPV/ /root/src/$PHPV/
+/root/org.src/php/ /root/src/php/
 
 
 # delete old debs
 #-------------------------------------------
-rm -rf /root/src/$PHPV/*deb
+rm -rf /root/src/php/*deb
 
 
 # BUGGY libzip
 #-------------------------------------------
-# rm -rf /root/src/$PHPV/libzip*
+# rm -rf /root/src/php/libzip*
 
 
 # Compiling all packages
 #-------------------------------------------
-cd /root/src/$PHPV
+cd /root/src/php
 
-# pwd
-# find /root/src/$PHPV -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip"
-# exit 0;
+pwd
+find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip"
+exit 0;
 
-for adir in $(find /root/src/$PHPV -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort); do
+for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort); do
 
 	#--- ovveride version
 	VEROVR=""
@@ -204,17 +200,17 @@ printf "\n\n"
 
 # delete unneeded packages
 #-------------------------------------------
-cd /root/src/$PHPV
-find /root/src/$PHPV/ -type f -iname "*udeb" -delete
-find /root/src/$PHPV/ -type f -iname "*dbgsym*deb" -delete
+cd /root/src/php
+find /root/src/php/ -type f -iname "*udeb" -delete
+find /root/src/php/ -type f -iname "*dbgsym*deb" -delete
 
 
 # upload to /tb2/build/{$RELNAME}-php8.x
 #-------------------------------------------
 export RELNAME=$(lsb_release -sc)
-mkdir -p /tb2/build/$RELNAME-$PHPV
-cp *.deb /tb2/build/$RELNAME-$PHPV/ -Rfav
-ls -la /tb2/build/$RELNAME-$PHPV/
+mkdir -p /tb2/build/$RELNAME-php
+cp *.deb /tb2/build/$RELNAME-php/ -Rfav
+ls -la /tb2/build/$RELNAME-php/
 
 
 # rebuild the repo

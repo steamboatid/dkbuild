@@ -14,6 +14,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 export PHPVERS=("php8.0" "php8.1")
+export PHPGREP=("php8.0\|php8.1")
 
 
 source /tb2/build/dk-build-0libs.sh
