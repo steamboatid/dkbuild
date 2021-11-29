@@ -156,7 +156,7 @@ line_num0=$(cat $FNOW3 | wc -l)
 
 aloop=0
 while :; do
-	printf " $aloop "
+	printf " aloop=$aloop "
 	aloop=$(( $aloop + 1 ))
 	if [[ $aloop -gt 100 ]]; then break; fi
 
