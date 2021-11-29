@@ -162,6 +162,9 @@ while :; do
 	aloop=$(( $aloop + 1))
 	if [[ $aloop -gt 100 ]]; then break; fi
 
+	cat $FNOW3
+	printf "\n\n $FNOW3 \n\n"
+
 	rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1)
 	printf "$rets" | grep -i "unable"; printf "$rets" | grep -i "unable" | wc -l
 
