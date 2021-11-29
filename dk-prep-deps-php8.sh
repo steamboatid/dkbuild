@@ -88,19 +88,22 @@ URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
 # URL="http://repo.aisits.id/php/dists/${RELNAME}/main/binary-amd64/Packages"
 get_package_file $URL $FPKGS
 
+
+# grep -iv "php5\|php7\|yac\|gmagick\|xcache\|solr\|swoole\|recode\|phalcon\|apache2" | \
+
 cat $FPKGS | grep "Depends:" | sed -r "s/Depends: //g"| \
 sed "s/\,//g" | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | sed "s/\s/\n/g" | sed '/^$/d' | \
-grep -iv "\-embed\|\-dbg\|dbgsym\|libtiff-dev\|posix0" | \
+grep -iv "\-embed\|\-dbg\|dbgsym\|libtiff-dev\|posix0\|apache2" | \
 grep -iv "dictionary\|mysqlnd\|tmpfiles\|php-curl-all-dev\|\-ps\|\-json\|Pre-php-common\|yac" | \
-grep -iv "php5\|php7\|yac\|gmagick\|xcache\|solr\|swoole\|recode\|phalcon\|apache2" | \
+grep -iv "php5\|php7\|apache2" | \
 cut -d":" -f1 | sort -u | sort  >  $FDEPS
 
 apt-cache search php | grep "\-dev" | \
-grep -iv "php5\|php7\|yac\|gmagick\|xcache\|solr\|swoole\|recode\|phalcon\|apache2" | \
+grep -iv "php5\|php7\|apache2" | \
 cut -d" " -f1  >>  $FDEPS
 
 cat $FDEPS | sort -u | sort | sed -r 's/\|//g' | sed '/^$/d' | \
-grep -iv "php5\|php7\|yac\|gmagick\|xcache\|solr\|swoole\|recode\|phalcon\|apache2" | \
+grep -iv "php5\|php7\|apache2" | \
   >>  $FDEPF
 
 cat $FDEPF | tr "\n" " " | xargs aptold install -my \
@@ -159,6 +162,7 @@ cat $FSRC2 | grep "php\-" >> $FSRC1
 cat $FSRC2 | grep "${PHPGREP}" >> $FSRC1
 
 cat $FSRC1 | sort -u | sort | tr "\n" " " | xargs apt source -my
+cat $FSRC1 | sort -u | sort
 
 
 fixing_folders_by_dsc_files
