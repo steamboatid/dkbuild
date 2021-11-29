@@ -183,8 +183,8 @@ while :; do
 
 		apkg=$(printf "$bline" | rev | cut -d" " -f1 | rev)
 		sed -i -r "/${apkg}/d" $FNOW3
-		line_num1=$(cat $FNOW3 | wc -l)
-		printf "\n --- aloop=$aloop --- prev=$line_num0 --- now=$line_num1 --- $apkg --- $bline "
+		line_num2=$(cat $FNOW3 | wc -l)
+		printf "\n --- aloop=$aloop --- prev=$line_num1 --- now=$line_num2 --- $apkg --- $bline "
 	done
 
 	line_num2=$(cat $FNOW3 | wc -l)
