@@ -61,7 +61,6 @@ mkdir -p /root/src/$PHPV /root/org.src/$PHPV /tmp/$PHPV /tb2/tmp
 cd /root/org.src/$PHPV
 chown -Rf _apt:root /root/org.src/$PHPV
 chown_apt
-exit 0;
 
 
 FPKGS="/tmp/$PHPV.pkgs"
@@ -100,8 +99,8 @@ FDST2="/tb2/tmp/$PHPV-pkg-org-2.txt"
 FDST3="/tb2/tmp/$PHPV-pkg-org-3.txt"
 
 # URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
-# get_package_file $URL $FDST
-cp $FPKGS $FDST
+# get_package_file $URL $FDST1
+cp $FPKGS $FDST1
 
 FNOW1="/tb2/tmp/$PHPV-pkg-now-1.txt"
 FNOW2="/tb2/tmp/$PHPV-pkg-now-2.txt"
@@ -112,16 +111,16 @@ FSRC2="/tb2/tmp/$PHPV-pkg-src-2.txt"
 
 # search package from "Package:"
 #-------------------------------------------
-cat $FDST | grep "Package:\|Source:" | \
+cat $FDST1 | grep "Package:\|Source:" | \
 	sed "s/Package\: //g" | sed "s/Source\: //g" | \
 	grep -v "\-embed\|\-dbg\|dbgsym\|php5\|php7\|recode\|phalcon\|apache" | \
 	grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | \
 	sort -u | sort > $FNOW1
 
-# tails=(gmagick solr swoole yac xmlrpc)
-# for atail in "${tails[@]}"; do
-# 	apt-cache search "\-${atail}" | grep "php\-\|${PHPV}" | cut -d" " -f1
-# done
+tails=(gmagick solr swoole yac xmlrpc)
+for atail in "${tails[@]}"; do
+	apt-cache search "\-${atail}" | grep "php\-\|${PHPV}" | cut -d" " -f1
+done
 exit 0;
 
 echo "php-gmagick" >> $FNOW1
