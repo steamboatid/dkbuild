@@ -185,7 +185,7 @@ while :; do
 		apkg=$(printf "$bline" | rev | cut -d" " -f1 | rev)
 		sed -i -r "/${apkg}/d" $FNOW3
 		line_num1=$(cat $FNOW3 | wc -l)
-		printf "\n --- aloop=$aloop --- prev=$line_num0 --- now=$line_num1 --- $apkg --- $bline "
+		printf "\n --- aloop=$aloop --- prev=$line_num0 --- now=$line_num1 -- fixes=$fixes --- $apkg --- $bline "
 	done
 
 	if [[ $fixes -lt 1 ]]; then
