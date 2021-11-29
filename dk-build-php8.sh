@@ -89,9 +89,9 @@ rm -rf /root/src/php/*deb
 #-------------------------------------------
 cd /root/src/php
 
-pwd
-find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip"
-exit 0;
+# pwd
+# find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip"
+# exit 0;
 
 for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort); do
 
