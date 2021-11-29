@@ -50,6 +50,8 @@ fixing_folders_by_dsc_files(){
 	for afile in $(find /root/org.src/$PHPV -maxdepth 1 -type f -iname "*.dsc"); do
 		bname=$(basename $afile)
 		ahead=$(printf "$bname" | cut -d"_" -f1)
+		if [[ $ahead = *"xmlrpc"* ]]; then continue; fi
+
 		anum=$(find /root/org.src/$PHPV -maxdepth 1 -type d -iname "${ahead}*" | wc -l)
 		if [[ $anum -lt 1 ]]; then
 			printf "\n\n --- ${read}$ahead ${end} missing \n"
