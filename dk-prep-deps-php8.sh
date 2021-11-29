@@ -162,6 +162,7 @@ while :; do
 	rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1 | grep -i "unable")
 
 	anum=$(printf "$rets" | wc -l)
+	printf "\n --- $anum "
 	if [[ $anum -lt 1 ]]; then
 		cp $FNOW3 $FNOW2
 		break
