@@ -178,7 +178,7 @@ cat $FSRC2 | grep "php\-" >> $FSRC3
 cat $FSRC2 | grep "${PHPGREP}" >> $FSRC3
 
 cat $FSRC3 | sort -u | sort | tr "\n" " " | xargs apt source -my
-cat $FSRC3 | sort -u | sort
+# cat $FSRC3 | sort -u | sort
 
 
 fixing_folders_by_dsc_files
