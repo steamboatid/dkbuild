@@ -156,11 +156,12 @@ line_num0=$(cat $FNOW3 | wc -l)
 
 aloop=0
 while :; do
+	printf " aloop=$aloop "
 	aloop=$(( $aloop + 1 ))
-	printf " aloop=$aloop $FNOW3 "
+	if [[ $aloop -gt 100 ]]; then break; fi
 
-	rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1)
-	# printf "$rets" | grep -i "unable"; printf "$rets" | grep -i "unable" | wc -l
+	# rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1)
+	printf "$rets" | grep -i "unable"; printf "$rets" | grep -i "unable" | wc -l
 
 	# anum=$(printf "$rets" | wc -l)
 	# printf "\n --- $anum "; exit 0;
