@@ -148,11 +148,9 @@ apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 
 cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
 	sort -u | sort | \
-	sed 's/(\([^\)]*\))//g'; exit 0;
-
-cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
-	sort -u | sort | \
 	sed 's/(\([^\)]*\))//g' >> $FNOW2
+
+cat $FNOW2; exit 0;
 
 cat $FNOW2 | sort -u | sort | \
 	xargs aptold build-dep -my 2>&1 | tee $FSRC1
