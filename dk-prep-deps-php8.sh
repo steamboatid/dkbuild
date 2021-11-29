@@ -157,6 +157,8 @@ cat $FNOW2 | sort -u | sort | \
 # source packages
 cat $FSRC1 | grep -iv "unable" | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
 
+cat $FSRC2; exit 0;
+
 >$FSRC1
 cat $FSRC2 | grep "php\-" >> $FSRC1
 cat $FSRC2 | grep "${PHPGREP}" >> $FSRC1
