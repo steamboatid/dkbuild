@@ -61,6 +61,7 @@ mkdir -p /root/src/$PHPV /root/org.src/$PHPV /tmp/$PHPV /tb2/tmp
 cd /root/org.src/$PHPV
 chown -Rf _apt:root /root/org.src/$PHPV
 chown_apt
+exit 0;
 
 
 FPKGS="/tmp/$PHPV.pkgs"
