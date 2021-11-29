@@ -179,7 +179,7 @@ while :; do
 	fixes=0
 	for bline in $(cat $ftmp); do
 		if [[ -n $bline ]]; then break; fi
-		
+
 		printf " \n $bline"
 		fixes=$(( $fixes + 1 ))
 		apkg=$(printf "$bline" | rev | cut -d" " -f1 | rev)
@@ -189,6 +189,7 @@ while :; do
 	done
 
 	if [[ $fixes -lt 1 ]]; then
+		printf "\n --- aloop=$aloop \n"
 		break
 	fi
 done
