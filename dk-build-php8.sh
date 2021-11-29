@@ -88,7 +88,7 @@ cd /root/src/$PHPV
 # find /root/src/$PHPV -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip"
 # exit 0;
 
-for adir in $(find /root/src/$PHPV -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip"); do
+for adir in $(find /root/src/$PHPV -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort); do
 	cd $adir
 	pwd
 
@@ -151,8 +151,17 @@ override_dh_shlibdeps:
 		printf "\n\n\n"
 	fi
 
+	printf "\n\n"
+	while :; do
+		AVGL=$(cat /proc/loadavg | cut -d" " -f1 | cut -d"." -f1)
+		AVGL=$(( $AVGL + 1))
+		CORE=$(( `nproc` ))
+		if [[ $AVGL -lt $CORE ]]; then break; fi
+		printf "$AVGL>$CORE "
+	done
+
 	NUMINS=$(ps -e -o command | grep -v grep | grep "dk-build-full" | awk '{print $NF}' | wc -l)
-	if [[ $NUMINS -lt 8 ]]; then
+	if [[ $NUMINS -lt 5 ]]; then
 		doback
 	else
 		if [[ $adir == *"phalcon"* ]]; then doback; else dofore; fi
@@ -183,4 +192,4 @@ ls -la /tb2/build/$RELNAME-$PHPV/
 
 # rebuild the repo
 #-------------------------------------------
-nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
+# nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
