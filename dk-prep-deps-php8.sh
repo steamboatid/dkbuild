@@ -152,6 +152,13 @@ dir_num=$(find /root/org.src/$PHPV -maxdepth 1 -type d | wc -l)
 printf "\n\n\n --- DSC=${blue}$dsc_num ${end} --- DIR=${blue}$dir_num ${end} \n\n"
 
 
+for afile in $(find /root/org.src/$PHPV -maxdepth 1 -type f -iname "*.dsc"); do
+	bname=$(basename $afile)
+	ahead=$(printf "$bname" | cut -d"-" -f1)
+	# anum=$(find /root/org.src/$PHPV -maxdepth 1 -type f)
+done
+exit 0;
+
 
 #--- wait
 #-------------------------------------------
