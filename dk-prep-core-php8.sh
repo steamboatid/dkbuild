@@ -13,17 +13,10 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
-export PHPV_DEFAULT="php8.0"
-export PHPV="${1:-$PHPV_DEFAULT}"
-export PHPVNUM=$(echo $PHPV | sed 's/php//g')
+export PHPVERS=("php8.0" "php8.1")
 
 
 source /tb2/build/dk-build-0libs.sh
-
-
-# print php version
-#-------------------------------------------
-printf "\n\n --- php version: ${yel}$PHPV${end} [$PHPVNUM] \n\n"
 
 
 # purge pendings
@@ -47,22 +40,24 @@ aptold install -fy libgd-dev libgd3 \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
 
-aptold install -fy --no-install-recommends  --allow-downgrades \
-$PHPV \
-$PHPV $PHPV-apcu $PHPV-ast $PHPV-bcmath $PHPV-bz2 $PHPV-cli $PHPV-common \
-$PHPV-curl $PHPV-dba $PHPV-dev $PHPV-enchant $PHPV-fpm $PHPV-gd $PHPV-gmp \
-$PHPV-igbinary $PHPV-imagick $PHPV-imap $PHPV-interbase \
-$PHPV-intl $PHPV-ldap $PHPV-mbstring $PHPV-memcached $PHPV-msgpack \
-$PHPV-mysql $PHPV-odbc $PHPV-opcache $PHPV-pgsql $PHPV-pspell $PHPV-raphf \
-$PHPV-readline $PHPV-redis $PHPV-snmp $PHPV-soap $PHPV-sqlite3 $PHPV-sybase \
-$PHPV-tidy $PHPV-xml $PHPV-xsl $PHPV-zip \
-$PHPV \
-$PHPV-cli $PHPV-fpm $PHPV-common $PHPV-curl $PHPV-fpm $PHPV-gd \
-$PHPV-bcmath $PHPV-bz2 $PHPV-gmp $PHPV-ldap $PHPV-mbstring $PHPV-mysql \
-$PHPV-opcache $PHPV-readline $PHPV-soap $PHPV-tidy $PHPV-xdebug $PHPV-xml $PHPV-xsl $PHPV-zip \
-php-memcached php-redis php-igbinary php-msgpack php-apcu \
-pkg-php-tools libdistro-info-perl php-all-dev \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
+for apv in "${PHPVERS[@]}"; do
+	aptold install -fy --no-install-recommends  --allow-downgrades \
+	$apv $apv-apcu $apv-ast $apv-bcmath $apv-bz2 $apv-cli $apv-common \
+	$apv-curl $apv-dba $apv-dev $apv-enchant $apv-fpm $apv-gd $apv-gmp \
+	$apv-igbinary $apv-imagick $apv-imap $apv-interbase \
+	$apv-intl $apv-ldap $apv-mbstring $apv-memcached $apv-msgpack \
+	$apv-mysql $apv-odbc $apv-opcache $apv-pgsql $apv-pspell $apv-raphf \
+	$apv-readline $apv-redis $apv-snmp $apv-soap $apv-sqlite3 $apv-sybase \
+	$apv-tidy $apv-xml $apv-xsl $apv-zip \
+	$apv \
+	$apv-cli $apv-fpm $apv-common $apv-curl $apv-fpm $apv-gd \
+	$apv-bcmath $apv-bz2 $apv-gmp $apv-ldap $apv-mbstring $apv-mysql \
+	$apv-opcache $apv-readline $apv-soap $apv-tidy $apv-xdebug $apv-xml $apv-xsl $apv-zip \
+	php-memcached php-redis php-igbinary php-msgpack php-apcu \
+	pkg-php-tools libdistro-info-perl php-all-dev \
+		2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
+done
+
 
 aptold install -my php-http php-raphf \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
@@ -158,47 +153,53 @@ libmagickwand-dev libmagickwand-6*dev libgraphicsmagick1-dev libmagickcore-6-arc
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
 
-aptold build-dep -fy $PHPV php-defaults \
-$PHPV-cli $PHPV-fpm $PHPV-common $PHPV-curl $PHPV-fpm $PHPV-gd \
-$PHPV-bcmath $PHPV-bz2 $PHPV-gmp $PHPV-ldap $PHPV-mbstring $PHPV-mysql \
-$PHPV-opcache $PHPV-readline $PHPV-soap $PHPV-tidy $PHPV-xdebug $PHPV-xml $PHPV-xsl $PHPV-zip \
-php-memcached php-redis php-igbinary php-msgpack php-apcu \
-	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
+for apv in "${PHPVERS[@]}"; do
+	aptold build-dep -my \
+	$apv php-defaults \
+	$apv-cli $apv-fpm $apv-common $apv-curl $apv-fpm $apv-gd \
+	$apv-bcmath $apv-bz2 $apv-gmp $apv-ldap $apv-mbstring $apv-mysql \
+	$apv-opcache $apv-readline $apv-soap $apv-tidy $apv-xdebug $apv-xml $apv-xsl $apv-zip \
+	php-memcached php-redis php-igbinary php-msgpack php-apcu \
+		2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
+done
 
 aptold build-dep -fy php-http php-raphf \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
 #--- recreate dir, delete debs
 #-------------------------------------------
-mkdir -p /root/org.src/$PHPV /root/src/$PHPV
-rm -rf /root/src/$PHPV/*deb
+mkdir -p /root/org.src/php /root/src/php
+rm -rf /root/src/php/*deb
 
 #--- fetch default source package
 #-------------------------------------------
-cd /root/org.src/$PHPV
+cd /root/org.src/php
 
-pkgs=(php-defaults \
-$PHPV $PHPV-apcu $PHPV-ast $PHPV-bcmath $PHPV-bz2 $PHPV-cli $PHPV-common \
-$PHPV-curl $PHPV-dba $PHPV-dev $PHPV-enchant $PHPV-fpm $PHPV-gd $PHPV-gmp \
-$PHPV-igbinary $PHPV-imagick $PHPV-imap $PHPV-interbase \
-$PHPV-intl $PHPV-ldap $PHPV-mbstring $PHPV-memcached $PHPV-msgpack \
-$PHPV-mysql $PHPV-odbc $PHPV-opcache $PHPV-pgsql $PHPV-pspell \
-$PHPV-raphf $PHPV-readline $PHPV-redis $PHPV-snmp $PHPV-soap \
-$PHPV-sqlite3 $PHPV-sybase $PHPV-tidy $PHPV-xdebug $PHPV-xml \
-$PHPV-xsl $PHPV-zip \
-php-memcached php-redis php-igbinary php-msgpack php-apcu \
-$PHPV-http php-http php-raphf)
+for apv in "${PHPVERS[@]}"; do
+	pkgs=(php-defaults \
+	$apv $apv-apcu $apv-ast $apv-bcmath $apv-bz2 $apv-cli $apv-common \
+	$apv-curl $apv-dba $apv-dev $apv-enchant $apv-fpm $apv-gd $apv-gmp \
+	$apv-igbinary $apv-imagick $apv-imap $apv-interbase \
+	$apv-intl $apv-ldap $apv-mbstring $apv-memcached $apv-msgpack \
+	$apv-mysql $apv-odbc $apv-opcache $apv-pgsql $apv-pspell \
+	$apv-raphf $apv-readline $apv-redis $apv-snmp $apv-soap \
+	$apv-sqlite3 $apv-sybase $apv-tidy $apv-xdebug $apv-xml \
+	$apv-xsl $apv-zip \
+	php-memcached php-redis php-igbinary php-msgpack php-apcu \
+	$apv-http php-http php-raphf)
 
-for apkg in "${pkgs[@]}"; do
-	printf "\n\n --- apt source: ${yel}$apkg ${end} \n"
-	aptold source -my $apkg
+	for apkg in "${pkgs[@]}"; do
+		printf "\n\n --- apt source: ${yel}$apkg ${end} \n"
+		aptold source -my $apkg
+	done
 done
+
 
 #--- sync to src
 #-------------------------------------------
-printf "\n-- sync to src: ${yel}$PHPV ${end}\n"
+printf "\n-- sync to src: PHP \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
-/root/org.src/$PHPV/ /root/src/$PHPV/
+/root/org.src/php/ /root/src/php/
 
 
 
@@ -219,10 +220,10 @@ printf "\n\n --- wait finished... \n\n\n"
 
 #--- sync to src
 #-------------------------------------------
-printf "\n-- sync to src: ${yel}$PHPV ${end}\n"
+printf "\n-- sync to src: PHP \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 --exclude ".git" \
-/root/org.src/$PHPV/ /root/src/$PHPV/
+/root/org.src/php/ /root/src/php/
 
 
 
