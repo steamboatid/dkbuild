@@ -152,6 +152,15 @@ cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
 
 
 cat $FNOW2 | sort -u | sort > $FNOW3
+
+>$FNOW2
+for apkg in $(cat $FNOW3); do
+	if [[ $(apt-cache search "$apkg" | wc -l) -gt 0 ]]; then
+		echo "${apkg}" >> $FNOW2
+	fi
+done
+cat $FNOW2; exit 0;
+
 line_num0=$(cat $FNOW3 | wc -l)
 line_num1=$line_num0
 
