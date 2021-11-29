@@ -187,7 +187,10 @@ for apv in "${PHPVERS[@]}"; do
 	$apv-sqlite3 $apv-sybase $apv-tidy $apv-xdebug $apv-xml \
 	$apv-xsl $apv-zip \
 	php-memcached php-redis php-igbinary php-msgpack php-apcu \
-	$apv-http php-http php-raphf
+	php-http php-raphf
+
+	aptold source -my \
+	$apv-http
 
 	# pkgs=(php-defaults \
 	# $apv $apv-apcu $apv-ast $apv-bcmath $apv-bz2 $apv-cli $apv-common \
