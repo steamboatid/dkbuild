@@ -189,17 +189,11 @@ while :; do
 
 	line_num2=$(cat $FNOW3 | wc -l)
 	if [[ $line_num2 -eq $line_num1 ]]; then
-		printf "\n --- prev=$line_num0 --- now=$line_num1 "
+		printf "\n --- aloop=$aloop --- prev=$line_num1 --- now=$line_num2 "
 		break
 	fi
 
 	line_num1=$line_num2
-
-
-	# if [[ $fixes -lt 1 ]]; then
-	# 	printf "\n --- aloop=$aloop -- fixes=$fixes \n"
-	# 	break
-	# fi
 done
 
 rm -rf $ftmp
