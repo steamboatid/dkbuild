@@ -152,7 +152,7 @@ override_dh_shlibdeps:
 	fi
 
 	NUMINS=$(ps -e -o command | grep -v grep | grep "dk-build-full" | awk '{print $NF}' | wc -l)
-	if [[ $NUMINS -lt 3 ]]; then
+	if [[ $NUMINS -lt 8 ]]; then
 		doback
 	else
 		if [[ $adir == *"phalcon"* ]]; then doback; else dofore; fi
