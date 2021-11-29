@@ -155,6 +155,7 @@ cat $FNOW2 | sort -u | sort > $FNOW3
 line_num0=$(cat $FNOW3 | wc -l)
 
 rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1 | grep -i "unable")
+printf "$rets" | grep -i "unable"; printf "$rets" | grep -i "unable" | wc -l
 
 aloop=0
 while :; do
@@ -166,7 +167,7 @@ while :; do
 
 	anum=$(printf "$rets" | wc -l)
 	printf "\n --- $anum "; exit 0;
-	
+
 	if [[ $anum -lt 1 ]]; then
 		cp $FNOW3 $FNOW2
 		break
