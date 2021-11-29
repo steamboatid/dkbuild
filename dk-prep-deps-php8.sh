@@ -159,23 +159,23 @@ while :; do
 	aloop=$(( $aloop + 1))
 	if [[ $aloop -gt 100 ]]; then break; fi
 
-	rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1)
-	printf "$rets" | grep -i "unable"; printf "$rets" | grep -i "unable" | wc -l
+	# rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1)
+	# printf "$rets" | grep -i "unable"; printf "$rets" | grep -i "unable" | wc -l
 
-	anum=$(printf "$rets" | wc -l)
-	printf "\n --- $anum "; exit 0;
+	# anum=$(printf "$rets" | wc -l)
+	# printf "\n --- $anum "; exit 0;
 
-	if [[ $anum -lt 1 ]]; then
-		cp $FNOW3 $FNOW2
-		break
-	fi
+	# if [[ $anum -lt 1 ]]; then
+	# 	cp $FNOW3 $FNOW2
+	# 	break
+	# fi
 
-	for aline in $(printf "$rets"); do
-		apkg=$(printf "$aline" | rev | cut -d" " -f1 | rev)
-		sed -i "/${apkg}/d" $FNOW3
-		line_num1=$(cat $FNOW3 | wc -l)
-		printf "\n --- prev=$line_num0 --- now=$line_num1 --- $apkg --- $aline "
-	done
+	# for aline in $(printf "$rets"); do
+	# 	apkg=$(printf "$aline" | rev | cut -d" " -f1 | rev)
+	# 	sed -i "/${apkg}/d" $FNOW3
+	# 	line_num1=$(cat $FNOW3 | wc -l)
+	# 	printf "\n --- prev=$line_num0 --- now=$line_num1 --- $apkg --- $aline "
+	# done
 done
 
 line_num1=$(cat $FNOW3 | wc -l)
