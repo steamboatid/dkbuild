@@ -69,6 +69,9 @@ for afile in $(find /root/org.src/$PHPV -maxdepth 1 -type f -iname "*.dsc"); do
 	anum=$(find /root/org.src/$PHPV -maxdepth 1 -type d -iname "${ahead}*" | wc -l)
 	if [[ $anum -lt 1 ]]; then
 		printf " $ahead \n"
+
+		aptold build-dep -my $ahead
+		apt source -my $ahead
 	fi
 done
 exit 0;
