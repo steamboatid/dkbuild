@@ -183,12 +183,13 @@ while :; do
 
 		apkg=$(printf "$bline" | rev | cut -d" " -f1 | rev)
 		sed -i -r "/${apkg}/d" $FNOW3
-		printf "\n --- aloop=$aloop --- $apkg --- $bline "
+		line_num2=$(cat $FNOW3 | wc -l)
+		printf "\n --- aloop=$aloop --- prev=$line_num0 --- now=$line_num2 --- $apkg --- $bline "
 	done
 
 	line_num2=$(cat $FNOW3 | wc -l)
+	printf "\n --- aloop=$aloop --- prev1=$line_num1 --- now2=$line_num2 "
 	if [[ $line_num2 -eq $line_num1 ]]; then
-		printf "\n --- aloop=$aloop --- prev=$line_num1 --- now=$line_num2 "
 		break
 	fi
 
