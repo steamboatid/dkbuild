@@ -172,11 +172,11 @@ cat $FSRC1; exit 0;
 
 # source packages
 cat $FSRC1 | grep -iv "unable" | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
-cat $FSRC2; exit 0;
 
 >$FSRC1
 cat $FSRC2 | grep "php\-" >> $FSRC1
 cat $FSRC2 | grep "${PHPGREP}" >> $FSRC1
+cat $FSRC1; exit 0;
 
 cat $FSRC1 | sort -u | sort | tr "\n" " " | xargs apt source -my
 cat $FSRC1 | sort -u | sort
