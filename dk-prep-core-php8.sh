@@ -41,7 +41,7 @@ aptold install -fy libgd-dev libgd3 \
 
 
 for apv in "${PHPVERS[@]}"; do
-	aptold install -fy --no-install-recommends  --allow-downgrades \
+	aptold install -my --no-install-recommends  --allow-downgrades \
 	$apv $apv-apcu $apv-ast $apv-bcmath $apv-bz2 $apv-cli $apv-common \
 	$apv-curl $apv-dba $apv-dev $apv-enchant $apv-fpm $apv-gd $apv-gmp \
 	$apv-igbinary $apv-imagick $apv-imap $apv-interbase \
@@ -176,7 +176,8 @@ rm -rf /root/src/php/*deb
 cd /root/org.src/php
 
 for apv in "${PHPVERS[@]}"; do
-	pkgs=(php-defaults \
+	aptold source -my \
+	php-defaults \
 	$apv $apv-apcu $apv-ast $apv-bcmath $apv-bz2 $apv-cli $apv-common \
 	$apv-curl $apv-dba $apv-dev $apv-enchant $apv-fpm $apv-gd $apv-gmp \
 	$apv-igbinary $apv-imagick $apv-imap $apv-interbase \
@@ -186,12 +187,24 @@ for apv in "${PHPVERS[@]}"; do
 	$apv-sqlite3 $apv-sybase $apv-tidy $apv-xdebug $apv-xml \
 	$apv-xsl $apv-zip \
 	php-memcached php-redis php-igbinary php-msgpack php-apcu \
-	$apv-http php-http php-raphf)
+	$apv-http php-http php-raphf
 
-	for apkg in "${pkgs[@]}"; do
-		printf "\n\n --- apt source: ${yel}$apkg ${end} \n"
-		aptold source -my $apkg
-	done
+	# pkgs=(php-defaults \
+	# $apv $apv-apcu $apv-ast $apv-bcmath $apv-bz2 $apv-cli $apv-common \
+	# $apv-curl $apv-dba $apv-dev $apv-enchant $apv-fpm $apv-gd $apv-gmp \
+	# $apv-igbinary $apv-imagick $apv-imap $apv-interbase \
+	# $apv-intl $apv-ldap $apv-mbstring $apv-memcached $apv-msgpack \
+	# $apv-mysql $apv-odbc $apv-opcache $apv-pgsql $apv-pspell \
+	# $apv-raphf $apv-readline $apv-redis $apv-snmp $apv-soap \
+	# $apv-sqlite3 $apv-sybase $apv-tidy $apv-xdebug $apv-xml \
+	# $apv-xsl $apv-zip \
+	# php-memcached php-redis php-igbinary php-msgpack php-apcu \
+	# $apv-http php-http php-raphf)
+
+	# for apkg in "${pkgs[@]}"; do
+	# 	printf "\n\n --- apt source: ${yel}$apkg ${end} \n"
+	# 	aptold source -my $apkg
+	# done
 done
 
 
