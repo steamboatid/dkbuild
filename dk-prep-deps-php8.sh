@@ -166,6 +166,7 @@ while :; do
 
 	anum=$(printf "$rets" | wc -l)
 	printf "\n --- $anum "; exit 0;
+	
 	if [[ $anum -lt 1 ]]; then
 		cp $FNOW3 $FNOW2
 		break
