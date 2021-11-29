@@ -174,7 +174,7 @@ while :; do
 
 	cat $FNOW3 | xargs apt build-dep -fy 2>&1 | grep -i "unable" > $ftmp
 	echo "" >> $ftmp
-	# cat $ftmp | wc -l
+	cat $ftmp | wc -l
 
 	fixes=0
 	for bline in $(cat $ftmp); do
