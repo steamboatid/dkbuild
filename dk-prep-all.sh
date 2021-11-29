@@ -93,7 +93,7 @@ get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core
 
 mkdir -p /root/org.src/pcre /root/src/pcre
 cd /root/org.src/pcre
-aptold source -y libpcre3
+apt source -y libpcre3
 
 
 #--- sync to src
@@ -186,7 +186,7 @@ get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
 #-------------------------------------------
 mkdir -p /root/org.src/sshfs /root/src/sshfs
 cd /root/org.src/sshfs
-aptold source -y sshfs libfuse3-dev
+apt source -y sshfs libfuse3-dev
 
 
 

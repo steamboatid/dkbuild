@@ -176,7 +176,7 @@ rm -rf /root/src/php/*deb
 cd /root/org.src/php
 
 for apv in "${PHPVERS[@]}"; do
-	aptold source -my \
+	apt source -my \
 	php-defaults \
 	$apv $apv-apcu $apv-ast $apv-bcmath $apv-bz2 $apv-cli $apv-common \
 	$apv-curl $apv-dba $apv-dev $apv-enchant $apv-fpm $apv-gd $apv-gmp \
@@ -189,7 +189,7 @@ for apv in "${PHPVERS[@]}"; do
 	php-memcached php-redis php-igbinary php-msgpack php-apcu \
 	php-http php-raphf
 
-	aptold source -my \
+	apt source -my \
 	$apv-http
 
 	# pkgs=(php-defaults \
@@ -206,7 +206,7 @@ for apv in "${PHPVERS[@]}"; do
 
 	# for apkg in "${pkgs[@]}"; do
 	# 	printf "\n\n --- apt source: ${yel}$apkg ${end} \n"
-	# 	aptold source -my $apkg
+	# 	apt source -my $apkg
 	# done
 done
 

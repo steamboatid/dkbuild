@@ -78,7 +78,7 @@ max_size = 100.0G
 '>/tb2/tmp/ccache/ccache.conf
 
 
-#--- preparing aptold sources.list
+#--- preparing apt sources.list
 #-------------------------------------------
 ping 1.1.1.1 -c3
 

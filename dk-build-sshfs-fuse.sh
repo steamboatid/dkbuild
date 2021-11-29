@@ -49,7 +49,7 @@ prepare_build_flags
 #-------------------------------------------
 mkdir -p /root/org.src/sshfs /root/src/sshfs
 cd /root/org.src/sshfs
-aptold source -y sshfs libfuse3-dev
+apt source -y sshfs libfuse3-dev
 
 
 # prepare dirs

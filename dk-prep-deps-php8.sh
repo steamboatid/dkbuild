@@ -175,7 +175,6 @@ cat $FSRC1 | grep "Picking" | grep -iv "unable" | cut -d" " -f2 | sed -r "s/'//g
 >$FSRC3
 cat $FSRC2 | grep "php\-" >> $FSRC3
 cat $FSRC2 | grep "${PHPGREP}" >> $FSRC3
-cat $FSRC3; exit 0;
 
 cat $FSRC3 | sort -u | sort | tr "\n" " " | xargs apt source -my
 cat $FSRC3 | sort -u | sort
