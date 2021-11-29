@@ -78,7 +78,6 @@ chown_apt
 
 fixing_folders_by_dsc_files
 fixing_folders_by_dsc_files
-exit 0;
 
 
 FPKGS="/tmp/$PHPV.pkgs"
@@ -164,6 +163,11 @@ cat $FSRC2 | grep "php\-" >> $FSRC1
 cat $FSRC2 | grep "$PHPV" >> $FSRC1
 
 cat $FSRC1 | sort -u | sort | tr "\n" " " | xargs apt source -my
+
+
+fixing_folders_by_dsc_files
+fixing_folders_by_dsc_files
+
 
 dsc_num=$(find /root/org.src/$PHPV -maxdepth 1 -type f -iname "*.dsc" | wc -l)
 dir_num=$(find /root/org.src/$PHPV -maxdepth 1 -type d | wc -l)
