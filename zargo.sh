@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-ssh argo "rm -rf /tb2/build/dk-prep*sh"
+# ssh argo "rm -rf /tb2/build/dk-prep*sh"
 
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 /tb2/build/*sh root@argo:/tb2/build/
