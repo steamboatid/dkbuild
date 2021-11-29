@@ -171,7 +171,8 @@ fixing_folders_by_dsc_files
 fixing_folders_by_dsc_files
 
 
-dsc_num=$(find /root/org.src/$PHPV -maxdepth 1 -type f -iname "*.dsc" | wc -l)
+# xmlrpc included in php-defaults
+dsc_num=$(find /root/org.src/$PHPV -maxdepth 1 -type f -iname "*.dsc" | grep -iv "xmlrpc" | wc -l)
 dir_num=$(find /root/org.src/$PHPV -maxdepth 1 -type d | wc -l)
 printf "\n\n\n --- DSC=${blue}$dsc_num ${end} --- DIR=${blue}$dir_num ${end} \n\n"
 
