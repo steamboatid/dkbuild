@@ -166,6 +166,7 @@ override_dh_shlibdeps:
 		fi
 		LASTLOAD=$AVGL
 		LOOPLOAD=$(( $LOOPLOAD + 1 ))
+		sleep 3
 	done
 	[[ $LOOPLOAD -gt 2 ]] && printf "\n\n"
 
