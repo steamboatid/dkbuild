@@ -169,8 +169,6 @@ done
 cat $FNOW2 | sort -u | sort | \
 	xargs aptold build-dep -my 2>&1 | tee $FSRC1
 
-cat $FSRC1; exit 0;
-
 # source packages
 cat $FSRC1 | grep "Picking" | grep -iv "unable" | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
 
