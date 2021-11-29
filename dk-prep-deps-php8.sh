@@ -177,9 +177,10 @@ while :; do
 	cat $ftmp | wc -l
 
 	fixes=0
-	cat $ftmp | while read bline; do
+	# cat $ftmp | while read bline; do
+	for bline in $(cat $ftmp); do
 		printf "\n --- $bline"
-		if [[ -n $bline ]]; then break; fi
+		if [[ ! -n $bline ]]; then break; fi
 
 		fixes=$(( $fixes + 1 ))
 		apkg=$(printf "$bline" | rev | cut -d" " -f1 | rev)
