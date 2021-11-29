@@ -155,10 +155,9 @@ cat $FNOW2 | sort -u | sort > $FNOW3
 line_num0=$(cat $FNOW3 | wc -l)
 
 aloop=0
-while :; do
-	printf " aloop=$aloop "
+while ($aloop lt 1000); do
 	aloop=$(( $aloop + 1 ))
-	if [[ $aloop -gt 100 ]]; then break; fi
+	printf " aloop=$aloop "
 
 	rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1)
 	# printf "$rets" | grep -i "unable"; printf "$rets" | grep -i "unable" | wc -l
