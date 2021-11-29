@@ -134,7 +134,7 @@ cat $FDST1 | grep "Package:\|Source:" | \
 	sort -u | sort > $FNOW1
 
 
-tails=(gmagick solr swoole yac xmlrpc phalcon4)
+tails=(solr swoole xmlrpc phalcon4)
 for atail in "${tails[@]}"; do
 	apt-cache search "\-${atail}" | grep "php\-\|${PHPV}" | cut -d" " -f1  >> $FNOW1
 done
@@ -152,7 +152,7 @@ cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
 	sed 's/(\([^\)]*\))//g' >> $FNOW2
 
 cat $FNOW2 | sort -u | sort | \
-	xargs aptold build-dep -my $apkg  2>&1 | tee $FSRC1
+	xargs aptold build-dep -my 2>&1 | tee $FSRC1
 
 # source packages
 cat $FSRC1 | grep -iv "unable" | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
