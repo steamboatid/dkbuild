@@ -15,7 +15,6 @@ rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 
 nohup /bin/bash /tb2/build/zgit-auto.sh >/dev/null 2>&1 &
 # /bin/bash /tb2/build/zgit-auto.sh
-exit 0;
 
 ssh argo "nohup chmod +x /usr/local/sbin/* /tb2/build/*sh 2>&1 >/dev/null &"
 
@@ -50,4 +49,4 @@ ssh argo -- lxca teye -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-php8.sh "php8.1"
 
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-core-php8.sh
-# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-deps-php8.sh
+ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-deps-php8.sh
