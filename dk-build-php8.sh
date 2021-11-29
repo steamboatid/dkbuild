@@ -159,6 +159,7 @@ override_dh_shlibdeps:
 		if [[ $AVGL -lt $CORE ]]; then break; fi
 		printf "$AVGL>$CORE "
 	done
+	printf "\n\n"
 
 	NUMINS=$(ps -e -o command | grep -v grep | grep "dk-build-full" | awk '{print $NF}' | wc -l)
 	if [[ $NUMINS -lt 5 ]]; then
