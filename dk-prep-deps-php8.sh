@@ -177,7 +177,7 @@ while :; do
 	cat $ftmp | wc -l
 
 	fixes=0
-	for bline in $(cat $ftmp); do
+	cat $ftmp | while read bline; do
 		printf "\n --- $bline"
 		if [[ -n $bline ]]; then break; fi
 
