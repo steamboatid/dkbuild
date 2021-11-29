@@ -98,6 +98,10 @@ cd /root/src/$PHPV
 # exit 0;
 
 for adir in $(find /root/src/$PHPV -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort); do
+
+	#--- ovveride version
+	VEROVR=""
+
 	#--- wait until average load is OK
 	wait_by_average_load
 
