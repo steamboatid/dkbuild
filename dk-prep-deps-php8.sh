@@ -171,15 +171,18 @@ while :; do
 	# 	break
 	# fi
 
+	cat $FNOW3 | xargs apt build-dep -fy 2>&1 | grep -i "unable" > /tmp/aaa
+	cat /tmp/aaa
+
 	fixes=0
-	for bline in $(cat $FNOW3 | xargs apt build-dep -fy 2>&1 | grep -i "unable"); do
-		printf " \n $bline"
-		fixes=$(( $fixes + 1 ))
-		apkg=$(printf "$bline" | rev | cut -d" " -f1 | rev)
-		sed -i -r "/${apkg}/d" $FNOW3
-		line_num1=$(cat $FNOW3 | wc -l)
-		printf "\n --- aloop=$aloop --- prev=$line_num0 --- now=$line_num1 --- $apkg --- $bline "
-	done
+	# for bline in ; do
+	# 	printf " \n $bline"
+	# 	fixes=$(( $fixes + 1 ))
+	# 	apkg=$(printf "$bline" | rev | cut -d" " -f1 | rev)
+	# 	sed -i -r "/${apkg}/d" $FNOW3
+	# 	line_num1=$(cat $FNOW3 | wc -l)
+	# 	printf "\n --- aloop=$aloop --- prev=$line_num0 --- now=$line_num1 --- $apkg --- $bline "
+	# done
 
 	if [[ $fixes -lt 1 ]]; then
 		break
