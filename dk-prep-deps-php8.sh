@@ -172,7 +172,7 @@ while :; do
 	# fi
 
 	fixes=0
-	for aline in $(cat $FNOW3 | xargs apt build-dep -my 2>&1 | grep -i "unable"); do
+	for aline in $(cat $FNOW3 | xargs apt build-dep -fy 2>&1 | grep -i "unable"); do
 		fixes=$(( $fixes + 1 ))
 		apkg=$(printf "$aline" | rev | cut -d" " -f1 | rev)
 		sed -i -r "/${apkg}/d" $FNOW3
