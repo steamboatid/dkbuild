@@ -160,8 +160,8 @@ while :; do
 	aloop=$(( $aloop + 1))
 	if [[ $aloop -gt 100 ]]; then break; fi
 
-	cat $FNOW3 | xargs apt build-dep -my 2>&1 >$ftmp
-	cat $ftmp; exit 0;
+	rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1)
+	printf "$rets"; printf "$rets" | wc -l; exit 0;
 
 	anum=$(cat $ftmp | wc -l)
 	if [[ $anum -lt 1 ]]; then
