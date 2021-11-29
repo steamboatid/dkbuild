@@ -164,7 +164,8 @@ while :; do
 		break
 	fi
 
-	for apkg in $(cat $FNOW3 | xargs apt build-dep -my 2>&1 | grep -i "unable"); do
+	for aline in $(cat $FNOW3 | xargs apt build-dep -my 2>&1 | grep -i "unable"); do
+		apkg=$(printf "$aline" | rev | cut -d" " -f1 | rev)
 		sed -i "/${apkg}/d" $FNOW3
 		line_num1=$(cat $FNOW3 | wc -l)
 		printf "\n --- prev=$line_num0 --- now=$line_num1 --- $apkg "
