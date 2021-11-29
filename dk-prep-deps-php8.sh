@@ -126,11 +126,14 @@ echo "php-xmlrpc" >> $FNOW
 
 echo "php-phalcon4" >> $FNOW
 echo "libicu-dev" >> $FNOW
+
+
 apt-cache search $PHPV | awk '{print $1}' | grep "$PHPV" | \
 	grep -v "dbgsym\|dbg\|apache" >> $FNOW
 apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 	grep -v "dbgsym\|dbg\|apache" >> $FNOW
 
+cat $FNOW; exit 0;
 
 cat $FNOW | grep -i "$PHPV\|php\-" | \
 	sort -u | sort | \
