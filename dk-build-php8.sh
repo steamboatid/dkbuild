@@ -186,6 +186,7 @@ printf "\n\n --- wait all background build jobs: "
 numo=0
 while :; do
 	numa=$(ps auxw | grep -v grep | grep "dk-build-full.sh" | wc -l)
+	if [[ $numa -lt 1 ]]; then break; fi
 	if [[ $numa -ne $numo ]]; then
 		printf " $numa"
 		numo=$numa
@@ -218,4 +219,4 @@ ls -la /tb2/build/$RELNAME-$PHPV/
 
 # rebuild the repo
 #-------------------------------------------
-# nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
+nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
