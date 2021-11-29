@@ -118,7 +118,13 @@ cd /root/org.src/$PHPV
 chown -Rf _apt:root /root/org.src/$PHPV
 chown_apt
 
-echo "php-phalcon3" >> $FNOW
+echo "php-gmagick" >> $FNOW
+echo "php-solr" >> $FNOW
+echo "php-swoole" >> $FNOW
+echo "php-yac" >> $FNOW
+echo "php-xmlrpc" >> $FNOW
+
+echo "php-phalcon4" >> $FNOW
 echo "libicu-dev" >> $FNOW
 apt-cache search $PHPV | awk '{print $1}' | grep "$PHPV" | \
 	grep -v "dbgsym\|dbg\|apache" >> $FNOW
