@@ -617,7 +617,6 @@ db4_install(){
 
 
 wait_by_average_load(){
-	printf "\n --- average load checking: "
 	LOOPLOAD=0
 	LASTLOAD=0
 	while :; do
@@ -627,6 +626,7 @@ wait_by_average_load(){
 		if [[ $AVGL -lt $CORE ]]; then break; fi
 
 		if [[ $AVGL -ne $LASTLOAD ]]; then
+			[[ $LOOPLOAD -lt 1 ]] && printf "\n --- average load checking: "
 			printf " $AVGL"
 		else
 			printf "."
@@ -635,7 +635,7 @@ wait_by_average_load(){
 		LOOPLOAD=$(( $LOOPLOAD + 1 ))
 		sleep 3
 	done
-	[[ $LOOPLOAD -gt 2 ]] && printf "\n last load: $AVGL \n\n"
+	[[ $LOOPLOAD -gt 2 ]] && printf "\n last load: $AVGL \n"
 }
 
 
