@@ -117,6 +117,7 @@ cat $FDST1 | grep "Package:\|Source:" | \
 	grep -v "Auto-Built" | sed -E 's/\(([^(.*)]*)\)//g' | sed -r 's/\s+//g' | \
 	sort -u | sort > $FNOW1
 
+
 tails=(gmagick solr swoole yac xmlrpc phalcon4)
 for atail in "${tails[@]}"; do
 	apt-cache search "\-${atail}" | grep "php\-\|${PHPV}" | cut -d" " -f1  >> $FNOW1
@@ -134,11 +135,7 @@ cat $FNOW1 | grep -i "$PHPV\|php\-" | \
 	sort -u | sort | \
 	sed 's/(\([^\)]*\))//g' >> $FNOW2
 
-cat $FNOW2; exit 0;
-
-cat $FNOW1 | grep -i "$PHPV\|php\-" | \
-	sort -u | sort | \
-	sed 's/(\([^\)]*\))//g' | \
+cat $FNOW2 | sort -u | sort | \
 	xargs aptold build-dep -my $apkg  2>&1 | tee $FSRC1
 
 # source packages
