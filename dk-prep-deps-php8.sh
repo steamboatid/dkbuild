@@ -154,6 +154,9 @@ cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
 cat $FNOW2 | sort -u | sort > $FNOW3
 line_num0=$(cat $FNOW3 | wc -l)
 
+rets=$(cat $FNOW3 | xargs apt build-dep -my 2>&1 | grep -i "unable")
+printf "$rets" | grep -i "unable"; printf "$rets" | grep -i "unable" | wc -l; exit 0;
+
 aloop=0
 while :; do
 	aloop=$(( $aloop + 1))
