@@ -52,7 +52,7 @@ fixing_folders_by_dsc_files(){
 		ahead=$(printf "$bname" | cut -d"_" -f1)
 		anum=$(find /root/org.src/$PHPV -maxdepth 1 -type d -iname "${ahead}*" | wc -l)
 		if [[ $anum -lt 1 ]]; then
-			printf " $ahead \n"
+			printf "\n\n --- ${read}$ahead ${end} missing \n"
 
 			aptold build-dep -my $ahead
 			apt source -my $ahead
