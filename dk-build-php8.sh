@@ -108,8 +108,6 @@ rm -rf /root/src/php8 /root/org.src/php8 \
 /root/src/php8.0 /root/org.src/php8.0 \
 /root/src/php8.1 /root/org.src/php8.1
 
-# find /root/org.src/php -iname "*phalcon3*" | xargs rm -rf
-# find /root/src/php -iname "*phalcon3*" | xargs rm -rf
 
 # prepare dirs
 #-------------------------------------------
@@ -143,9 +141,10 @@ cd /root/src/php
 # find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip"
 # exit 0;
 
-# for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort); do
+# for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "phalcon3\|http\|lz4\|\-ps\-" | sort); do
 
-for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "phalcon3\|http\|lz4\|\-ps\-" | sort); do
+
+for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort); do
 
 	#--- ovveride version
 	VEROVR=""
@@ -238,7 +237,7 @@ override_dh_shlibdeps:
 	# fi
 
 	# always do background, avg load already checked in the beginning loop
-	dofore "$adir"
+	doback "$adir"
 	sleep 1
 done
 
@@ -282,4 +281,4 @@ ls -la /tb2/build/$RELNAME-php/
 
 # rebuild the repo
 #-------------------------------------------
-# nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
+nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &

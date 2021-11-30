@@ -25,6 +25,26 @@ doback(){
 	sleep 1
 }
 
+wait_build_full(){
+	printf "\n\n --- wait all background build jobs: "
+	numo=0
+	while :; do
+		numa=$(ps auxw | grep -v grep | grep "dk-build-full.sh" | wc -l)
+		if [[ $numa -lt 1 ]]; then break; fi
+		if [[ $numa -ne $numo ]]; then
+			printf " $numa"
+			numo=$numa
+		else
+			printf "."
+		fi
+		sleep 3
+	done
+
+	wait
+	sleep 1
+}
+
+
 
 # reset default build flags
 #-------------------------------------------
@@ -47,26 +67,18 @@ find /tb2/build/$RELNAME-all/ -type f -iname "*deb" -delete
 # some job at background
 #-------------------------------------------
 doback_bash /tb2/build/dk-build-nutcracker.sh &
-sleep 1
 doback_bash /tb2/build/dk-build-keydb.sh &
-sleep 1
 doback_bash /tb2/build/dk-build-pcre.sh &
-sleep 1
 doback_bash /tb2/build/dk-build-lua-resty-lrucache.sh &
-sleep 1
 doback_bash /tb2/build/dk-build-lua-resty-core.sh &
-sleep 1
 doback_bash /tb2/build/dk-build-libzip.sh &
-sleep 1
 doback_bash /tb2/build/dk-build-sshfs-fuse.sh &
-sleep 1
 
 
-# some job at foreground
+# some job at foreground, wait first
 #-------------------------------------------
-/bin/bash /tb2/build/dk-build-nginx.sh
-printf "\n\n\n"
-sleep 1
+wait_build_full
+doback_bash /tb2/build/dk-build-nginx.sh &
 
 
 # build & install db4 first, then php
@@ -74,9 +86,7 @@ sleep 1
 if /bin/bash /tb2/build/dk-build-db4.sh; then
 	printf "\n\n\n"
 	sleep 1
-
-	/bin/bash /tb2/build/dk-build-php8.sh "php8.0" "8.0"
-	/bin/bash /tb2/build/dk-build-php8.sh "php8.1" "8.1"
+	/bin/bash /tb2/build/dk-build-php8.sh
 fi
 
 printf "\n\n\n"
@@ -85,22 +95,7 @@ sleep 1
 
 # wait all background jobs
 #-------------------------------------------
-printf "\n\n --- wait all background build jobs: "
-numo=0
-while :; do
-	numa=$(ps auxw | grep -v grep | grep "dk-build-full.sh" | wc -l)
-	if [[ $numa -lt 1 ]]; then break; fi
-	if [[ $numa -ne $numo ]]; then
-		printf " $numa"
-		numo=$numa
-	else
-		printf "."
-	fi
-	sleep 3
-done
-
-wait
-sleep 1
+wait_build_full
 
 
 # check if any fails
