@@ -217,9 +217,9 @@ override_dh_shlibdeps:
 	if [[ $adir == *"phalcon3"* ]]; then
 		fix_php_phalcon3
 	fi
-	# if [[ $adir == *"-ps-"* ]]; then
-	# 	fix_php_ps
-	# fi
+	if [[ $adir == *"-ps-"* ]]; then
+		fix_php_ps
+	fi
 
 	if [[ $adir == *"redis"* ]]; then
 		printf "\n\n\n --- its PHP-REDIS -- do rsync $adir \n"
