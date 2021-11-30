@@ -214,12 +214,12 @@ override_dh_shlibdeps:
 	if [[ $adir == *"lz4"* ]]; then
 		fix_php_lz4
 	fi
-	if [[ $adir == *"-ps-"* ]]; then
-		fix_php_ps
-	fi
 	if [[ $adir == *"phalcon3"* ]]; then
 		fix_php_phalcon3
 	fi
+	# if [[ $adir == *"-ps-"* ]]; then
+	# 	fix_php_ps
+	# fi
 
 	if [[ $adir == *"redis"* ]]; then
 		printf "\n\n\n --- its PHP-REDIS -- do rsync $adir \n"
