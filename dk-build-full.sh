@@ -29,12 +29,16 @@ do
 done
 
 if [ -z "${dir}" ]; then
-  printf "\n --- Usage: $0 ${red}-d <debian_build_directory>${end} "
-  dir=$PWD
-  printf "\n --- using current directory as build dir: $dir \n\n"
+	printf "\n --- Usage: $0 ${red}-d <debian_build_directory>${end} "
+	dir=$PWD
+	printf "\n --- using current directory as build dir: $dir \n\n"
 else
-  printf "\n --- using build dir: $dir \n\n"
+	printf "\n --- using build dir: $dir \n\n"
+
+	# change directory using argument
+	cd "$dir"
 fi
+
 
 
 # reset default build flags

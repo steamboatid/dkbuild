@@ -47,12 +47,19 @@ find /tb2/build/$RELNAME-all/ -type f -iname "*deb" -delete
 # some job at background
 #-------------------------------------------
 doback_bash /tb2/build/dk-build-nutcracker.sh &
+sleep 1
 doback_bash /tb2/build/dk-build-keydb.sh &
+sleep 1
 doback_bash /tb2/build/dk-build-pcre.sh &
+sleep 1
 doback_bash /tb2/build/dk-build-lua-resty-lrucache.sh &
+sleep 1
 doback_bash /tb2/build/dk-build-lua-resty-core.sh &
+sleep 1
 doback_bash /tb2/build/dk-build-libzip.sh &
+sleep 1
 doback_bash /tb2/build/dk-build-sshfs-fuse.sh &
+sleep 1
 
 
 # some job at foreground

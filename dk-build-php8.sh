@@ -173,6 +173,7 @@ override_dh_shlibdeps:
 
 	# always do background, avg load already checked in the beginning loop
 	doback "$adir"
+	sleep 1
 done
 
 

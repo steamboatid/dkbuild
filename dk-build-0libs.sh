@@ -99,7 +99,7 @@ save_clean_apt_cache(){
 
 
 install_aptfast(){
-cat <<\EOT >/etc/apt/sources.list.d/apt-fast.list
+cat << EOT >/etc/apt/sources.list.d/apt-fast.list
 deb http://ppa.launchpad.net/apt-fast/stable/ubuntu bionic main
 EOT
 	apt-key adv --keyserver keyserver.ubuntu.com \
