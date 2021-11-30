@@ -108,8 +108,8 @@ rm -rf /root/src/php8 /root/org.src/php8 \
 /root/src/php8.0 /root/org.src/php8.0 \
 /root/src/php8.1 /root/org.src/php8.1
 
-find /root/org.src/php -iname "*phalcon3*" | xargs rm -rf
-find /root/src/php -iname "*phalcon3*" | xargs rm -rf
+# find /root/org.src/php -iname "*phalcon3*" | xargs rm -rf
+# find /root/src/php -iname "*phalcon3*" | xargs rm -rf
 
 # prepare dirs
 #-------------------------------------------
