@@ -53,4 +53,4 @@ ssh argo -- lxca teye -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
 
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-php8.sh
 
-ssh argo -- lxc-attach -n bus -- /bin/bash dk-build-full.sh -d /root/src/php/php-ps-1.4.1
+# ssh argo -- lxc-attach -n bus -- /bin/bash dk-build-full.sh -d /root/src/php/php-ps-1.4.1

@@ -36,6 +36,45 @@ dofore(){
 	sleep 1
 }
 
+fix_php_pecl_http(){
+	cp debian/control debian/control.in
+
+	sed -i -r '0,/^php-pecl-http/{s/^php-pecl-http/php-http/}' debian/changelog
+	sed -i -r 's/pecl-http\.so/http\.so/' debian/php-http.pecl
+
+	sed -i -r 's/^Source\: php\-pecl\-http/Source\: php\-http/' debian/control
+	sed -i -r 's/^Provides\: php\-pecl\-http/Provides\: php\-http/' debian/control
+	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control
+
+	sed -i -r 's/^Source\: php\-pecl\-http/Source\: php\-http/' debian/control.in
+	sed -i -r 's/^Provides\: php\-pecl\-http/Provides\: php\-http/' debian/control.in
+	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control.in
+}
+
+fix_php_lz4(){
+	cp debian/control debian/control.in
+
+	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control
+	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control.in
+	sed -i -r 's/^DH_PHP_VERSIONS_OVERRIDE/\# DH_PHP_VERSIONS_OVERRIDE/' debian/rules
+}
+fix_php_ps(){
+	odir=$PWD
+
+	cd /tmp;
+	wget -c wget https://pecl.php.net/get/ps-1.4.4.tgz; \
+	tar xvzf ps-1.4.4.tgz
+
+	cd "$odir"
+	[[ -e ps-1.4.1 ]] && mv ps-1.4.1 old.ps-1.4.1
+	cp /tmp/ps-1.4.4 . -Rfa
+
+	cp debian/control debian/control.in
+	sed -i -r 's/dh-php \(>= 0.12~/dh-php \(>= 4~/' debian/control
+	sed -i -r 's/dh-php \(>= 0.12~/dh-php \(>= 4~/' debian/control.in
+	sed -i -r 's/<min>4.3.10/<min>7.0.33/' package.xml
+	sed -i -r 's/<release>1.4.1/<release>1.4.4/' package.xml
+}
 
 
 # wait until average load is OK
@@ -60,6 +99,9 @@ prepare_build_flags
 rm -rf /root/src/php8 /root/org.src/php8 \
 /root/src/php8.0 /root/org.src/php8.0 \
 /root/src/php8.1 /root/org.src/php8.1
+
+find /root/org.src/php -iname "*phalcon3*" | xargs rm -rf
+find /root/src/php -iname "*phalcon3*" | xargs rm -rf
 
 # prepare dirs
 #-------------------------------------------
@@ -155,6 +197,17 @@ override_dh_shlibdeps:
 	dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
 	-v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.aisits.id" -D buster -u high; \
 	head debian/changelog
+
+	# temporary solution
+	if [[ $adir == *"http"* ]]; then
+		fix_php_pecl_http
+	fi
+	if [[ $adir == *"lz4"* ]]; then
+		fix_php_lz4
+	fi
+	if [[ $adir == *"-ps-"* ]]; then
+		fix_php_ps
+	fi
 
 	if [[ $adir == *"redis"* ]]; then
 		printf "\n\n\n --- its PHP-REDIS -- do rsync $adir \n"
