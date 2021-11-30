@@ -75,6 +75,14 @@ fix_php_ps(){
 	sed -i -r 's/<min>4.3.10/<min>7.0.33/' package.xml
 	sed -i -r 's/<release>1.4.1/<release>1.4.4/' package.xml
 }
+fix_php_phalcon3(){
+	cp debian/control debian/control.in
+
+	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control
+	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control.in
+	sed -i -r 's/^DH_PHP_VERSIONS_OVERRIDE/\# DH_PHP_VERSIONS_OVERRIDE/' debian/rules
+}
+
 
 
 # wait until average load is OK
@@ -135,7 +143,9 @@ cd /root/src/php
 # find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip"
 # exit 0;
 
-for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort); do
+# for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort); do
+
+for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "phalcon3\|http\|lz4\|ps" | sort); do
 
 	#--- ovveride version
 	VEROVR=""
@@ -207,6 +217,9 @@ override_dh_shlibdeps:
 	fi
 	if [[ $adir == *"-ps-"* ]]; then
 		fix_php_ps
+	fi
+	if [[ $adir == *"phalcon3"* ]]; then
+		fix_php_phalcon3
 	fi
 
 	if [[ $adir == *"redis"* ]]; then
