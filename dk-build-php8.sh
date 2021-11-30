@@ -217,7 +217,7 @@ override_dh_shlibdeps:
 	if [[ $adir == *"phalcon3"* ]]; then
 		fix_php_phalcon3
 	fi
-	if [[ $adir == *"-ps-"* ]]; then
+	if [[ $adir == *"-ps-"* ]] && [[ $adir == *"1.4.1"* ]]; then
 		fix_php_ps
 	fi
 
