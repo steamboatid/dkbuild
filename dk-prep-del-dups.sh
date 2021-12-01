@@ -28,6 +28,10 @@ for adir in $(find . -mindepth 1 -maxdepth 1 -type d | grep -iv "php8\|xdebug");
 	vernum=$(printf "$bname" | rev | cut -d"-" -f1 | rev)
 	patsed=$(printf "$vernum" | sed -r 's/\+/\\+/g' | sed -r 's/\~/\\~/g')
 	extname=$(printf "$bname" | sed -r "s/$patsed//")
+
+	dirnum=$(find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | wc -l)
+	[[ $dirnum -le 1 ]] && continue;
+
 	printf "\n --- $adir -- $vernum -- $extname"
 done
 
