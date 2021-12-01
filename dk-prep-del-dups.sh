@@ -44,7 +44,10 @@ delete_duplicate_dirs(){
 
 	printf "\n\n\n"
 	for aext in $(cat $tmpf | sort -u | sort); do
-		printf "\n --- $aext \n"
+		lastver=$(find . -mindepth 1 -maxdepth 1 -type d -iname "$aext*" | \
+			sort -nr | head -n1)
+		printf "\n --- $aext --- $lastver \n"
+
 		find . -mindepth 1 -maxdepth 1 -type d -iname "$aext*" | \
 			sort -nr | tail -n +2
 
