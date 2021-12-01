@@ -46,7 +46,6 @@ delete_duplicate_dirs(){
 		echo "$extname" >> $tmpf
 	done
 
-	printf "\n"
 	for aext in $(cat $tmpf | sort -u | sort); do
 		lastver=$(find . -mindepth 1 -maxdepth 1 -type d -iname "$aext*" | \
 			sort -nr | head -n1)
@@ -71,7 +70,7 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 
 
 
-printf "\n\n --- delete duplicates "
+printf "\n\n --- delete duplicates \n"
 delete_duplicate_dirs "/root/org.src/php"
 delete_duplicate_dirs "/root/org.src/php"
 
