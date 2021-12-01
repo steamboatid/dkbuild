@@ -237,7 +237,7 @@ fi
 
 pinba_110=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*pinba-1.1.0*" | wc -l)
 pinba_112=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*pinba-1.1.2*" | wc -l)
-if [[ $pinba_110 -gt 0]] && [[ $pinba_112 -gt 0]]; then
+if [[ $pinba_110 -gt 0 ]] && [[ $pinba_112 -gt 0 ]]; then
 	find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*pinba-1.1.0*" | xargs rm -rf
 fi
 
