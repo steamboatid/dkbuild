@@ -207,6 +207,7 @@ for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-
 	#---
 	if [[ $adir != *"defaults"* ]] && [[ $adir != *"php8"* ]]; then
 		fix_debian_controls "$adir"
+		fix_debian_controls "$adir"
 	fi
 
 
