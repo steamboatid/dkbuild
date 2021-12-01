@@ -26,7 +26,8 @@ cd /root/src/php
 for adir in $(find . -mindepth 1 -maxdepth 1 -type d | grep -iv "php8\|xdebug"); do
 	bname=$(basename $adir)
 	vernum=$(printf "$bname" | rev | cut -d"-" -f1 | rev)
-	extname=$(printf "$bname" | sed -r "s/$vernum//")
+	patsed=$(printf "$vernum" | sed -r 's/\+/\\+/g' | sed -r 's/\~/\\~/g')
+	extname=$(printf "$bname" | sed -r "s/$patsed//")
 	printf "\n --- $adir -- $vernum -- $extname"
 done
 
