@@ -265,7 +265,7 @@ cd /root/src/php
 
 
 # for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort); do
-for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "http\|pro" | sort); do
+for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "http\|propro" | sort); do
 
 	#--- ovveride version
 	VEROVR=""
