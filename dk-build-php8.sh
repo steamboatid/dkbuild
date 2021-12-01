@@ -292,10 +292,10 @@ cd /root/src/php
 # exit 0;
 
 # for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "phalcon3\|http\|lz4\|\-ps\-" | sort -nr); do
+# for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep "http" | sort -nr); do
 
 
-# for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort -nr); do
-for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep "http" | sort -nr); do
+for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort -nr); do
 
 	#--- ovveride version
 	VEROVR=""
@@ -349,27 +349,12 @@ for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep "http" |
 
 		sleep 1
 		cd "$adir"
-		dofore "$adir"
+		doback "$adir"
 		continue
 	fi
 
-	# if [[ $adir == *"propro"* ]]; then
-	# 	cd "$adir"
-	# 	dofore "$adir"
-	# 	dpkg -i --force-all ../php*-propro*deb
-
-	# 	sleep 1
-	# 	http_dir=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*http*" | sort | tail -n1)
-	# 	cd "$http_dir"
-	# 	prepare_php_build "$http_dir"
-	# 	fix_php_pecl_http "$http_dir"
-	# 	dofore "$http_dir"
-	# 	continue
-	# fi
-
-
 	# always do background, avg load already checked in the beginning loop
-	dofore "$adir"
+	doback "$adir"
 	sleep 1
 done
 
