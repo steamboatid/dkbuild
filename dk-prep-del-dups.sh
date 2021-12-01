@@ -42,7 +42,7 @@ delete_duplicate_dirs(){
 		echo "$extname" >> $tmpf
 	done
 
-	printf "\n\n\n"
+	printf "\n"
 	for aext in $(cat $tmpf | sort -u | sort); do
 		lastver=$(find . -mindepth 1 -maxdepth 1 -type d -iname "$aext*" | \
 			sort -nr | head -n1)
