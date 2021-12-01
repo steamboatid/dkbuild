@@ -338,19 +338,32 @@ for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep "http" |
 	fi
 
 
-	if [[ $adir == *"propro"* ]]; then
-		cd "$adir"
-		dofore "$adir"
-		dpkg -i --force-all ../php*-propro*deb
+	if [[ $adir == *"http"* ]]; then
+		propro_dir=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*propro*" | sort | tail -n1)
+		cd "$propro_dir"
+		prepare_php_build "$propro_dir"
+		fix_debian_controls "$adir"
+		dofore "$propro_dir"
 
 		sleep 1
-		http_dir=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*http*" | sort | tail -n1)
-		cd "$http_dir"
-		prepare_php_build "$http_dir"
-		fix_php_pecl_http "$http_dir"
-		dofore "$http_dir"
+		cd "$adir"
+		dofore "$adir"
 		continue
 	fi
+
+	# if [[ $adir == *"propro"* ]]; then
+	# 	cd "$adir"
+	# 	dofore "$adir"
+	# 	dpkg -i --force-all ../php*-propro*deb
+
+	# 	sleep 1
+	# 	http_dir=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*http*" | sort | tail -n1)
+	# 	cd "$http_dir"
+	# 	prepare_php_build "$http_dir"
+	# 	fix_php_pecl_http "$http_dir"
+	# 	dofore "$http_dir"
+	# 	continue
+	# fi
 
 
 	# always do background, avg load already checked in the beginning loop
