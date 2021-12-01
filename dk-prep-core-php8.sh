@@ -20,6 +20,12 @@ export PHPGREP=("php8.0\|php8.1")
 source /tb2/build/dk-build-0libs.sh
 
 
+
+# delete phideb
+rm -rf /etc/apt/sources.list.d/phideb.list
+grep -i phideb /etc/apt/sources.list.d/* -l | xargs rm -rf
+
+
 # purge pendings
 purge_pending_installs
 

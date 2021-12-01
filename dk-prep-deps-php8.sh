@@ -46,22 +46,45 @@ get_package_file_gz(){
 }
 
 fixing_folders_by_dsc_files(){
+	odir=$PWD
+	cd /root/org.src/php
+	for a in $(find . -maxdepth 1 -type f -iname "*.dsc" | sort ); do
+		dpkg-source -x --no-check --no-overwrite-dir $a 2>&1 | grep -v 'error'
+	done
+
+
+	cd "$odir"
 	for afile in $(find /root/org.src/php -maxdepth 1 -type f -iname "*.dsc"); do
 		bname=$(basename $afile)
 		ahead=$(printf "$bname" | cut -d"_" -f1)
 		if [[ $ahead = *"xmlrpc"* ]]; then continue; fi
 
 		adir=$(printf "$ahead" | sed -r 's/\_/\-/g')
-		anum=$(find /root/org.src/php -maxdepth 1 -type d -iname "${adir}*" | wc -l)
+
+		bdir=$adir
+		patts=('php8\.0\-' 'php8\.1\-' 'php\-' '\-all\-dev')
+		for apatt in "${patts[@]}"; do
+			bdir=$(printf "$bdir" | sed -r "s/$apatt//g")
+		done
+
+		anum=$(find /root/org.src/php -maxdepth 1 -type d -iname "*${bdir}-*" | wc -l)
 		if [[ $anum -lt 1 ]]; then
-			printf "\n\n --- Dir ${read}$adir ${end} missing \n"
+			printf "\n\n --- Dir ${read}$adir -- $bdir ${end} missing \n"
 
 			aptold build-dep -my $adir
 			apt source -my $adir
 		fi
 	done
+
+	cd "$odir"
+	printf "\n\n"
 }
 
+
+
+# delete phideb
+rm -rf /etc/apt/sources.list.d/phideb.list
+grep -i phideb /etc/apt/sources.list.d/* -l | xargs rm -rf
 
 
 #--- PHP

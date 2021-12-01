@@ -44,5 +44,7 @@ ssh argo -- lxca teye -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
 ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh
 ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-all.sh
 
-ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-init-debian.sh
-ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-install-all.sh
+ssh argo -- /bin/bash /tb2/build/xrepo-rebuild.sh
+
+ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/dk-init-debian.sh
+ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/dk-install-all.sh
