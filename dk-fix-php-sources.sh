@@ -101,9 +101,15 @@ for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-
 		fix_debian_controls "$adir"
 		fix_debian_controls "$adir"
 		/usr/share/dh-php/gen-control
+
+		dhphp4=$(grep "dh\-php (>= " "$adir"/debian/control* | grep " 4" | wc -l)
+		if [[ $dhphp4 -lt 1 ]]; then
+			printf "\n --- $adir ERROR \n"
+			grep "dh\-php (>= " "$adir"/debian/control*
+			printf "\n\n"
+		fi
 	fi
 
-	grep "dh\-php (>= " "$adir"/debian/control*
 done
 
 cd /root/src/php
