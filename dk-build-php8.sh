@@ -112,6 +112,9 @@ fix_debian_controls(){
 	odir=$PWD
 	cd "$bdir"
 
+	# copy if not exists
+	[[ ! -e debian/control.in ]] && cp debian/control debian/control.in
+
 	files=('debian/control.in' 'debian/control')
 	for afile in "${files[@]}"; do
 		[[ $(grep "Package\:.*all-dev" $afile | wc -l) -lt 1 ]] && continue;
@@ -307,7 +310,8 @@ for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "http
 	fi
 
 	#---
-	fix_debian_controls
+	fix_debian_controls "$adir"
+
 
 	if [[ $adir == *"redis"* ]]; then
 		printf "\n\n\n --- its PHP-REDIS -- do rsync $adir \n"
@@ -333,15 +337,8 @@ for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "http
 	fi
 
 
-	# NUMINS=$(ps -e -o command | grep -v grep | grep "dk-build-full" | awk '{print $NF}' | wc -l)
-	# if [[ $NUMINS -lt 5 ]]; then
-	# 	doback "$adir"
-	# else
-	# 	if [[ $adir == *"phalcon"* ]]; then doback "$adir"; else dofore "$adir"; fi
-	# fi
-
 	# always do background, avg load already checked in the beginning loop
-	dofore "$adir"
+	doback "$adir"
 	sleep 1
 done
 
