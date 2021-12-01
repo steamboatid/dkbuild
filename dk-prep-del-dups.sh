@@ -19,24 +19,25 @@ export PHPGREP=("php8.0\|php8.1")
 
 source /tb2/build/dk-build-0libs.sh
 
+delete_duplicate_dirs(){
+	cd /root/src/php
+	for adir in $(find . -mindepth 1 -maxdepth 1 -type d | grep -iv "php8\|xdebug"); do
+		bname=$(basename $adir)
+		vernum=$(printf "$bname" | rev | cut -d"-" -f1 | rev)
+		patsed=$(printf "$vernum" | sed -r 's/\+/\\+/g' | sed -r 's/\~/\\~/g')
+		extname=$(printf "$bname" | sed -r "s/$patsed//")
 
+		dirnum=$(find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | wc -l)
+		[[ $dirnum -le 1 ]] && continue;
 
-cd /root/src/php
+		printf "\n --- $adir -- $vernum -- $extname "
 
-for adir in $(find . -mindepth 1 -maxdepth 1 -type d | grep -iv "php8\|xdebug"); do
-	bname=$(basename $adir)
-	vernum=$(printf "$bname" | rev | cut -d"-" -f1 | rev)
-	patsed=$(printf "$vernum" | sed -r 's/\+/\\+/g' | sed -r 's/\~/\\~/g')
-	extname=$(printf "$bname" | sed -r "s/$patsed//")
+		# find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | sort -nr | tail -n +2
+		find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | \
+			sort -nr | tail -n +2 | xargs rm -rf
+	done
+}
 
-	dirnum=$(find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | wc -l)
-	[[ $dirnum -le 1 ]] && continue;
-
-	printf "\n --- $adir -- $vernum -- $extname "
-
-	# find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | sort -nr | tail -n +2
-	find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | \
-		sort -nr | tail -n +2 | xargs rm -rf
-done
-
+delete_duplicate_dirs
+delete_duplicate_dirs
 printf "\n\n"
