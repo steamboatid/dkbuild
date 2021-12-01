@@ -337,7 +337,7 @@ for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-
 
 
 	# always do background, avg load already checked in the beginning loop
-	dofore "$adir"
+	doback "$adir"
 	sleep 1
 done
 
