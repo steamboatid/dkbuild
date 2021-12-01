@@ -24,7 +24,7 @@ delete_duplicate_dirs(){
 	adir="$1"
 	cd "$adir"
 
-	for adir in $(find . -mindepth 1 -maxdepth 1 -type d | grep -iv "php8\|xdebug"); do
+	for adir in $(find . -mindepth 1 -maxdepth 1 -type d | grep -iv "php8\|xdebug" | sort); do
 		bname=$(basename $adir)
 		vernum=$(printf "$bname" | rev | cut -d"-" -f1 | rev)
 		patsed=$(printf "$vernum" | sed -r 's/\+/\\+/g' | sed -r 's/\~/\\~/g')
