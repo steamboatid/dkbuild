@@ -114,20 +114,36 @@ fix_debian_controls(){
 
 	# copy if not exists
 	[[ ! -e debian/control.in ]] && cp debian/control debian/control.in
+	/usr/share/dh-php/gen-control
 
 	files=('debian/control.in' 'debian/control')
 	for afile in "${files[@]}"; do
-		[[ $(grep "Package\:.*all-dev" $afile | wc -l) -lt 1 ]] && continue;
-		[[ $(grep "Package\: 8.*" $afile | wc -l) -lt 1 ]] && continue;
+		if [[ $(grep "Package\:.*all-dev" $afile | wc -l) -gt 0 ]]; then
+			ftmp1=$(mktemp)
+			awk '/Package\: php.*-all-dev/ {exit} {print}' $afile > $ftmp1
+			mv $ftmp1 $afile
+		fi
 
-		ftmp1=$(mktemp)
-		awk '/Package\: php.*-all-dev/ {exit} {print}' $afile > $ftmp1
-		mv $ftmp1 $afile
+		if [[ $(grep "Package\: 8.*" $afile | wc -l) -gt 0 ]]; then
+			ftmp1=$(mktemp)
+			awk '/Package\: php8.*/ {exit} {print}' $afile > $ftmp1
+			mv $ftmp1 $afile
+		fi
 
-		awk '/Package\: php8.*/ {exit} {print}' $afile > $ftmp1
-		mv $ftmp1 $afile
+		if [[ $(grep "Package\: 7.*" $afile | wc -l) -gt 0 ]]; then
+			ftmp1=$(mktemp)
+			awk '/Package\: php7.*/ {exit} {print}' $afile > $ftmp1
+			mv $ftmp1 $afile
+		fi
+
+		if [[ $(grep "Package\: 5.*" $afile | wc -l) -gt 0 ]]; then
+			ftmp1=$(mktemp)
+			awk '/Package\: php5.*/ {exit} {print}' $afile > $ftmp1
+			mv $ftmp1 $afile
+		fi
 	done
 
+	/usr/share/dh-php/gen-control
 	cd "$odir"
 }
 
@@ -278,7 +294,8 @@ cd /root/src/php
 # for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "phalcon3\|http\|lz4\|\-ps\-" | sort -nr); do
 
 
-for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort -nr); do
+# for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort -nr); do
+for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep "http" | sort -nr); do
 
 	#--- ovveride version
 	VEROVR=""
