@@ -130,6 +130,8 @@ fix_controls_rules
 if [[ $ERRFIX -gt 0 ]]; then
 	ERRFIX=0
 	fix_controls_rules
+else
+	printf " --- OK \n"
 fi
 
 
