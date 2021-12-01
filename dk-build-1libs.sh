@@ -16,7 +16,6 @@ export TODATE=$(date +%Y%m%d)
 
 
 source /tb2/build/dk-build-0libs.sh
-source /tb2/build/dk-build-1libs.sh
 
 
 fix_php_pecl_http(){
