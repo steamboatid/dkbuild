@@ -24,6 +24,7 @@ delete_duplicate_dirs(){
 	adir="$1"
 	cd "$adir"
 
+	tmpf=$(mktemp)
 	for adir in $(find . -mindepth 1 -maxdepth 1 -type d | grep -iv "php8\|xdebug" | sort -nr); do
 		bname=$(basename $adir)
 		vernum=$(printf "$bname" | rev | cut -d"-" -f1 | rev)
@@ -35,11 +36,18 @@ delete_duplicate_dirs(){
 
 		printf "\n --- $adir -- $vernum -- $extname \n"
 
-		find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | \
-			sort -nr | tail -n +2
+		echo "$extname" >> $tmpf
+
+		# find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | \
+		# 	sort -nr | tail -n +2
 
 		# find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | \
 		# 	sort -nr | tail -n +2 | xargs rm -rf
+	done
+
+	printf "\n\n\n"
+	for aext in $(cat $tmpf | sort -u | sort); do
+		printf "\n --- $aext "
 	done
 
 	cd "$odir"
