@@ -20,7 +20,10 @@ export PHPGREP=("php8.0\|php8.1")
 source /tb2/build/dk-build-0libs.sh
 
 delete_duplicate_dirs(){
-	cd /root/src/php
+	odir=$PWD
+	adir="$1"
+	cd "$adir"
+
 	for adir in $(find . -mindepth 1 -maxdepth 1 -type d | grep -iv "php8\|xdebug"); do
 		bname=$(basename $adir)
 		vernum=$(printf "$bname" | rev | cut -d"-" -f1 | rev)
@@ -36,8 +39,14 @@ delete_duplicate_dirs(){
 		find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | \
 			sort -nr | tail -n +2 | xargs rm -rf
 	done
+
+	cd "$odir"
 }
 
-delete_duplicate_dirs
-delete_duplicate_dirs
+delete_duplicate_dirs "/root/org.src/php"
+delete_duplicate_dirs "/root/org.src/php"
+
+delete_duplicate_dirs "/root/src/php"
+delete_duplicate_dirs "/root/src/php"
+
 printf "\n\n"
