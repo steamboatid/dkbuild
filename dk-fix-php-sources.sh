@@ -80,7 +80,6 @@ delete_duplicate_dirs "/root/src/php"
 
 for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort -nr); do
 	cd $adir
-	pwd
 
 	# temporary solution
 	if [[ $adir == *"http"* ]]; then
