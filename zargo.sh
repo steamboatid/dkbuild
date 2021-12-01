@@ -44,7 +44,7 @@ ssh argo -- lxca teye -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-del-dups.sh
 
-# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh
+ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh
 ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-php8.sh
 ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-check-log.sh
 
