@@ -34,7 +34,7 @@ for adir in $(find . -mindepth 1 -maxdepth 1 -type d | grep -iv "php8\|xdebug");
 
 	printf "\n --- $adir -- $vernum -- $extname"
 
-	find . -iname "$extname-*" | sort -nr | tail -n +2
-	find . -iname "$extname-*" | sort -nr | tail -n +2 | xargs rm -rf
+	find . -mindepth 1 -maxdepth 1 -type d -iname "$extname-*" | sort -nr | tail -n +2
+	# find . -mindepth 1 -maxdepth 1 -type d -iname "$extname-*" | sort -nr | tail -n +2 | xargs rm -rf
 done
 
