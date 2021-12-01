@@ -64,6 +64,7 @@ delete_duplicate_dirs(){
 }
 
 
+printf "\n --- rsync from org.src "
 rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times --delete \
 --exclude ".git" \
 ~/org.src/php/* ~/src/php/
