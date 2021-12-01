@@ -76,6 +76,16 @@ fix_php_ps(){
 	cd "$odir"
 }
 
+fix_php_pinba(){
+	odir=$PWD
+	adir="$1"
+	cd "$adir"
+
+	sed -i -r 's/<min>4.4.8/<min>7.0.0/' package.xml
+
+	cd "$odir"
+}
+
 fix_php_phalcon3(){
 	odir=$PWD
 	adir="$1"
