@@ -31,15 +31,15 @@ delete_duplicate_dirs(){
 		patsed=$(printf "$vernum" | sed -r 's/\+/\\+/g' | sed -r 's/\~/\\~/g')
 		extname=$(printf "$bname" | sed -r "s/$patsed//")
 
-		dirnum=$(find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | wc -l)
+		if [[ $extname == *"apcu"* ]] && [[ $extname != *"-bc-"* ]]; then
+			dirnum=$(find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | grep -iv "\-bc\-" | wc -l)
+		else
+			dirnum=$(find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | wc -l)
+		fi
 		[[ $dirnum -le 1 ]] && continue;
 
 		printf "\n --- $adir -- $vernum -- $extname "
-
 		echo "$extname" >> $tmpf
-
-		# find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | \
-		# 	sort -nr | tail -n +2 | xargs rm -rf
 	done
 
 	printf "\n\n\n"
@@ -50,7 +50,6 @@ delete_duplicate_dirs(){
 
 		find . -mindepth 1 -maxdepth 1 -type d -iname "$aext*" | \
 			sort -nr | tail -n +2
-
 	done
 
 	cd "$odir"
