@@ -107,6 +107,16 @@ fix_php_phalcon3(){
 }
 
 
+fix_debian_controls(){
+	bdir="$1"
+	odir=$PWD
+	cd "$bdir"
+
+	awk '/Package\: php.*-all-dev/ {exit} {print}' debian/control.in >
+
+	cd "$odir"
+}
+
 prepare_php_build(){
 	bdir="$1"
 	odir=$PWD
@@ -254,7 +264,8 @@ cd /root/src/php
 # for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "phalcon3\|http\|lz4\|\-ps\-" | sort); do
 
 
-for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort); do
+# for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort); do
+for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "http\|pro" | sort); do
 
 	#--- ovveride version
 	VEROVR=""
