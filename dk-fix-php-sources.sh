@@ -130,12 +130,23 @@ fix_controls_rules
 if [[ $ERRFIX -gt 0 ]]; then
 	ERRFIX=0
 	fix_controls_rules
+
+	if [[ $ERRFIX -lt 1 ]]; then
+		printf " --- OK \n"
+	fi
 else
 	printf " --- OK \n"
 fi
 
 
 printf "\n\n --- check missing controls "
+olderr=$ERRFIX
+ERRFIX=0
 check_missing_controls
+if [[ $ERRFIX -lt 1 ]]; then
+	printf " --- OK \n"
+else
+	ERRFIX=$(( $ERRFIX + $olderr ))
+fi
 
 printf "\n\n"
