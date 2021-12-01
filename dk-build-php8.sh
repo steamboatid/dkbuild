@@ -37,6 +37,10 @@ dofore(){
 }
 
 fix_php_pecl_http(){
+	odir=$PWD
+	adir="$1"
+	cd "$adir"
+
 	cp debian/control debian/control.in
 
 	sed -i -r '0,/^php-pecl-http/{s/^php-pecl-http/php-http/}' debian/changelog
@@ -51,23 +55,32 @@ fix_php_pecl_http(){
 	sed -i -r 's/^Provides\: php\-pecl\-http/Provides\: php\-http/' debian/control.in
 	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control.in
 	sed -i -r 's/dh-php \(>= 0.33~/dh-php \(>= 4~/' debian/control.in
+
+	cd "$odir"
 }
 
 fix_php_lz4(){
+	odir=$PWD
+	adir="$1"
+	cd "$adir"
+
 	cp debian/control debian/control.in
 
 	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control
 	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control.in
 	sed -i -r 's/^DH_PHP_VERSIONS_OVERRIDE/\# DH_PHP_VERSIONS_OVERRIDE/' debian/rules
+
+	cd "$odir"
 }
 fix_php_ps(){
 	odir=$PWD
+	adir="$1"
 
 	cd /tmp;
 	wget -c wget https://pecl.php.net/get/ps-1.4.4.tgz; \
 	tar xvzf ps-1.4.4.tgz
 
-	cd "$odir"
+	cd "$adir"
 	[[ -e ps-1.4.1 ]] && mv ps-1.4.1 old.ps-1.4.1
 	cp /tmp/ps-1.4.4 . -Rfa
 
@@ -76,15 +89,81 @@ fix_php_ps(){
 	sed -i -r 's/dh-php \(>= 0.12~/dh-php \(>= 4~/' debian/control.in
 	sed -i -r 's/<min>4.3.10/<min>7.0.33/' package.xml
 	sed -i -r 's/<release>1.4.1/<release>1.4.4/' package.xml
+
+	cd "$odir"
 }
 fix_php_phalcon3(){
+	odir=$PWD
+	adir="$1"
+	cd "$adir"
+
 	cp debian/control debian/control.in
 
 	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control
 	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control.in
 	sed -i -r 's/^DH_PHP_VERSIONS_OVERRIDE/\# DH_PHP_VERSIONS_OVERRIDE/' debian/rules
+
+	cd "$odir"
 }
 
+
+prepare_php_build(){
+	bdir="$1"
+	odir=$PWD
+	cd "$bdir"
+
+	# revert backup if exists
+	if [ -e "debian/changelog.1" ]; then
+		cp debian/changelog.1 debian/changelog
+	fi
+	# backup changelog
+	cp debian/changelog debian/changelog.1 -fa
+
+	mkdir -p debian/rules.d
+	echo "
+override_dh_shlibdeps:
+	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info
+">debian/rules.d/ovr-shlibdeps.mk
+
+
+	# override version from source
+	#-------------------------------------------
+	if [ -e main/php_version.h ]; then
+		VERSRC=$(cat main/php_version.h | grep "define PHP_VERSION " | sed -r "s/\s+/ /g" | sed "s/\"//g" | cut -d" " -f3)
+		VEROVR="${VERSRC}.1"
+		printf "\n\n VERSRC=$VERSRC ---> VEROVR=$VEROVR \n"
+	fi
+	if [ -e php_redis.h ]; then
+		VERSRC=$(cat php_redis.h | grep "define PHP_REDIS_VERSION " | sed -r "s/\s+/ /g" | sed "s/\"//g" | cut -d" " -f3)
+		VEROVR="${VERSRC}.1"
+		printf "\n\n VERSRC=$VERSRC ---> VEROVR=$VEROVR \n"
+	fi
+
+
+	VERNUM=$(basename "$PWD" | tr "-" " " | awk '{print $NF}' | cut -f1 -d"+")
+	VERNEXT=$(echo ${VERNUM} | awk -F. -v OFS=. '{$NF=$NF+20;print}')
+	printf "\n\n$adir \n--- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
+	sleep 1
+
+	if [ -e "debian/changelog" ]; then
+		VERNUM=$(dpkg-parsechangelog --show-field Version | sed "s/[+~-]/ /g"| cut -f1 -d" ")
+		VERNEXT=$(echo ${VERNUM} | awk -F. -v OFS=. '{$NF=$NF+20;print}')
+		printf "\n by changelog \n--- VERNUM= $VERNUM NEXT= $VERNEXT---\n\n\n"
+	fi
+
+	if [ -n "$VEROVR" ]; then
+		VERNEXT=$VEROVR
+		printf "\n by VEROVR \n--- VERNUM= $VERNUM NEXT= $VERNEXT---\n\n\n"
+		sleep 1
+	fi
+
+
+	dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
+	-v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.aisits.id" -D buster -u high; \
+	head debian/changelog
+
+	cd "$odir"
+}
 
 
 # wait until average load is OK
@@ -133,6 +212,7 @@ rm -rf /root/src/php/*deb
 # BUGGY extensions
 #-------------------------------------------
 # rm -rf /root/src/php/libzip*
+
 find /root/org.src/php -maxdepth 1 -type d -iname "*xmlrpc*" | xargs rm -rf
 find /root/org.src/php -maxdepth 1 -type f -iname "*xmlrpc*" | xargs rm -rf
 find /root/src/php -maxdepth 1 -type d -iname "*xmlrpc*" | xargs rm -rf
@@ -149,6 +229,7 @@ ps_144=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*-ps-1.4.4*"
 if [[ $ps_141 -gt 0 ]] && [[ ps_144 -gt 0 ]]; then
 	find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*-ps-1.4.1*" | xargs rm -rf
 fi
+
 
 
 # Compiling all packages
@@ -174,69 +255,22 @@ for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-
 	cd $adir
 	pwd
 
-	# revert backup if exists
-	if [ -e "debian/changelog.1" ]; then
-		cp debian/changelog.1 debian/changelog
-	fi
-	# backup changelog
-	cp debian/changelog debian/changelog.1 -fa
+	#--- prepare changelog, rules.d, etc
+	prepare_php_build "$adir"
 
-	if [[ -d debian/rules.d ]]; then
-		echo "
-override_dh_shlibdeps:
-	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info
-
-">debian/rules.d/ovr-shlibdeps.mk
-	fi
-
-
-	# override version from source
-	#-------------------------------------------
-	if [ -e main/php_version.h ]; then
-		VERSRC=$(cat main/php_version.h | grep "define PHP_VERSION " | sed -r "s/\s+/ /g" | sed "s/\"//g" | cut -d" " -f3)
-		VEROVR="${VERSRC}.1"
-		printf "\n\n VERSRC=$VERSRC ---> VEROVR=$VEROVR \n"
-	fi
-	if [ -e php_redis.h ]; then
-		VERSRC=$(cat php_redis.h | grep "define PHP_REDIS_VERSION " | sed -r "s/\s+/ /g" | sed "s/\"//g" | cut -d" " -f3)
-		VEROVR="${VERSRC}.1"
-		printf "\n\n VERSRC=$VERSRC ---> VEROVR=$VEROVR \n"
-	fi
-
-
-	VERNUM=$(basename "$PWD" | tr "-" " " | awk '{print $NF}' | cut -f1 -d"+")
-	VERNEXT=$(echo ${VERNUM} | awk -F. -v OFS=. '{$NF=$NF+20;print}')
-	printf "\n\n$adir \n--- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
-	sleep 1
-
-	if [ -e "debian/changelog" ]; then
-		VERNUM=$(dpkg-parsechangelog --show-field Version | sed "s/[+~-]/ /g"| cut -f1 -d" ")
-		VERNEXT=$(echo ${VERNUM} | awk -F. -v OFS=. '{$NF=$NF+20;print}')
-		printf "\n by changelog \n--- VERNUM= $VERNUM NEXT= $VERNEXT---\n\n\n"
-	fi
-
-	if [ -n "$VEROVR" ]; then
-		VERNEXT=$VEROVR
-		printf "\n by VEROVR \n--- VERNUM= $VERNUM NEXT= $VERNEXT---\n\n\n"
-	fi
-
-
-	dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
-	-v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.aisits.id" -D buster -u high; \
-	head debian/changelog
 
 	# temporary solution
 	if [[ $adir == *"http"* ]]; then
-		fix_php_pecl_http
+		fix_php_pecl_http "$adir"
 	fi
 	if [[ $adir == *"lz4"* ]]; then
-		fix_php_lz4
+		fix_php_lz4 "$adir"
 	fi
 	if [[ $adir == *"phalcon3"* ]]; then
-		fix_php_phalcon3
+		fix_php_phalcon3 "$adir"
 	fi
 	if [[ $adir == *"-ps-"* ]] && [[ $adir == *"1.4.1"* ]]; then
-		fix_php_ps
+		fix_php_ps "$adir"
 	fi
 
 	if [[ $adir == *"redis"* ]]; then
@@ -254,6 +288,11 @@ override_dh_shlibdeps:
 		dpkg -i --force-all ../php*-propro*deb
 
 		sleep 1
+		http_dir=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*http*" | sort | tail -n1)
+		cd "$http_dir"
+		prepare_php_build "$http_dir"
+		fix_php_pecl_http "$http_dir"
+		dofore "$http_dir"
 		continue
 	fi
 
