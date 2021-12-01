@@ -64,13 +64,14 @@ delete_duplicate_dirs(){
 }
 
 
-printf "\n --- rsync from org.src "
-rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times --delete \
+printf "\n\n --- rsync from org.src "
+rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 --exclude ".git" \
 ~/org.src/php/* ~/src/php/
 
 
 
+printf "\n\n --- delete duplicates "
 delete_duplicate_dirs "/root/org.src/php"
 delete_duplicate_dirs "/root/org.src/php"
 
@@ -78,6 +79,7 @@ delete_duplicate_dirs "/root/src/php"
 delete_duplicate_dirs "/root/src/php"
 
 
+printf "\n\n --- fix controls, rules, etc "
 for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort -nr); do
 	cd $adir
 
