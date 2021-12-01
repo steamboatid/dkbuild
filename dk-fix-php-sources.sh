@@ -100,10 +100,10 @@ for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-
 	if [[ $adir != *"defaults"* ]] && [[ $adir != *"php8"* ]]; then
 		fix_debian_controls "$adir"
 		fix_debian_controls "$adir"
+		/usr/share/dh-php/gen-control
 	fi
 
 	grep "dh\-php (>= " "$adir"/debian/control*
-	/usr/share/dh-php/gen-control
 done
 
 cd /root/src/php
