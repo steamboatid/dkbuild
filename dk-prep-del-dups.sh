@@ -50,6 +50,9 @@ delete_duplicate_dirs(){
 
 		find . -mindepth 1 -maxdepth 1 -type d -iname "$aext*" | \
 			sort -nr | tail -n +2
+
+		find . -mindepth 1 -maxdepth 1 -type d -iname "$aext*" | \
+			sort -nr | tail -n +2 | xargs rm -rf
 	done
 
 	cd "$odir"
