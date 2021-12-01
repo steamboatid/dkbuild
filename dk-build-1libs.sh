@@ -97,7 +97,6 @@ fix_debian_controls(){
 
 	# copy if not exists
 	[[ ! -e debian/control.in ]] && cp debian/control debian/control.in
-	/usr/share/dh-php/gen-control
 
 	files=('debian/control.in' 'debian/control')
 	for afile in "${files[@]}"; do
@@ -132,7 +131,6 @@ fix_debian_controls(){
 		fi
 	done
 
-	/usr/share/dh-php/gen-control
 	cd "$odir"
 }
 
