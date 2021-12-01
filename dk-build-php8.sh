@@ -112,7 +112,7 @@ fix_debian_controls(){
 	odir=$PWD
 	cd "$bdir"
 
-	awk '/Package\: php.*-all-dev/ {exit} {print}' debian/control.in >
+	# awk '/Package\: php.*-all-dev/ {exit} {print}' debian/control.in >
 
 	cd "$odir"
 }
