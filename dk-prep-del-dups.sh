@@ -32,10 +32,11 @@ for adir in $(find . -mindepth 1 -maxdepth 1 -type d | grep -iv "php8\|xdebug");
 	dirnum=$(find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | wc -l)
 	[[ $dirnum -le 1 ]] && continue;
 
-	printf "\n --- $adir -- $vernum -- $extname \n"
+	printf "\n --- $adir -- $vernum -- $extname "
 
-	find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | sort -nr | tail -n +2
-	# find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | sort -nr | tail -n +2 | xargs rm -rf
+	# find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | sort -nr | tail -n +2
+	find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | \
+		sort -nr | tail -n +2 | xargs rm -rf
 done
 
 printf "\n\n"
