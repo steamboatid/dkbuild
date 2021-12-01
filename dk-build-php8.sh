@@ -45,10 +45,12 @@ fix_php_pecl_http(){
 	sed -i -r 's/^Source\: php\-pecl\-http/Source\: php\-http/' debian/control
 	sed -i -r 's/^Provides\: php\-pecl\-http/Provides\: php\-http/' debian/control
 	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control
+	sed -i -r 's/dh-php \(>= 0.33~/dh-php \(>= 4~/' debian/control
 
 	sed -i -r 's/^Source\: php\-pecl\-http/Source\: php\-http/' debian/control.in
 	sed -i -r 's/^Provides\: php\-pecl\-http/Provides\: php\-http/' debian/control.in
 	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control.in
+	sed -i -r 's/dh-php \(>= 0.33~/dh-php \(>= 4~/' debian/control.in
 }
 
 fix_php_lz4(){
@@ -128,9 +130,25 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 rm -rf /root/src/php/*deb
 
 
-# BUGGY libzip
+# BUGGY extensions
 #-------------------------------------------
 # rm -rf /root/src/php/libzip*
+find /root/org.src/php -maxdepth 1 -type d -iname "*xmlrpc*" | xargs rm -rf
+find /root/org.src/php -maxdepth 1 -type f -iname "*xmlrpc*" | xargs rm -rf
+find /root/src/php -maxdepth 1 -type d -iname "*xmlrpc*" | xargs rm -rf
+find /root/src/php -maxdepth 1 -type f -iname "*xmlrpc*" | xargs rm -rf
+
+http_v3=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*http-3*" | wc -l)
+http_v4=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*http-4*" | wc -l)
+if [[ $http_v3 -gt 0 ]] && [[ $http_v4 -gt 0 ]]; then
+	find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*http-3*" | xargs rm -rf
+fi
+
+ps_141=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*-ps-1.4.1*" | wc -l)
+ps_144=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*-ps-1.4.4*" | wc -l)
+if [[ $ps_141 -gt 0 ]] && [[ ps_144 -gt 0 ]]; then
+	find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*-ps-1.4.1*" | xargs rm -rf
+fi
 
 
 # Compiling all packages
@@ -228,6 +246,17 @@ override_dh_shlibdeps:
 		pwd
 		printf "\n\n\n"
 	fi
+
+
+	if [[ $adir == *"propro"* ]]; then
+		cd "$adir"
+		dofore "$adir"
+		dpkg -i --force-all ../php*-propro*deb
+
+		sleep 1
+		continue
+	fi
+
 
 	# NUMINS=$(ps -e -o command | grep -v grep | grep "dk-build-full" | awk '{print $NF}' | wc -l)
 	# if [[ $NUMINS -lt 5 ]]; then
