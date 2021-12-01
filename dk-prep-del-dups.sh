@@ -34,7 +34,7 @@ delete_duplicate_dirs(){
 		dirnum=$(find . -mindepth 1 -maxdepth 1 -type d -iname "$extname*" | wc -l)
 		[[ $dirnum -le 1 ]] && continue;
 
-		printf "\n --- $adir -- $vernum -- $extname \n"
+		printf "\n --- $adir -- $vernum -- $extname "
 
 		echo "$extname" >> $tmpf
 
