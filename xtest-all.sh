@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+mkdir -p /var/log/dkbuild
+
 lxc-start -qn tbus
 lxc-attach -n tbus -- /bin/bash /tb2/build/dk-init-debian.sh  2>&1 | tee /var/log/dkbuild/dk-tbus-init.log
 lxc-attach -n tbus -- /bin/bash /tb2/build/dk-install-all.sh  2>&1 | tee /var/log/dkbuild/dk-tbus-install.log

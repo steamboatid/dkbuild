@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+mkdir -p /var/log/dkbuild
+
 lxc-start -qn bus
 lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh   2>&1 | tee /var/log/dkbuild/dk-bus-prep.log
 lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-all.sh  2>&1 | tee /var/log/dkbuild/dk-bus-build.log
