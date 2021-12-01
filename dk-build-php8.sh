@@ -344,6 +344,8 @@ for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep "http" |
 		prepare_php_build "$propro_dir"
 		fix_debian_controls "$adir"
 		dofore "$propro_dir"
+		sleep 1
+		dpkg -i --force-all ../php*-propro*deb
 
 		sleep 1
 		cd "$adir"
