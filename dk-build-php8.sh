@@ -149,28 +149,6 @@ rm -rf /root/src/php/*deb
 #-------------------------------------------
 # rm -rf /root/src/php/libzip*
 
-find /root/org.src/php -maxdepth 1 -type d -iname "*xmlrpc*" | xargs rm -rf
-find /root/org.src/php -maxdepth 1 -type f -iname "*xmlrpc*" | xargs rm -rf
-find /root/src/php -maxdepth 1 -type d -iname "*xmlrpc*" | xargs rm -rf
-find /root/src/php -maxdepth 1 -type f -iname "*xmlrpc*" | xargs rm -rf
-
-http_v3=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*http-3*" | wc -l)
-http_v4=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*http-4*" | wc -l)
-if [[ $http_v3 -gt 0 ]] && [[ $http_v4 -gt 0 ]]; then
-	find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*http-3*" | xargs rm -rf
-fi
-
-ps_141=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*-ps-1.4.1*" | wc -l)
-ps_144=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*-ps-1.4.4*" | wc -l)
-if [[ $ps_141 -gt 0 ]] && [[ ps_144 -gt 0 ]]; then
-	find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*-ps-1.4.1*" | xargs rm -rf
-fi
-
-pinba_110=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*pinba-1.1.0*" | wc -l)
-pinba_112=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*pinba-1.1.2*" | wc -l)
-if [[ $pinba_110 -gt 0 ]] && [[ $pinba_112 -gt 0 ]]; then
-	find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*pinba-1.1.0*" | xargs rm -rf
-fi
 
 
 

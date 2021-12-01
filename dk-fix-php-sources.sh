@@ -123,6 +123,8 @@ printf "\n\n --- delete duplicates: src \n"
 delete_duplicate_dirs "/root/src/php"
 delete_duplicate_dirs "/root/src/php"
 
+printf "\n\n --- delete bad ext "
+delete_bad_php_ext
 
 printf "\n\n --- fix controls, rules, etc "
 ERRFIX=0
