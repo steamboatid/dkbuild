@@ -23,6 +23,7 @@ delete_duplicate_dirs(){
 	odir=$PWD
 	adir="$1"
 	cd "$adir"
+	pwd
 
 	tmpf=$(mktemp)
 	for adir in $(find . -mindepth 1 -maxdepth 1 -type d | grep -iv "php8\|xdebug" | sort -nr); do
