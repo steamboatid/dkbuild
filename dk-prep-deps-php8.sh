@@ -83,8 +83,7 @@ fixing_folders_by_dsc_files(){
 
 
 # delete phideb
-rm -rf /etc/apt/sources.list.d/phideb.list
-grep -i phideb /etc/apt/sources.list.d/* -l | xargs rm -rf
+delete_phideb
 
 
 #--- PHP

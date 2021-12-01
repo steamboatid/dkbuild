@@ -22,8 +22,7 @@ source /tb2/build/dk-build-0libs.sh
 
 
 # delete phideb
-rm -rf /etc/apt/sources.list.d/phideb.list
-grep -i phideb /etc/apt/sources.list.d/* -l | xargs rm -rf
+delete_phideb
 
 
 # purge pendings

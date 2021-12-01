@@ -638,6 +638,20 @@ wait_by_average_load(){
 	[[ $LOOPLOAD -gt 2 ]] && printf "\n last load: $AVGL \n"
 }
 
+delete_phideb(){
+	phideb=0
+	if [[ -e /etc/apt/sources.list.d/phideb.list ]]; then
+		rm -rf /etc/apt/sources.list.d/phideb.list
+		phideb=1
+	fi
+	if [[ $(grep -i phideb /etc/apt/sources.list.d/* -l | wc -l) -gt 0 ]]; then
+		grep -i phideb /etc/apt/sources.list.d/* -l | xargs rm -rf
+		phideb=2
+	fi
+	if [[ $phideb -gt 0 ]]; then
+		apt update
+	fi
+}
 
 init_dkbuild(){
 	# global config
