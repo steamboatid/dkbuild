@@ -55,6 +55,7 @@ delete_duplicate_dirs(){
 		find . -mindepth 1 -maxdepth 1 -type d -iname "$aext*" | \
 			sort -nr | tail -n +2 | xargs rm -rf
 	done
+	rm -rf $tmpf
 
 	cd "$odir"
 }
@@ -64,5 +65,14 @@ delete_duplicate_dirs "/root/org.src/php"
 
 delete_duplicate_dirs "/root/src/php"
 delete_duplicate_dirs "/root/src/php"
+
+
+cd /root/src/php
+for adir in $(find . -mindepth 1 -maxdepth 1 -type d | grep -iv "php8\|xdebug" | sort -nr); do
+	nums=$(find -L "$adir/debian" -iname "control.in" | wc -l)
+	if [[ $nums -lt 1 ]]; then
+		printf "\n -- missing control.in: $adir "
+	fi
+done
 
 printf "\n\n"

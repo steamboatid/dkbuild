@@ -171,6 +171,11 @@ override_dh_shlibdeps:
 wait_by_average_load
 
 
+# delete duplicated dirs
+#-------------------------------------------
+/bin/bash /tb2/build/dk-prep-del-dups.sh
+
+
 # special version
 #-------------------------------------------
 VEROVR=""
