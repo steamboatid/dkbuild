@@ -141,6 +141,12 @@ fix_debian_controls(){
 			awk '/Package\: php5.*/ {exit} {print}' $afile > $ftmp1
 			mv $ftmp1 $afile
 		fi
+
+		dhphp_num=$(cat "$afile" | grep "dh\-php \(.*\)" | wc -l)
+		# printf "\n\n $dhphp_num \n"
+		if [[ $dhphp_num -gt 0 ]]; then
+			sed -i -r 's/dh\-php \(>= .*\~?\)/dh\-php \(>= 4\~)/g' $afile
+		fi
 	done
 
 	/usr/share/dh-php/gen-control
@@ -353,6 +359,13 @@ for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-
 		sleep 1
 		cd "$adir"
 		doback "$adir"
+		continue
+	fi
+
+	if [[ $adir == *"propro"* ]]; then
+		dofore "$adir"
+		sleep 1
+		dpkg -i --force-all ../php*-propro*deb
 		continue
 	fi
 
