@@ -23,4 +23,9 @@ source /tb2/build/dk-build-0libs.sh
 
 cd /root/src/php
 
-find . -mindepth 1 -maxdepth 1 -type d
+for adir in $(find . -mindepth 1 -maxdepth 1 -type d | grep -iv "php8\|xdebug"); do
+	bname=$(basename $adir)
+	vernum=$(echo $bname | rev | cut -d"-" -f1 | rev)
+	printf "\n --- $adir -- $vernum"
+done
+
