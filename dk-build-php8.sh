@@ -275,11 +275,10 @@ cd /root/src/php
 # find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip"
 # exit 0;
 
-# for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "phalcon3\|http\|lz4\|\-ps\-" | sort); do
+# for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "phalcon3\|http\|lz4\|\-ps\-" | sort -nr); do
 
 
-# for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort); do
-for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "http" | sort); do
+for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort -nr); do
 
 	#--- ovveride version
 	VEROVR=""
