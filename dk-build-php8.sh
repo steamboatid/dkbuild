@@ -112,7 +112,18 @@ fix_debian_controls(){
 	odir=$PWD
 	cd "$bdir"
 
-	# awk '/Package\: php.*-all-dev/ {exit} {print}' debian/control.in >
+	files=('debian/control.in' 'debian/control')
+	for afile in "${files[@]}"; do
+		[[ $(grep "Package\:.*all-dev" $afile | wc -l) -lt 1 ]] && continue;
+		[[ $(grep "Package\: 8.*" $afile | wc -l) -lt 1 ]] && continue;
+
+		ftmp1=$(mktemp)
+		awk '/Package\: php.*-all-dev/ {exit} {print}' $afile > $ftmp1
+		mv $ftmp1 $afile
+
+		awk '/Package\: php8.*/ {exit} {print}' $afile > $ftmp1
+		mv $ftmp1 $afile
+	done
 
 	cd "$odir"
 }
@@ -295,6 +306,9 @@ for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "http
 		fix_php_ps "$adir"
 	fi
 
+	#---
+	fix_debian_controls
+
 	if [[ $adir == *"redis"* ]]; then
 		printf "\n\n\n --- its PHP-REDIS -- do rsync $adir \n"
 		rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
@@ -351,9 +365,6 @@ done
 wait
 sleep 1
 printf "\n\n"
-
-
-cat /root/src/php/php-pecl-http-4.1.0+3.2.4+2.6.0/dkbuild.log
 
 
 
