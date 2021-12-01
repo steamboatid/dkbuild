@@ -353,6 +353,9 @@ sleep 1
 printf "\n\n"
 
 
+cat /root/src/php/php-pecl-http-4.1.0+3.2.4+2.6.0/dkbuild.log
+
+
 
 # delete unneeded packages
 #-------------------------------------------
