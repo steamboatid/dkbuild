@@ -148,7 +148,7 @@ check_missing_controls
 if [[ $ERRFIX -lt 1 ]]; then
 	printf " --- OK \n"
 else
-	ERRFIX=$(( $ERRFIX + $olderr ))
+	export ERRFIX=$(( $ERRFIX + $olderr ))
 fi
 
 printf "\n\n"

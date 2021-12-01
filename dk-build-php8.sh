@@ -148,7 +148,14 @@ rm -rf /root/src/php/*deb
 # BUGGY extensions
 #-------------------------------------------
 # rm -rf /root/src/php/libzip*
+delete_bad_php_ext
 
+export ERRFIX=0
+/bin/bash /tb2/build/dk-fix-php-sources.sh
+if [[ $ERRFIX -gt 0 ]]; then
+	printf "\n\n\n FATAL ERROR \n\n"
+	exit 10
+fi
 
 
 
@@ -195,8 +202,7 @@ for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-
 	fi
 
 	#---
-	if [[ $adir != *"defaults"* ]]; then
-		fix_debian_controls "$adir"
+	if [[ $adir != *"defaults"* ]] && [[ $adir != *"php8"* ]]; then
 		fix_debian_controls "$adir"
 	fi
 
