@@ -75,17 +75,24 @@ for adir in $(find /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*" 
 
 	VERNUM=$(basename "$PWD" | tr "-" " " | awk '{print $NF}' | cut -f1 -d"+")
 	VERNEXT=$(echo ${VERNUM} | awk -F. -v OFS=. '{$NF=$NF+20;print}')
-	printf "\n\n$adir --- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
+	printf "\n\n$adir --- VERNUM= $VERNUM NEXT= $VERNEXT ---\n"
 
+	# pcre only
 	if [ -e "debian/changelog" ]; then
-		VERNUM=$(dpkg-parsechangelog --show-field Version | sed "s/[+~-]/ /g"| cut -f1 -d" ")
-		VERNEXT=$(echo ${VERNUM} | awk -F. -v OFS=. '{$NF=$NF+20;print}')
-		printf "\n by changelog \n--- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
+		VERNUM=$(dpkg-parsechangelog --show-field Version | sed "s/[+~]/ /g"| cut -f1 -d" ")
+		VERNEXT=$(echo ${VERNUM} | awk -F- -v OFS=- '{$NF=$NF+20;print}')
+		printf "\n by changelog \n--- VERNUM= $VERNUM NEXT= $VERNEXT ---\n"
 	fi
+
+	# if [ -e "debian/changelog" ]; then
+	# 	VERNUM=$(dpkg-parsechangelog --show-field Version | sed "s/[+~-]/ /g"| cut -f1 -d" ")
+	# 	VERNEXT=$(echo ${VERNUM} | awk -F. -v OFS=. '{$NF=$NF+20;print}')
+	# 	printf "\n by changelog \n--- VERNUM= $VERNUM NEXT= $VERNEXT ---\n"
+	# fi
 
 	if [ -n "$VEROVR" ]; then
 		VERNEXT=$VEROVR
-		printf "\n\n$adir --- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
+		printf "\n\n$adir --- VERNUM= $VERNUM NEXT= $VERNEXT ---\n"
 	fi
 
 
