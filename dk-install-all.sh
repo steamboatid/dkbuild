@@ -109,6 +109,11 @@ export LANGUAGE=en_US.UTF-8
 fi
 
 
+#--- for logging
+ip a
+dhclient eth0
+
+
 find /var/lib/apt/lists/ -type f -delete; \
 find /var/cache/apt/ -type f -delete; \
 rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \

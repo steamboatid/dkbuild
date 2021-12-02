@@ -18,20 +18,14 @@ nohup /bin/bash /tb2/build/zgit-auto.sh >/dev/null 2>&1 &
 
 ssh argo "nohup chmod +x /usr/local/sbin/* /tb2/build/*sh 2>&1 >/dev/null &"
 
-ssh argo "lxc-start -qn tbus >/dev/null 2>&1 &"
-ssh argo "lxc-start -qn teye >/dev/null 2>&1 &"
-ssh argo "lxc-start -qn bus  >/dev/null 2>&1 &"
-ssh argo "lxc-start -qn eye  >/dev/null 2>&1 &"
+lxcs=(bus eye tbus teye)
+for alxc in ${lxcs[@]}; do
+	ssh argo -- lxc-start -qn $alxc
+	ssh argo -- lxca $alxc -- dhclient eth0 >/dev/null 2>&1 &
+	ssh argo -- lxca $alxc -- rm -rf /usr/local/sbin/dk*sh
+	ssh argo -- lxca $alxc -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
+done
 
-ssh argo -- lxca eye  -- rm -rf /usr/local/sbin/dk*sh
-ssh argo -- lxca bus  -- rm -rf /usr/local/sbin/dk*sh
-ssh argo -- lxca tbus -- rm -rf /usr/local/sbin/dk*sh
-ssh argo -- lxca teye -- rm -rf /usr/local/sbin/dk*sh
-
-ssh argo -- lxca eye  -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
-ssh argo -- lxca bus  -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
-ssh argo -- lxca tbus -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
-ssh argo -- lxca teye -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
 
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-fix-php-sources.sh
