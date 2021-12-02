@@ -1,7 +1,10 @@
 #!/bin/bash
 
 
-mkdir -p /tb2/root/github/dkbuild/
+mkdir -p /tb2/root/github/dkbuild/ /tb2/root/github/baks.dkbuild/
+
+rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
+/tb2/root/github/dkbuild/* /tb2/root/github/baks.dkbuild/
 
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 /tb2/build/*sh /tb2/root/github/dkbuild/
