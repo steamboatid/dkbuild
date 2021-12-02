@@ -114,7 +114,7 @@ fix_debian_controls(){
 
 		if [[ $(grep "Package\:.*all-dev" $afile | wc -l) -gt 0 ]]; then
 			ftmp1=$(mktemp)
-			awk '/Package\: php.*-all-dev/ {exit} {print}' $afile > $ftmp1
+			awk '/Package: php.*-all-dev/ {exit} {print}' $afile > $ftmp1
 			mv $ftmp1 $afile
 		fi
 
