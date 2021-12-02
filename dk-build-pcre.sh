@@ -116,7 +116,7 @@ find /root/src/pcre -type f -iname "*dbgsym*deb" -delete
 
 # install current debs
 #-------------------------------------------
-dpkg -i --force-all ../*deb
+dpkg -i --force-all *deb
 
 
 # upload to /tb2/build/{$RELNAME}-nginx
