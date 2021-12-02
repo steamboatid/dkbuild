@@ -209,6 +209,12 @@ complete_php_installs() {
 	vnum="$2"
 	> /tmp/pkg-php0.txt
 
+	apt-cache search db4.8 | grep -iv "cil\|tcl\|doc" | \
+	cut -d" " -f1 | xargs aptold install -fy -o Dpkg::Options::="--force-overwrite"
+
+	apt-cache search db4.8 | grep -iv "cil\|tcl\|doc" | \
+	cut -d" " -f1  >> /tmp/pkg-php0.txt
+
 	apt-cache search $phpv | grep -v "apache\|embed" |\
 	grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache\|enchant" |\
 	grep "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|common\|fpm\|cli" \
