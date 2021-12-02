@@ -110,6 +110,8 @@ fix_debian_controls(){
 
 	files=('debian/control.in' 'debian/control')
 	for afile in "${files[@]}"; do
+		if [[ ! -e $afile ]]; then continue; fi
+
 		if [[ $(grep "Package\:.*all-dev" $afile | wc -l) -gt 0 ]]; then
 			ftmp1=$(mktemp)
 			awk '/Package\: php.*-all-dev/ {exit} {print}' $afile > $ftmp1
