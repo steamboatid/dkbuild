@@ -90,7 +90,13 @@ get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core
 
 mkdir -p /root/org.src/pcre /root/src/pcre
 cd /root/org.src/pcre
-apt source -y libpcre3
+ftmp=$(mktemp)
+echo 'libpcre2-posix2' > $ftmp
+apt-cache search pcre2 | grep -iv "rust\|elpa\|dbg\|posix" | cut -d" " -f1 >> $ftmp
+apt-cache search pcre3 | grep -iv "rust\|elpa\|dbg\|posix" | cut -d" " -f1 >> $ftmp
+cat $ftmp | tr "\n" " " | xargs aptold install -fy
+cat $ftmp | tr "\n" " " | xargs aptold build-dep -fy
+cat $ftmp | tr "\n" " " | xargs aptold source -y
 
 
 #--- sync to src
