@@ -325,13 +325,15 @@ check_build_log(){
 
 	PHPLOGS=$(find /root/src/php -maxdepth 2 -iname "dkbuild.log" | wc -l)
 	PHPDIRS=$(find /root/src/php -maxdepth 1 -type d | wc -l)
-	printf "\n\n PHP LOGS = ${yel}$PHPLOGS${end} --  PHP DIRS = ${yel}$PHPDIRS${end} \n"
 
+	PHPDIRA=0
 	for adir in $(find /root/src/php -mindepth 1 -maxdepth 1 -type d | sort -n); do
 		if [[ $(find $adir -maxdepth 1 -type f -iname "dkbuild.log" | wc -l) -lt 1 ]]; then
 			printf "\n --- no build.log: $adir "
 		fi
+		PHPDIRA=$(( $PHPDIRA + 1 ))
 	done
+	printf "\n\n PHP LOGS = ${yel}$PHPLOGS${end} --  PHP DIRS = ${yel}$PHPDIRS, $PHPDIRA${end} \n"
 
 	printf "\n\n"
 }
