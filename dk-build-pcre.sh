@@ -62,7 +62,7 @@ rm -rf /root/src/pcre/*deb
 cd /root/src/pcre
 find /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*"
 
-for adir in $(find /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*"); do
+for adir in $(find /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*" | sort -nr); do
 	cd $adir
 	pwd
 
@@ -95,7 +95,6 @@ for adir in $(find /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*")
 		VERNEXT=$VEROVR
 		printf "\n\n$adir --- VERNUM= $VERNUM NEXT= $VERNEXT ---\n"
 	fi
-	continue
 
 
 	dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
@@ -105,7 +104,6 @@ for adir in $(find /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*")
 
 	/bin/bash /tb2/build/dk-build-full.sh
 done
-exit
 
 
 # delete unneeded packages
@@ -114,6 +112,11 @@ mkdir -p /root/src/pcre
 cd /root/src/pcre
 find /root/src/pcre -type f -iname "*udeb" -delete
 find /root/src/pcre -type f -iname "*dbgsym*deb" -delete
+
+
+# install current debs
+#-------------------------------------------
+dpkg -i --force-all ../*deb
 
 
 # upload to /tb2/build/{$RELNAME}-nginx
