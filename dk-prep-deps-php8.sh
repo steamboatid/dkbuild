@@ -207,19 +207,14 @@ cat $FSRC3 | sort -u | sort | tr "\n" " " | xargs apt source -my
 #--- last attempt to install all
 cd /root/org.src/php
 apt-cache search php8 | cut -d" " -f1 | \
-	grep -iv "apache\|embed\|dbgsym\|yac\|gmagick" | xargs aptold install -fy
+	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" | xargs aptold install -fy
 apt-cache search php8 | cut -d" " -f1 | \
-	grep -iv "apache\|embed\|dbgsym\|yac\|gmagick" | xargs aptold build-dep -fy
+	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" | xargs aptold build-dep -fy
 apt-cache search php8 | cut -d" " -f1 | \
-	grep -iv "apache\|embed\|dbgsym" | xargs aptold source -y
+	grep -iv "symfony\|apache\|embed\|dbgsym" | xargs aptold source -y
 
 apt-cache search libxmlrpc | cut -d" " -f1 | \
 	grep -iv "perl\|java\|ocaml" | xargs aptold install -fy
-apt-cache search phpdbg | cut -d" " -f1 | \
-	grep -iv "dbgsym" | xargs aptold install -fy
-
-apt-cache search php | cut -d" " -f1 | grep "\-dev" | \
-	grep -iv "yac\|gmagick\|xcache\|solr\|swoole" | xargs aptold install -fy
 
 
 fixing_folders_by_dsc_files
