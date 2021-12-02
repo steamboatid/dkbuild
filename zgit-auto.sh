@@ -6,7 +6,7 @@ mkdir -p /tb2/root/github/dkbuild/ /tb2/root/github/baks.dkbuild/
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 /tb2/root/github/dkbuild/* /tb2/root/github/baks.dkbuild/
 
-rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
+rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /tb2/build/*sh /tb2/root/github/dkbuild/
 
 cd /tb2/root/github/dkbuild/
