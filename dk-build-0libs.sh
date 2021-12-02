@@ -321,7 +321,9 @@ check_build_log(){
 		printf "\n\n\n\t TOTAL FAILS = $TOTFAIL\n\n"
 		exit $TOTFAIL; # exit as error
 	fi
+	PHPLOG=$(find /root/src/php -maxdepth 2 -iname "dkbuild.log" | wc -l)
 	printf "\n\n TOTAL LOGS = ${yel}$TOTLOG ${end} \n"
+	printf "\n\n PHP LOGS = ${yel}$PHPLOG ${end} \n"
 	printf "\n\n"
 }
 
