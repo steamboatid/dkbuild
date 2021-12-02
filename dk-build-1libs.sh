@@ -104,6 +104,7 @@ fix_debian_controls(){
 	bdir="$1"
 	odir=$PWD
 	cd "$bdir"
+	pwd
 
 	# copy if not exists
 	[[ ! -e debian/control.in ]] && cp debian/control debian/control.in
@@ -114,25 +115,25 @@ fix_debian_controls(){
 
 		if [[ $(grep "Package\:.*all-dev" $afile | wc -l) -gt 0 ]]; then
 			ftmp1=$(mktemp)
-			awk "/Package\: php.*-all-dev/ {exit} {print}" $afile > $ftmp1
+			awk '/Package: php.*-all-dev/ {exit} {print}' $afile > $ftmp1
 			mv $ftmp1 $afile
 		fi
 
 		if [[ $(grep "Package\: 8.*" $afile | wc -l) -gt 0 ]]; then
 			ftmp1=$(mktemp)
-			awk '/Package\: php8.*/ {exit} {print}' $afile > $ftmp1
+			awk '/Package: php8.*/ {exit} {print}' $afile > $ftmp1
 			mv $ftmp1 $afile
 		fi
 
 		if [[ $(grep "Package\: 7.*" $afile | wc -l) -gt 0 ]]; then
 			ftmp1=$(mktemp)
-			awk '/Package\: php7.*/ {exit} {print}' $afile > $ftmp1
+			awk '/Package: php7.*/ {exit} {print}' $afile > $ftmp1
 			mv $ftmp1 $afile
 		fi
 
 		if [[ $(grep "Package\: 5.*" $afile | wc -l) -gt 0 ]]; then
 			ftmp1=$(mktemp)
-			awk '/Package\: php5.*/ {exit} {print}' $afile > $ftmp1
+			awk '/Package: php5.*/ {exit} {print}' $afile > $ftmp1
 			mv $ftmp1 $afile
 		fi
 
