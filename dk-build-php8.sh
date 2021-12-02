@@ -228,23 +228,16 @@ for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-
 		dofore "$propro_dir"
 		sleep 1
 		dpkg -i --force-all ../php*-propro*deb
-
-		sleep 1
-		cd "$adir"
-		doback "$adir"
-		continue
-	fi
-
-	if [[ $adir == *"propro"* ]]; then
-		dofore "$adir"
-		sleep 1
-		dpkg -i --force-all ../php*-propro*deb
-		continue
 	fi
 
 	# always do background, avg load already checked in the beginning loop
 	doback "$adir"
 	sleep 1
+
+	# install after build
+	if [[ $adir == *"propro"* ]]; then
+		dpkg -i --force-all ../php*-propro*deb
+	fi
 done
 
 
