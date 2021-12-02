@@ -94,6 +94,7 @@ for adir in $(find /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*")
 		VERNEXT=$VEROVR
 		printf "\n\n$adir --- VERNUM= $VERNUM NEXT= $VERNEXT ---\n"
 	fi
+	continue
 
 
 	dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
