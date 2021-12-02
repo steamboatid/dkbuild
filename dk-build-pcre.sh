@@ -61,7 +61,7 @@ rm -rf /root/src/pcre/*deb
 #-------------------------------------------
 cd /root/src/pcre
 
-for adir in $(find /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*" | head -n1); do
+for adir in $(find /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*"); do
 	cd $adir
 	pwd
 

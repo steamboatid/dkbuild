@@ -44,7 +44,7 @@ do_hash() {
 
 create_release() {
 	RELNAME=$1
-	RELVER="0.1"
+	RELVER="0.3"
 
 	cat << EOF
 Archive: stable
