@@ -27,7 +27,7 @@ for alxc in ${lxcs[@]}; do
 done
 
 
-# ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-all.sh
+ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-all.sh
 ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-fix-php-sources.sh
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-php8.sh
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-check-log.sh
