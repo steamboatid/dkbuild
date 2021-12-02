@@ -60,6 +60,7 @@ rm -rf /root/src/pcre/*deb
 # build
 #-------------------------------------------
 cd /root/src/pcre
+find /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*"
 
 for adir in $(find /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*"); do
 	cd $adir
