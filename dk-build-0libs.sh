@@ -302,6 +302,7 @@ doback_bash(){
 check_build_log(){
 	printf "\n\n---check dkbuild.log \n"
 	export TOTFAIL=0
+	export TOTLOG=0
 	for alog in $(find /root/src -maxdepth 3 -type f -iname "dkbuild.log" | sort -u); do
 		printf " --- $alog ---\n"
 		NUMFAIL=$(tail -n100 ${alog} | tr -d '\000' | grep -a "buildpackage" | grep -a "failed" | wc -l)
@@ -312,6 +313,7 @@ check_build_log(){
 			tail -n100 ${alog} | tr -d '\000' | grep -a "buildpackage" | grep -a "failed"
 			printf "\n"
 		fi
+		TOTLOG=$(( $TOTLOG + 1 ))
 	done
 	sleep 0.1
 
@@ -319,6 +321,7 @@ check_build_log(){
 		printf "\n\n\n\t TOTAL FAILS = $TOTFAIL\n\n"
 		exit $TOTFAIL; # exit as error
 	fi
+	printf "\n\n TOTAL LOGS = ${yel}$TOTLOG ${end} \n"
 	printf "\n\n"
 }
 
