@@ -118,23 +118,23 @@ fix_debian_controls(){
 		# 	mv $ftmp1 $afile
 		# fi
 
-		# if [[ $(grep "Package\: 8.*" $afile | wc -l) -gt 0 ]]; then
-		# 	ftmp1=$(mktemp)
-		# 	awk '/Package\: php8.*/ {exit} {print}' $afile > $ftmp1
-		# 	mv $ftmp1 $afile
-		# fi
+		if [[ $(grep "Package\: 8.*" $afile | wc -l) -gt 0 ]]; then
+			ftmp1=$(mktemp)
+			awk '/Package\: php8.*/ {exit} {print}' $afile > $ftmp1
+			mv $ftmp1 $afile
+		fi
 
-		# if [[ $(grep "Package\: 7.*" $afile | wc -l) -gt 0 ]]; then
-		# 	ftmp1=$(mktemp)
-		# 	awk '/Package\: php7.*/ {exit} {print}' $afile > $ftmp1
-		# 	mv $ftmp1 $afile
-		# fi
+		if [[ $(grep "Package\: 7.*" $afile | wc -l) -gt 0 ]]; then
+			ftmp1=$(mktemp)
+			awk '/Package\: php7.*/ {exit} {print}' $afile > $ftmp1
+			mv $ftmp1 $afile
+		fi
 
-		# if [[ $(grep "Package\: 5.*" $afile | wc -l) -gt 0 ]]; then
-		# 	ftmp1=$(mktemp)
-		# 	awk '/Package\: php5.*/ {exit} {print}' $afile > $ftmp1
-		# 	mv $ftmp1 $afile
-		# fi
+		if [[ $(grep "Package\: 5.*" $afile | wc -l) -gt 0 ]]; then
+			ftmp1=$(mktemp)
+			awk '/Package\: php5.*/ {exit} {print}' $afile > $ftmp1
+			mv $ftmp1 $afile
+		fi
 
 		dhphp_num=$(cat "$afile" | grep "dh\-php \(.*\)" | wc -l)
 		# printf "\n\n $dhphp_num \n"
