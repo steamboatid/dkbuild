@@ -57,7 +57,8 @@ rm -rf /root/src/db4/*deb
 
 # build
 #-------------------------------------------
-cd /root/src/db4/git-db4
+BUILDDIR="/root/src/db4/git-db4"
+cd $BUILDDIR
 
 # revert backup if exists
 if [ -e "debian/changelog.1" ]; then
@@ -99,7 +100,7 @@ dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELV
 head debian/changelog
 sleep 2
 
-/bin/bash /tb2/build/dk-build-full.sh
+/bin/bash /tb2/build/dk-build-full.sh -d $BUILDDIR
 
 
 # delete unneeded packages

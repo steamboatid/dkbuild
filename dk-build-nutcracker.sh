@@ -56,7 +56,8 @@ rm -rf /root/src/nutcracker/*deb
 
 # build
 #-------------------------------------------
-cd /root/src/nutcracker/git-nutcracker
+BUILDDIR="/root/src/nutcracker/git-nutcracker"
+cd $BUILDDIR
 
 # revert backup if exists
 if [ -e "debian/changelog.1" ]; then
@@ -100,8 +101,7 @@ dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELV
 head debian/changelog
 sleep 2
 
-/bin/bash /tb2/build/dk-build-full.sh
-
+/bin/bash /tb2/build/dk-build-full.sh -d $BUILDDIR
 
 
 # delete unneeded packages
