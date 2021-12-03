@@ -10,6 +10,9 @@ kill_current_scripts(){
 		awk '{print $2}' | grep -v "$PID" | xargs kill -9  >/dev/null 2>&1
 	ps auxw | grep -v grep | grep "dk-" | grep ".sh" | \
 		awk '{print $2}' | grep -v "$PID" | xargs kill -9  >/dev/null 2>&1
+
+	killall -9 ccache cc cc1 gcc g++  >/dev/null 2>&1
+	killall -9 ccache cc cc1 gcc g++  >/dev/null 2>&1
 }
 
 kill_current_scripts
