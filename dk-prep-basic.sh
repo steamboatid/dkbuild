@@ -35,6 +35,7 @@ aptold update
 
 dpkg --configure -a; \
 aptold install -y
+exit 0
 
 
 #--- preparing screen
