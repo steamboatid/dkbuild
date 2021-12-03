@@ -180,7 +180,9 @@ gnupg2 apt-utils tzdata curl ssh rsync libxmlrpc* \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen
 
-apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys | grep -iv "not changed"
+
+apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys \
+	2>&1 | grep -iv "not changed"
 
 aptold update; aptold full-upgrade --auto-remove --purge -fy
 
@@ -235,7 +237,9 @@ grep -iv "dbg\|lisp\|ocaml\|posix0" >>  /tmp/deps.pkgs
 cat ~/build.deps | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | \
 sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g"  >>  /tmp/deps.pkgs
 
-cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | xargs aptold install -y --ignore-missing
+cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
+	xargs aptold install -y --ignore-missing \
+	2>&1 | grep -iv "newest"
 
 
 #--- wait
