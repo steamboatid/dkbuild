@@ -15,6 +15,7 @@ export TODATE=$(date +%Y%m%d)
 
 
 source /tb2/build/dk-build-0libs.sh
+exit 0
 
 
 
@@ -35,7 +36,6 @@ aptold update
 
 dpkg --configure -a; \
 aptold install -y
-exit 0
 
 
 #--- preparing screen
