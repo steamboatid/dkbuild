@@ -1,6 +1,21 @@
 #!/bin/bash
 
 
+
+kill_current_scripts(){
+	PID=$$
+	ps auxw | grep -v grep | grep "xbuild-test-all.sh" | \
+		awk '{print $2}' | grep -v "$PID" | xargs kill -9  >/dev/null 2>&1
+	ps auxw | grep -v grep | grep "xtest-all.sh" | \
+		awk '{print $2}' | grep -v "$PID" | xargs kill -9  >/dev/null 2>&1
+	ps auxw | grep -v grep | grep "dk-" | grep ".sh" | \
+		awk '{print $2}' | grep -v "$PID" | xargs kill -9  >/dev/null 2>&1
+}
+
+kill_current_scripts
+kill_current_scripts
+
+
 mkdir -p /var/log/dkbuild
 
 lxc-start -qn tbus
