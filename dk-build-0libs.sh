@@ -118,12 +118,12 @@ EOT
 }
 
 
-# aptold create and check (version14)
+# aptold create and check (version15)
 #-------------------------------------------
 create_aptold(){
 	echo \
 '#!/bin/bash
-# version14
+# version15
 
 save_local_debs(){
 	mkdir -p /tb2/tmp/cachedebs/
@@ -154,24 +154,24 @@ if [[ $str == *"duyf"* ]]; then exs=1; fi
 
 if [[ $exs -lt 1 ]]; then
 	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@" -du \
-		 2>/dev/null
+		2>&1 | grep -iv "stable cli"
 fi
 
 save_local_debs &
 apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@" \
-	 2>/dev/null
+	2>&1 | grep -iv "stable cli"
 
 '>/usr/local/sbin/aptold
 }
 
 
 
-# aptnew create and check (version14)
+# aptnew create and check (version15)
 #-------------------------------------------
 create_aptnew(){
 	echo \
 '#!/bin/bash
-# version14
+# version15
 
 save_local_debs(){
 	mkdir -p /tb2/tmp/cachedebs/
@@ -201,11 +201,13 @@ if [[ $str == *"duyf"* ]]; then exs=1; fi
 # printf "\n $str \n$exs \n"
 
 if [[ $exs -lt 1 ]]; then
-	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@" -du
+	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@" -du \
+		2>&1 | grep -iv "stable cli"
 fi
 
 save_local_debs &
-apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@"
+apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@" \
+	2>&1 | grep -iv "stable cli"
 
 '>/usr/local/sbin/aptnew
 }
@@ -685,7 +687,7 @@ init_dkbuild >/dev/null 2>&1 &
 #--- update aptold
 if [ ! -e /usr/local/sbin/aptold ]; then
 	create_aptold
-elif [[ $(grep "version14" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version15" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
 	create_aptold
 fi
 chmod +x /usr/local/sbin/aptold
@@ -694,7 +696,7 @@ chmod +x /usr/local/sbin/aptold
 #--- update aptnew
 if [ ! -e /usr/local/sbin/aptnew ]; then
 	create_aptnew
-elif [[ $(grep "version14" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version15" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
 	create_aptnew
 fi
 chmod +x /usr/local/sbin/aptnew
