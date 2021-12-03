@@ -31,7 +31,7 @@ rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
 /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/; \
 mkdir -p /root/.local/share/nano/ /root/.config/procps/; \
 dpkg --configure -a
-# aptold update
+aptold update
 exit 0
 
 dpkg --configure -a; \

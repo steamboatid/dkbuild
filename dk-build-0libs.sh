@@ -153,11 +153,13 @@ if [[ $str == *"duyf"* ]]; then exs=1; fi
 # printf "\n $str \n$exs \n"
 
 if [[ $exs -lt 1 ]]; then
-	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@" -du
+	apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@" -du \
+		2>&1 | grep -iv "stable cli"
 fi
 
 save_local_debs &
-apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@"
+apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@" \
+	2>&1 | grep -iv "stable cli"
 
 '>/usr/local/sbin/aptold
 }
