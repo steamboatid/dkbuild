@@ -28,7 +28,7 @@ get_package_file(){
 
 	DOGET=0
 	if [ ! -s "${DST}" ]; then DOGET=1; fi
-	if [ test `find "${DST}" -mtime +10800` ]; then DOGET=1; fi
+	if [ test `find "${DST}" -mtime +1` ]; then DOGET=1; fi
 	if [[ $DOGET -gt 0 ]]; then
 		curl -A "Aptly/1.0" -Ss "$URL" > "$DST"
 	fi
