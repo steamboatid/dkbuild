@@ -15,7 +15,6 @@ export TODATE=$(date +%Y%m%d)
 
 
 source /tb2/build/dk-build-0libs.sh
-exit 0
 
 
 
@@ -33,6 +32,7 @@ rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
 mkdir -p /root/.local/share/nano/ /root/.config/procps/; \
 dpkg --configure -a; \
 aptold update
+exit 0
 
 dpkg --configure -a; \
 aptold install -y
