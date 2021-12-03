@@ -135,28 +135,28 @@ timedatectl set-timezone Asia/Jakarta
 
 
 echo \
-'deb http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu bionic main
-deb-src http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu bionic main
+'# deb http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu bionic main
+# deb-src http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu bionic main
 '>/etc/apt/sources.list.d/nginx-ppa-devel.list
 
 echo \
-'# deb http://repo.aisits.id/nginx-devel bionic main
-# deb-src http://repo.aisits.id/nginx-devel bionic main
+'deb http://repo.aisits.id/nginx-devel bionic main
+deb-src http://repo.aisits.id/nginx-devel bionic main
 '>/etc/apt/sources.list.d/nginx-devel-aisits.list
 
 echo \
 "# deb https://packages.sury.org/php/ ${RELNAME} main
-# deb-src https://packages.sury.org/php/ ${RELNAME} main
+deb-src https://packages.sury.org/php/ ${RELNAME} main
 ">/etc/apt/sources.list.d/php-sury.list
 
 echo \
-"# deb http://repo.aisits.id/php/ ${RELNAME} main
+"deb http://repo.aisits.id/php/ ${RELNAME} main
 deb-src http://repo.aisits.id/php/ ${RELNAME} main
 ">/etc/apt/sources.list.d/php-aisits.list
 
 echo \
 '# deb http://ppa.launchpad.net/eqalpha/keydb-server/ubuntu bionic main
-deb-src http://ppa.launchpad.net/eqalpha/keydb-server/ubuntu bionic main
+# deb-src http://ppa.launchpad.net/eqalpha/keydb-server/ubuntu bionic main
 '>/etc/apt/sources.list.d/keydb-ppa.list
 
 echo \
