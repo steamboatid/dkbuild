@@ -34,7 +34,7 @@ done
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-check-log.sh
 # ssh argo -- lxc-attach -n teye -- /bin/bash /tb2/build/dk-install-all.sh
 
-# ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-basic.sh
+ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-basic.sh
 ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-basic.sh
 
 # ssh argo "/bin/bash /tb2/build/xbuild-test-all.sh >/var/log/dkbuild/build-test-all.log 2>&1 &"
