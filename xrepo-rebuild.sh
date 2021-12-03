@@ -48,7 +48,7 @@ create_release() {
 
 	cat << EOF
 Archive: stable
-Origin: phideb of ${RELNAME}
+Origin: phideb
 Label: phideb
 Suite: ${RELNAME}
 Codename: ${RELNAME}
@@ -101,7 +101,7 @@ release="buster"
 
 cat << EOT >Release
 Archive: stable
-Origin: phideb of ${release}
+Origin: phideb
 Label: phideb
 Suite: ${release}
 Codename: ${release}
@@ -121,7 +121,7 @@ release="bullseye"
 
 cat << EOT >Release
 Archive: stable
-Origin: phideb of ${release}
+Origin: phideb
 Label: phideb
 Suite: ${release}
 Codename: ${release}
@@ -153,4 +153,5 @@ find -L /w3repo/phideb -type f -user root  -exec chown webme:webme {} \;
 printf "\n\n touch folders & files: "
 find -L /w3repo/phideb -exec touch {} \;
 
+/bin/bash /root/clear-nginx-cache.sh
 /bin/bash /root/cf-clear.sh

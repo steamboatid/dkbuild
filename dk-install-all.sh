@@ -158,7 +158,8 @@ sed -i '/keydb/d' /var/lib/dpkg/statoverride
 # /lib/systemd/system/php* /etc/init.d/php*
 
 # short install
-aptnew install --no-install-recommends --fix-missing --reinstall -fy \
+aptnew install  -o Dpkg::Options::="--force-overwrite" \
+--no-install-recommends --fix-missing --reinstall -fy \
 libzip4 libdb4.8; \
 aptnew install --no-install-recommends --fix-missing --reinstall -fy \
 php8.0-fpm php8.0-cli php8.0-zip \
