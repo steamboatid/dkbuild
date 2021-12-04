@@ -149,18 +149,19 @@ building_php(){
 
 
 	if [[ $adir == *"http"* ]]; then
+		cdir=$PWD
 		propro_dir=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*propro*" | sort | tail -n1)
 		cd "$propro_dir"
 		prepare_php_build "$propro_dir"
-		fix_debian_controls "$adir"
+		fix_debian_controls "$propro_dir"
 		pwd
-		dofore "$propro_dir" >/dev/null 2>&1
+		dofore "$propro_dir"
 		sleep 1
 		dpkg -i --force-all ../php*-propro*deb
 
-		cd "$adir"
+		cd "$cdir"
 		pwd
-		dofore "$adir"
+		dofore "$cdir"
 		continue
 	fi
 
