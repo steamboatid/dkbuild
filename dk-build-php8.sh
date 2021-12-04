@@ -97,6 +97,84 @@ override_dh_shlibdeps:
 }
 
 
+building_php(){
+	adir="$1"
+	odir=$PWD
+
+	#--- ovveride version
+	VEROVR=""
+
+	#--- wait until average load is OK
+	wait_by_average_load
+
+	#--- starting building
+	cd $adir
+	pwd
+
+	#--- prepare changelog, rules.d, etc
+	prepare_php_build "$adir"
+
+
+	# temporary solution
+	if [[ $adir == *"http"* ]]; then
+		fix_php_pecl_http "$adir"
+	fi
+	if [[ $adir == *"lz4"* ]]; then
+		fix_php_lz4 "$adir"
+	fi
+	if [[ $adir == *"phalcon3"* ]]; then
+		fix_php_phalcon3 "$adir"
+	fi
+	if [[ $adir == *"pinba"* ]]; then
+		fix_php_pinba "$adir"
+	fi
+	if [[ $adir == *"-ps-"* ]] && [[ $adir == *"1.4.1"* ]]; then
+		fix_php_ps "$adir"
+	fi
+
+	#---
+	if [[ $adir != *"defaults"* ]] && [[ $adir != *"php8"* ]]; then
+		fix_debian_controls "$adir"
+		fix_debian_controls "$adir"
+	fi
+
+
+	if [[ $adir == *"redis"* ]]; then
+		printf "\n\n\n --- its PHP-REDIS -- do rsync $adir \n"
+		rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
+		/root/src/git-phpredis $adir
+		pwd
+		printf "\n\n\n"
+	fi
+
+
+	if [[ $adir == *"http"* ]]; then
+		propro_dir=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*propro*" | sort | tail -n1)
+		cd "$propro_dir"
+		prepare_php_build "$propro_dir"
+		fix_debian_controls "$adir"
+		dofore "$propro_dir"
+		sleep 1
+		dpkg -i --force-all ../php*-propro*deb
+	fi
+
+	# always do background, avg load already checked in the beginning loop
+	doback "$adir"
+	sleep 1
+
+	# install after build
+	if [[ $adir == *"propro"* ]]; then
+		dpkg -i --force-all ../php*-propro*deb
+	fi
+
+	cd "$odir"
+}
+
+
+
+
+
+
 # wait until average load is OK
 #-------------------------------------------
 wait_by_average_load
@@ -171,74 +249,18 @@ cd /root/src/php
 # for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep "http" | sort -nr); do
 
 
+#--- initial build
 for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort -nr); do
+	building_php "$adir"
+done
 
-	#--- ovveride version
-	VEROVR=""
-
-	#--- wait until average load is OK
-	wait_by_average_load
-
-	#--- starting building
-	cd $adir
-	pwd
-
-	#--- prepare changelog, rules.d, etc
-	prepare_php_build "$adir"
-
-
-	# temporary solution
-	if [[ $adir == *"http"* ]]; then
-		fix_php_pecl_http "$adir"
-	fi
-	if [[ $adir == *"lz4"* ]]; then
-		fix_php_lz4 "$adir"
-	fi
-	if [[ $adir == *"phalcon3"* ]]; then
-		fix_php_phalcon3 "$adir"
-	fi
-	if [[ $adir == *"pinba"* ]]; then
-		fix_php_pinba "$adir"
-	fi
-	if [[ $adir == *"-ps-"* ]] && [[ $adir == *"1.4.1"* ]]; then
-		fix_php_ps "$adir"
-	fi
-
-	#---
-	if [[ $adir != *"defaults"* ]] && [[ $adir != *"php8"* ]]; then
-		fix_debian_controls "$adir"
-		fix_debian_controls "$adir"
-	fi
-
-
-	if [[ $adir == *"redis"* ]]; then
-		printf "\n\n\n --- its PHP-REDIS -- do rsync $adir \n"
-		rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-		/root/src/git-phpredis $adir
-		pwd
-		printf "\n\n\n"
-	fi
-
-
-	if [[ $adir == *"http"* ]]; then
-		propro_dir=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*propro*" | sort | tail -n1)
-		cd "$propro_dir"
-		prepare_php_build "$propro_dir"
-		fix_debian_controls "$adir"
-		dofore "$propro_dir"
-		sleep 1
-		dpkg -i --force-all ../php*-propro*deb
-	fi
-
-	# always do background, avg load already checked in the beginning loop
-	doback "$adir"
-	sleep 1
-
-	# install after build
-	if [[ $adir == *"propro"* ]]; then
-		dpkg -i --force-all ../php*-propro*deb
+#--- rebuild if dkbuild.log not found
+for adir in $(find /root/src/php -mindepth 1 -maxdepth 1 -type d | sort -n); do
+	if [[ $(find $adir -maxdepth 1 -type f -iname "dkbuild.log" | wc -l) -lt 1 ]]; then
+		building_php "$adir"
 	fi
 done
+
 
 
 # wait all background jobs
