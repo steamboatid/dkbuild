@@ -134,6 +134,15 @@ time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 	2>&1 | tee dkbuild.log
 
 
+#--- missing dkbuild.log
+if [[ ! -e dkbuild.log ]]; then
+	printf "\n\n\n --- dkbuild.log missing \n\n"
+	sleep 3
+	/bin/bash $0 -d "$PWD"
+fi
+
+
+
 isdeps=$(cat dkbuild.log | grep -i "unmet build dependencies" | wc -l)
 if [[ $isdeps -gt 0 ]]; then
 	cat dkbuild.log | grep -i "unmet build dependencies" | \
