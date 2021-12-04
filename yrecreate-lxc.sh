@@ -16,6 +16,7 @@ if [[ -z "${alxc}" ]] || [[ -z "${arel}" ]]; then
 	printf "\n --- Usage:   $0 ${blue}-l <a_LXC_name> -r <debian_release>${end} "
 	printf "\n --- Example: $0 ${blue}-l teye -r bullseye${end} "
 	printf "\n\n"
+	exit 1
 fi
 
 
