@@ -276,16 +276,16 @@ cd /root/src/php
 
 
 #--- initial build
-for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort -nr | grep "http"); do
+for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort -nr); do
 	building_php "$adir"
 done
 
 #--- rebuild if dkbuild.log not found
-# for adir in $(find /root/src/php -mindepth 1 -maxdepth 1 -type d | sort -n); do
-# 	if [[ $(find $adir -maxdepth 1 -type f -iname "dkbuild.log" | wc -l) -lt 1 ]]; then
-# 		building_php "$adir"
-# 	fi
-# done
+for adir in $(find /root/src/php -mindepth 1 -maxdepth 1 -type d | sort -n); do
+	if [[ $(find $adir -maxdepth 1 -type f -iname "dkbuild.log" | wc -l) -lt 1 ]]; then
+		building_php "$adir"
+	fi
+done
 
 
 
