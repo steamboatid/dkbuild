@@ -213,6 +213,13 @@ apt-cache search php8 | cut -d" " -f1 | \
 apt-cache search php8 | cut -d" " -f1 | \
 	grep -iv "symfony\|apache\|embed\|dbgsym" | xargs aptold source -y
 
+apt-cache search sodium | cut -d" " -f1 | \
+	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5" | xargs aptold install -fy
+apt-cache search sodium | cut -d" " -f1 | \
+	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5" | xargs aptold build-dep -fy
+apt-cache search sodium | cut -d" " -f1 | \
+	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5" | xargs aptold source -y
+
 apt-cache search libxmlrpc | cut -d" " -f1 | \
 	grep -iv "perl\|java\|ocaml" | xargs aptold install -fy
 

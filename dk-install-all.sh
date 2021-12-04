@@ -160,11 +160,17 @@ sed -i '/keydb/d' /var/lib/dpkg/statoverride
 # short install
 aptnew install  -o Dpkg::Options::="--force-overwrite" \
 --no-install-recommends --fix-missing --reinstall -fy \
-libzip4 libdb4.8; \
-aptnew install --no-install-recommends --fix-missing --reinstall -fy \
+libzip4 libdb4.8 libgeoip1 bison flex libsodium23
+
+aptnew install \
+--no-install-recommends --fix-missing --reinstall -fy \
+nutcracker keydb-server keydb-tools nginx-extras
+
+aptnew install \
+--no-install-recommends --fix-missing --reinstall -fy \
 php8.0-fpm php8.0-cli php8.0-zip \
-php8.1-fpm php8.1-cli php8.1-zip \
-nutcracker keydb-server keydb-tools nginx-extras; \
+php8.1-fpm php8.1-cli php8.1-zip
+
 aptnew install -y; \
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
 
