@@ -69,6 +69,7 @@ mkdir -p /tb2/phideb/dists/{buster,bullseye}/main/binary-amd64
 
 # delete old files
 find /tb2/phideb -type f -delete
+rm -rf /tb2/phideb/pool
 
 folders=(php nginx nutcracker lua-resty-core lua-resty-lrucache keydb pcre libzip db4 sshfs)
 for afolder in "${folders[@]}"; do
@@ -76,11 +77,11 @@ for afolder in "${folders[@]}"; do
 
 	# buster
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
-	/tb2/build/buster-$afolder/* /tb2/phideb/pool/buster/
+	/tb2/build/buster-$afolder/* /tb2/phideb/pool/buster/$afolder/
 
 	# bullseye
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
-	/tb2/build/bullseye-$afolder/* /tb2/phideb/pool/bullseye/
+	/tb2/build/bullseye-$afolder/* /tb2/phideb/pool/bullseye/$afolder/
 done
 
 
