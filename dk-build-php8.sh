@@ -153,15 +153,19 @@ building_php(){
 		cd "$propro_dir"
 		prepare_php_build "$propro_dir"
 		fix_debian_controls "$adir"
-		dofore "$propro_dir"
+		pwd
+		dofore "$propro_dir" >/dev/null 2>&1
 		sleep 1
 		dpkg -i --force-all ../php*-propro*deb
 
 		cd "$adir"
+		pwd
 	fi
 
 	# always do background, avg load already checked in the beginning loop
-	doback "$adir"
+	cd "$adir"
+	pwd
+	dofore "$adir"
 	sleep 1
 
 	# install after build
