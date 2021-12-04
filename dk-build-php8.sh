@@ -96,6 +96,25 @@ override_dh_shlibdeps:
 	cd "$odir"
 }
 
+wait_build_jobs_php(){
+	printf "\n\n --- wait all background build jobs: "
+	numo=0
+	while :; do
+		numa=$(ps auxw | grep -v grep | grep "dk-build-full.sh" | wc -l)
+		if [[ $numa -lt 1 ]]; then break; fi
+		if [[ $numa -ne $numo ]]; then
+			printf " $numa"
+			numo=$numa
+		else
+			printf "."
+		fi
+		sleep 3
+	done
+
+	wait
+	sleep 1
+	printf "\n\n"
+}
 
 building_php(){
 	adir="$1"
@@ -155,14 +174,14 @@ building_php(){
 		prepare_php_build "$propro_dir"
 		fix_debian_controls "$propro_dir"
 		pwd
-		dofore "$propro_dir"
+		doback "$propro_dir"
+		wait_build_jobs_php
+
 		sleep 1
 		dpkg -i --force-all ../php*-propro*deb
 
 		cd "$cdir"
-		pwd
-		dofore "$cdir"
-		continue
+		adir=$cdir
 	fi
 
 	# always do background, avg load already checked in the beginning loop
@@ -272,23 +291,7 @@ done
 
 # wait all background jobs
 #-------------------------------------------
-printf "\n\n --- wait all background build jobs: "
-numo=0
-while :; do
-	numa=$(ps auxw | grep -v grep | grep "dk-build-full.sh" | wc -l)
-	if [[ $numa -lt 1 ]]; then break; fi
-	if [[ $numa -ne $numo ]]; then
-		printf " $numa"
-		numo=$numa
-	else
-		printf "."
-	fi
-	sleep 3
-done
-
-wait
-sleep 1
-printf "\n\n"
+wait_build_jobs_php
 
 
 
