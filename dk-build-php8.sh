@@ -156,6 +156,8 @@ building_php(){
 		dofore "$propro_dir"
 		sleep 1
 		dpkg -i --force-all ../php*-propro*deb
+
+		cd "$adir"
 	fi
 
 	# always do background, avg load already checked in the beginning loop
@@ -250,7 +252,7 @@ cd /root/src/php
 
 
 #--- initial build
-for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort -nr); do
+for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort -nr | grep "http"); do
 	building_php "$adir"
 done
 
