@@ -19,9 +19,9 @@ source /tb2/build/dk-build-0libs.sh
 
 
 
-
-# gen config
+# gen config, delete locks
 #-------------------------------------------
+delete_apt_lock
 /bin/bash /tb2/build/dk-config-gen.sh
 
 
