@@ -75,6 +75,8 @@ folders=(php nginx nutcracker lua-resty-core lua-resty-lrucache keydb pcre libzi
 for afolder in "${folders[@]}"; do
 	printf " copy folder: $afolder \n"
 
+	mkdir -p /tb2/phideb/pool/buster/$afolder /tb2/phideb/pool/bullseye/$afolder
+
 	# buster
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 	/tb2/build/buster-$afolder/* /tb2/phideb/pool/buster/$afolder/
