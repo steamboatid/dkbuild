@@ -222,18 +222,18 @@ complete_php_installs() {
 	apt-cache search db4.8 | grep -iv "cil\|tcl\|doc" | \
 	cut -d" " -f1  >> /tmp/pkg-php0.txt
 
-	apt-cache search $phpv | grep -v "apache\|embed" |\
-	grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache\|enchant" |\
-	grep "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|common\|fpm\|cli" \
+	apt-cache search $phpv | grep -v "apache\|embed" | \
+	grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache\|enchant" | \
+	grep "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|common\|fpm\|cli" | \
 	cut -d" " -f1  >> /tmp/pkg-php0.txt
 
-	apt-cache search $phpv | grep -v "apache\|embed" |\
-	grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache\|enchant" |\
-	grep "bcmath\|bz2\|gmp\|mbstring\|mysql\|opcache\|readline\|xdebug\|zip" \
+	apt-cache search $phpv | grep -v "apache\|embed" | \
+	grep -v "cgi\|imap\|odbc\|pgsql\|dbg\|dev\|ldap\|sybase\|interbase\|yac\|xcache\|enchant" | \
+	grep "bcmath\|bz2\|gmp\|mbstring\|mysql\|opcache\|readline\|xdebug\|zip" | \
 	cut -d" " -f1  >> /tmp/pkg-php0.txt
 
 	apt-cache search $phpv |\
-	grep -v "apache\|debug\|dbg\|cgi\|embed\|gmagick\|yac\|-dev\|enchant" |\
+	grep -v "apache\|debug\|dbg\|cgi\|embed\|gmagick\|yac\|-dev\|enchant" | \
 	cut -d" " -f1  >> /tmp/pkg-php0.txt
 
 	cat /tmp/pkg-php0.txt | sort -u | sort | tr "\n" " " > /tmp/pkg-php1.txt
