@@ -160,12 +160,12 @@ building_php(){
 
 		cd "$adir"
 		pwd
+		dofore "$adir"
+		continue
 	fi
 
 	# always do background, avg load already checked in the beginning loop
-	cd "$adir"
-	pwd
-	dofore "$adir"
+	doback "$adir"
 	sleep 1
 
 	# install after build
