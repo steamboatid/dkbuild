@@ -137,7 +137,7 @@ libmaxminddb-dev libmcrypt-dev libmemcached-dev libmhash-dev \
 libmm-dev libmysqlclient-dev libnethttpd-ocaml-dev libocamlnet-ocaml-dev libonig-dev \
 libpam0g-dev libpcre2-dev libpcre3-dev libpcre++-dev libpcre-ocaml-dev libperl-dev \
 libpng*dev libpng-dev libpq-dev libpspell-dev libqdbm-dev libreadline-dev \
-libroscpp-core-dev librust-memmap-dev libsasl2-dev libsnmp-dev libsodium-dev \
+libroscpp-core-dev libsasl2-dev libsnmp-dev libsodium-dev \
 libsodium-dev libsqlite3-dev libssl-dev libsystemd-dev libticonv-dev \
 libtidy-dev libtiff-dev libwebp-dev libwrap0-dev libx11-dev libxft*dev libxml2-dev \
 libxml-light-ocaml-dev libxmlrpc-c++8-dev libxmlrpc-core-c3-dev libxmlrpc-epi-dev \
