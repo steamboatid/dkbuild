@@ -220,6 +220,13 @@ apt-cache search sodium | cut -d" " -f1 | \
 apt-cache search sodium | cut -d" " -f1 | \
 	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5" | xargs aptold source -y
 
+apt-cache search libicu | cut -d" " -f1 | \
+	grep -iv "java\|dbg\|sym\|hb" | xargs aptold install -fy
+apt-cache search libicu | cut -d" " -f1 | \
+	grep -iv "java\|dbg\|sym\|hb" | xargs aptold build-dep -fy
+apt-cache search libicu | cut -d" " -f1 | \
+	grep -iv "java\|dbg\|sym\|hb" | xargs aptold source -y
+
 apt-cache search libxmlrpc | cut -d" " -f1 | \
 	grep -iv "perl\|java\|ocaml" | xargs aptold install -fy
 
