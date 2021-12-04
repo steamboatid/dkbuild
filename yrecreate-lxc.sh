@@ -1,7 +1,23 @@
 #!/bin/bash
 
-# example
-alxc="teye"
+
+# read command parameter
+#-------------------------------------------
+# while getopts d:y:a: flag
+while getopts l:r: flag
+do
+	case "${flag}" in
+		r) arel=${OPTARG};;
+		l) alxc=${OPTARG};;
+	esac
+done
+
+if [[ -z "${alxc}" ]] || [[ -z "${arel}" ]]; then
+	printf "\n --- Usage:   $0 ${blue}-l <a_LXC_name> -r <debian_release>${end} "
+	printf "\n --- Example: $0 ${blue}-l teye -r bullseye${end} "
+	printf "\n\n"
+fi
+
 
 mkdir -p /root/lxc-conf
 cp /var/lib/lxc/$alxc/config /root/lxc-conf/$alxc.config -fv
@@ -10,7 +26,7 @@ lxc-destroy -fsn $alxc
 
 # actual create
 lxc-create -n $alxc -t download \
--- --dist debian --release bullseye --arch amd64 \
+-- --dist debian --release $arel --arch amd64 \
 --force-cache --no-validate --server images.linuxcontainers.org \
 --keyserver hkp://p80.pool.sks-keyservers.net:80
 
