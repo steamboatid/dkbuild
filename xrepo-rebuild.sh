@@ -76,11 +76,11 @@ for afolder in "${folders[@]}"; do
 
 	# buster
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
-	/tb2/build/buster-$afolder /tb2/phideb/pool/buster/
+	/tb2/build/buster-$afolder/* /tb2/phideb/pool/buster/
 
 	# bullseye
 	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
-	/tb2/build/bullseye-$afolder /tb2/phideb/pool/bullseye/
+	/tb2/build/bullseye-$afolder/* /tb2/phideb/pool/bullseye/
 done
 
 
