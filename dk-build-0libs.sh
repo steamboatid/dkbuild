@@ -331,7 +331,7 @@ check_build_log(){
 	PHPDIRS=0
 	for adir in $(find /root/src/php -mindepth 1 -maxdepth 1 -type d | sort -n); do
 		if [[ $(find $adir -maxdepth 1 -type f -iname "dkbuild.log" | wc -l) -lt 1 ]]; then
-			printf "\n --- no build.log: $adir "
+			printf "\n --- no dkbuild.log: $adir "
 		fi
 		PHPDIRS=$(( $PHPDIRS + 1 ))
 	done

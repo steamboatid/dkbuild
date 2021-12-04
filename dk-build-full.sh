@@ -121,6 +121,7 @@ export DEB_LDFLAGS_MAINT_APPEND
 fi
 chmod +x debian/rules
 
+>dkbuild.log
 nproc2=$(( `nproc` ))
 
 # export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
