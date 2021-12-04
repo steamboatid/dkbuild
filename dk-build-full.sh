@@ -139,8 +139,13 @@ if [[ ! -e dkbuild.log ]]; then
 	printf "\n\n\n --- dkbuild.log missing \n\n"
 	sleep 3
 	/bin/bash $0 -d "$PWD"
+else
+	printf "\n\n"
 fi
 
+
+ls -la dkbuild.log
+printf "\n\n\n"
 
 
 isdeps=$(cat dkbuild.log | grep -i "unmet build dependencies" | wc -l)
