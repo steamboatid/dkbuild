@@ -21,12 +21,19 @@ source /tb2/build/dk-build-0libs.sh
 # read command parameter
 #-------------------------------------------
 # while getopts d:y:a: flag
-while getopts d: flag
+while getopts d:l: flag
 do
 	case "${flag}" in
 		d) dir=${OPTARG};;
+		l) loop=${OPTARG};;
 	esac
 done
+
+if [ -z "${loop}" ]; then
+	loop=1
+else
+	loop=$(( $loop + 1))
+fi
 
 if [ -z "${dir}" ]; then
 	printf "\n --- Usage: $0 ${red}-d <debian_build_directory>${end} "
@@ -135,12 +142,12 @@ time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 
 
 #--- missing dkbuild.log
-if [[ ! -e dkbuild.log ]]; then
-	printf "\n\n\n --- dkbuild.log missing \n\n"
+if [[ ! -e dkbuild.log ]] && [[ $loop -lt 3 ]]; then
+	printf "\n\n\n --- dkbuild.log missing --- LOOP=$loop \n\n"
 	sleep 3
-	/bin/bash $0 -d "$PWD"
+	/bin/bash $0 -d "$PWD" -l $loop
 else
-	printf "\n\n"
+	printf "\n\n --- LOOP=$loop \n\n"
 fi
 
 
