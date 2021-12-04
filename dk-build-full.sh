@@ -129,8 +129,9 @@ nproc2=$(( `nproc` ))
 export DH_VERBOSE=1; \
 export DEB_BUILD_PROFILES="noudep nocheck noinsttest nojava nosql"; \
 export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
-debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
---no-lintian --no-tgz-check --no-sign -b -uc -us -d 2>&1 | tee dkbuild.log
+time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
+--no-lintian --no-tgz-check --no-sign -b -uc -us -d \
+	2>&1 | tee dkbuild.log
 
 
 isdeps=$(cat dkbuild.log | grep -i "unmet build dependencies" | wc -l)
@@ -150,7 +151,8 @@ if [[ $isfail -gt 0 ]] && [[ $isdeps -gt 0 ]]; then
 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
 	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
 	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
-	--no-lintian --no-tgz-check --no-sign -b -uc -us -D 2>&1 | tee dkbuild.log
+	--no-lintian --no-tgz-check --no-sign -b -uc -us -D \
+		2>&1 | tee dkbuild.log
 fi
 
 isflict=$(tail -n100 dkbuild.log | grep -i conflict | wc -l)
@@ -162,7 +164,8 @@ if [[ $isfail -gt 0 ]] && [[ $isflict -gt 0 ]]; then
 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
 	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
 	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
-	--no-lintian --no-tgz-check --no-sign -b -uc -us -d 2>&1 | tee dkbuild.log
+	--no-lintian --no-tgz-check --no-sign -b -uc -us -d \
+		2>&1 | tee dkbuild.log
 fi
 
 if [[ $isdeps -gt 0 ]]; then
