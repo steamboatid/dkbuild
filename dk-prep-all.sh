@@ -193,6 +193,10 @@ apt install fuse3 libfuse3*
 apt source -y sshfs libfuse3-dev
 
 
+# sshfs, libfuse
+#-------------------------------------------
+aptold install -fy clang bison flex
+
 
 #--- wait
 #-------------------------------------------
