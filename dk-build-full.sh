@@ -154,10 +154,8 @@ if [[ ! -e dkbuild.log ]] && [[ $loop -lt 5 ]]; then
 else
 	printf "\n\n --- LOOP=$loop \n\n"
 fi
-
-
-ls -la dkbuild.log
-printf "\n\n\n"
+# ls -la dkbuild.log
+# printf "\n\n\n"
 
 
 isdeps=$(cat dkbuild.log | grep -i "unmet build dependencies" | wc -l)
