@@ -153,9 +153,9 @@ building_php(){
 		cd "$propro_dir"
 		prepare_php_build "$propro_dir"
 		fix_debian_controls "$adir"
-		dofore "$propro_dir"
-		sleep 1
-		dpkg -i --force-all ../php*-propro*deb
+		# dofore "$propro_dir"
+		# sleep 1
+		# dpkg -i --force-all ../php*-propro*deb
 
 		cd "$adir"
 	fi
@@ -257,11 +257,11 @@ for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-
 done
 
 #--- rebuild if dkbuild.log not found
-for adir in $(find /root/src/php -mindepth 1 -maxdepth 1 -type d | sort -n); do
-	if [[ $(find $adir -maxdepth 1 -type f -iname "dkbuild.log" | wc -l) -lt 1 ]]; then
-		building_php "$adir"
-	fi
-done
+# for adir in $(find /root/src/php -mindepth 1 -maxdepth 1 -type d | sort -n); do
+# 	if [[ $(find $adir -maxdepth 1 -type f -iname "dkbuild.log" | wc -l) -lt 1 ]]; then
+# 		building_php "$adir"
+# 	fi
+# done
 
 
 
