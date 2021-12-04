@@ -153,9 +153,9 @@ building_php(){
 		cd "$propro_dir"
 		prepare_php_build "$propro_dir"
 		fix_debian_controls "$adir"
-		# dofore "$propro_dir"
-		# sleep 1
-		# dpkg -i --force-all ../php*-propro*deb
+		dofore "$propro_dir"
+		sleep 1
+		dpkg -i --force-all ../php*-propro*deb
 
 		cd "$adir"
 	fi
