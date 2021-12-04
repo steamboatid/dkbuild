@@ -34,6 +34,8 @@ if [ -z "${loop}" ]; then
 else
 	loop=$(( $loop + 1))
 fi
+printf "\n --- LOOP: $loop \n"
+
 
 if [ -z "${dir}" ]; then
 	printf "\n --- Usage: $0 ${red}-d <debian_build_directory>${end} "
@@ -144,10 +146,11 @@ wait; sync; sleep 1
 
 
 #--- missing dkbuild.log
-if [[ ! -e dkbuild.log ]] && [[ $loop -lt 3 ]]; then
+if [[ ! -e dkbuild.log ]] && [[ $loop -lt 5 ]]; then
 	printf "\n\n\n --- dkbuild.log missing --- LOOP=$loop \n\n"
 	sleep 3
 	/bin/bash $0 -d "$PWD" -l $loop
+	printf "\n\n"
 else
 	printf "\n\n --- LOOP=$loop \n\n"
 fi
