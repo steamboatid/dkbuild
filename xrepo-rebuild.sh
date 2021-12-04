@@ -78,11 +78,11 @@ for afolder in "${folders[@]}"; do
 	mkdir -p /tb2/phideb/pool/buster/$afolder /tb2/phideb/pool/bullseye/$afolder
 
 	# buster
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+	rsync -aHAXztr --numeric-ids --delete \
 	/tb2/build/buster-$afolder/* /tb2/phideb/pool/buster/$afolder/
 
 	# bullseye
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+	rsync -aHAXztr --numeric-ids --delete \
 	/tb2/build/bullseye-$afolder/* /tb2/phideb/pool/bullseye/$afolder/
 done
 
