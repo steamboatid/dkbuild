@@ -15,7 +15,31 @@ export TODATE=$(date +%Y%m%d)
 
 
 source /tb2/build/dk-build-0libs.sh
-/run/keydb/keydb-server.pid
+
+
+
+
+# gen config, delete locks
+#-------------------------------------------
+delete_apt_lock
+/bin/bash /tb2/build/dk-config-gen.sh
+
+
+
+if [[ ! -e /run/done.init.dkbuild.txt ]]; then
+
+	# tweaks
+	echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
+	aptnew install -y eatmydata lsb-release nano rsync \
+		2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+
+
+	echo \
+'Acquire::Queue-Mode "host";
+Acquire::Languages "none";
+Acquire::http { Pipeline-Depth "200"; };
+Acquire::https { Verify-Peer false; };
+'>/etc/apt/apt.conf.d/99translations
 
 
 	echo \
