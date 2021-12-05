@@ -163,6 +163,9 @@ apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 apt-cache search php8 | cut -d" " -f1 | \
 	grep -iv "symfony\|apache\|embed\|dbgsym" >> $FNOW1
 
+echo "php-http php-pecl-http php-pecl-http-dev php-http-all-dev" | \
+	tr " " "\n" >> $FNOW1
+
 cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
 	sort -u | sort | \
 	sed 's/(\([^\)]*\))//g' > $FNOW2
@@ -204,7 +207,7 @@ apt-cache search php8 | cut -d" " -f1 | \
 apt-cache search php8 | cut -d" " -f1 | \
 	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" | xargs aptold build-dep -fy
 apt-cache search php8 | cut -d" " -f1 | \
-	grep -iv "symfony\|apache\|embed\|dbgsym" | xargs aptold source -my
+	grep -iv "symfony\|apache\|embed\|dbgsym\|http" | xargs aptold source -my
 
 apt-cache search sodium | cut -d" " -f1 | \
 	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5\|rust" | \
