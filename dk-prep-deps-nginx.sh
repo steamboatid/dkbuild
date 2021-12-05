@@ -19,31 +19,6 @@ source /tb2/build/dk-build-0libs.sh
 
 
 
-get_package_file(){
-	URL="$1"
-	DST="$2"
-
-	DOGET=0
-	if [ ! -s "${DST}" ]; then DOGET=1; fi
-	if [ test `find "${DST}" -mtime +1` ]; then DOGET=1; fi
-	if [[ $DOGET -gt 0 ]]; then
-		curl -A "Aptly/1.0" -Ss "$URL" > "$DST"
-	fi
-}
-
-get_package_file_gz(){
-	URL="$1"
-	DST="$2"
-	AGZ="$3"
-
-	get_package_file "$URL" "$AGZ"
-	if [ ! -s "${AGZ}" ]; then
-		gzip -cdk "$AGZ" > "$DST"
-	fi
-}
-
-
-
 #--- remove ALL first
 #-------------------------------------------
 # cd `mktemp -d` && apt remove -fy --fix-missing --fix-broken php* nginx*

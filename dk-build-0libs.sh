@@ -671,6 +671,33 @@ delete_phideb(){
 	fi
 }
 
+get_package_file(){
+	URL="$1"
+	DST="$2"
+
+	DOGET=0
+	if [[ ! -e "${DST}" ]]; then DOGET=1;
+	elif [[ ! -s "${DST}" ]]; then DOGET=1;
+	elif [ test `find "${DST}" -mtime +1` ]; then DOGET=1; fi
+
+	if [[ $DOGET -gt 0 ]]; then
+		curl -A "Aptly/1.0" -Ss "$URL" > "$DST"
+	fi
+}
+
+get_package_file_gz(){
+	URL="$1"
+	DST="$2"
+	AGZ="$3"
+
+	get_package_file "$URL" "$AGZ"
+	if [[ -s "${AGZ}" ]]; then
+		gzip -cdk "$AGZ" > "$DST"
+	fi
+}
+
+
+
 init_dkbuild(){
 	# global config
 	global_git_config  &
