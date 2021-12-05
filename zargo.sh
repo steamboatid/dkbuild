@@ -17,6 +17,8 @@ done
 
 printf "\n\n --- prepare lxcs "
 wait
+printf "\n\n"
+
 
 
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-pcre.sh
