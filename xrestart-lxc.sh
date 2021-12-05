@@ -33,7 +33,7 @@ if [ -z "${alxc}" ]; then
 	exit
 fi
 
-printf "\n --- stop: $alxc "
+printf "\n ---  stop: $alxc "
 lxc-stop -kn $alxc
 sleep 0.1
 
@@ -52,7 +52,7 @@ if [[ $ip4 -lt 1 ]] && [[ $ip6 -lt 1 ]]; then
 fi
 
 ip4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
-printf "\n ip4: $ip4 "
+printf "\n ---   ip4: $ip4 "
 
 printf "\n --- prepare scripts: $alxc "
 lxca $alxc -- rm -rf /usr/local/sbin/dk*sh
