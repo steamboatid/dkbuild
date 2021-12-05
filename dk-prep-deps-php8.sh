@@ -160,6 +160,9 @@ apt-cache search "php" | awk '{print $1}' | grep "${PHPGREP}" | \
 apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 	grep -v "dbgsym\|dbg\|apache" >> $FNOW1
 
+apt-cache search php8 | cut -d" " -f1 | \
+	grep -iv "symfony\|apache\|embed\|dbgsym" >> $FNOW1
+
 cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
 	sort -u | sort | \
 	sed 's/(\([^\)]*\))//g' > $FNOW2
@@ -201,14 +204,17 @@ apt-cache search php8 | cut -d" " -f1 | \
 apt-cache search php8 | cut -d" " -f1 | \
 	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" | xargs aptold build-dep -fy
 apt-cache search php8 | cut -d" " -f1 | \
-	grep -iv "symfony\|apache\|embed\|dbgsym" | xargs aptold source -y
+	grep -iv "symfony\|apache\|embed\|dbgsym" | xargs aptold source -my
 
 apt-cache search sodium | cut -d" " -f1 | \
-	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5" | xargs aptold install -fy
+	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5\|rust" | \
+	xargs aptold install -fy
 apt-cache search sodium | cut -d" " -f1 | \
-	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5" | xargs aptold build-dep -fy
+	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5\|rust" | \
+	xargs aptold build-dep -fy
 apt-cache search sodium | cut -d" " -f1 | \
-	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5" | xargs aptold source -y
+	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5\|rust" | \
+	xargs aptold source -y
 
 apt-cache search libicu | cut -d" " -f1 | \
 	grep -iv "java\|dbg\|sym\|hb" | xargs aptold install -fy
@@ -247,6 +253,10 @@ done
 wait
 printf "\n\n --- wait finished... \n\n\n"
 
+
+#--- delete unused
+#-------------------------------------------
+rm -rf ~/org.src/php/rust*
 
 #--- sync to src
 #-------------------------------------------
