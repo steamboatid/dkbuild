@@ -195,7 +195,9 @@ cat $FSRC1 | grep "Picking" | grep -iv "unable" | cut -d" " -f2 | sed -r "s/'//g
 cat $FSRC2 | grep "php\-" >> $FSRC3
 cat $FSRC2 | grep "${PHPGREP}" >> $FSRC3
 
-cat $FSRC3 | sort -u | sort | tr "\n" " " | xargs apt source -my
+cat $FSRC3 | \
+grep -iv "php8.1-http\|php8.0-http\|php-http" | \
+sort -u | sort | tr "\n" " " | xargs apt source -my
 # cat $FSRC3 | sort -u | sort
 
 
@@ -207,7 +209,9 @@ apt-cache search php8 | cut -d" " -f1 | \
 apt-cache search php8 | cut -d" " -f1 | \
 	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" | xargs aptold build-dep -fy
 apt-cache search php8 | cut -d" " -f1 | \
-	grep -iv "symfony\|apache\|embed\|dbgsym\|http" | xargs aptold source -my
+	grep -iv "symfony\|apache\|embed\|dbgsym" | \
+	grep -iv "php8.1-http\|php8.0-http\|php-http" | \
+	xargs aptold source -my
 
 apt-cache search sodium | cut -d" " -f1 | \
 	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5\|rust" | \

@@ -68,6 +68,9 @@ done
 aptold install -my php-http php-raphf \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
+apt-cache search php | grep http | grep -i pecl | \
+	cut -d" " -f1 | xargs aptold install -fy | grep --color=auto "Depends\|$"
+
 apt-cache search libsnmp | grep -iv "perl\|dbg\|pyth" | cut -d" " -f1 | \
 	xargs aptold install -fy \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
@@ -172,6 +175,13 @@ done
 aptold build-dep -fy php-http php-raphf \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
+apt-cache search php | grep http | grep -i pecl | \
+	cut -d" " -f1 | \
+	grep -iv "php-http-all-dev\|php5.6-http\|php7.0-http\|php7.1-http\|php7.2-http\|php7.3-http\|php7.4-http" | \
+	grep -iv "php8.0-http\|php8.1-http" | \
+	xargs aptold build-dep -fy | grep --color=auto "Depends\|$"
+
+
 #--- recreate dir, delete debs
 #-------------------------------------------
 mkdir -p /root/org.src/php /root/src/php
@@ -193,27 +203,10 @@ for apv in "${PHPVERS[@]}"; do
 	$apv-sqlite3 $apv-sybase $apv-tidy $apv-xdebug $apv-xml \
 	$apv-xsl $apv-zip \
 	php-memcached php-redis php-igbinary php-msgpack php-apcu \
-	php-http php-raphf
+	php-raphf
 
-	apt source -my \
-	$apv-http
-
-	# pkgs=(php-defaults \
-	# $apv $apv-apcu $apv-ast $apv-bcmath $apv-bz2 $apv-cli $apv-common \
-	# $apv-curl $apv-dba $apv-dev $apv-enchant $apv-fpm $apv-gd $apv-gmp \
-	# $apv-igbinary $apv-imagick $apv-imap $apv-interbase \
-	# $apv-intl $apv-ldap $apv-mbstring $apv-memcached $apv-msgpack \
-	# $apv-mysql $apv-odbc $apv-opcache $apv-pgsql $apv-pspell \
-	# $apv-raphf $apv-readline $apv-redis $apv-snmp $apv-soap \
-	# $apv-sqlite3 $apv-sybase $apv-tidy $apv-xdebug $apv-xml \
-	# $apv-xsl $apv-zip \
-	# php-memcached php-redis php-igbinary php-msgpack php-apcu \
-	# $apv-http php-http php-raphf)
-
-	# for apkg in "${pkgs[@]}"; do
-	# 	printf "\n\n --- apt source: ${yel}$apkg ${end} \n"
-	# 	apt source -my $apkg
-	# done
+	apt source -my php-pecl-http
+	apt source -my $apv-http
 done
 
 
