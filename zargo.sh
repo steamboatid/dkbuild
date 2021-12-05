@@ -20,6 +20,7 @@ ssh argo "nohup chmod +x /usr/local/sbin/* /tb2/build/*sh 2>&1 >/dev/null &"
 
 lxcs=(bus eye tbus teye)
 for alxc in ${lxcs[@]}; do
+	ssh argo -- lxc-stop -kn $alxc
 	ssh argo -- lxc-start -qn $alxc
 	ssh argo -- lxca $alxc -- dhclient eth0 >/dev/null 2>&1 &
 	ssh argo -- lxca $alxc -- rm -rf /usr/local/sbin/dk*sh
