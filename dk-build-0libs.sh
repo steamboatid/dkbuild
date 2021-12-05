@@ -363,7 +363,7 @@ update_existing_git(){
 	PDIR=$PWD
 	mkdir -p "$DST"
 	cd "$DST"
-	printf "\n---updating $DST \n"
+	printf "\n ---updating $DST \n"
 
 	if git reset --hard  >/dev/null 2>&1; then
 		git rm -r --cached . >/dev/null 2>&1
@@ -420,8 +420,8 @@ get_update_new_github(){
 
 	if [ ! -d ${DST} ]; then
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
-		printf "\n---new clone to: $DST \n---from: https://github.com/${URL} $OPS $DST "
-		printf "\n---# git clone https://github.com/${URL} $OPS $DST ---\n"
+		printf "\n ---new clone to: $DST \n---from: https://github.com/${URL} $OPS $DST "
+		printf "\n ---# git clone https://github.com/${URL} $OPS $DST ---\n"
 		git clone "https://github.com/${URL}" $OPS "$DST"
 	else
 		FURL="https://github.com/${URL}"
@@ -437,8 +437,8 @@ get_update_new_gitlab(){
 
 	if [ ! -d ${DST} ]; then
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
-		printf "\n---new clone to: $DST \n---from: https://gitlab.com/${URL} $OPS $DST "
-		printf "\n---# git clone https://gitlab.com/${URL} $OPS $DST ---\n"
+		printf "\n ---new clone to: $DST \n---from: https://gitlab.com/${URL} $OPS $DST "
+		printf "\n ---# git clone https://gitlab.com/${URL} $OPS $DST ---\n"
 		git clone "https://gitlab.com/${URL}" $OPS "$DST"
 	else
 		FURL="https://gitlab.com/${URL}"
@@ -454,8 +454,8 @@ get_update_new_bitbucket(){
 
 	if [ ! -d ${DST} ]; then
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
-		printf "\n---new clone to: $DST \n---from: https://bitbucket.org/${URL} $OPS $DST "
-		printf "\n---# git clone https://bitbucket.org/${URL} $OPS $DST ---\n"
+		printf "\n ---new clone to: $DST \n---from: https://bitbucket.org/${URL} $OPS $DST "
+		printf "\n ---# git clone https://bitbucket.org/${URL} $OPS $DST ---\n"
 		git clone "https://bitbucket.org/${URL}" $OPS "$DST"
 	else
 		FURL="https://bitbucket.org/${URL}"
@@ -471,8 +471,8 @@ get_update_new_salsa(){
 
 	if [ ! -d ${DST} ]; then
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
-		printf "\n---new clone to: $DST \n---from: https://salsa.debian.org/${URL} $OPS $DST "
-		printf "\n---# git clone https://salsa.debian.org/${URL} $OPS $DST ---\n"
+		printf "\n ---new clone to: $DST \n---from: https://salsa.debian.org/${URL} $OPS $DST "
+		printf "\n ---# git clone https://salsa.debian.org/${URL} $OPS $DST ---\n"
 		git clone "https://salsa.debian.org/${URL}" $OPS "$DST"
 	else
 		FURL="https://salsa.debian.org/${URL}"
@@ -694,6 +694,12 @@ get_package_file_gz(){
 	if [[ -s "${AGZ}" ]]; then
 		gzip -cdk "$AGZ" > "$DST"
 	fi
+}
+
+stop_services(){
+	for ainit in $(find /etc/init.d/ -type f | grep "fpm\|nginx\|keydb\|nutc"); do
+		/bin/bash $ainit stop
+	done
 }
 
 

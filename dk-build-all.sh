@@ -72,10 +72,11 @@ check_installed_pkgs(){
 
 
 
-# reset default build flags
+# reset default build flags, stop services
 #-------------------------------------------
 reset_build_flags
 prepare_build_flags
+stop_services
 
 
 # gen config
@@ -83,12 +84,10 @@ prepare_build_flags
 /bin/bash /tb2/build/dk-config-gen.sh
 
 
-
 #--- delete OLD files
 mkdir -p /root/org.src /root/src /tb2/build/$RELNAME-all
 find /root/src -type f -iname "*deb" -delete
 find /tb2/build/$RELNAME-all -type f -iname "*deb" -delete
-
 
 
 # some job at foreground: build & istall base packages

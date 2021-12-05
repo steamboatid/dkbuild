@@ -89,13 +89,13 @@ check_php_installs() {
 	eval "$phpv -m" | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis"
 	NUMEXT=$(eval "$phpv -m" | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis" | wc -l)
 	if [[ $NUMEXT -lt 8 ]]; then
-		printf "\n--- ${red}${phpv} ext:NOT OK ${end}\n"
+		printf "\n --- ${red}${phpv} ext:NOT OK ${end}\n"
 	else
-		printf "\n--- ${blu}${phpv} ext: OK ${end}\n"
+		printf "\n --- ${blu}${phpv} ext: OK ${end}\n"
 	fi
 
 	# check php version
-	printf "\n--- Output of ${yel}php -v${end} \n"
+	printf "\n --- Output of ${yel}php -v${end} \n"
 	eval "$phpv -v"
 }
 check_php_installs "php8.0"
