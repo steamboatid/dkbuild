@@ -62,8 +62,11 @@ check_installed_pkgs(){
 	fi
 
 	if [[ $ERRBASE -gt 0 ]]; then
-		printf "\n\n --- ${red}base packages failed ${end} \n\n"
+		printf "\n\n --- ${red}base packages: failed ${end} \n\n"
 		exit 1
+	else
+		printf "\n\n --- ${green}base packages: OK ${end} \n\n"
+		sleep 3
 	fi
 }
 
@@ -92,6 +95,7 @@ find /tb2/build/$RELNAME-all/ -type f -iname "*deb" -delete
 doback_bash /tb2/build/dk-build-libzip.sh &
 doback_bash /tb2/build/dk-build-pcre.sh &
 doback_bash /tb2/build/dk-build-db4.sh &
+
 wait_build_full
 check_installed_pkgs
 
