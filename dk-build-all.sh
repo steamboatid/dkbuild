@@ -48,15 +48,15 @@ wait_build_full(){
 check_installed_pkgs(){
 	printf "\n\n"
 	export ERRBASE=0
-	if [[ $(dpkg -l | grep "^ii" | grep db4 | grep aisits | wc -l) -gt 0 ]]; then
+	if [[ $(dpkg -l | grep "^ii" | grep db4 | grep aisits | wc -l) -lt 1 ]]; then
 		printf "\n --- ${red}db4 failed ${end}"
 		export ERRBASE=1
 	fi
-	if [[ $(dpkg -l | grep "^ii" | grep pcre | grep aisits | wc -l) -gt 0 ]]; then
+	if [[ $(dpkg -l | grep "^ii" | grep pcre | grep aisits | wc -l) -lt 1 ]]; then
 		printf "\n --- ${red}pcre failed ${end}"
 		export ERRBASE=1
 	fi
-	if [[ $(dpkg -l | grep "^ii" | grep zip | grep aisits | wc -l) -gt 0 ]]; then
+	if [[ $(dpkg -l | grep "^ii" | grep zip | grep aisits | wc -l) -lt 1 ]]; then
 		printf "\n --- ${red}libzip failed ${end}"
 		export ERRBASE=1
 	fi
@@ -93,9 +93,9 @@ find /tb2/build/$RELNAME-all -type f -iname "*deb" -delete
 
 # some job at foreground: build & istall base packages
 #-------------------------------------------
-/bin/bash /tb2/build/dk-build-db4.sh
 doback_bash /tb2/build/dk-build-libzip.sh
 doback_bash /tb2/build/dk-build-pcre.sh
+doback_bash /tb2/build/dk-build-db4.sh
 
 wait_build_full
 check_installed_pkgs

@@ -36,19 +36,24 @@ if [[ -z "${alxc}" ]] || [[ -z "${arel}" ]]; then
 fi
 
 
+printf "\n --- save config "
 mkdir -p /root/lxc-conf
 cp /var/lib/lxc/$alxc/config /root/lxc-conf/$alxc.config -fv
 
+printf "\n --- delete lxc "
 lxc-destroy -fsn $alxc
 
 # actual create
+printf "\n --- create lxc: $alxc -- $arel "
 lxc-create -n $alxc -t download \
 -- --dist debian --release $arel --arch amd64 \
 --force-cache --no-validate --server images.linuxcontainers.org \
 --keyserver hkp://p80.pool.sks-keyservers.net:80
 
 # copy config file back
+printf "\n --- copy config file back "
 mv /var/lib/lxc/$alxc/config /var/lib/lxc/$alxc/config.old
 cp /root/lxc-conf/$alxc.config /var/lib/lxc/$alxc/config -fv
 
+printf "\n --- start lxc "
 lxc-start -n $alxc
