@@ -116,6 +116,7 @@ if [[ ! -s $FPKGS ]]; then
 	URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
 	get_package_file $URL $FPKGS
 fi
+ls -la $FPKGS
 if [[ ! -s $FPKGS ]]; then
 	printf "\n\n --- $FPKGS empty \n\n"
 	exit 1
