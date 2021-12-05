@@ -85,8 +85,9 @@ prepare_build_flags
 
 
 #--- delete OLD files
+mkdir -p /root/org.src /root/src /tb2/build/$RELNAME-all
 find /root/src -type f -iname "*deb" -delete
-find /tb2/build/$RELNAME-all/ -type f -iname "*deb" -delete
+find /tb2/build/$RELNAME-all -type f -iname "*deb" -delete
 
 
 
