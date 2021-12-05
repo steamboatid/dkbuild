@@ -40,9 +40,9 @@ printf "\n --- LOOP: $loop \n"
 if [ -z "${dir}" ]; then
 	printf "\n --- Usage: $0 ${red}-d <debian_build_directory>${end} "
 	dir=$PWD
-	printf "\n --- using current directory as build dir: $dir \n\n"
+	printf "\n --- using current directory as build dir: ${blue} $dir ${end} \n\n"
 else
-	printf "\n --- using build dir: $dir \n\n"
+	printf "\n --- using build dir: ${blue} $dir ${end} \n\n"
 
 	# change directory using argument
 	cd "$dir"
