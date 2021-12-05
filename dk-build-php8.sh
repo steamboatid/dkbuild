@@ -116,6 +116,14 @@ wait_build_jobs_php(){
 	printf "\n\n"
 }
 
+install_propro_debs(){
+	build_propro=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "propro" | wc -l)
+	debs_propro=$(find -L /root/src/php -type f -iname "php*-propro*deb" | wc -l)
+	if [[ $debs_propro -gt 0 ]] && [[ $build_propro -lt 1 ]]; then
+		dpkg -i --force-all /root/src/php*-propro*deb
+	fi
+}
+
 building_php(){
 	adir="$1"
 	odir=$PWD
@@ -189,13 +197,7 @@ building_php(){
 	sleep 1
 
 	# install after build
-	if [[ $adir == *"propro"* ]]; then
-		build_propro=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "propro" | wc -l)
-		debs_propro=$(find -L .. -type f -iname "php*-propro*deb" | wc -l)
-		if [[ $debs_propro -gt 0 ]] && [[ $build_propro -lt 1 ]]; then
-			dpkg -i --force-all ../php*-propro*deb
-		fi
-	fi
+	install_propro_debs
 
 	cd "$odir"
 }
@@ -283,6 +285,9 @@ cd /root/src/php
 for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort -nr); do
 	building_php "$adir"
 done
+
+#--- immediate install
+install_propro_debs
 
 #--- rebuild if dkbuild.log not found
 for adir in $(find /root/src/php -mindepth 1 -maxdepth 1 -type d | sort -n); do
