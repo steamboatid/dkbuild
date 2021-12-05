@@ -132,18 +132,18 @@ aptnew full-upgrade --auto-remove --purge -fy
 # apt purge -fy nginx* php* keydb* nutc* fuse* libfuse* sshfs* lua* db4* | grep -iv "not installed"; \
 # apt purge -fy nginx* php* keydb* nutc* fuse* libfuse* sshfs* lua* db4* | grep -iv "not installed"
 
-sed -i '/keydb/d' /var/lib/dpkg/statoverride
+# sed -i '/keydb/d' /var/lib/dpkg/statoverride
 
 
 # special steps for keydb only
-cd `mktemp -d`; \
-rm -rf /etc/keydb /etc/systemd /lib/systemd/system/keydb*; \
-systemctl daemon-reload; aptnew purge --auto-remove --purge  -fy keydb*; \
-aptnew update; aptnew full-upgrade --auto-remove --purge -fy; \
-aptnew install --reinstall -fy keydb-server keydb-tools; \
-netstat -nlpat | grep --color keydb-server
+# cd `mktemp -d`; \
+# rm -rf /etc/keydb /etc/systemd /lib/systemd/system/keydb*; \
+# systemctl daemon-reload; aptnew purge --auto-remove --purge  -fy keydb*; \
+# aptnew update; aptnew full-upgrade --auto-remove --purge -fy; \
+# aptnew install --reinstall -fy keydb-server keydb-tools; \
+# netstat -nlpat | grep --color keydb-server
 
-sed -i '/keydb/d' /var/lib/dpkg/statoverride
+# sed -i '/keydb/d' /var/lib/dpkg/statoverride
 
 
 # cd `mktemp -d`; \
