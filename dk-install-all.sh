@@ -15,31 +15,7 @@ export TODATE=$(date +%Y%m%d)
 
 
 source /tb2/build/dk-build-0libs.sh
-
-
-
-
-# gen config, delete locks
-#-------------------------------------------
-delete_apt_lock
-/bin/bash /tb2/build/dk-config-gen.sh
-
-
-
-if [[ ! -e /run/done.init.dkbuild.txt ]]; then
-
-	# tweaks
-	echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
-	aptold install -y eatmydata lsb-release nano rsync \
-		2>&1 | grep -iv "newest" | grep --color=auto "Depends"
-
-
-	echo \
-'Acquire::Queue-Mode "host";
-Acquire::Languages "none";
-Acquire::http { Pipeline-Depth "200"; };
-Acquire::https { Verify-Peer false; };
-'>/etc/apt/apt.conf.d/99translations
+/run/keydb/keydb-server.pid
 
 
 	echo \
@@ -96,14 +72,14 @@ export LANGUAGE=en_US.UTF-8
 
 
 	cd `mktemp -d`
-	aptold update
+	aptnew update
 	dpkg --configure -a
-	aptold install -y locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
+	aptnew install -y locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
 	gnupg2 apt-utils tzdata curl \
 		2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen
 	apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys | grep -iv "not changed"
-	aptold update; aptold full-upgrade -fy
+	aptnew update; aptnew full-upgrade -fy
 
 	echo "1" > /run/done.init.dkbuild.txt
 fi
@@ -123,8 +99,8 @@ rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
 /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/; \
 mkdir -p /root/.local/share/nano/ /root/.config/procps/; \
 dpkg --configure -a; \
-aptold autoclean; aptold clean; aptold update
-aptold full-upgrade --auto-remove --purge -fy
+aptnew autoclean; aptnew clean; aptnew update
+aptnew full-upgrade --auto-remove --purge -fy
 
 
 # purge packages
@@ -138,8 +114,8 @@ sed -i '/keydb/d' /var/lib/dpkg/statoverride
 # special steps for keydb only
 cd `mktemp -d`; \
 rm -rf /etc/keydb /etc/systemd /lib/systemd/system/keydb*; \
-systemctl daemon-reload; aptold purge --auto-remove --purge  -fy keydb*; \
-aptold update; aptnew full-upgrade --auto-remove --purge -fy; \
+systemctl daemon-reload; aptnew purge --auto-remove --purge  -fy keydb*; \
+aptnew update; aptnew full-upgrade --auto-remove --purge -fy; \
 aptnew install --reinstall -fy keydb-server keydb-tools; \
 netstat -nlpat | grep --color keydb-server
 
@@ -147,7 +123,7 @@ sed -i '/keydb/d' /var/lib/dpkg/statoverride
 
 
 # cd `mktemp -d`; \
-# aptold purge --auto-remove --purge \
+# aptnew purge --auto-remove --purge \
 # php* nginx* libnginx* lua-resty* keydb-server keydb-tools nutcracker -fy
 
 # rm -rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb \
@@ -189,7 +165,7 @@ fi
 if [[ $(dpkg -l | grep "^ii" | grep "keydb\-server" | wc -l) -lt 1 ]]; then
 	rm -rf /var/lib/dpkg/info/keydb-server.*
 	dpkg --configure -a
-	aptold install -fy
+	aptnew install -fy
 fi
 
 
@@ -217,7 +193,7 @@ complete_php_installs() {
 	> /tmp/pkg-php0.txt
 
 	apt-cache search db4.8 | grep -iv "cil\|tcl\|doc" | \
-	cut -d" " -f1 | xargs aptold install -fy -o Dpkg::Options::="--force-overwrite"
+	cut -d" " -f1 | xargs aptnew install -fy -o Dpkg::Options::="--force-overwrite"
 
 	apt-cache search db4.8 | grep -iv "cil\|tcl\|doc" | \
 	cut -d" " -f1  >> /tmp/pkg-php0.txt
