@@ -1,8 +1,10 @@
 #!/bin/bash
 
-rm -rf /root/src/php/libsodium-1.0.18/dkbuild.log
-rm -rf /root/src/php/libsodium-1.0.18/dkbuild.log
+rm -rf /root/org.src /root/src
 
-/bin/bash /tb2/build/dk-build-full.sh -d /root/src/php/libsodium-1.0.18
+/bin/bash /tb2/build/dk-prep-deps-php8.sh
 
-ls -la /root/src/php/libsodium-1.0.18/dkbuild.log
+dsc_num=$(find /root/org.src/php -maxdepth 1 -type f -iname "*.dsc" | grep -iv "xmlrpc" | wc -l)
+dir_num=$(find /root/org.src/php -maxdepth 1 -type d | wc -l)
+printf "\n\n\n --- DSC=${blue}$dsc_num ${end} --- DIR=${blue}$dir_num ${end} \n\n"
+

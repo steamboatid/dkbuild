@@ -34,8 +34,9 @@ printf "\n\n"
 # ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/dk-install-all.sh
 # ssh argo -- lxc-attach -n tbus -- /bin/bash /tb2/build/dk-install-check.sh
 
-ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-core-php8.sh
-ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-deps-php8.sh
+# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-core-php8.sh
+# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-deps-php8.sh
+
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-php8.sh
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-check-log.sh
 
@@ -43,6 +44,8 @@ ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-deps-php8.sh
 
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-basic.sh
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-basic.sh
-# ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/zdev.sh
+
+ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/zdev.sh
+ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/zdev.sh
 
 # ssh argo "/bin/bash /tb2/build/xbuild-test-all.sh >/var/log/dkbuild/build-test-all.log 2>&1 &"
