@@ -46,17 +46,18 @@ wait_build_full(){
 }
 
 check_installed_pkgs(){
+	printf "\n\n"
 	export ERRBASE=0
 	if [[ $(dpkg -l | grep "^ii" | grep db4 | grep aisits | wc -l) -gt 0 ]]; then
-		printf "\n\n --- ${red}db4 failed ${end}"
+		printf "\n --- ${red}db4 failed ${end}"
 		export ERRBASE=1
 	fi
 	if [[ $(dpkg -l | grep "^ii" | grep pcre | grep aisits | wc -l) -gt 0 ]]; then
-		printf "\n\n --- ${red}pcre failed ${end}"
+		printf "\n --- ${red}pcre failed ${end}"
 		export ERRBASE=1
 	fi
 	if [[ $(dpkg -l | grep "^ii" | grep zip | grep aisits | wc -l) -gt 0 ]]; then
-		printf "\n\n --- ${red}libzip failed ${end}"
+		printf "\n --- ${red}libzip failed ${end}"
 		export ERRBASE=1
 	fi
 
