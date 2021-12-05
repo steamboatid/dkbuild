@@ -13,6 +13,7 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
+export ERRBASE=0
 
 
 source /tb2/build/dk-build-0libs.sh
@@ -44,6 +45,27 @@ wait_build_full(){
 	sleep 1
 }
 
+check_installed_pkgs(){
+	export ERRBASE=0
+	if [[ $(dpkg -l | grep "^ii" | grep db4 | grep aisits | wc -l) -gt 0 ]]; then
+		printf "\n\n --- ${red}db4 failed ${end}"
+		export ERRBASE=1
+	fi
+	if [[ $(dpkg -l | grep "^ii" | grep pcre | grep aisits | wc -l) -gt 0 ]]; then
+		printf "\n\n --- ${red}pcre failed ${end}"
+		export ERRBASE=1
+	fi
+	if [[ $(dpkg -l | grep "^ii" | grep zip | grep aisits | wc -l) -gt 0 ]]; then
+		printf "\n\n --- ${red}libzip failed ${end}"
+		export ERRBASE=1
+	fi
+
+	if [[ $ERRBASE -gt 0 ]]; then
+		printf "\n\n --- ${red}base packages failed ${end} \n\n"
+		exit 1
+	fi
+}
+
 
 
 # reset default build flags
@@ -68,7 +90,9 @@ find /tb2/build/$RELNAME-all/ -type f -iname "*deb" -delete
 #-------------------------------------------
 doback_bash /tb2/build/dk-build-libzip.sh &
 doback_bash /tb2/build/dk-build-pcre.sh &
+doback_bash /tb2/build/dk-build-db4.sh &
 wait_build_full
+check_installed_pkgs
 
 
 # some job at background
