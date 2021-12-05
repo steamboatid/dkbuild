@@ -27,21 +27,35 @@ source /tb2/build/dk-build-0libs.sh
 
 
 init_resolver() {
-	if [ -e /etc/resolv.conf ]; then
+	if [ -f /etc/init.d/resolvconf ] && [ -f /etc/resolvconf/resolv.conf.d/head ]; then
 		echo \
-"nameserver 1.1.1.1
-nameserver 8.8.8.8
-"> /etc/resolv.conf
-	elif [ -e /etc/init.d/resolvconf ] && [ -e /etc/resolvconf/resolv.conf.d/head ]; then
-		echo \
-"nameserver 1.1.1.1
+"nameserver 10.0.2.1
+nameserver 10.0.3.1
+nameserver 172.16.0.1
+nameserver 172.16.251.1
+
+nameserver 1.1.1.1
 nameserver 8.8.8.8
 "> /etc/resolvconf/resolv.conf.d/head
 
 		chmod +x /etc/init.d/resolvconf
 		/etc/init.d/resolvconf restart
-	else
-		sed -i "s/\#DNS=/DNS=1.1.1.1 8.8.8.8/g" /etc/systemd/resolved.conf
+	fi
+
+	if [ -f /etc/resolv.conf ]; then
+		echo \
+"nameserver 10.0.2.1
+nameserver 10.0.3.1
+nameserver 172.16.0.1
+nameserver 172.16.251.1
+
+nameserver 1.1.1.1
+nameserver 8.8.8.8
+"> /etc/resolv.conf
+	fi
+
+	if [[ -f /etc/systemd/resolved.conf ]]; then
+		sed -i "s/\#DNS=/DNS=10.0.2.1 10.0.3.1 172.16.0.1 172.16.251.1/g" /etc/systemd/resolved.conf
 		sed -i "s/\#FallbackDNS=/FallbackDNS=1.1.1.1 8.8.8.8/g" /etc/systemd/resolved.conf
 		sed -i "s/\#Cache=yes/Cache=yes/g" /etc/systemd/resolved.conf
 		# cat /etc/systemd/resolved.conf | grep "DNS="

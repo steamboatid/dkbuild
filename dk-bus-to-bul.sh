@@ -240,6 +240,7 @@ search aisdev.id ais.its.ac.id ais now loc lo
 nameserver 172.16.251.1
 #--topgw
 nameserver 172.16.0.1
+nameserver 10.0.2.1
 nameserver 10.0.3.1
 
 #--nasdec-NS

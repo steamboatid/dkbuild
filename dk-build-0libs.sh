@@ -677,6 +677,14 @@ init_dkbuild(){
 
 	# chown apt
 	chown_apt &
+
+	if [[ $(grep "buster" /etc/apt/sources.list | wc -l) -gt 0 ]]; then
+		/etc/init.d/resolvconf restart
+	else
+		systemctl enable systemd-resolved.service
+		systemctl restart systemd-resolved.service
+		systemd-resolve --status
+	fi
 }
 
 

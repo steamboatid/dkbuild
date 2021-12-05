@@ -67,7 +67,8 @@ find /tb2/build/$RELNAME-all/ -type f -iname "*deb" -delete
 # some job at foreground: build & istall base packages
 #-------------------------------------------
 doback_bash /tb2/build/dk-build-libzip.sh &
-doback_bash /tb2/build/dk-build-pcre.sh
+doback_bash /tb2/build/dk-build-pcre.sh &
+wait_build_full
 
 
 # some job at background
