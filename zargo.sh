@@ -25,7 +25,7 @@ printf "\n\n"
 
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-fix-php-sources.sh
-# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-all.sh
+ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-all.sh
 
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-core-php8.sh
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-deps-php8.sh
