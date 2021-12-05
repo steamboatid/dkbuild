@@ -15,7 +15,7 @@ for alxc in ${lxcs[@]}; do
 	ssh argo -- lxc-stop -kn $alxc
 	ssh argo -- lxc-start -qn $alxc
 	# ssh argo -- lxca $alxc -- dhclient eth0 >/dev/null 2>&1 &
-	# ssh argo -- lxca $alxc -- rm -rf /usr/local/sbin/dk*sh
+	ssh argo -- lxca $alxc -- rm -rf /usr/local/sbin/dk*sh
 	# ssh argo -- lxca $alxc -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
 done
 
