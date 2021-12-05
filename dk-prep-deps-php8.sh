@@ -27,8 +27,10 @@ get_package_file(){
 	DST="$2"
 
 	DOGET=0
-	if [ ! -s "${DST}" ]; then DOGET=1; fi
-	if [ test `find "${DST}" -mtime +1` ]; then DOGET=1; fi
+	if [[ ! -e "${DST}" ]]; then DOGET=1;
+	elif [[ ! -s "${DST}" ]]; then DOGET=1;
+	elif [[ test `find "${DST}" -mtime +1` ]]; then DOGET=1; fi
+
 	if [[ $DOGET -gt 0 ]]; then
 		curl -A "Aptly/1.0" -Ss "$URL" > "$DST"
 	fi
@@ -40,7 +42,7 @@ get_package_file_gz(){
 	AGZ="$3"
 
 	get_package_file "$URL" "$AGZ"
-	if [ ! -s "${AGZ}" ]; then
+	if [[ -s "${AGZ}" ]]; then
 		gzip -cdk "$AGZ" > "$DST"
 	fi
 }
@@ -108,22 +110,21 @@ URL="https://packages.sury.org/php/dists/buster/main/binary-amd64/Packages"
 # URL="http://repo.aisits.id/php/dists/buster/main/binary-amd64/Packages"
 
 rm -rf $FPKGS
-ls -la $FPKGS
 URL="http://repo.aisits.id/php/dists/${RELNAME}/main/binary-amd64/Packages"
 get_package_file $URL $FPKGS
 
-# if $FPKGS empty
-ls -la $FPKGS
-if [[ ! -s $FPKGS ]]; then
-	URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
-	get_package_file $URL $FPKGS
-fi
+# # if $FPKGS empty
+# ls -la $FPKGS
+# if [[ ! -s $FPKGS ]]; then
+# 	URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
+# 	get_package_file $URL $FPKGS
+# fi
 
-ls -la $FPKGS
-if [[ ! -s $FPKGS ]]; then
-	printf "\n\n --- $FPKGS empty \n\n"
-	exit 1
-fi
+# ls -la $FPKGS
+# if [[ ! -s $FPKGS ]]; then
+# 	printf "\n\n --- $FPKGS empty \n\n"
+# 	exit 1
+# fi
 
 
 
