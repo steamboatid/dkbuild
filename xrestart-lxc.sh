@@ -47,7 +47,7 @@ ip6=$(/sbin/ip -o -6 addr list eth0 | awk '{print $4}' | cut -d/ -f1 | wc -l)
 
 if [[ $ip4 -lt 1 ]] && [[ $ip6 -lt 1 ]]; then
 	printf "\n --- get IP: "
-	lxca $alxc -- dhclient eth0
+	lxc-attach -n $alxc -- dhclient eth0
 	sleep 0.2
 fi
 
@@ -55,6 +55,6 @@ ip4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
 printf "\n ---   ip4: $ip4 "
 
 printf "\n --- prepare scripts: $alxc "
-lxca $alxc -- rm -rf /usr/local/sbin/dk*sh
-lxca $alxc -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
-lxca $alxc -- chmod +x /tb2/build/*sh /usr/local/sbin/*
+lxc-attach -n $alxc -- rm -rf /usr/local/sbin/dk*sh
+lxc-attach -n $alxc -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
+lxc-attach -n $alxc -- chmod +x /tb2/build/*sh /usr/local/sbin/*
