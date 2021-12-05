@@ -190,8 +190,11 @@ building_php(){
 
 	# install after build
 	if [[ $adir == *"propro"* ]]; then
-		wait_build_jobs_php
-		dpkg -i --force-all ../php*-propro*deb
+		build_propro=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "propro" | wc -l)
+		debs_propro=$(find -L .. -type f -iname "php*-propro*deb" | wc -l)
+		if [[ $debs_propro -gt 0 ]] && [[ $build_propro -lt 1 ]]; then
+			dpkg -i --force-all ../php*-propro*deb
+		fi
 	fi
 
 	cd "$odir"
