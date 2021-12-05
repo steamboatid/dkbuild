@@ -111,9 +111,14 @@ rm -rf $FPKGS
 URL="http://repo.aisits.id/php/dists/${RELNAME}/main/binary-amd64/Packages"
 get_package_file $URL $FPKGS
 
+# if $FPKGS empty
 if [[ ! -s $FPKGS ]]; then
 	URL="https://packages.sury.org/php/dists/${RELNAME}/main/binary-amd64/Packages"
 	get_package_file $URL $FPKGS
+fi
+if [[ ! -s $FPKGS ]]; then
+	printf "\n\n --- $FPKGS empty \n\n"
+	exit 1
 fi
 
 
