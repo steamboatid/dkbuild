@@ -48,8 +48,8 @@ ip4=$(lxc-attach -n $alxc -- /sbin/ip -o -4 addr list eth0 | awk '{print $4}' | 
 ip6=$(lxc-attach -n $alxc -- /sbin/ip -o -6 addr list eth0 | awk '{print $4}' | cut -d/ -f1 | wc -l)
 
 if [[ $ip4 -lt 1 ]] && [[ $ip6 -lt 1 ]]; then
-	printf "\n --- get IP: "
-	lxc-attach -n $alxc -- dhclient eth0
+	printf "\n --- getIP: "
+	lxc-attach -n $alxc -- dhclient eth0  >/dev/null 2>&1
 	sleep 0.2
 fi
 
