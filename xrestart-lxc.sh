@@ -34,8 +34,10 @@ if [ -z "${alxc}" ]; then
 fi
 
 printf "\n ---  stop: $alxc "
+lxc-stop -n $alxc
+sleep 1
 lxc-stop -kn $alxc
-sleep 0.1
+sleep 0.2
 
 printf "\n --- start: $alxc "
 lxc-start -qn $alxc
