@@ -12,7 +12,7 @@ ssh argo "nohup chmod +x /usr/local/sbin/* /tb2/build/*sh 2>&1 >/dev/null &"
 
 lxcs=(bus eye tbus teye)
 for alxc in ${lxcs[@]}; do
-	ssh argo -- /bin/bash /tb2/build/xrestart-lxc.sh "$alxc"
+	ssh argo -- /bin/bash /tb2/build/xrestart-lxc.sh -a "$alxc"
 done
 
 
