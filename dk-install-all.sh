@@ -255,4 +255,5 @@ complete_php_installs "php8.0" "8.0"
 complete_php_installs "php8.1" "8.1"
 
 
+#--- check packages installed
 /bin/bash /tb2/build/dk-install-check.sh
