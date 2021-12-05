@@ -54,7 +54,7 @@ fi
 ip4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
 printf "\n ---   ip4: $ip4 "
 
-printf "\n --- prepare scripts: $alxc "
-lxc-attach -n $alxc -- rm -rf /usr/local/sbin/dk*sh
-lxc-attach -n $alxc -- ln -sf /tb2/build/dk*sh /usr/local/sbin/
+printf "\n --- preps: $alxc "
+# lxc-attach -n $alxc -- rm -rf /usr/local/sbin/dk*sh
+lxc-attach -n $alxc -- ln -sf /tb2/build/*sh /usr/local/sbin/
 lxc-attach -n $alxc -- chmod +x /tb2/build/*sh /usr/local/sbin/*
