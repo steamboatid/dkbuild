@@ -190,6 +190,7 @@ building_php(){
 
 	# install after build
 	if [[ $adir == *"propro"* ]]; then
+		wait_build_jobs_php
 		dpkg -i --force-all ../php*-propro*deb
 	fi
 

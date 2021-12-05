@@ -103,29 +103,18 @@ check_installed_pkgs
 
 # some job at background
 #-------------------------------------------
-doback_bash /tb2/build/dk-build-nutcracker.sh &
-doback_bash /tb2/build/dk-build-keydb.sh &
-doback_bash /tb2/build/dk-build-lua-resty-lrucache.sh &
-doback_bash /tb2/build/dk-build-lua-resty-core.sh &
-doback_bash /tb2/build/dk-build-sshfs-fuse.sh &
+doback_bash /tb2/build/dk-build-nutcracker.sh
+doback_bash /tb2/build/dk-build-keydb.sh
+doback_bash /tb2/build/dk-build-lua-resty-lrucache.sh
+doback_bash /tb2/build/dk-build-lua-resty-core.sh
+doback_bash /tb2/build/dk-build-sshfs-fuse.sh
 
 
 # some job at foreground, wait first
 #-------------------------------------------
 wait_build_full
-doback_bash /tb2/build/dk-build-nginx.sh &
-
-
-# build & install db4 first, then php
-#-------------------------------------------
-if /bin/bash /tb2/build/dk-build-db4.sh; then
-	printf "\n\n\n"
-	sleep 1
-	/bin/bash /tb2/build/dk-build-php8.sh
-fi
-
-printf "\n\n\n"
-sleep 1
+doback_bash /tb2/build/dk-build-nginx.sh
+doback_bash /tb2/build/dk-build-php8.sh
 
 
 # wait all background jobs
