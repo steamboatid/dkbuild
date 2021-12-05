@@ -163,8 +163,8 @@ apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
 apt-cache search php8 | cut -d" " -f1 | \
 	grep -iv "symfony\|apache\|embed\|dbgsym" >> $FNOW1
 
-echo "php-http php-pecl-http php-pecl-http-dev php-http-all-dev" | \
-	tr " " "\n" >> $FNOW1
+echo "php-pecl-http php-pecl-http-dev" | tr " " "\n" >> $FNOW1
+
 
 cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
 	sort -u | sort | \
