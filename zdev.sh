@@ -25,7 +25,11 @@ source /tb2/build/dk-build-0libs.sh
 rm -rf /root/org.src /root/src
 
 >/tmp/zdev.txt
-/bin/bash /tb2/build/dk-prep-deps-php8.sh 2>&1 | tee /tmp/zdev.txt
+/bin/bash /tb2/build/dk-prep-core-php8.sh 2>&1 | tee -a /tmp/zdev.txt
+/bin/bash /tb2/build/dk-prep-deps-php8.sh 2>&1 | tee -a /tmp/zdev.txt
+
+printf "\n\n"
+cat /tmp/zdev.txt | greo -i unable
 
 dsc_num=$(find /root/org.src/php -maxdepth 1 -type f -iname "*.dsc" | grep -iv "xmlrpc" | wc -l)
 dir_num=$(find /root/org.src/php -maxdepth 1 -type d | wc -l)
