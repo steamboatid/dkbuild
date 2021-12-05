@@ -234,6 +234,14 @@ apt-cache search libxmlrpc | cut -d" " -f1 | \
 	grep -iv "perl\|java\|ocaml" | xargs aptold install -fy
 
 
+for apkg in $(apt search php 2>&1 | grep -iv "stable cli" | grep 2021 | \
+	grep -iv "php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|dev\|common\|default" | \
+	cut -d"/" -f1  | sort -u); do
+	aptold build-dep -fy $apkg
+	aptold source -y -qq $apkg
+done
+
+
 fixing_folders_by_dsc_files
 fixing_folders_by_dsc_files
 
