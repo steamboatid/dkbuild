@@ -56,9 +56,9 @@ printf "\n ---   ip4: $ip4 -- restart dns client "
 
 arel=$(lxc-attach -n $alxc -- lsb_release -sc)
 if [[ "$arel" == "buster" ]]; then
-	lxc-attach -n $alxc -- apt install -fy resolvconf >/dev/null 2>&1
-	lxc-attach -n $alxc -- /etc/init.d/resolvconf stop >/dev/null 2>&1
-	lxc-attach -n $alxc -- /etc/init.d/resolvconf restart
+	lxc-attach -n $alxc -- apt install -fy resolvconf  >/dev/null 2>&1
+	lxc-attach -n $alxc -- /etc/init.d/resolvconf stop  >/dev/null 2>&1
+	lxc-attach -n $alxc -- /etc/init.d/resolvconf restart  >/dev/null 2>&1
 elif [[ "$arel" == "bullseye" ]]; then
 	lxc-attach -n $alxc -- systemctl enable systemd-resolved.service
 	lxc-attach -n $alxc -- systemctl restart systemd-resolved.service
