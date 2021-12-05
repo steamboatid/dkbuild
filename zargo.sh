@@ -14,7 +14,9 @@ lxcs=(bus eye tbus teye)
 for alxc in ${lxcs[@]}; do
 	ssh argo -- /bin/bash /tb2/build/xrestart-lxc.sh -a "$alxc" >/dev/null 2>&1 &
 done
-wait 
+
+printf "\n\n --- prepare lxcs "
+wait
 
 
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-pcre.sh
