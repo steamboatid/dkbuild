@@ -12,8 +12,9 @@ ssh argo "nohup chmod +x /usr/local/sbin/* /tb2/build/*sh 2>&1 >/dev/null &"
 
 lxcs=(bus eye tbus teye)
 for alxc in ${lxcs[@]}; do
-	ssh argo -- /bin/bash /tb2/build/xrestart-lxc.sh -a "$alxc"
+	ssh argo -- /bin/bash /tb2/build/xrestart-lxc.sh -a "$alxc" >/dev/null 2>&1 &
 done
+wait 
 
 
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-pcre.sh
