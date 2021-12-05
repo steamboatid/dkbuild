@@ -35,13 +35,13 @@ fi
 
 printf "\n ---  stop: $alxc "
 lxc-stop -n $alxc
-sleep 0.5
+sleep 1
 lxc-stop -kn $alxc  >/dev/null 2>&1
 sleep 0.2
 
 printf "\n --- start: $alxc "
 lxc-start -qn $alxc
-sleep 0.5
+sleep 0.2
 
 
 ip4=$(lxc-attach -n $alxc -- /sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1 | wc -l)
