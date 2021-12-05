@@ -52,7 +52,15 @@ if [[ $ip4 -lt 1 ]] && [[ $ip6 -lt 1 ]]; then
 fi
 
 ip4=$(lxc-attach -n $alxc -- /sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
-printf "\n ---   ip4: $ip4 "
+printf "\n ---   ip4: $ip4 -- restart dns client "
+
+arel=$(lxc-attach -n $alxc -- lsb_release -sc)
+if [[ "$arel" == "buster" ]]; then
+	lxc-attach -n $alxc -- /etc/init.d/resolvconf restart
+elif [[ "$arel" == "bullseye" ]]; then
+	lxc-attach -n $alxc -- systemctl enable systemd-resolved.service
+	lxc-attach -n $alxc -- systemctl restart systemd-resolved.service
+fi
 
 printf "\n --- preps: scripts $alxc "
 lxc-attach -n $alxc -- rm -rf /usr/local/sbin/dk*sh /usr/local/sbin/x*sh /usr/local/sbin/y*sh /usr/local/sbin/z*sh
