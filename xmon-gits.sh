@@ -40,13 +40,13 @@ get_curl(){
 		date_now=$(( $date_now ))
 		date_delta=$(( $date_now - $date_file ))
 
-		if [[ $date_delta -gt 86400 ]]; then
+		if [[ $date_delta -gt 3600 ]]; then
 			docurl=1
 		fi
 	fi
 
 	if [[ $docurl -gt 0 ]]; then
-		curl -L --insecure --ipv4 -A "Aptly/1.0" $aurl 2>&1 >$cache_file
+		curl -L --insecure --ipv4 -A "Aptly/1.0" "$aurl" 2>&1 >$cache_file
 	fi
 
 	cat $cache_file
@@ -188,13 +188,16 @@ done < "/tmp/gits-list.txt"
 
 printf "\n\n -- SUM delta: ${green}$sum_delta ${end}"
 
-format="+%H:%M:%S"
-if [[ $sum_delta -gt 86400 ]] && [[ $sum_delta -lt 2592000 ]]; then
-	format="+%d days  %H:%M:%S"
-else
-	format="+%m months %d days  %H:%M:%S"
+
+if [[ $sum_delta -gt 0 ]]; then
+	format="+%H:%M:%S"
+	if [[ $sum_delta -gt 86400 ]] && [[ $sum_delta -lt 2592000 ]]; then
+		format="+%d days  %H:%M:%S"
+	else
+		format="+%m months %d days  %H:%M:%S"
+	fi
+	formatted=$(date -u "$format" -d "@$(printf "%010d\n" $sum_delta)" | sed "s|^00:||")
+	printf " -- ${cyn} $formatted ${end}"
 fi
-formatted=$(date -u "$format" -d "@$(printf "%010d\n" $sum_delta)" | sed "s|^00:||")
-printf " -- ${cyn} $formatted ${end}"
 
 printf "\n\n --- done \n\n"
