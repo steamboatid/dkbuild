@@ -77,9 +77,10 @@ ls -lah ./trusted-keys
 
 LOCSIZE=$(ls -la ./trusted-keys | cut -d' ' -f5)
 ARGOSIZE=$(ssh argo -C "ls -la /w3repo/trusted-keys | cut -d' ' -f5")
+ARGOSIZE2=$(( $ARGOSIZE * 2 ))
 
 printf "\n\n SIZES: local=$LOCSIZE argo=$ARGOSIZE \n"
-if [[ $LOCSIZE -gt $ARGOSIZE ]]; then
+if [[ $LOCSIZE -gt $ARGOSIZE ]] && [[ $LOCSIZE -lt $ARGOSIZE2 ]]; then
 	scp ./trusted-keys argo:/w3repo/
 fi
 
