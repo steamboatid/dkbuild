@@ -48,4 +48,8 @@ printf "\n\n"
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/zdev.sh
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/zdev.sh
 
+printf "\n\n --- exec xbuild-test-all.sh "
 ssh argo "/bin/bash /tb2/build/xbuild-test-all.sh >/var/log/dkbuild/build-test-all.log 2>&1 &"
+
+wait
+printf "\n\n --- done \n\n"
