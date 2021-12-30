@@ -19,13 +19,12 @@ printf "\n\n --- prepare lxcs "
 
 lxcs=(bus eye tbus teye)
 for alxc in ${lxcs[@]}; do
-	printf "\n -- $alxc "
 	# ssh argo -- /bin/bash /tb2/build/xrestart-lxc.sh -a "$alxc" >/dev/null 2>&1 &
 	ssh argo -- /bin/bash /tb2/build/xrestart-lxc.sh -a "$alxc"
 done
 
-wait
-printf "\n\n"
+# wait
+# printf "\n\n"
 
 
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-pcre.sh
