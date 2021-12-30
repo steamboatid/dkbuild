@@ -140,8 +140,8 @@ echo \
 '>/etc/apt/sources.list.d/nginx-ppa-devel.list
 
 echo \
-'deb http://repo.aisits.id/nginx-devel bionic main
-deb-src http://repo.aisits.id/nginx-devel bionic main
+'deb http://repo.aisits.id/nginx-devel devel main
+deb-src http://repo.aisits.id/nginx-devel devel main
 '>/etc/apt/sources.list.d/nginx-devel-aisits.list
 
 echo \
