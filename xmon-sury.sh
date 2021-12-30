@@ -118,7 +118,9 @@ if [[ $epoch_delta -gt 0 ]]; then
 		format="+%m months %d days  %H:%M:%S"
 	fi
 	formatted=$(date -u "$format" -d "@$(printf "%010d\n" $epoch_delta)" | sed "s|^00:||")
-	printf " -- ${cyn} $formatted ${end}"
+	printf " -- ${cyn} $formatted ${end} \n\n\n"
+
+	/bin/bash /tb2/build/xbuild-test-all.sh 2>&1 | tee /var/log/dkbuild/build-test-all.log
 fi
 
 
