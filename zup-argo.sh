@@ -25,4 +25,4 @@ done
 wait
 printf "\n\n"
 
-
+ssh argo "ln -sf /tb2/build/*sh /usr/local/sbin/"
