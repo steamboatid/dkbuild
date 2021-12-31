@@ -1,31 +1,12 @@
 #!/bin/bash
 
 
-rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
-/tb2/build/*sh root@argo:/tb2/build/
-
-rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
-/tb2/build/dk* root@argo:/tb2/build/
-
-nohup /bin/bash /tb2/build/zgit-auto.sh >/dev/null 2>&1 &
-ssh argo "nohup chmod +x /usr/local/sbin/* /tb2/build/*sh 2>&1 >/dev/null &"
-
-ssh argo -- killall -9 cc ccache cc1 gcc g++  >/dev/null 2>&1 &
-sleep 0.2
-ssh argo -- killall -9 cc ccache cc1 gcc g++  >/dev/null 2>&1 &
+MYFILE=$(which $0)
+MYDIR=$(realpath $(dirname $MYFILE))
+echo $MYDIR
 
 
-printf "\n\n --- PREPARE LXCS --- \n\n"
-
-lxcs=(bus eye tbus teye)
-for alxc in ${lxcs[@]}; do
-	# ssh argo -- /bin/bash /tb2/build/xrestart-lxc.sh -a "$alxc" >/dev/null 2>&1 &
-	ssh argo -- /bin/bash /tb2/build/xrestart-lxc.sh -a "$alxc"
-done
-
-# wait
-# printf "\n\n"
-
+/bin/bash $MYDIR/zup-argo.sh
 
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-pcre.sh
 
@@ -51,7 +32,7 @@ done
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/zdev.sh
 
 
-printf "\n\n --- exec xbuild-test-all.sh "
+printf "\n\n --- EXEC xbuild-test-all.sh "
 ssh argo "/bin/bash /tb2/build/xbuild-test-all.sh >/var/log/dkbuild/build-test-all.log 2>&1 &"
 
 wait

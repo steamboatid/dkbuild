@@ -39,6 +39,31 @@ source ~/.bashrc
 
 
 
+wait_jobs(){
+	numo=0
+	numz=0
+	while :; do
+		# jobs -r
+		numa=$(jobs -r | wc -l)
+		if [[ $numz -gt 3 ]]; then
+			break
+		elif [[ $numa -lt 1 ]]; then
+			numz=$(( $numz + 1 ))
+			printf "."
+		elif [[ $numa -ne $numo ]]; then
+			numo=$numa
+			printf " $numa"
+		else
+			printf "."
+		fi
+
+		sleep 1
+	done
+
+	# wait
+	wait
+}
+
 wait_backs(){
 	patt="$1"
 

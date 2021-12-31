@@ -1,6 +1,22 @@
 #!/bin/bash
 
 
+export DEBIAN_FRONTEND="noninteractive"
+
+export DEBFULLNAME="Dwi Kristianto"
+export DEBEMAIL="steamboatid@gmail.com"
+export EMAIL="steamboatid@gmail.com"
+
+export RELNAME=$(lsb_release -sc)
+export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
+
+export TODAY=$(date +%Y%m%d-%H%M)
+export TODATE=$(date +%Y%m%d)
+
+
+source /tb2/build/dk-build-0libs.sh
+
+
 
 kill_current_scripts(){
 	PID=$$
@@ -18,17 +34,31 @@ kill_current_scripts(){
 	killall -9 ccache cc cc1 gcc g++  >/dev/null 2>&1
 }
 
+do_testing(){
+	alxc="$1"
+
+	lxc-start -qn $alxc
+	lxc-attach -n $alxc -- /bin/bash /tb2/build/dk-init-debian.sh  2>&1 | tee /var/log/dkbuild/dk-$alxc-init.log
+	lxc-attach -n $alxc -- /bin/bash /tb2/build/dk-install-all.sh  2>&1 | tee /var/log/dkbuild/dk-$alxc-install.log
+	sleep 1
+}
+
 kill_current_scripts
 kill_current_scripts
 
 
 mkdir -p /var/log/dkbuild
 
-lxc-start -qn tbus
-lxc-attach -n tbus -- /bin/bash /tb2/build/dk-init-debian.sh  2>&1 | tee /var/log/dkbuild/dk-tbus-init.log
-lxc-attach -n tbus -- /bin/bash /tb2/build/dk-install-all.sh  2>&1 | tee /var/log/dkbuild/dk-tbus-install.log
+do_testing "tbus" >/dev/null 2>&1 &
+do_testing "teye" >/dev/null 2>&1 &
 sleep 1
 
-lxc-start -qn teye
-lxc-attach -n teye -- /bin/bash /tb2/build/dk-init-debian.sh  2>&1 | tee /var/log/dkbuild/dk-teye-init.log
-lxc-attach -n teye -- /bin/bash /tb2/build/dk-install-all.sh  2>&1 | tee /var/log/dkbuild/dk-teye-install.log
+printf "\n\n\n wait... "
+wait_jobs
+printf "\n\n\n wait... "
+wait < <(jobs -p)
+
+printf "\n\n --- clear nginx cache "
+/bin/bash /root/clear-nginx-cache.sh
+
+printf "\n\n done. \n\n"
