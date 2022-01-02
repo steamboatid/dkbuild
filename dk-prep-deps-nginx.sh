@@ -57,6 +57,7 @@ cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
 	xargs aptold install -my \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
 
+aptold install -fy
 
 
 #--- sync to src
