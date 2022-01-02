@@ -41,10 +41,14 @@ cd /root/org.src/nginx
 chown -Rf _apt:root /root/org.src/nginx
 
 cat $FDST | grep "Package:" | sed "s/Package\: //g" | \
+grep -iv "resty-core"
+exit 0
+
+cat $FDST | grep "Package:" | sed "s/Package\: //g" | \
 grep -iv "resty-core" | \
 tr "\n" " " > $FNOW
 
-# cat $FNOW | xargs aptold build-dep -fy
+cat $FNOW | xargs aptold build-dep -fy
 exit 0
 
 
