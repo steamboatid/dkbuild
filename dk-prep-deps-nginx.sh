@@ -45,7 +45,6 @@ grep -iv "resty" | \
 tr "\n" " " > $FNOW
 
 cat $FNOW | xargs aptold build-dep -fy
-exit 0
 
 
 cat /tb2/tmp/nginx-pkg-org.txt | grep "Depends:" | sed -r "s/Depends: //g"| \
@@ -60,7 +59,6 @@ cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
 
 aptold install -fy
-exit 0
 
 
 #--- sync to src
