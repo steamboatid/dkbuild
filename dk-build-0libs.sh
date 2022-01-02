@@ -720,7 +720,7 @@ get_package_file_gz(){
 	AGZ="$3"
 
 	if [[ -s "${AGZ}" ]]; then
-		ls -la "$AGZ"
+		# ls -la "$AGZ"
 		# printf "\n\n --- gzip -cdk $AGZ > $DST \n\n"
 		gzip -cdk "$AGZ" > "$DST"
 	fi
