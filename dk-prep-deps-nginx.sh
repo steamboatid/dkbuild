@@ -45,7 +45,7 @@ grep -iv "resty-core" | \
 tr "\n" " " > $FNOW
 
 cat $FNOW | xargs aptold build-dep -fy
-
+exit 0
 
 
 cat /tb2/tmp/nginx-pkg-org.txt | grep "Depends:" | sed -r "s/Depends: //g"| \
