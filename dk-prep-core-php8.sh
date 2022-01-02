@@ -201,6 +201,7 @@ rm -rf /root/src/php/*deb
 #--- fetch default source package
 #-------------------------------------------
 cd /root/org.src/php
+chown_apt
 
 for apv in "${PHPVERS[@]}"; do
 	apt source -my \
@@ -232,12 +233,14 @@ apt-cache search imagick | cut -d' ' -f1 | grep php | grep -i "\-dev"  >>/tmp/ph
 apt-cache search ast | cut -d' ' -f1 | grep php |  grep -iv "xcache\|solr" |\
 grep -i "\-dev"  >>/tmp/php-pkgs.txt
 
+chown_apt
 cat /tmp/php-pkgs.txt | xargs aptold install -fy
 cat /tmp/php-pkgs.txt | xargs aptold build-dep -fy
 cat /tmp/php-pkgs.txt | xargs apt source -my
 
 
 #--- another errornous packages
+chown_apt
 cd /root/org.src/php; \
 apt-cache search php | cut -d' ' -f1 | grep "^php-" |\
 grep -i "\-dev" | grep -iv "horde\|dbg\|sym" |\
