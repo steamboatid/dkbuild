@@ -227,6 +227,11 @@ cat /tmp/php-pkgs.txt | xargs aptold install -fy
 cat /tmp/php-pkgs.txt | xargs aptold build-dep -fy
 cat /tmp/php-pkgs.txt | xargs apt source -my
 
+apt-cache search redis | cut -d' ' -f1 | grep php | grep -iv "swoole" | \
+grep -i "\-dev"  >/tmp/php-pkgs.txt
+cat /tmp/php-pkgs.txt | xargs aptold install -fy
+cat /tmp/php-pkgs.txt | xargs aptold build-dep -fy
+cat /tmp/php-pkgs.txt | xargs apt source -my
 
 
 #--- sync to src
