@@ -44,6 +44,8 @@ tr "\n" " " > $FNOW
 cd /root/org.src/nginx
 chown -Rf _apt:root /root/org.src/nginx
 
+cat $FNOW
+exit 0
 cat $FNOW | xargs aptold build-dep -fy
 
 cat /tb2/tmp/nginx-pkg-org.txt | grep "Depends:" | sed -r "s/Depends: //g"| \
@@ -53,11 +55,10 @@ grep -iv "|" | cut -d":" -f1 | sort -u >  /tmp/deps.pkgs
 
 echo "perl-base"  >> /tmp/deps.pkgs
 
-# cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
-# 	xargs aptold install -my \
-# 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
+cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
+	xargs aptold install -my \
+	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
 
-cat /tmp/deps.pkgs
 aptold install -fy
 exit 0
 
