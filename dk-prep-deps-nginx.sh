@@ -48,16 +48,18 @@ cat $FNOW | xargs aptold build-dep -fy
 
 cat /tb2/tmp/nginx-pkg-org.txt | grep "Depends:" | sed -r "s/Depends: //g"| \
 sed "s/\,//g" | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | sed "s/\s/\n/g" | sed '/^$/d' | \
-grep -iv "api\|perl\|debconf\|nginx-full\|nginx-light\|nginx-core\|nginx-extras\|lua" | \
+grep -iv "api\|perl\|debconf\|nginx-full\|nginx-light\|nginx-core\|nginx-extras" | \
 grep -iv "|" | cut -d":" -f1  >  /tmp/deps.pkgs
 
 echo "perl-base"  >> /tmp/deps.pkgs
 
-cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
-	xargs aptold install -my \
-	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
+# cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
+# 	xargs aptold install -my \
+# 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
 
+cat /tmp/deps.pkgs
 aptold install -fy
+exit 0
 
 
 #--- sync to src
