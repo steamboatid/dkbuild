@@ -37,15 +37,16 @@ FNOW="/tb2/tmp/nginx-pkg-now.txt"
 get_package_file_gz $URL $FDST $FGZ
 
 
-cat $FDST | grep "Package:" | sed "s/Package\: //g" | \
-grep -iv "api\|perl\|debconf\|nginx-full\|nginx-light\|nginx-core\|nginx-extras" | \
-tr "\n" " " > $FNOW
-
-
 cd /root/org.src/nginx
 chown -Rf _apt:root /root/org.src/nginx
 
+cat $FDST | grep "Package:" | sed "s/Package\: //g" | \
+grep -iv "resty-core" | \
+tr "\n" " " > $FNOW
+
 cat $FNOW | xargs aptold build-dep -fy
+
+
 
 cat /tb2/tmp/nginx-pkg-org.txt | grep "Depends:" | sed -r "s/Depends: //g"| \
 sed "s/\,//g" | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | sed "s/\s/\n/g" | sed '/^$/d' | \
