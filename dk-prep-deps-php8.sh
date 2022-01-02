@@ -50,7 +50,7 @@ fixing_folders_by_dsc_files(){
 
 			aptold build-dep -my $adir
 			chown_apt
-			apt source -my $adir
+			aptold source -my $adir
 		fi
 	done
 
@@ -199,7 +199,7 @@ cat $FSRC2 | grep "${PHPGREP}" >> $FSRC3
 chown_apt
 cat $FSRC3 | \
 grep -iv "php8.1-http\|php8.0-http\|php-http" | \
-sort -u | sort | tr "\n" " " | xargs apt source -my
+sort -u | sort | tr "\n" " " | xargs aptold source -my
 # cat $FSRC3 | sort -u | sort
 
 

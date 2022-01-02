@@ -204,7 +204,7 @@ cd /root/org.src/php
 chown_apt
 
 for apv in "${PHPVERS[@]}"; do
-	apt source -my \
+	aptold source -my \
 	php-defaults \
 	$apv $apv-apcu $apv-ast $apv-bcmath $apv-bz2 $apv-cli $apv-common \
 	$apv-curl $apv-dba $apv-dev $apv-enchant $apv-fpm $apv-gd $apv-gmp \
@@ -217,8 +217,8 @@ for apv in "${PHPVERS[@]}"; do
 	php-memcached php-redis php-igbinary php-msgpack php-apcu \
 	php-raphf
 
-	apt source -my php-pecl-http
-	apt source -my $apv-http
+	aptold source -my php-pecl-http
+	aptold source -my $apv-http
 done
 
 
@@ -236,7 +236,7 @@ grep -i "\-dev"  >>/tmp/php-pkgs.txt
 chown_apt
 cat /tmp/php-pkgs.txt | xargs aptold install -fy
 cat /tmp/php-pkgs.txt | xargs aptold build-dep -fy
-cat /tmp/php-pkgs.txt | xargs apt source -my
+cat /tmp/php-pkgs.txt | xargs aptold source -my
 
 
 #--- another errornous packages
@@ -244,7 +244,7 @@ chown_apt
 cd /root/org.src/php; \
 apt-cache search php | cut -d' ' -f1 | grep "^php-" |\
 grep -i "\-dev" | grep -iv "horde\|dbg\|sym" |\
-xargs apt source -my
+xargs aptold source -my
 
 
 #--- sync to src
