@@ -706,7 +706,7 @@ get_package_file(){
 	elif [ test `find "${DST}" -mtime +1` ]; then DOGET=1; fi
 
 	if [[ $DOGET -gt 0 ]]; then
-		curl -A "Aptly/1.0" -Ss "$URL" > "$DST"
+		curl -A "Aptly/1.0" -Ss -L "$URL" > "$DST"
 	fi
 }
 
@@ -718,6 +718,7 @@ get_package_file_gz(){
 	get_package_file "$URL" "$AGZ"
 	if [[ -s "${AGZ}" ]]; then
 		ls -la "$AGZ"
+		printf "\n\n --- gzip -cdk $AGZ > $DST"
 		gzip -cdk "$AGZ" > "$DST"
 	fi
 }
