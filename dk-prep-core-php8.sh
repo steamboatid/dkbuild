@@ -228,6 +228,8 @@ apt-cache search xdebug | cut -d' ' -f1 | grep php | grep -i "\-dev"  >>/tmp/php
 apt-cache search redis | cut -d' ' -f1 | grep php | grep -iv "swoole" | \
 grep -i "\-dev"  >>/tmp/php-pkgs.txt
 apt-cache search imagick | cut -d' ' -f1 | grep php | grep -i "\-dev"  >>/tmp/php-pkgs.txt
+apt-cache search ast | cut -d' ' -f1 | grep php |  grep -iv "xcache\|solr" |\
+grep -i "\-dev"  >>/tmp/php-pkgs.txt
 
 cat /tmp/php-pkgs.txt | xargs aptold install -fy
 cat /tmp/php-pkgs.txt | xargs aptold build-dep -fy
