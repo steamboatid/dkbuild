@@ -716,6 +716,7 @@ get_package_file_gz(){
 	AGZ="$3"
 
 	get_package_file "$URL" "$AGZ"
+	ls -la "$AGZ"
 	if [[ -s "${AGZ}" ]]; then
 		gzip -cdk "$AGZ" > "$DST"
 	fi
