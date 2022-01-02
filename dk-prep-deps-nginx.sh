@@ -35,7 +35,7 @@ FDST="/tb2/tmp/nginx-pkg-org.txt"
 FGZ="/tb2/tmp/nginx-pkg-org.gz"
 FNOW="/tb2/tmp/nginx-pkg-now.txt"
 get_package_file_gz $URL $FDST $FGZ
-exit 0
+
 
 cat $FDST | grep "Package:" | sed "s/Package\: //g" | \
 tr "\n" " " > $FNOW
