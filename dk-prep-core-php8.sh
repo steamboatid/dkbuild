@@ -28,6 +28,16 @@ delete_phideb
 # purge pendings
 purge_pending_installs
 
+
+# install libboost
+apt-cache search libboost1 | cut -d' ' -f1 | grep dev | xargs aptold install -fy
+
+apt-cache search libboost | cut -d' ' -f1 | grep -i "\-dev" |\
+grep -i "atomic\|chrono\|date-time\|serialization\|system\|thread" |\
+xargs aptold install -fy
+
+
+
 # PHP8.x, source via default + git
 #-------------------------------------------
 aptold install -fy --fix-broken
