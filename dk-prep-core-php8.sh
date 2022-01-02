@@ -236,6 +236,13 @@ cat /tmp/php-pkgs.txt | xargs aptold build-dep -fy
 cat /tmp/php-pkgs.txt | xargs apt source -my
 
 
+#--- another errornous packages
+cd /root/org.src/php; \
+apt-cache search php | cut -d' ' -f1 | grep "^php-" |\
+grep -i "\-dev" | grep -iv "horde\|dbg\|sym" |\
+xargs apt source -my
+
+
 #--- sync to src
 #-------------------------------------------
 printf "\n-- sync to src: PHP \n"

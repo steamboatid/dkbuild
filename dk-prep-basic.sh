@@ -145,13 +145,13 @@ deb-src http://repo.aisits.id/nginx-devel devel main
 '>/etc/apt/sources.list.d/nginx-devel-aisits.list
 
 echo \
-"# deb https://packages.sury.org/php/ ${RELNAME} main
-# deb-src https://packages.sury.org/php/ ${RELNAME} main
+"#-- deb https://packages.sury.org/php/ ${RELNAME} main
+deb-src https://packages.sury.org/php/ ${RELNAME} main
 ">/etc/apt/sources.list.d/php-sury.list
 
 echo \
 "deb http://repo.aisits.id/php/ ${RELNAME} main
-deb-src http://repo.aisits.id/php/ ${RELNAME} main
+#-- deb-src http://repo.aisits.id/php/ ${RELNAME} main
 ">/etc/apt/sources.list.d/php-aisits.list
 
 echo \
