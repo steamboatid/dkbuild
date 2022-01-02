@@ -44,7 +44,7 @@ cat $FDST | grep "Package:" | sed "s/Package\: //g" | \
 grep -iv "resty-core" | \
 tr "\n" " " > $FNOW
 
-cat $FNOW | xargs aptold build-dep -fy
+# cat $FNOW | xargs aptold build-dep -fy
 exit 0
 
 
