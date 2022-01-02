@@ -35,6 +35,7 @@ aptold update
 
 dpkg --configure -a; \
 aptold install -y
+apt autoremove --auto-remove --purge -fy
 
 
 #--- preparing screen

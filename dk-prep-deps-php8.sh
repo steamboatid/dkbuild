@@ -244,6 +244,7 @@ done
 
 fixing_folders_by_dsc_files
 fixing_folders_by_dsc_files
+apt autoremove --auto-remove --purge -fy
 
 
 # xmlrpc included in php-defaults

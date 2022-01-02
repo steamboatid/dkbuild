@@ -59,6 +59,7 @@ cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
 
 aptold install -fy
+apt autoremove --auto-remove --purge -fy
 
 
 #--- sync to src

@@ -35,6 +35,7 @@ apt-cache search libboost1 | cut -d' ' -f1 | grep dev | xargs aptold install -fy
 apt-cache search libboost | cut -d' ' -f1 | grep -i "\-dev" |\
 grep -i "atomic\|chrono\|date-time\|serialization\|system\|thread" |\
 xargs aptold install -fy
+apt autoremove --auto-remove --purge -fy
 
 
 
