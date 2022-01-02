@@ -10,7 +10,7 @@ echo $MYDIR
 
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-pcre.sh
 
-ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh
+# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-fix-php-sources.sh
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-all.sh
 
@@ -33,7 +33,10 @@ ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh
 
 ssh argo -- lxc-attach -n eye -- rm -rf /root/org.src/php /root/src/php
 
+ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-config-gen.sh
+ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-basic.sh
 ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-core-php8.sh
+
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-deps-nginx.sh
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-deps-php8.sh
 

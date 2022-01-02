@@ -22,6 +22,9 @@ source /tb2/build/dk-build-0libs.sh
 
 #--- clean up previous
 #-------------------------------------------
+systemctl restart systemd-timesyncd.service; \
+killall -9 apt; sleep 1; killall -9 apt; \
+killall -9 apt; sleep 1; killall -9 apt; \
 find /var/lib/apt/lists/ -type f -delete; \
 find /var/cache/apt/ -type f -delete; \
 rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
@@ -31,7 +34,7 @@ rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
 /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/; \
 mkdir -p /root/.local/share/nano/ /root/.config/procps/; \
 dpkg --configure -a; \
-aptold update
+apt autoclean; apt clean; apt update --allow-unauthenticated
 
 dpkg --configure -a; \
 aptold install -y
