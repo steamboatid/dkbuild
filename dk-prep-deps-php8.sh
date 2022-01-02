@@ -49,6 +49,7 @@ fixing_folders_by_dsc_files(){
 			printf "\n\n --- Dir ${read}$adir -- $bdir ${end} missing \n"
 
 			aptold build-dep -my $adir
+			chown_apt
 			apt source -my $adir
 		fi
 	done
@@ -195,6 +196,7 @@ cat $FSRC1 | grep "Picking" | grep -iv "unable" | cut -d" " -f2 | sed -r "s/'//g
 cat $FSRC2 | grep "php\-" >> $FSRC3
 cat $FSRC2 | grep "${PHPGREP}" >> $FSRC3
 
+chown_apt
 cat $FSRC3 | \
 grep -iv "php8.1-http\|php8.0-http\|php-http" | \
 sort -u | sort | tr "\n" " " | xargs apt source -my
