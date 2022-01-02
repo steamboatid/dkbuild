@@ -220,6 +220,15 @@ for apv in "${PHPVERS[@]}"; do
 done
 
 
+#--- errornous packages
+cd /root/org.src/php
+apt-cache search xdebug | cut -d' ' -f1 | grep php | grep -i "\-dev" >/tmp/php-pkgs.txt
+cat /tmp/php-pkgs.txt | xargs aptold install -fy
+cat /tmp/php-pkgs.txt | xargs aptold build-dep -fy
+cat /tmp/php-pkgs.txt | xargs apt source -my
+
+
+
 #--- sync to src
 #-------------------------------------------
 printf "\n-- sync to src: PHP \n"
