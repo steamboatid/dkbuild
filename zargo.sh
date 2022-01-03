@@ -39,7 +39,8 @@ echo $MYDIR
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-deps-php8.sh
 
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-all.sh
-ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-sshfs-fuse.sh
+# ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-sshfs-fuse.sh
+ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-gits.sh
 
 
 # printf "\n\n --- EXEC xbuild-test-all.sh "
