@@ -745,12 +745,18 @@ init_dkbuild(){
 	# chown apt
 	chown_apt &
 
+	# restart
+	systemctl daemon-reload
+
 	if [[ $(grep "buster" /etc/apt/sources.list | wc -l) -gt 0 ]]; then
 		/etc/init.d/resolvconf restart
 	else
 		systemctl enable systemd-resolved.service
 		systemctl restart systemd-resolved.service
 		systemd-resolve --status
+
+		systemctl enable systemd-timesyncd.service
+		systemctl restart systemd-timesyncd.service
 	fi
 }
 
