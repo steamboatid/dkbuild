@@ -5,8 +5,16 @@ MYFILE=$(which $0)
 MYDIR=$(realpath $(dirname $MYFILE))
 echo $MYDIR
 
-
 /bin/bash $MYDIR/zup-argo.sh
+
+
+printf "\n\n --- EXEC xbuild-test-all.sh "
+ssh argo "/bin/bash /tb2/build/xbuild-test-all.sh >/var/log/dkbuild/build-test-all.log 2>&1 &"
+
+wait
+printf "\n\n --- done \n\n"
+
+
 
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-pcre.sh
 
@@ -43,11 +51,4 @@ echo $MYDIR
 
 # ssh argo -- lxc-attach -n eye -- dig github.com
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-gits.sh
-ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-db4.sh
-
-
-# printf "\n\n --- EXEC xbuild-test-all.sh "
-# ssh argo "/bin/bash /tb2/build/xbuild-test-all.sh >/var/log/dkbuild/build-test-all.log 2>&1 &"
-
-# wait
-# printf "\n\n --- done \n\n"
+# ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-db4.sh
