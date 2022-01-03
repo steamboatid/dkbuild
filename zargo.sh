@@ -42,7 +42,7 @@ echo $MYDIR
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-sshfs-fuse.sh
 
 # ssh argo -- lxc-attach -n eye -- dig github.com
-ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-gits.sh
+# ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-gits.sh
 ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-db4.sh
 
 

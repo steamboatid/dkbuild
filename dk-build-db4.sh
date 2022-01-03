@@ -46,7 +46,7 @@ mkdir -p /root/src/db4
 rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times --delete \
 --exclude ".git" \
 /root/org.src/db4/ /root/src/db4/
-# cp /root/src/db4/git-debs-db4/* /root/src/db4/
+cp /root/src/db4/git-debs-db4/* /root/src/db4/
 
 
 # delete old debs
