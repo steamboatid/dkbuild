@@ -143,12 +143,12 @@ EOT
 }
 
 
-# aptold create and check (version16)
+# aptold create and check (version17)
 #-------------------------------------------
 create_aptold(){
 	echo \
 '#!/bin/bash
-# version16
+# version17
 
 save_local_debs(){
 	mkdir -p /tb2/tmp/cachedebs/
@@ -164,7 +164,7 @@ save_local_debs(){
 		fi
 	fi
 
-	find /tb2/tmp/cachedebs -type f -mtime +1 -delete
+	find /tb2/tmp/cachedebs -type f -mtime +1 -delete >/dev/null 2>&1 &
 }
 
 chown -Rf _apt:root /var/cache/apt/archives/partial/
@@ -193,12 +193,12 @@ apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$
 
 
 
-# aptnew create and check (version16)
+# aptnew create and check (version17)
 #-------------------------------------------
 create_aptnew(){
 	echo \
 '#!/bin/bash
-# version16
+# version17
 
 save_local_debs(){
 	mkdir -p /tb2/tmp/cachedebs/
@@ -214,7 +214,7 @@ save_local_debs(){
 		fi
 	fi
 
-	find /tb2/tmp/cachedebs -type f -mtime +1 -delete
+	find /tb2/tmp/cachedebs -type f -mtime +1 -delete >/dev/null 2>&1 &
 }
 
 chown -Rf _apt:root /var/cache/apt/archives/partial/
@@ -762,7 +762,7 @@ init_dkbuild >/dev/null 2>&1 &
 #--- update aptold
 if [ ! -e /usr/local/sbin/aptold ]; then
 	create_aptold
-elif [[ $(grep "version16" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version17" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
 	create_aptold
 fi
 chmod +x /usr/local/sbin/aptold
@@ -771,7 +771,7 @@ chmod +x /usr/local/sbin/aptold
 #--- update aptnew
 if [ ! -e /usr/local/sbin/aptnew ]; then
 	create_aptnew
-elif [[ $(grep "version16" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version17" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
 	create_aptnew
 fi
 chmod +x /usr/local/sbin/aptnew
