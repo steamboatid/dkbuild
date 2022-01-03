@@ -62,7 +62,7 @@ mkdir -p /root/src/sshfs
 #--- get source
 #-------------------------------------------
 printf "\n-- sync to src sshfs \n"
-rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
+rsync -aHAXztrv --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/sshfs/ /root/src/sshfs/
 
 
@@ -122,7 +122,7 @@ do_build_sshfs_fuse() {
 
 # build FUSE
 #-------------------------------------------
-dirname=$(find /root/src/sshfs -maxdepth 1 -type d -iname "*fuse" | head -n1)
+dirname=$(find /root/src/sshfs -mindepth 1 -maxdepth 1 -type d -iname "*fuse*" | grep -v "sshfs\-" | head -n1)
 cd $dirname
 pwd
 do_build_sshfs_fuse "$dirname"
@@ -130,7 +130,7 @@ do_build_sshfs_fuse "$dirname"
 
 # build SSHFS
 #-------------------------------------------
-dirname=$(find /root/src/sshfs -mindepth 1 -maxdepth 1 -type d -iname "*sshfs" | head -n1)
+dirname=$(find /root/src/sshfs -mindepth 1 -maxdepth 1 -type d -iname "*sshfs*" | head -n1)
 cd $dirname
 pwd
 # hack iosize
