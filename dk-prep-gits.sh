@@ -83,7 +83,7 @@ printf "\n\n wait for all background process... [$bname] "
 numo=0
 while :; do
 	sleep 1
-	
+
 	# jobs -r | grep -iv "find\|chmod\|chown" | grep "git\|bit"
 	nums=$(jobs -r | grep -iv "find\|chmod\|chown" | grep -iv "dk-prep-gits.sh" | grep "git\|bit" | wc -l)
 	if [[ $nums -lt $numo ]]; then
