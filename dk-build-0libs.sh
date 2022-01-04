@@ -790,8 +790,16 @@ apt_source_build_dep_from_file(){
 	if [[ -s "$afile" ]]; then
 		tfile=$(mktemp)
 		ofile=$(mktemp)
+		cfile=$(mktemp)
 		cat $afile | grep -iv "horde\|php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|\-http" | \
 			sort -u | sort > $tfile
+
+		if [[ -e $pfile ]]; then
+			cat $tfile >> $cfile
+			cat $pfile >> $cfile
+			cat $cfile | grep -iv "horde\|php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|\-http" | \
+				sort -u | sort > $tfile
+		fi
 
 		cat $tfile | xargs aptold build-dep -fy -qq
 		cat $tfile | xargs aptold source -my -qq  2>&1 |\
@@ -803,7 +811,7 @@ apt_source_build_dep_from_file(){
 		cat $ofile | grep -iv "horde\|php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|\-http" | \
 			sort -u | sort > $pfile
 
-		rm -rf $tfile $ofile
+		rm -rf $tfile $ofile $cfile
 	fi
 }
 
