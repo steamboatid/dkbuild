@@ -82,7 +82,7 @@ fixing_folders_by_dsc_files
 fixing_folders_by_dsc_files
 
 # list of package source
->/tmp/php-pkgs.txt
+[[ -e /tmp/php-pkgs.txt ]] && touch /tmp/php-pkgs.txt || >/tmp/php-pkgs.txt
 
 
 FPKGS="/tmp/php.pkgs"

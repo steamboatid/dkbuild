@@ -785,14 +785,14 @@ apt_source_build_dep_from_file(){
 	if [[ -s "$afile" ]]; then
 		tfile=$(mktemp)
 		ofile=$(mktemp)
-		cat $afile | grep -iv "php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|\-http" | \
+		cat $afile | grep -iv "horde\|php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|\-http" | \
 			sort -u | sort > $tfile
 
 		cat $tfile | xargs aptold build-dep -fy -qq
 		cat $tfile | xargs aptold source -my -qq  2>&1 |\
 			grep -iv "use\|git\|latest" | tee $ofile
 
-		cat $ofile | grep "Picking" | sed -r "s/\'//g"
+		cat $ofile | grep "Picking" | tr "'" " "
 		rm -rf $tfile $ofile
 	fi
 }
