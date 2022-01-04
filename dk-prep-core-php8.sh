@@ -33,6 +33,11 @@ delete_phideb
 purge_pending_installs
 
 
+# list of package source
+#-------------------------------------------
+[[ -e /tmp/php-pkgs.txt ]] && touch /tmp/php-pkgs.txt || >/tmp/php-pkgs.txt
+
+
 # install libboost
 apt-cache search libboost1 | cut -d' ' -f1 | grep dev | xargs aptold install -fy
 
@@ -228,7 +233,6 @@ done
 
 #--- errornous packages
 cd /root/org.src/php
->/tmp/php-pkgs.txt
 
 apt-cache search xdebug | cut -d' ' -f1 | grep php | grep -i "\-dev"  >>/tmp/php-pkgs.txt
 apt-cache search redis | cut -d' ' -f1 | grep php | grep -iv "swoole" | \
@@ -239,16 +243,18 @@ grep -i "\-dev"  >>/tmp/php-pkgs.txt
 
 chown_apt
 cat /tmp/php-pkgs.txt | xargs aptold install -fy
-cat /tmp/php-pkgs.txt | xargs aptold build-dep -fy
-cat /tmp/php-pkgs.txt | xargs aptold source -my
+
+# cat /tmp/php-pkgs.txt | xargs aptold build-dep -fy
+# cat /tmp/php-pkgs.txt | xargs aptold source -my
 
 
 #--- another errornous packages
 chown_apt
-cd /root/org.src/php; \
 apt-cache search php | cut -d' ' -f1 | grep "^php-" |\
-grep -i "\-dev" | grep -iv "horde\|dbg\|sym" |\
-xargs aptold source -my
+grep -i "\-dev" | grep -iv "horde\|dbg\|sym" \
+	>>/tmp/php-pkgs.txt
+
+apt_source_build_dep_from_file "/tmp/php-pkgs.txt" "php"
 
 
 #--- sync to src

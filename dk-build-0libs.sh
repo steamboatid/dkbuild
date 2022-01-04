@@ -806,10 +806,13 @@ apt_source_build_dep_from_file(){
 			grep -iv "use\|git\|latest" | tee $ofile
 
 		# save picks file
-		cat $ofile | grep "Picking" | tr "'" " " >> $pfile
-		cat $pfile | sort -u | sort > $ofile
-		cat $ofile | grep -iv "horde\|php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|\-http" | \
-			sort -u | sort > $pfile
+		cat $ofile | grep "Picking" | tr "'" " " | sed -r 's/\s+/ /g' | cut -d' ' -f2
+		exit 0
+		
+		cat $ofile | grep "Picking" | tr "'" " " | sed -r 's/\s+/ /g' | cut -d' ' -f2 >> $pfile
+		# cat $pfile | sort -u | sort > $ofile
+		# cat $ofile | grep -iv "horde\|php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|\-http" | \
+		# 	sort -u | sort > $pfile
 
 		rm -rf $tfile $ofile $cfile
 	fi
