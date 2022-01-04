@@ -789,32 +789,14 @@ apt_source_build_dep_from_file(){
 
 	if [[ -s "$afile" ]]; then
 		tfile=$(mktemp)
-		ofile=$(mktemp)
-		cfile=$(mktemp)
 		cat $afile | grep -iv "horde\|php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|\-http" | \
 			sort -u | sort > $tfile
 
-		if [[ -e $pfile ]]; then
-			cat $tfile >> $cfile
-			cat $pfile >> $cfile
-			cat $cfile | grep -iv "horde\|php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|\-http" | \
-				sort -u | sort > $tfile
-		fi
-
 		cat $tfile | xargs aptold build-dep -fy -qq
 		cat $tfile | xargs aptold source -my -qq  2>&1 |\
-			grep -iv "use\|git\|latest" | tee $ofile
+			grep -iv "use\|git\|latest"
 
-		# save picks file
-		cat $ofile | grep "Picking" | tr "'" " " | sed -r 's/\s+/ /g' | cut -d' ' -f2
-		exit 0
-		
-		cat $ofile | grep "Picking" | tr "'" " " | sed -r 's/\s+/ /g' | cut -d' ' -f2 >> $pfile
-		# cat $pfile | sort -u | sort > $ofile
-		# cat $ofile | grep -iv "horde\|php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|\-http" | \
-		# 	sort -u | sort > $pfile
-
-		rm -rf $tfile $ofile $cfile
+		rm -rf $tfile
 	fi
 }
 
