@@ -788,7 +788,8 @@ apt_source_build_dep_from_file(){
 			sort -u | sort > $tfile
 
 		cat $tfile | xargs aptold build-dep -fy -qq
-		cat $tfile | xargs aptold source -my -qq
+		cat $tfile | xargs aptold source -my -qq  2>&1 |\
+			grep -iv "use\|git"
 	fi
 }
 
