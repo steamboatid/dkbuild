@@ -99,8 +99,10 @@ echo 'libpcre2-posix2' > $ftmp
 apt-cache search pcre2 | grep -iv "rust\|elpa\|dbg\|posix" | cut -d" " -f1 >> $ftmp
 apt-cache search pcre3 | grep -iv "rust\|elpa\|dbg\|posix" | cut -d" " -f1 >> $ftmp
 cat $ftmp | tr "\n" " " | xargs aptold install -fy
-cat $ftmp | tr "\n" " " | xargs aptold build-dep -fy
-cat $ftmp | tr "\n" " " | xargs aptold source -y
+
+apt_source_build_dep_from_file "$ftmp" "pcre"
+# cat $ftmp | tr "\n" " " | xargs aptold build-dep -fy
+# cat $ftmp | tr "\n" " " | xargs aptold source -y
 
 
 #--- sync to src
