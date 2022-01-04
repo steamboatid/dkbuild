@@ -81,6 +81,9 @@ chown_apt
 fixing_folders_by_dsc_files
 fixing_folders_by_dsc_files
 
+# list of package source
+>/tmp/php-pkgs.txt
+
 
 FPKGS="/tmp/php.pkgs"
 FDEPS="/tmp/php-deps.pkgs"
@@ -204,14 +207,13 @@ cat $FSRC2 | grep "${PHPGREP}" >> $FSRC3
 chown_apt
 cat $FSRC3 | \
 grep -iv "php8.1-http\|php8.0-http\|php-http" | \
-sort -u | sort | tr "\n" " " | xargs aptold source -my -qq
+sort -u | sort  >>/tmp/php-pkgs.txt
 # cat $FSRC3 | sort -u | sort
 
 
 
 #--- last attempt to install all
 cd /root/org.src/php
->/tmp/php-pkgs.txt
 
 apt-cache search php8 | cut -d" " -f1 | \
 	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" | xargs aptold install -fy
