@@ -53,14 +53,14 @@ fixing_folders_by_dsc_files(){
 		anum=$(find /root/org.src/php -maxdepth 1 -type d -iname "*${bdir}-*" | wc -l)
 		if [[ $anum -lt 1 ]]; then
 			printf "\n\n --- Dir ${read}$adir -- $bdir ${end} missing \n"
-			>>/tmp/php-pkgs.txt
+			echo "$adir" >>/tmp/php-pkgs.txt
 
 			# aptold build-dep -my $adir
 			# aptold source -my $adir
 		fi
 	done
-	cat /tmp/php-pkgs.txt | xargs aptold build-dep -fy -qq
-	cat /tmp/php-pkgs.txt | xargs aptold source -my -qq
+
+	apt_source_build_dep_from_file "/tmp/php-pkgs.txt"
 
 	cd "$odir"
 	printf "\n\n"
@@ -255,8 +255,8 @@ apt-cache search libxmlrpc | cut -d" " -f1 | \
 apt search php 2>&1 | grep -iv "stable cli" | grep 2021 | \
 grep -iv "php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|dev\|common\|default\|\-http" | \
 cut -d"/" -f1  | sort -u | sort > /tmp/php-pkgs.txt
-cat /tmp/php-pkgs.txt | xargs aptold build-dep -fy -qq
-cat /tmp/php-pkgs.txt | xargs aptold source -my -qq
+
+apt_source_build_dep_from_file "/tmp/php-pkgs.txt"
 
 
 

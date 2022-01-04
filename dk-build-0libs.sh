@@ -780,6 +780,15 @@ stop_services(){
 }
 
 
+apt_source_build_dep_from_file(){
+	afile="$1"
+	tfile=$(mktemp)
+	cat $afile | sort -u | sort > $tfile
+	
+	cat $tfile | xargs aptold build-dep -fy -qq
+	cat $tfile | xargs aptold source -my -qq
+}
+
 
 init_dkbuild(){
 	# global config
