@@ -7,6 +7,10 @@ export DEBFULLNAME="Dwi Kristianto"
 export DEBEMAIL="steamboatid@gmail.com"
 export EMAIL="steamboatid@gmail.com"
 
+if [[ $(dpkg -l | grep "^ii" | grep "lsb\-release" | wc -l) -lt 1 ]]; then
+	apt update; dpkg --configure -a; apt install -fy;
+	apt install -fy lsb-release;
+fi
 export RELNAME=$(lsb_release -sc)
 export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
 
@@ -132,6 +136,7 @@ chmod +x debian/rules
 
 >dkbuild.log
 nproc2=$(( `nproc` ))
+nproc2=1
 
 # export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
 # dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \

@@ -7,6 +7,10 @@ export DEBFULLNAME="Dwi Kristianto"
 export DEBEMAIL="steamboatid@gmail.com"
 export EMAIL="steamboatid@gmail.com"
 
+if [[ $(dpkg -l | grep "^ii" | grep "lsb\-release" | wc -l) -lt 1 ]]; then
+	apt update; dpkg --configure -a; apt install -fy;
+	apt install -fy lsb-release;
+fi
 export RELNAME=$(lsb_release -sc)
 export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
 
@@ -250,14 +254,7 @@ cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
 #-------------------------------------------
 bname=$(basename $0)
 printf "\n\n --- wait for all background process...  [$bname] "
-while :; do
-	nums=$(jobs -r | grep -iv "find\|chmod\|chown" | wc -l)
-	printf ".$nums "
-	if [[ $nums -lt 1 ]]; then break; fi
-	sleep 1
-done
-
-wait
+wait_jobs; wait
 printf "\n\n --- wait finished... \n\n\n"
 
 

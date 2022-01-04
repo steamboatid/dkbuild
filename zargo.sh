@@ -8,11 +8,9 @@ echo $MYDIR
 /bin/bash $MYDIR/zup-argo.sh
 
 
-printf "\n\n --- EXEC xbuild-test-all.sh "
-ssh argo "/bin/bash /tb2/build/xbuild-test-all.sh >/var/log/dkbuild/build-test-all.log 2>&1 &"
-
-wait
-printf "\n\n --- done \n\n"
+# printf "\n\n --- EXEC xbuild-test-all.sh "
+# ssh argo "/bin/bash /tb2/build/xbuild-test-all.sh >/var/log/dkbuild/build-test-all.log 2>&1 &"
+# printf "\n\n --- done \n\n"
 
 
 
@@ -41,7 +39,7 @@ printf "\n\n --- done \n\n"
 
 # ssh argo -- lxc-attach -n eye -- rm -rf /root/org.src/php /root/src/php
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-config-gen.sh
-# ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-basic.sh
+ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-basic.sh
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-core-php8.sh
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-deps-nginx.sh
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-deps-php8.sh

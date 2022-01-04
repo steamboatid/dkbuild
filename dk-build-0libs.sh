@@ -8,6 +8,10 @@ export DEBEMAIL="steamboatid@gmail.com"
 export EMAIL="steamboatid@gmail.com"
 export DPKG_COLORS="always"
 
+if [[ $(dpkg -l | grep "^ii" | grep "lsb\-release" | wc -l) -lt 1 ]]; then
+	apt update; dpkg --configure -a; apt install -fy;
+	apt install -fy lsb-release;
+fi
 export RELNAME=$(lsb_release -sc)
 export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
 
@@ -57,30 +61,65 @@ wait_jobs(){
 			printf "."
 		fi
 
-		sleep 1
+		sleep 3
 	done
 
 	# wait
 	wait
 }
 
-wait_backs(){
+wait_backs_wpatt(){
 	patt="$1"
 
 	bname=$(basename $0)
 	printf "\n\n --- wait for all background process...  [$bname] [$patt] "
+
 	numo=0
+	numz=0
 	while :; do
-		nums=$(jobs -r | grep -iv "find\|chmod\|chown" | grep "${patt}" | wc -l)
-		if [[ $nums -eq $numo ]]; then
+		numa=$(jobs -r | grep -iv "find\|chmod\|chown" | grep "${patt}" | wc -l)
+		if [[ $numz -gt 3 ]]; then
+			break
+		elif [[ $numa -lt 1 ]]; then
+			numz=$(( $numz + 1 ))
 			printf "."
+		elif [[ $numa -ne $numo ]]; then
+			numo=$numa
+			printf " $numa"
 		else
-			printf ".$nums "
-			numo=$((nums))
+			printf "."
 		fi
 
-		if [[ $nums -lt 1 ]]; then break; fi
-		sleep 1
+		sleep 3
+	done
+
+	wait
+	printf "\n --- ${blue}wait finished...${end} \n\n\n"
+}
+
+wait_backs_nopatt(){
+	patt="$1"
+
+	bname=$(basename $0)
+	printf "\n\n --- wait for all background process...  [$bname] [$patt] "
+
+	numo=0
+	numz=0
+	while :; do
+		numa=$(jobs -r | grep -iv "find\|chmod\|chown" | wc -l)
+		if [[ $numz -gt 3 ]]; then
+			break
+		elif [[ $numa -lt 1 ]]; then
+			numz=$(( $numz + 1 ))
+			printf "."
+		elif [[ $numa -ne $numo ]]; then
+			numo=$numa
+			printf " $numa"
+		else
+			printf "."
+		fi
+
+		sleep 3
 	done
 
 	wait
@@ -108,7 +147,7 @@ fill_up_apt_cache(){
 		"$afile" /var/cache/apt/archives/ >/dev/null 2>&1 &
 	done
 
-	wait_backs "rsync"
+	wait_backs_wpatt "rsync"
 	chown -Rf _apt:root /var/cache/apt/archives/
 	chmod -Rf 700 /var/cache/apt/archives/partial/
 }
@@ -705,9 +744,13 @@ get_package_file(){
 	DST="$2"
 
 	DOGET=0
-	if [[ ! -e "${DST}" ]]; then DOGET=1;
-	elif [[ ! -s "${DST}" ]]; then DOGET=1;
-	elif [ test `find "${DST}" -mtime +1` ]; then DOGET=1; fi
+	if [[ ! -e "${DST}" ]]; then
+		DOGET=1
+	elif [[ ! -s "${DST}" ]]; then
+		DOGET=1
+	elif [[ $(find "${DST}" -mtime +1 | wc -l) -gt 0 ]]; then
+		DOGET=1
+	fi
 
 	if [[ $DOGET -gt 0 ]]; then
 		curl -A "Aptly/1.0" -Ss -L "$URL" > "$DST"
@@ -754,10 +797,10 @@ init_dkbuild(){
 		systemctl enable systemd-resolved.service
 		systemctl restart systemd-resolved.service
 		systemd-resolve --status
-
-		systemctl enable systemd-timesyncd.service
-		systemctl restart systemd-timesyncd.service
 	fi
+
+	systemctl enable systemd-timesyncd.service   >/dev/null 2>&1
+	systemctl restart systemd-timesyncd.service  >/dev/null 2>&1 &
 }
 
 

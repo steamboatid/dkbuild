@@ -7,6 +7,10 @@ export DEBFULLNAME="Dwi Kristianto"
 export DEBEMAIL="steamboatid@gmail.com"
 export EMAIL="steamboatid@gmail.com"
 
+if [[ $(dpkg -l | grep "^ii" | grep "lsb\-release" | wc -l) -lt 1 ]]; then
+	apt update; dpkg --configure -a; apt install -fy;
+	apt install -fy lsb-release;
+fi
 export RELNAME=$(lsb_release -sc)
 export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
 
@@ -119,7 +123,6 @@ dpkg -i --force-all *deb
 
 # upload to /tb2/build/{$RELNAME}-nginx
 #-------------------------------------------
-export RELNAME=$(lsb_release -sc)
 mkdir -p /tb2/build/$RELNAME-libzip
 cp *.deb /tb2/build/$RELNAME-libzip/ -Rfav
 ls -la /tb2/build/$RELNAME-libzip/

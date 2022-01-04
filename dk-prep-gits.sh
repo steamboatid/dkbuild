@@ -7,6 +7,10 @@ export DEBFULLNAME="Dwi Kristianto"
 export DEBEMAIL="steamboatid@gmail.com"
 export EMAIL="steamboatid@gmail.com"
 
+if [[ $(dpkg -l | grep "^ii" | grep "lsb\-release" | wc -l) -lt 1 ]]; then
+	apt update; dpkg --configure -a; apt install -fy;
+	apt install -fy lsb-release;
+fi
 export RELNAME=$(lsb_release -sc)
 export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
 
@@ -27,7 +31,7 @@ ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}
 
 
 #-- taken from dk-prep-all.sh
-get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"  >/dev/null 2>&1 &
+# get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-lrucache/git-lua-resty-lrucache"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core"  >/dev/null 2>&1 &
 
@@ -67,11 +71,11 @@ get_update_new_github "steamboatid/libfuse" "/root/org.src/sshfs/git-fuse"  >/de
 get_update_new_github "steamboatid/sshfs" "/root/org.src/sshfs/git-sshfs"  >/dev/null 2>&1 &
 
 
+# db4
+get_update_new_github "steamboatid/db4" "/root/org.src/db4/git-db4"  >/dev/null 2>&1 &
+get_update_new_github "steamboatid/debs-db4" "/root/org.src/db4/git-debs-db4"  >/dev/null 2>&1 &
 
-# get_update_new_github "steamboatid/db4" "/root/org.src/db4/git-db4"  >/dev/null 2>&1 &
-# get_update_new_github "steamboatid/debs-db4" "/root/org.src/db4/git-debs-db4"  >/dev/null 2>&1 &
-get_update_new_github "steamboatid/db4" "/root/org.src/db4/git-db4"
-get_update_new_github "steamboatid/debs-db4" "/root/org.src/db4/git-debs-db4"
+get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"
 
 
 
@@ -79,26 +83,8 @@ get_update_new_github "steamboatid/debs-db4" "/root/org.src/db4/git-debs-db4"
 #--- wait
 #-------------------------------------------
 bname=$(basename $0)
-printf "\n\n wait for all background process... [$bname] "
-numo=0
-while :; do
-	sleep 1
-
-	# jobs -r | grep -iv "find\|chmod\|chown" | grep "git\|bit"
-	nums=$(jobs -r | grep -iv "find\|chmod\|chown" | grep -iv "dk-prep-gits.sh" | grep "git\|bit" | wc -l)
-	if [[ $nums -lt $numo ]]; then
-		printf "."
-	else
-		jobs -r | grep -iv "find\|chmod\|chown" | grep -iv "dk-prep-gits.sh" | grep "git\|bit" | sed -r "s/\s+/ /g" | cut -d" " -f4 | sort -u | sort
-		printf ".$nums "
-		numo=$nums
-	fi
-
-	if [[ $nums -lt 1 ]]; then break; fi
-	sleep 3
-done
-
-wait
+# printf "\n\n wait for all background process... [$bname] "
+wait_backs_wpatt "dk-prep-gits.sh"; wait
 printf "\n\n --- wait finished... \n\n\n"
 
 
