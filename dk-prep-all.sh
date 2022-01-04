@@ -42,11 +42,11 @@ ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}
 /bin/bash /tb2/build/dk-config-gen.sh
 /bin/bash /tb2/build/dk-prep-basic.sh
 
-/bin/bash /tb2/build/dk-prep-core-php8.sh
-/bin/bash /tb2/build/dk-prep-deps-nginx.sh
-/bin/bash /tb2/build/dk-prep-deps-php8.sh
+nohup /bin/bash /tb2/build/dk-prep-gits.sh >/dev/null 2>&1 &
 
-/bin/bash /tb2/build/dk-prep-gits.sh
+/bin/bash /tb2/build/dk-prep-deps-nginx.sh
+/bin/bash /tb2/build/dk-prep-core-php8.sh
+/bin/bash /tb2/build/dk-prep-deps-php8.sh
 
 
 # NGINX, source via git
