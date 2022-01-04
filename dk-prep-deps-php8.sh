@@ -57,7 +57,7 @@ fixing_folders_by_dsc_files(){
 		fi
 	done
 
-	apt_source_build_dep_from_file "/tmp/php-pkgs.txt"
+	apt_source_build_dep_from_file "/tmp/php-pkgs.txt" "php"
 
 	cd "$odir"
 	printf "\n\n"
@@ -246,7 +246,7 @@ grep -iv "php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|dev\|common\|default\|\-h
 cut -d"/" -f1  | sort -u | sort  \
 	>>/tmp/php-pkgs.txt
 
-apt_source_build_dep_from_file "/tmp/php-pkgs.txt"
+apt_source_build_dep_from_file "/tmp/php-pkgs.txt" "php"
 
 
 

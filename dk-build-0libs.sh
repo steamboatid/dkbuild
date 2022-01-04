@@ -782,6 +782,11 @@ stop_services(){
 
 apt_source_build_dep_from_file(){
 	afile="$1"
+	agroup="$2"
+
+	# pick_file
+	pfile="/tmp/$agroup-picks.txt"
+
 	if [[ -s "$afile" ]]; then
 		tfile=$(mktemp)
 		ofile=$(mktemp)
@@ -792,7 +797,12 @@ apt_source_build_dep_from_file(){
 		cat $tfile | xargs aptold source -my -qq  2>&1 |\
 			grep -iv "use\|git\|latest" | tee $ofile
 
-		cat $ofile | grep "Picking" | tr "'" " "
+		# save picks file
+		cat $ofile | grep "Picking" | tr "'" " " >> $pfile
+		cat $pfile | sort -u | sort > $ofile
+		cat $ofile | grep -iv "horde\|php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|\-http" | \
+			sort -u | sort > $pfile
+
 		rm -rf $tfile $ofile
 	fi
 }
