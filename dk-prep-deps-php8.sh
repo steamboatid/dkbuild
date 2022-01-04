@@ -54,9 +54,6 @@ fixing_folders_by_dsc_files(){
 		if [[ $anum -lt 1 ]]; then
 			printf "\n\n --- Dir ${read}$adir -- $bdir ${end} missing \n"
 			echo "$adir" >>/tmp/php-pkgs.txt
-
-			# aptold build-dep -my $adir
-			# aptold source -my $adir
 		fi
 	done
 
@@ -214,47 +211,38 @@ sort -u | sort | tr "\n" " " | xargs aptold source -my -qq
 
 #--- last attempt to install all
 cd /root/org.src/php
+>/tmp/php-pkgs.txt
+
 apt-cache search php8 | cut -d" " -f1 | \
 	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" | xargs aptold install -fy
+
 apt-cache search php8 | cut -d" " -f1 | \
-	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" | xargs aptold build-dep -fy
+	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" >>/tmp/php-pkgs.txt
 apt-cache search php8 | cut -d" " -f1 | \
 	grep -iv "symfony\|apache\|embed\|dbgsym" | \
-	grep -iv "php8.1-http\|php8.0-http\|php-http" | \
-	xargs aptold source -my -qq
+	grep -iv "php8.1-http\|php8.0-http\|php-http"  >>/tmp/php-pkgs.txt
 
 apt-cache search sodium | cut -d" " -f1 | \
 	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5\|rust" | \
 	xargs aptold install -fy
 apt-cache search sodium | cut -d" " -f1 | \
-	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5\|rust" | \
-	xargs aptold build-dep -fy
-apt-cache search sodium | cut -d" " -f1 | \
-	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5\|rust" | \
-	xargs aptold source -my -qq
+	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5\|rust" \
+	>>/tmp/php-pkgs.txt
 
 apt-cache search libicu | cut -d" " -f1 | \
 	grep -iv "java\|dbg\|sym\|hb" | xargs aptold install -fy
 apt-cache search libicu | cut -d" " -f1 | \
-	grep -iv "java\|dbg\|sym\|hb" | xargs aptold build-dep -fy
-apt-cache search libicu | cut -d" " -f1 | \
-	grep -iv "java\|dbg\|sym\|hb" | xargs aptold source -my -qq
+	grep -iv "java\|dbg\|sym\|hb" \
+	>>/tmp/php-pkgs.txt
 
 apt-cache search libxmlrpc | cut -d" " -f1 | \
 	grep -iv "perl\|java\|ocaml" | xargs aptold install -fy
 
 
-# for apkg in $(apt search php 2>&1 | grep -iv "stable cli" | grep 2021 | \
-# 	grep -iv "php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|dev\|common\|default" | \
-# 	cut -d"/" -f1  | sort -u); do
-# 	aptold build-dep -fy $apkg
-# 	aptold source -y -qq $apkg
-# done
-
->/tmp/php-pkgs.txt
 apt search php 2>&1 | grep -iv "stable cli" | grep 2021 | \
 grep -iv "php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|dev\|common\|default\|\-http" | \
-cut -d"/" -f1  | sort -u | sort > /tmp/php-pkgs.txt
+cut -d"/" -f1  | sort -u | sort  \
+	>>/tmp/php-pkgs.txt
 
 apt_source_build_dep_from_file "/tmp/php-pkgs.txt"
 
