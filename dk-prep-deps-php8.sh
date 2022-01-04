@@ -60,7 +60,8 @@ fixing_folders_by_dsc_files(){
 		fi
 	done
 
-	apt_source_build_dep_from_file "/tmp/php-pkgs.txt"
+	cat /tmp/php-pkgs.txt
+	# apt_source_build_dep_from_file "/tmp/php-pkgs.txt"
 
 	cd "$odir"
 	printf "\n\n"
