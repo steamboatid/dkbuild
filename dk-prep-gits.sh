@@ -84,7 +84,7 @@ get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"
 #-------------------------------------------
 bname=$(basename $0)
 # printf "\n\n wait for all background process... [$bname] "
-wait_backs_wpatt "dk-prep-gits.sh"; wait
+wait_backs_wpatt "dk-prep-gits.sh"
 printf "\n\n --- wait finished... \n\n\n"
 
 
