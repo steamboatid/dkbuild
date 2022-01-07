@@ -48,6 +48,7 @@ echo $MYDIR
 
 ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-all.sh
 ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-nginx.sh
+ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/xtest-all.sh
 
 # ssh argo -- lxc-attach -n eye -- dig github.com
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-db4.sh
