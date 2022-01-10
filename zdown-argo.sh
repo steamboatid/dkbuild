@@ -10,4 +10,4 @@ rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 root@argo:/tb2/build/* /tb2/build/
 
 rm -rf build bullseye-* buster-* nbproject/
-ls /tb2/build
+ls --color=auto -F /tb2/build

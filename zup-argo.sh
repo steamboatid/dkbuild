@@ -13,6 +13,10 @@ prepare_lxc(){
 	printf "\n\n"
 }
 
+sync_others(){
+	ssh abdi -- sh -c "cd /tmp; rm -rf zdown-argo.sh; scp argo:/tb2/build/zdown-argo.sh .; bash ./zdown-argo.sh"
+}
+
 
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 /tb2/build/*sh root@argo:/tb2/build/
