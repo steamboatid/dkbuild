@@ -24,6 +24,8 @@ rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
 /tb2/build/dk* root@argo:/tb2/build/
 
+sync_others >/dev/null 2>&1 &
+
 nohup /bin/bash /tb2/build/zgit-auto.sh >/dev/null 2>&1 &
 ssh argo "nohup chmod +x /usr/local/sbin/* /tb2/build/*sh 2>&1 >/dev/null &"
 
