@@ -49,5 +49,7 @@ apt autoclean
 apt clean
 apt update --allow-unauthenticated
 
+dpkg --configure -a
+
 aptold full-upgrade --auto-remove --purge --fix-missing -fy \
   -o Dpkg::Options::="--force-overwrite"
