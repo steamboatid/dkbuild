@@ -29,6 +29,13 @@ source /tb2/build/dk-build-0libs.sh
 
 
 
+systemctl daemon-reload; \
+systemctl restart systemd-resolved.service; \
+systemctl restart systemd-timesyncd.service; \
+killall -9 apt; sleep 1; killall -9 apt; \
+killall -9 apt; sleep 1; killall -9 apt
+
+
 find /var/lib/apt/lists/ -type f -delete; \
 find /var/cache/apt/ -type f -delete; \
 rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
