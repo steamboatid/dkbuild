@@ -24,8 +24,17 @@ source /tb2/build/dk-build-0libs.sh
 
 
 
+#--- init
+#-------------------------------------------
+init_dkbuild
+dig packages.sury.org @172.16.0.1
+dig packages.sury.org @1.1.1.1
+
+
 #--- clean up previous
 #-------------------------------------------
+systemctl daemon-reload; \
+systemctl restart systemd-resolved.service; \
 systemctl restart systemd-timesyncd.service; \
 killall -9 apt; sleep 1; killall -9 apt; \
 killall -9 apt; sleep 1; killall -9 apt; \
@@ -43,6 +52,14 @@ apt autoclean; apt clean; apt update --allow-unauthenticated
 dpkg --configure -a; \
 aptold install -y
 apt autoremove --auto-remove --purge -fy
+
+if [[ -e /usr/local/sbin/aptold ]]; then
+	aptold full-upgrade --auto-remove --purge --fix-missing \
+		-o Dpkg::Options::="--force-overwrite" -fy
+else
+	apt full-upgrade --auto-remove --purge --fix-missing \
+		-o Dpkg::Options::="--force-overwrite" -fy
+fi
 
 
 #--- preparing screen
