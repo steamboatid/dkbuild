@@ -23,6 +23,35 @@ source /tb2/build/dk-build-0libs.sh
 
 
 
+# recheck ip
+#-------------------------------------------
+islxc=$(cat /proc/1/environ | sed -r 's/container/\ncontainer/g; s/^\n//g' | \
+grep -a 'container=lxc' | wc -l)
+if [[ $islxc -gt 0 ]]; then
+	systemctl daemon-reload
+
+	if [[ $(grep "buster" /etc/apt/sources.list | wc -l) -gt 0 ]]; then
+		rm -rf /etc/resolvconf/run; /etc/init.d/resolvconf restart
+
+		/sbin/dhclient -4 -v -i -pf /run/dhclient.eth0.pid \
+		-lf /var/lib/dhcp/dhclient.eth0.leases \
+		-I -df /var/lib/dhcp/dhclient6.eth0.leases eth0
+
+		rm -rf /etc/resolvconf/run; /etc/init.d/resolvconf restart
+	else
+		systemctl enable systemd-resolved.service
+		systemctl restart systemd-resolved.service
+		systemd-resolve --status
+
+		/sbin/dhclient -4 -v -i -pf /run/dhclient.eth0.pid \
+		-lf /var/lib/dhcp/dhclient.eth0.leases \
+		-I -df /var/lib/dhcp/dhclient6.eth0.leases eth0
+	fi
+
+	sleep 0.5
+	ip a
+fi
+
 # gen config
 #-------------------------------------------
 /bin/bash /tb2/build/dk-config-gen.sh

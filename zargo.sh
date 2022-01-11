@@ -26,7 +26,8 @@ lxc-start -qn eye; \
 lxc-start -qn tbus; \
 lxc-start -qn teye"
 
-ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh
+ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-apt-upgrade.sh
+# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-all.sh
 
 
