@@ -77,17 +77,21 @@ rm -rf /tb2/phideb/pool
 
 folders=(php nginx nutcracker lua-resty-core lua-resty-lrucache keydb pcre libzip db4 sshfs)
 for afolder in "${folders[@]}"; do
-	printf " copy folder: $afolder \n"
+	printf " copy folder: $afolder "
 
 	mkdir -p /tb2/phideb/pool/buster/$afolder /tb2/phideb/pool/bullseye/$afolder
 
 	# buster
+	printf " -- buster "
 	rsync -aHAXztr --numeric-ids --delete \
 	/tb2/build/buster-$afolder/* /tb2/phideb/pool/buster/$afolder/
 
 	# bullseye
+	printf " -- bullseye "
 	rsync -aHAXztr --numeric-ids --delete \
 	/tb2/build/bullseye-$afolder/* /tb2/phideb/pool/bullseye/$afolder/
+
+	printf " -- done \n"
 done
 
 
