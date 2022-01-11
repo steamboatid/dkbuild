@@ -814,7 +814,9 @@ init_dkbuild(){
 	systemctl daemon-reload
 
 	if [[ $(grep "buster" /etc/apt/sources.list | wc -l) -gt 0 ]]; then
+		rm -rf /etc/resolvconf/run
 		/etc/init.d/resolvconf restart
+		dhclient -v eth0
 	else
 		systemctl enable systemd-resolved.service
 		systemctl restart systemd-resolved.service
