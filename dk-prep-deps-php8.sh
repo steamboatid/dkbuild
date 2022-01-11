@@ -123,10 +123,12 @@ cut -d":" -f1 | sort -u | sort  >  $FDEPS
 
 apt-cache search php | grep "\-dev" | \
 grep -iv "php5\|php7\|yac\|gmagick\|xcache\|solr\|swoole\|recode\|phalcon\|apache2" | \
+grep -iv "\-embed\|\-dbg\|dbgsym" | \
 cut -d" " -f1  >>  $FDEPS
 
 cat $FDEPS | sort -u | sort | sed -r 's/\|//g' | sed '/^$/d' | \
 grep -iv "php5\|php7\|yac\|gmagick\|xcache\|solr\|swoole\|recode\|phalcon\|apache2" | \
+grep -iv "\-embed\|\-dbg\|dbgsym" | \
   >>  $FDEPF
 
 cat $FDEPF | tr "\n" " " | xargs aptold install -my \
@@ -167,9 +169,9 @@ echo "libicu-dev" >> $FNOW1
 
 
 apt-cache search "php" | awk '{print $1}' | grep "${PHPGREP}" | \
-	grep -v "dbgsym\|dbg\|apache" >> $FNOW1
+	grep -iv "embed\|dbgsym\|dbg\|apache" >> $FNOW1
 apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
-	grep -v "dbgsym\|dbg\|apache" >> $FNOW1
+	grep -iv "embed\|dbgsym\|dbg\|apache" >> $FNOW1
 
 apt-cache search php8 | cut -d" " -f1 | \
 	grep -iv "symfony\|apache\|embed\|dbgsym" >> $FNOW1
@@ -200,7 +202,8 @@ cat $FNOW2 | sort -u | sort | \
 	xargs aptold build-dep -my 2>&1 | tee $FSRC1
 
 # source packages
-cat $FSRC1 | grep "Picking" | grep -iv "unable" | cut -d" " -f2 | sed -r "s/'//g" | sort -u | sort > $FSRC2
+cat $FSRC1 | grep "Picking" | grep -iv "unable" | cut -d" " -f2 | \
+	sed -r "s/'//g" | sort -u | sort > $FSRC2
 
 >$FSRC3
 cat $FSRC2 | grep "php\-" >> $FSRC3
@@ -223,7 +226,7 @@ apt-cache search php8 | cut -d" " -f1 | \
 apt-cache search php8 | cut -d" " -f1 | \
 	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" >>/tmp/php-pkgs.txt
 apt-cache search php8 | cut -d" " -f1 | \
-	grep -iv "symfony\|apache\|embed\|dbgsym" | \
+	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" | \
 	grep -iv "php8.1-http\|php8.0-http\|php-http"  >>/tmp/php-pkgs.txt
 
 apt-cache search sodium | cut -d" " -f1 | \

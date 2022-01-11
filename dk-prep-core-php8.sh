@@ -251,7 +251,7 @@ cat /tmp/php-pkgs.txt | xargs aptold install -fy
 #--- another errornous packages
 chown_apt
 apt-cache search php | cut -d' ' -f1 | grep "^php-" |\
-grep -i "\-dev" | grep -iv "horde\|dbg\|sym" \
+grep -i "\-dev" | grep -iv "horde\|dbg\|sym\|embed" \
 	>>/tmp/php-pkgs.txt
 
 apt_source_build_dep_from_file "/tmp/php-pkgs.txt" "php"
