@@ -259,6 +259,7 @@ echo "libzip4 libdb4.8 libdb4.8++ db4.8-util" >>  /tmp/deps.pkgs
 apt-cache search libpcre | cut -d" " -f1 | \
 grep -iv "dbg\|lisp\|ocaml\|posix0" >>  /tmp/deps.pkgs
 
+touch ~/build.deps
 cat ~/build.deps | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | \
 sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g"  >>  /tmp/deps.pkgs
 

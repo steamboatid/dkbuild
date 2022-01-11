@@ -163,6 +163,7 @@ fi
 # printf "\n\n\n"
 
 
+touch ~/build.deps
 isdeps=$(cat dkbuild.log | grep -i "unmet build dependencies" | wc -l)
 if [[ $isdeps -gt 0 ]]; then
 	cat dkbuild.log | grep -i "unmet build dependencies" | \
