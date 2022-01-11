@@ -38,6 +38,16 @@ if [[ $islxc -gt 0 ]]; then
 		-I -df /var/lib/dhcp/dhclient6.eth0.leases eth0
 
 		rm -rf /etc/resolvconf/run; /etc/init.d/resolvconf restart
+
+		if [[ ! -e /etc/resolv.conf ]]; then
+			cat << EOT > /etc/resolv.conf
+nameserver 172.16.0.1
+nameserver 172.16.251.1
+nameserver 1.1.1.1
+nameserver 8.8.8.8
+EOT
+			/etc/init.d/resolvconf restart
+		fi
 	else
 		systemctl enable systemd-resolved.service
 		systemctl restart systemd-resolved.service
@@ -46,6 +56,17 @@ if [[ $islxc -gt 0 ]]; then
 		/sbin/dhclient -4 -v -i -pf /run/dhclient.eth0.pid \
 		-lf /var/lib/dhcp/dhclient.eth0.leases \
 		-I -df /var/lib/dhcp/dhclient6.eth0.leases eth0
+		systemctl restart systemd-resolved.service
+
+		if [[ ! -e /etc/resolv.conf ]]; then
+			cat << EOT > /etc/resolv.conf
+nameserver 172.16.0.1
+nameserver 172.16.251.1
+nameserver 1.1.1.1
+nameserver 8.8.8.8
+EOT
+			systemctl restart systemd-resolved.service
+		fi
 	fi
 
 	sleep 0.5
