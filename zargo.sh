@@ -8,24 +8,27 @@ echo $MYDIR
 /bin/bash $MYDIR/zup-argo.sh
 
 
-# printf "\n\n --- EXEC xbuild-test-all.sh "
-# ssh argo "/bin/bash /tb2/build/xbuild-test-all.sh >/var/log/dkbuild/build-test-all.log 2>&1 &"
-# printf "\n\n --- done \n\n"
-# exit 0
-
-
 printf "\n\n --- stop lxc \n"
 ssh argo "lxc-stop -kqn bus; \
 lxc-stop -kqn eye; \
 lxc-stop -kqn tbus; \
 lxc-stop -kqn teye"
+sleep 0.5
 
 printf "\n\n --- start lxc \n"
 ssh argo "lxc-start -qn bus; \
 lxc-start -qn eye; \
 lxc-start -qn tbus; \
 lxc-start -qn teye"
-sleep 1
+sleep 0.5
+
+
+printf "\n\n --- EXEC xbuild-test-all.sh "
+ssh argo "/bin/bash /tb2/build/xbuild-test-all.sh >/var/log/dkbuild/build-test-all.log 2>&1 &"
+printf "\n\n --- done \n\n"
+exit 0
+
+
 
 # ssh argo -- lxc-attach -n bus -- uptime
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-apt-upgrade.sh
@@ -62,9 +65,9 @@ sleep 1
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-basic.sh
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-core-php8.sh
 
-ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-config-gen.sh
-ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-basic.sh
-ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-core-php8.sh
+# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-config-gen.sh
+# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-basic.sh
+# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-core-php8.sh
 
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-deps-nginx.sh
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-deps-php8.sh
