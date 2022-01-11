@@ -53,6 +53,17 @@ kill_current_scripts
 
 mkdir -p /var/log/dkbuild
 
+printf "\n\n --- stop lxc \n"
+lxc-stop -kqn tbus
+lxc-stop -kqn teye
+sleep 1
+
+printf "\n\n --- start lxc \n"
+lxc-start -qn tbus
+lxc-start -qn teye
+sleep 1
+
+printf "\n\n --- testing at lxc \n"
 do_testing "tbus" >/dev/null 2>&1 &
 do_testing "teye" >/dev/null 2>&1 &
 sleep 1

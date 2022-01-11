@@ -45,14 +45,26 @@ reset
 kill_current_scripts
 kill_current_scripts
 
-
 rm -rf /var/log/dkbuild
 mkdir -p /var/log/dkbuild
 
+printf "\n\n --- stop lxc \n"
+lxc-stop -kqn bus
+lxc-stop -kqn eye
+lxc-stop -kqn tbus
+lxc-stop -kqn teye
+sleep 1
+
+printf "\n\n --- start lxc \n"
 lxc-start -qn bus
 lxc-start -qn eye
 lxc-start -qn tbus
 lxc-start -qn teye
+sleep 1
+
+printf "\n\n --- apt upgrade \n"
+lxc-attach -n bus -- /bin/bash /tb2/build/dk-apt-upgrade.sh
+lxc-attach -n eye -- /bin/bash /tb2/build/dk-apt-upgrade.sh
 sleep 1
 
 printf "\n\n --- prep-all \n"

@@ -14,11 +14,24 @@ echo $MYDIR
 # exit 0
 
 
-ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/xrepo-rebuild.sh
+printf "\n\n --- stop lxc \n"
+ssh argo "lxc-stop -kqn bus; \
+lxc-stop -kqn eye; \
+lxc-stop -kqn tbus; \
+lxc-stop -kqn teye"
 
+printf "\n\n --- start lxc \n"
+ssh argo "lxc-start -qn bus; \
+lxc-start -qn eye; \
+lxc-start -qn tbus; \
+lxc-start -qn teye"
+
+ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh
+ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-all.sh
+
+
+# ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/xrepo-rebuild.sh
 # ssh argo -- lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-pcre.sh
-
-# ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-fix-php-sources.sh
 # ssh argo -- lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-all.sh
 
