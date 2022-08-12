@@ -23,8 +23,8 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
-# /bin/bash /tb2/build/dk-init-debian.sh
+source /tb2/build-devomd/dk-build-0libs.sh
+# /bin/bash /tb2/build-devomd/dk-init-debian.sh
 
 # get PHPVER from arguments
 if [[ ! -z $1 ]]; then
@@ -33,7 +33,7 @@ fi
 
 # gen config
 #-------------------------------------------
-/bin/bash /tb2/build/dk-config-gen.sh
+/bin/bash /tb2/build-devomd/dk-config-gen.sh
 
 filling_apt_cache() {
 	patt="$1"
@@ -112,7 +112,7 @@ install_php() {
 
 
 	# prepare repo list
-	echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
+	echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php-sury.list
 	aptold update
 
 	>/tmp/all-php

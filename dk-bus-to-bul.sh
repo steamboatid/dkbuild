@@ -25,7 +25,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 remove_old_pkgs(){
@@ -230,26 +230,18 @@ EOT
 source ~/.bashrc
 
 
-sed -i "s/\#DNS=/DNS=172.16.251.1 10.0.2.1 10.0.3.1 192.168.8.1 192.168.0.1/g" /etc/systemd/resolved.conf
+sed -i "s/\#DNS=/DNS=10.0.2.1 10.0.3.1 192.168.0.1 192.168.1.1 192.168.88.1/g" /etc/systemd/resolved.conf
 sed -i "s/\#FallbackDNS=/FallbackDNS=1.1.1.1 8.8.8.8/g" /etc/systemd/resolved.conf
 sed -i "s/\#Cache=yes/Cache=yes/g" /etc/systemd/resolved.conf
 cat /etc/systemd/resolved.conf | grep "DNS="
 
 rm -rf /etc/resolv.conf; touch /etc/resolv.conf
 cat <<\EOT >/etc/resolv.conf
-domain aisdev.id
-search aisdev.id ais.its.ac.id ais now loc lo
+domain omd.id
+search omd.my.id omd.web.id omd.id
 
-#--aisgw
-nameserver 172.16.251.1
-#--topgw
-nameserver 172.16.0.1
-nameserver 10.0.2.1
-nameserver 10.0.3.1
-
-#--nasdec-NS
-nameserver 103.94.190.3
-nameserver 103.94.190.6
+#--devomd
+#-- nameserver 127.0.0.1
 
 #--ext
 nameserver 1.1.1.1
@@ -268,50 +260,50 @@ systemctl restart systemd-resolved.service
 
 
 cat <<\EOT >/etc/apt/sources.list
-deb http://repo.aisits.id/debian bullseye main contrib non-free
-deb http://repo.aisits.id/debian bullseye-updates main contrib non-free
-deb http://repo.aisits.id/debian bullseye-proposed-updates main contrib non-free
-deb http://repo.aisits.id/debian bullseye-backports main contrib non-free
-deb http://repo.aisits.id/debian-security bullseye-security main
+deb http://deb.debian.org/debian bullseye main contrib non-free
+deb http://deb.debian.org/debian bullseye-updates main contrib non-free
+deb http://deb.debian.org/debian bullseye-proposed-updates main contrib non-free
+deb http://deb.debian.org/debian bullseye-backports main contrib non-free
+deb http://deb.debian.org/debian-security bullseye-security main
 
-# deb-src http://repo.aisits.id/debian bullseye main contrib non-free
-# deb-src http://repo.aisits.id/debian bullseye-updates main contrib non-free
-# deb-src http://repo.aisits.id/debian bullseye-proposed-updates main contrib non-free
-# deb-src http://repo.aisits.id/debian bullseye-backports main contrib non-free
-# deb-src http://repo.aisits.id/debian-security bullseye-security main
+# deb-src http://deb.debian.org/debian bullseye main contrib non-free
+# deb-src http://deb.debian.org/debian bullseye-updates main contrib non-free
+# deb-src http://deb.debian.org/debian bullseye-proposed-updates main contrib non-free
+# deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free
+# deb-src http://deb.debian.org/debian-security bullseye-security main
 
-deb [arch=amd64] http://repo.aisits.id/mariadb/repo/10.6/debian bullseye main
-deb [arch=amd64] http://repo.aisits.id/zabbix/5.5/debian bullseye main
+deb [arch=amd64] http://repo.omd.my.id/mariadb/repo/10.6/debian bullseye main
+deb [arch=amd64] http://repo.omd.my.id/zabbix/5.5/debian bullseye main
 
-deb http://repo.aisits.id/keydb-server/ubuntu bionic main
+deb http://repo.omd.my.id/keydb-server/ubuntu bionic main
 
-# deb http://repo.aisits.id/php bullseye main
-# deb http://repo.aisits.id/nginx bullseye nginx
-# deb http://repo.aisits.id/nginx-devel devel nginx
+# deb http://repo.omd.my.id/php bullseye main
+# deb http://repo.omd.my.id/nginx bullseye nginx
+# deb http://repo.omd.my.id/nginx-devel devel nginx
 
-# deb http://repo.aisits.id/wine bullseye main
-# deb http://repo.aisits.id/node16 bullseye main
-# deb http://repo.aisits.id/virtualbox bullseye contrib
+# deb http://repo.omd.my.id/wine bullseye main
+# deb http://repo.omd.my.id/node16 bullseye main
+# deb http://repo.omd.my.id/virtualbox bullseye contrib
 
-# deb http://repo.aisits.id/spotify stable non-free
-# deb http://repo.aisits.id/audacity bionic main
-# deb http://repo.aisits.id/skype stable main
-# deb http://repo.aisits.id/multimedia bullseye main non-free
+# deb http://repo.omd.my.id/spotify stable non-free
+# deb http://repo.omd.my.id/audacity bionic main
+# deb http://repo.omd.my.id/skype stable main
+# deb http://repo.omd.my.id/multimedia bullseye main non-free
 
-# deb http://repo.aisits.id/opera stable non-free
-# deb http://repo.aisits.id/chrome stable main
-# deb http://repo.aisits.id/vivaldi stable main
+# deb http://repo.omd.my.id/opera stable non-free
+# deb http://repo.omd.my.id/chrome stable main
+# deb http://repo.omd.my.id/vivaldi stable main
 
-# deb http://repo.aisits.id/earth stable main
-# deb http://repo.aisits.id/vscode stable main
+# deb http://repo.omd.my.id/earth stable main
+# deb http://repo.omd.my.id/vscode stable main
 
 EOT
 #--- end of /etc/apt/sources.list
 
 #--- add phideb
 echo \
-"deb [trusted=yes arch=amd64] http://repo.aisits.id/phideb ${RELNAME} main
-#deb-src [trusted=yes arch=amd64] http://repo.aisits.id/phideb ${RELNAME} main
+"deb [trusted=yes arch=amd64] http://repo.omd.my.id/phideb ${RELNAME} main
+#deb-src [trusted=yes arch=amd64] http://repo.omd.my.id/phideb ${RELNAME} main
 ">/etc/apt/sources.list.d/phideb.list
 
 
@@ -380,7 +372,7 @@ echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen
 aptold install -yf gnupg2 apt-utils tzdata curl \
 		2>&1 | grep -iv "not installed\|newest\|reading\|building\|stable CLI"
 
-apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys \
+apt-key adv --fetch-keys http://repo.omd.my.id/trusted-keys \
 	2>&1 | grep --color "processed"
 
 aptold full-upgrade --auto-remove --purge -fy \

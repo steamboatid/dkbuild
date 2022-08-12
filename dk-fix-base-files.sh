@@ -18,7 +18,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -96,7 +96,7 @@ reinstall_base() {
 
 # gen config
 #-------------------------------------------
-/bin/bash /tb2/build/dk-config-gen.sh
+/bin/bash /tb2/build-devomd/dk-config-gen.sh
 
 
 remove_non_base

@@ -21,7 +21,7 @@ export PHPVERS=("php8.0" "php8.1")
 export PHPGREP=("php8.0\|php8.1")
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -93,10 +93,10 @@ FDEPF="/tmp/php-deps-final.pkgs"
 
 URL="https://packages.sury.org/php/dists/bullseye/main/binary-amd64/Packages"
 URL="https://packages.sury.org/php/dists/buster/main/binary-amd64/Packages"
-# URL="http://repo.aisits.id/php/dists/buster/main/binary-amd64/Packages"
+# URL="http://repo.omd.my.id/php/dists/buster/main/binary-amd64/Packages"
 
 rm -rf $FPKGS
-URL="http://repo.aisits.id/php/dists/${RELNAME}/main/binary-amd64/Packages"
+URL="http://repo.omd.my.id/php/dists/${RELNAME}/main/binary-amd64/Packages"
 get_package_file $URL $FPKGS
 
 # # if $FPKGS empty

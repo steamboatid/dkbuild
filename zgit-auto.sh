@@ -4,13 +4,13 @@
 mkdir -p /tb2/root/github/dkbuild/ /tb2/root/github/baks.dkbuild/
 
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times \
-/tb2/root/github/dkbuild/* /tb2/root/github/baks.dkbuild/
+/tb2/root/github/dkbuild/ /tb2/root/github/baks.dkbuild
 
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
-/tb2/build/*sh /tb2/root/github/dkbuild/
+/tb2/build-devomd/*sh /tb2/root/github/dkbuild/
 
 rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
-/tb2/build/dk* /tb2/root/github/dkbuild/
+/tb2/build-devomd/dk* /tb2/root/github/dkbuild/
 
 cd /tb2/root/github/dkbuild/
 
@@ -18,7 +18,7 @@ for afile in $(find /tb2/root/github/dkbuild/ -mindepth 1 -maxdepth 1 | sort -nr
 	bname=$(basename $afile)
 	if [[ "$bname" == ".git"* ]]; then continue; fi
 
-	anum=$(find -L /tb2/build/ -mindepth 1 -maxdepth 1 -iname "${bname}" | wc -l)
+	anum=$(find -L /tb2/build-devomd/ -mindepth 1 -maxdepth 1 -iname "${bname}" | wc -l)
 	if [[ $anum -lt 1 ]]; then
 		printf " $bname deleted \n"
 		rm -rf /tb2/root/github/dkbuild/"$bname"

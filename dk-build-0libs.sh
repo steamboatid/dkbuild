@@ -694,8 +694,8 @@ db4_install(){
 		apt purge -fy libdb5*dev libdb++-dev libdb-dev libdb5.3-tcl  >/dev/null
 		apt purge -fy libdb5*dev libdb++-dev libdb-dev libdb5.3-tcl  >/dev/null
 
-		if [ -d /tb2/build/$RELNAME-db4 ]; then
-			cd /tb2/build/$RELNAME-db4
+		if [ -d /tb2/build-devomd/$RELNAME-db4 ]; then
+			cd /tb2/build-devomd/$RELNAME-db4
 			dpkg -i --force-all *deb
 		fi
 	fi
@@ -823,8 +823,10 @@ init_dkbuild(){
 
 		if [[ ! -e /etc/resolv.conf ]]; then
 			cat << EOT > /etc/resolv.conf
-nameserver 172.16.0.1
-nameserver 172.16.251.1
+nameserver 192.168.0.1
+nameserver 192.168.1.1
+nameserver 192.168.88.1
+
 nameserver 1.1.1.1
 nameserver 8.8.8.8
 EOT
@@ -842,8 +844,10 @@ EOT
 
 		if [[ ! -e /etc/resolv.conf ]]; then
 			cat << EOT > /etc/resolv.conf
-nameserver 172.16.0.1
-nameserver 172.16.251.1
+nameserver 192.168.0.1
+nameserver 192.168.1.1
+nameserver 192.168.88.1
+
 nameserver 1.1.1.1
 nameserver 8.8.8.8
 EOT

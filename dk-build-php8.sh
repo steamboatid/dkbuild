@@ -21,15 +21,15 @@ export PHPVERS=("php8.0" "php8.1")
 export PHPGREP=("php8.0\|php8.1")
 
 
-source /tb2/build/dk-build-0libs.sh
-source /tb2/build/dk-build-1libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-1libs.sh
 
 
 
 doback(){
 	adir="$1"
 	cd "$adir"
-	/usr/bin/nohup /bin/bash /tb2/build/dk-build-full.sh -d "$adir" 2>&1 >/dev/null 2>&1 &
+	/usr/bin/nohup /bin/bash /tb2/build-devomd/dk-build-full.sh -d "$adir" 2>&1 >/dev/null 2>&1 &
 	printf "\n\n\n"
 	sleep 1
 }
@@ -37,7 +37,7 @@ doback(){
 dofore(){
 	adir="$1"
 	cd "$adir"
-	/bin/bash /tb2/build/dk-build-full.sh -d "$adir"
+	/bin/bash /tb2/build-devomd/dk-build-full.sh -d "$adir"
 	printf "\n\n\n"
 	sleep 1
 }
@@ -94,7 +94,7 @@ override_dh_shlibdeps:
 
 
 	dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
-	-v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.aisits.id" -D buster -u high; \
+	-v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.omd.my.id" -D buster -u high; \
 	head debian/changelog
 
 	cd "$odir"
@@ -218,7 +218,7 @@ wait_by_average_load
 
 # delete duplicate dirs
 #-------------------------------------------
-/bin/bash /tb2/build/dk-prep-del-dups.sh
+/bin/bash /tb2/build-devomd/dk-prep-del-dups.sh
 
 
 # special version
@@ -242,8 +242,8 @@ rm -rf /root/src/php8 /root/org.src/php8 \
 
 # prepare dirs
 #-------------------------------------------
-mkdir -p /tb2/build/$RELNAME-php
-rm -rf /tb2/build/$RELNAME-php/*deb
+mkdir -p /tb2/build-devomd/$RELNAME-php
+rm -rf /tb2/build-devomd/$RELNAME-php/*deb
 mkdir -p /root/src/php
 
 
@@ -265,7 +265,7 @@ rm -rf /root/src/php/*deb
 delete_bad_php_ext
 
 export ERRFIX=0
-/bin/bash /tb2/build/dk-fix-php-sources.sh
+/bin/bash /tb2/build-devomd/dk-fix-php-sources.sh
 if [[ $ERRFIX -gt 0 ]]; then
 	printf "\n\n\n FATAL ERROR \n\n"
 	exit 10
@@ -315,13 +315,13 @@ find /root/src/php/ -type f -iname "*udeb" -delete
 find /root/src/php/ -type f -iname "*dbgsym*deb" -delete
 
 
-# upload to /tb2/build/{$RELNAME}-php8.x
+# upload to /tb2/build-devomd/{$RELNAME}-php8.x
 #-------------------------------------------
-mkdir -p /tb2/build/$RELNAME-php
-cp *.deb /tb2/build/$RELNAME-php/ -Rfav
-ls -la /tb2/build/$RELNAME-php/
+mkdir -p /tb2/build-devomd/$RELNAME-php
+cp *.deb /tb2/build-devomd/$RELNAME-php/ -Rfav
+ls -la /tb2/build-devomd/$RELNAME-php/
 
 
 # rebuild the repo
 #-------------------------------------------
-nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
+nohup ssh devomd "nohup /bin/bash /tb2/build-devomd/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &

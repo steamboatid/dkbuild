@@ -21,7 +21,7 @@ MYFILE=$(which $0)
 MYDIR=$(realpath $(dirname $MYFILE))
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -63,30 +63,30 @@ lxc-start -qn teye
 sleep 1
 
 printf "\n\n --- apt upgrade \n"
-lxc-attach -n bus -- /bin/bash /tb2/build/dk-apt-upgrade.sh
-lxc-attach -n eye -- /bin/bash /tb2/build/dk-apt-upgrade.sh
+lxc-attach -n bus -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh
+lxc-attach -n eye -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh
 sleep 1
 
 printf "\n\n --- prep-all \n"
-lxc-attach -n bus -- /bin/bash /tb2/build/dk-prep-all.sh   2>&1 | \
+lxc-attach -n bus -- /bin/bash /tb2/build-devomd/dk-prep-all.sh   2>&1 | \
 	tee /var/log/dkbuild/dk-bus-prep.log >/dev/null 2>&1 &
-lxc-attach -n eye -- /bin/bash /tb2/build/dk-prep-all.sh   2>&1 | \
+lxc-attach -n eye -- /bin/bash /tb2/build-devomd/dk-prep-all.sh   2>&1 | \
 	tee /var/log/dkbuild/dk-eye-prep.log >/dev/null 2>&1 &
 wait
 sleep 1
 
 
 printf "\n\n --- build-all \n"
-lxc-attach -n bus -- /bin/bash /tb2/build/dk-build-all.sh  2>&1 | \
+lxc-attach -n bus -- /bin/bash /tb2/build-devomd/dk-build-all.sh  2>&1 | \
 	tee /var/log/dkbuild/dk-bus-build.log >/dev/null 2>&1 &
-lxc-attach -n eye -- /bin/bash /tb2/build/dk-build-all.sh  2>&1 | \
+lxc-attach -n eye -- /bin/bash /tb2/build-devomd/dk-build-all.sh  2>&1 | \
 	tee /var/log/dkbuild/dk-eye-build.log >/dev/null 2>&1 &
 wait
 sleep 1
 
 
 printf "\n\n --- xrepo-rebuild \n"
-/bin/bash /tb2/build/xrepo-rebuild.sh  2>&1 | tee /var/log/dkbuild/dk-argo-repo-rebuild.log
+/bin/bash /tb2/build-devomd/xrepo-rebuild.sh  2>&1 | tee /var/log/dkbuild/dk-devomd-repo-rebuild.log
 sleep 1
 printf "\n\n --- clear nginx cache \n"
 /bin/bash /root/clear-nginx-cache.sh

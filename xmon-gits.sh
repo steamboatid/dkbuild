@@ -19,7 +19,7 @@ export TODATE=$(date +%Y%m%d)
 export ERRBASE=0
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -206,7 +206,7 @@ if [[ $sum_delta -gt 0 ]]; then
 	formatted=$(date -u "$format" -d "@$(printf "%010d\n" $sum_delta)" | sed "s|^00:||")
 	printf " -- ${cyn} $formatted ${end} \n\n\n"
 
-	# /bin/bash /tb2/build/xbuild-test-all.sh 2>&1 | tee /var/log/dkbuild/build-test-all.log
+	# /bin/bash /tb2/build-devomd/xbuild-test-all.sh 2>&1 | tee /var/log/dkbuild/build-test-all.log
 fi
 
 printf "\n\n --- done \n\n"

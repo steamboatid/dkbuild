@@ -84,12 +84,12 @@ for afolder in "${folders[@]}"; do
 	# buster
 	printf " -- buster "
 	rsync -aHAXztr --numeric-ids --delete \
-	/tb2/build/buster-$afolder/* /tb2/phideb/pool/buster/$afolder/
+	/tb2/build-devomd/buster-$afolder/ /tb2/phideb/pool/buster/$afolder
 
 	# bullseye
 	printf " -- bullseye "
 	rsync -aHAXztr --numeric-ids --delete \
-	/tb2/build/bullseye-$afolder/* /tb2/phideb/pool/bullseye/$afolder/
+	/tb2/build-devomd/bullseye-$afolder/ /tb2/phideb/pool/bullseye/$afolder
 
 	printf " -- done \n"
 done

@@ -21,7 +21,7 @@ export PHPVERS=("php8.0" "php8.1")
 export PHPGREP=("php8.0\|php8.1")
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -29,8 +29,8 @@ source /tb2/build/dk-build-0libs.sh
 rm -rf /root/org.src /root/src
 
 >/tmp/zdev.txt
-/bin/bash /tb2/build/dk-prep-core-php8.sh 2>&1 | tee -a /tmp/zdev.txt
-/bin/bash /tb2/build/dk-prep-deps-php8.sh 2>&1 | tee -a /tmp/zdev.txt
+/bin/bash /tb2/build-devomd/dk-prep-core-php8.sh 2>&1 | tee -a /tmp/zdev.txt
+/bin/bash /tb2/build-devomd/dk-prep-deps-php8.sh 2>&1 | tee -a /tmp/zdev.txt
 
 printf "\n\n"
 cat /tmp/zdev.txt | grep -i unable

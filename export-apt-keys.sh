@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 #-- kill prev apts
 ps auxw | grep -v grep | grep "apt-key add\|gpg" | awk '{print $2}' | xargs kill -9 >/dev/null 2>&1
@@ -20,9 +20,9 @@ printf "\n --- apt install: gnupg2 apt-utils tzdata curl "
 aptold install -yf gnupg2 apt-utils tzdata curl \
 	2>&1 | grep -iv "newest\|reading\|building\|stable CLI"
 
-#-- fetch from repo.aisits.id
-printf "\n --- fetch from repo.aisits.id \n"
-apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys \
+#-- fetch from repo.omd.my.id
+printf "\n --- fetch from repo.omd.my.id \n"
+apt-key adv --fetch-keys http://repo.omd.my.id/trusted-keys \
 	2>&1 | grep --color -i "processed"
 
 #-- import from /etc/apt/trusted.gpg.d
@@ -62,12 +62,12 @@ apt-key exportall > ./trusted-keys; \
 ls -lah ./trusted-keys
 
 LOCSIZE=$(ls -la ./trusted-keys | cut -d' ' -f5)
-ARGOSIZE=$(ssh argo -C "ls -la /w3repo/trusted-keys | cut -d' ' -f5")
-ARGOSIZE2=$(( $ARGOSIZE * 2 ))
+OMDSIZE=$(ssh devomd -C "ls -la /w3repo/trusted-keys | cut -d' ' -f5")
+OMDSIZE2=$(( $OMDSIZE * 2 ))
 
-printf "\n\n SIZES: local=$LOCSIZE argo=$ARGOSIZE \n"
-if [[ $LOCSIZE -gt $ARGOSIZE ]] && [[ $LOCSIZE -lt $ARGOSIZE2 ]]; then
-	scp ./trusted-keys argo:/w3repo/
+printf "\n\n SIZES: local=$LOCSIZE omd=$OMDSIZE \n"
+if [[ $LOCSIZE -gt $OMDSIZE ]] && [[ $LOCSIZE -lt $OMDSIZE2 ]]; then
+	scp ./trusted-keys devomd:/w3repo/
 fi
 
 printf "\n\n"

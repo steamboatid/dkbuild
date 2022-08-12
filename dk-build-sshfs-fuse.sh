@@ -18,7 +18,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -37,8 +37,8 @@ VEROVR="3.10.3"
 
 # delete old debs
 #-------------------------------------------
-mkdir -p /tb2/build/$RELNAME-sshfs
-rm -rf /tb2/build/$RELNAME-sshfs/*deb
+mkdir -p /tb2/build-devomd/$RELNAME-sshfs
+rm -rf /tb2/build-devomd/$RELNAME-sshfs/*deb
 mkdir -p /root/src/sshfs
 rm -rf /root/src/sshfs/*deb
 
@@ -58,8 +58,8 @@ aptold source -y sshfs libfuse3-dev
 
 # prepare dirs
 #-------------------------------------------
-mkdir -p /tb2/build/$RELNAME-sshfs
-rm -rf /tb2/build/$RELNAME-sshfs/*deb
+mkdir -p /tb2/build-devomd/$RELNAME-sshfs
+rm -rf /tb2/build-devomd/$RELNAME-sshfs/*deb
 mkdir -p /root/src/sshfs
 
 
@@ -115,11 +115,11 @@ do_build_sshfs_fuse() {
 
 
 	dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
-	-v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.aisits.id" -D buster -u high; \
+	-v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.omd.my.id" -D buster -u high; \
 	head debian/changelog
 	sleep 2
 
-	/bin/bash /tb2/build/dk-build-full.sh -d "$bdir"
+	/bin/bash /tb2/build-devomd/dk-build-full.sh -d "$bdir"
 }
 
 
@@ -152,13 +152,13 @@ find /root/src/sshfs -type f -iname "*udeb" -delete
 find /root/src/sshfs -type f -iname "*dbgsym*deb" -delete
 
 
-# upload to /tb2/build/{$RELNAME}-nginx
+# upload to /tb2/build-devomd/{$RELNAME}-nginx
 #-------------------------------------------
-mkdir -p /tb2/build/$RELNAME-sshfs
-cp *.deb /tb2/build/$RELNAME-sshfs/ -Rfav
-ls -la /tb2/build/$RELNAME-sshfs/
+mkdir -p /tb2/build-devomd/$RELNAME-sshfs
+cp *.deb /tb2/build-devomd/$RELNAME-sshfs/ -Rfav
+ls -la /tb2/build-devomd/$RELNAME-sshfs/
 
 
 # rebuild the repo
 #-------------------------------------------
-nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
+nohup ssh devomd "nohup /bin/bash /tb2/build-devomd/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &

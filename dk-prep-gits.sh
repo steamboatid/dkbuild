@@ -18,11 +18,11 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 # check dns resolve
 dig github.com | grep -v ";" | grep "IN"
-dig github.com @172.16.251.1 | grep -v ";" | grep "IN"
+dig github.com @192.168.1.1 | grep -v ";" | grep "IN"
 dig github.com @1.1.1.1 | grep -v ";" | grep "IN"
 
 #  kill slow git

@@ -18,7 +18,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -73,8 +73,8 @@ ps -e -o command | grep -iv "grep\|pool\|worker\|rsync" | sort -u | grep --color
 # check php custom
 check_php_custom() {
 	phpv="$1"
-	NUMNON=$(dpkg -l | grep "^ii" | grep $phpv | grep -iv aisits | wc -l)
-	NUMCUS=$(dpkg -l | grep "^ii" | grep $phpv | grep -i aisits | wc -l)
+	NUMNON=$(dpkg -l | grep "^ii" | grep $phpv | grep -iv omd | wc -l)
+	NUMCUS=$(dpkg -l | grep "^ii" | grep $phpv | grep -i omd | wc -l)
 	printf "\n\n--- ${cyan}$phpv packages${end}: ${yel}default=$NUMNON  ${blu}CUSTOM=$NUMCUS ${end}\n"
 }
 

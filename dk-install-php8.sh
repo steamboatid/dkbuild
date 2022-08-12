@@ -18,7 +18,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -26,7 +26,7 @@ source /tb2/build/dk-build-0libs.sh
 # gen config, delete locks
 #-------------------------------------------
 delete_apt_lock
-/bin/bash /tb2/build/dk-config-gen.sh
+/bin/bash /tb2/build-devomd/dk-config-gen.sh
 
 
 
@@ -115,8 +115,8 @@ check_php_installs "php8.1"
 # check php custom
 check_php_custom() {
 	phpv="$1"
-	NUMNON=$(dpkg -l | grep "^ii" | grep $phpv | grep -v aisits | wc -l)
-	NUMCUS=$(dpkg -l | grep "^ii" | grep $phpv | grep aisits | wc -l)
+	NUMNON=$(dpkg -l | grep "^ii" | grep $phpv | grep -v omd | wc -l)
+	NUMCUS=$(dpkg -l | grep "^ii" | grep $phpv | grep omd | wc -l)
 	printf "\n\n--- ${cyan}$phpv packages${end}: ${yel}default=$NUMNON  ${blu}CUSTOM=$NUMCUS ${end}\n"
 }
 

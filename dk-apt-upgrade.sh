@@ -18,7 +18,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -41,8 +41,10 @@ if [[ $islxc -gt 0 ]]; then
 
 		if [[ ! -e /etc/resolv.conf ]]; then
 			cat << EOT > /etc/resolv.conf
-nameserver 172.16.0.1
-nameserver 172.16.251.1
+nameserver 192.168.0.1
+nameserver 192.168.1.1
+nameserver 192.168.88.1
+
 nameserver 1.1.1.1
 nameserver 8.8.8.8
 EOT
@@ -60,8 +62,10 @@ EOT
 
 		if [[ ! -e /etc/resolv.conf ]]; then
 			cat << EOT > /etc/resolv.conf
-nameserver 172.16.0.1
-nameserver 172.16.251.1
+nameserver 192.168.0.1
+nameserver 192.168.1.1
+nameserver 192.168.88.1
+
 nameserver 1.1.1.1
 nameserver 8.8.8.8
 EOT
@@ -75,7 +79,7 @@ fi
 
 # gen config
 #-------------------------------------------
-/bin/bash /tb2/build/dk-config-gen.sh
+/bin/bash /tb2/build-devomd/dk-config-gen.sh
 
 
 

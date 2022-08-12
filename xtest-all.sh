@@ -18,7 +18,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -42,8 +42,8 @@ do_testing(){
 	alxc="$1"
 
 	lxc-start -qn $alxc
-	lxc-attach -n $alxc -- /bin/bash /tb2/build/dk-init-debian.sh  2>&1 | tee /var/log/dkbuild/dk-$alxc-init.log
-	lxc-attach -n $alxc -- /bin/bash /tb2/build/dk-install-all.sh  2>&1 | tee /var/log/dkbuild/dk-$alxc-install.log
+	lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-init-debian.sh  2>&1 | tee /var/log/dkbuild/dk-$alxc-init.log
+	lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-install-all.sh  2>&1 | tee /var/log/dkbuild/dk-$alxc-install.log
 	sleep 1
 }
 

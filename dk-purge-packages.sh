@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -12,7 +12,7 @@ nowpkgs=$(dpkg -l|grep "^ii"|sed -r "s/\s+/ /g"|cut -d" " -f2|sed -r "s/\:amd64/
 
 pkgs=""
 for apkg in $nowpkgs; do
-	exists=$(grep -i "$apkg" /tb2/build/basic.pkgs | wc -l)
+	exists=$(grep -i "$apkg" /tb2/build-devomd/basic.pkgs | wc -l)
 	if [[ $exists -lt 1 ]]; then
 		pkgs="${apkg} ${pkgs}"
 		# printf " $apkg"

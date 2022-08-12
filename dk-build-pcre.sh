@@ -18,7 +18,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -30,8 +30,8 @@ wait_by_average_load
 
 # delete old debs
 #-------------------------------------------
-mkdir -p /tb2/build/$RELNAME-pcre
-rm -rf /tb2/build/$RELNAME-pcre/*deb
+mkdir -p /tb2/build-devomd/$RELNAME-pcre
+rm -rf /tb2/build-devomd/$RELNAME-pcre/*deb
 mkdir -p /root/src/pcre
 rm -rf /root/src/pcre/*deb
 
@@ -102,11 +102,11 @@ for adir in $(find /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*" 
 
 
 	dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
-	-v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.aisits.id" -D buster -u high; \
+	-v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.omd.my.id" -D buster -u high; \
 	head debian/changelog
 	sleep 2
 
-	/bin/bash /tb2/build/dk-build-full.sh -d "$adir"
+	/bin/bash /tb2/build-devomd/dk-build-full.sh -d "$adir"
 done
 
 
@@ -123,13 +123,13 @@ find /root/src/pcre -type f -iname "*dbgsym*deb" -delete
 dpkg -i --force-all *deb
 
 
-# upload to /tb2/build/{$RELNAME}-nginx
+# upload to /tb2/build-devomd/{$RELNAME}-nginx
 #-------------------------------------------
-mkdir -p /tb2/build/$RELNAME-pcre
-cp *.deb /tb2/build/$RELNAME-pcre/ -Rfav
-ls -la /tb2/build/$RELNAME-pcre/
+mkdir -p /tb2/build-devomd/$RELNAME-pcre
+cp *.deb /tb2/build-devomd/$RELNAME-pcre/ -Rfav
+ls -la /tb2/build-devomd/$RELNAME-pcre/
 
 
 # rebuild the repo
 #-------------------------------------------
-nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
+nohup ssh devomd "nohup /bin/bash /tb2/build-devomd/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &

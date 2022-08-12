@@ -18,7 +18,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -72,7 +72,7 @@ fi
 
 printf "\n --- preps: scripts $alxc "
 lxc-attach -n $alxc -- rm -rf /usr/local/sbin/dk*sh /usr/local/sbin/x*sh /usr/local/sbin/y*sh /usr/local/sbin/z*sh
-lxc-attach -n $alxc -- ln -sf /tb2/build/*sh /usr/local/sbin/
-lxc-attach -n $alxc -- chmod +x /tb2/build/*sh /usr/local/sbin/* -f
+lxc-attach -n $alxc -- ln -sf /tb2/build-devomd/*sh /usr/local/sbin/
+lxc-attach -n $alxc -- chmod +x /tb2/build-devomd/*sh /usr/local/sbin/* -f
 
 printf "\n\n"

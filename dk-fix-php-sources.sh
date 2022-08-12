@@ -22,8 +22,8 @@ export PHPGREP=("php8.0\|php8.1")
 export ERRFIX=0
 
 
-source /tb2/build/dk-build-0libs.sh
-source /tb2/build/dk-build-1libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-1libs.sh
 
 
 

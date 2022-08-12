@@ -19,9 +19,9 @@ export TODATE=$(date +%Y%m%d)
 export ERRBASE=0
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
-/bin/bash /tb2/build/xmon-sury.sh
-/bin/bash /tb2/build/xmon-gits.sh
+/bin/bash /tb2/build-devomd/xmon-sury.sh
+/bin/bash /tb2/build-devomd/xmon-gits.sh

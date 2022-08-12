@@ -4,7 +4,7 @@
 # this script will delete ALL non-essential packages
 #
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 apt purge --auto-remove --purge \
 build-essential bison re2c \

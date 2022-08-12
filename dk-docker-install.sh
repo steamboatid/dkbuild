@@ -18,15 +18,15 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
 
 # gen config
 #-------------------------------------------
-/bin/bash /tb2/build/dk-config-gen.sh
-/bin/bash /tb2/build/dk-init-debian.sh
+/bin/bash /tb2/build-devomd/dk-config-gen.sh
+/bin/bash /tb2/build-devomd/dk-init-debian.sh
 
 
 # prepare install docker packages
@@ -59,7 +59,7 @@ sleep 0.5
 # create Dockerfile
 #-------------------------------------------
 back_pull() {
-	HTTPS_PROXY="172.16.251.23:3128" HTTP_PROXY="172.16.251.23:3128" \
+	HTTPS_PROXY="192.168.88.11:3128" HTTP_PROXY="192.168.88.11:3128" \
 	nohup docker pull $1 >/dev/null 2>&1 &
 }
 
@@ -91,9 +91,9 @@ printf 'LANG=en_US.UTF-8' >> /etc/default/locale; \
 printf 'LANGUAGE=en_US.UTF-8' >> /etc/default/locale
 
 RUN printf '\
-deb http://repo.aisits.id/debian ${RELNAME} main contrib non-free \n\
-deb http://repo.aisits.id/debian ${RELNAME}-proposed-updates main contrib non-free \n\
-deb http://repo.aisits.id/debian ${RELNAME}-backports main contrib non-free \n\
+deb http://deb.debian.org/debian ${RELNAME} main contrib non-free \n\
+deb http://deb.debian.org/debian ${RELNAME}-proposed-updates main contrib non-free \n\
+deb http://deb.debian.org/debian ${RELNAME}-backports main contrib non-free \n\
 '>/etc/apt/sources.list; \
 apt update; apt full-upgrade -fy; apt install -fy locales locales-all apt-utils
 RUN dpkg-reconfigure locales
@@ -103,9 +103,9 @@ lsb-release net-tools dnsutils
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US.UTF-8' LC_ALL='en_US.UTF-8'
 RUN export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8; export LANGUAGE=en_US.UTF-8; locale-gen en_US.UTF-8
 
-RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
-/bin/bash /tb2/build/dk-init-debian.sh &&\
-/bin/bash /tb2/build/zins.sh
+RUN git clone https://github.com/steamboatid/dkbuild /tb2/build-devomd &&\
+/bin/bash /tb2/build-devomd/dk-init-debian.sh &&\
+/bin/bash /tb2/build-devomd/zins.sh
 
 ">Dockerfile
 
@@ -132,12 +132,12 @@ RUN git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
 
 	# printf "\n\n running docker \n"
 	# docker run $DNAME \
-	# /bin/bash -c "echo 'nameserver 172.16.251.1'>/etc/resolv.conf; \
-	# echo '172.16.251.23 repo.aisits.id argo'>>/etc/hosts; apt update; \
-	# apt install git; rm -rf /tb2/build; \
-	# git clone https://github.com/steamboatid/dkbuild /tb2/build; \
-	# /bin/bash /tb2/build/dk-init-debian.sh &&\
-	# /bin/bash /tb2/build/zins.sh"
+	# /bin/bash -c "echo 'nameserver 192.168.1.1'>/etc/resolv.conf; \
+	# echo '192.168.88.11 repo.omd.my.id devomd'>>/etc/hosts; apt update; \
+	# apt install git; rm -rf /tb2/build-devomd; \
+	# git clone https://github.com/steamboatid/dkbuild /tb2/build-devomd; \
+	# /bin/bash /tb2/build-devomd/dk-init-debian.sh &&\
+	# /bin/bash /tb2/build-devomd/zins.sh"
 }
 
 build_docker "buster"

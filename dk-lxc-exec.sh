@@ -42,17 +42,17 @@ echo 'nameserver 1.1.1.1' > /etc/resolv.conf; \
 echo 'nameserver 8.8.8.8' >> /etc/resolv.conf; \
 dhclient >/dev/null 2>&1"
 
-lxcrun "echo '103.94.190.3    repo.aisits.id argo' >> /etc/hosts"
+lxcrun "echo '103.94.190.3    repo.omd.my.id devomd' >> /etc/hosts"
 
 lxcrun "printf '\
-deb http://repo.aisits.id/debian buster main contrib non-free \n\
-deb http://repo.aisits.id/debian-security buster/updates main contrib non-free \n\
-deb http://repo.aisits.id/debian buster-updates main contrib non-free \n\
-deb http://repo.aisits.id/debian buster-proposed-updates main contrib non-free \n\
+deb http://deb.debian.org/debian buster main contrib non-free \n\
+deb http://deb.debian.org/debian-security buster/updates main contrib non-free \n\
+deb http://deb.debian.org/debian buster-updates main contrib non-free \n\
+deb http://deb.debian.org/debian buster-proposed-updates main contrib non-free \n\
 '>/etc/apt/sources.list; \
 apt update; apt install -fy locales locales-all apt-utils libterm-readline-gnu-perl; \
 apt install -fy git netbase init eatmydata nano rsync libterm-readline-gnu-perl \
 lsb-release net-tools dnsutils"
 
-lxcrun "rm -rf /tb2/build; git clone https://github.com/steamboatid/dkbuild /tb2/build &&\
-/bin/bash /tb2/build/dk-init-debian.sh && /bin/bash /tb2/build/zins.sh"
+lxcrun "rm -rf /tb2/build-devomd; git clone https://github.com/steamboatid/dkbuild /tb2/build-devomd &&\
+/bin/bash /tb2/build-devomd/dk-init-debian.sh && /bin/bash /tb2/build-devomd/zins.sh"

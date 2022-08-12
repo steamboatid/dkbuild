@@ -18,14 +18,14 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
 
 # gen config
 #-------------------------------------------
-/bin/bash /tb2/build/dk-config-gen.sh
+/bin/bash /tb2/build-devomd/dk-config-gen.sh
 
 
 
@@ -34,8 +34,10 @@ init_resolver() {
 		echo \
 "nameserver 10.0.2.1
 nameserver 10.0.3.1
-nameserver 172.16.0.1
-nameserver 172.16.251.1
+
+nameserver 192.168.0.1
+nameserver 192.168.1.1
+nameserver 192.168.88.1
 
 nameserver 1.1.1.1
 nameserver 8.8.8.8
@@ -49,8 +51,10 @@ nameserver 8.8.8.8
 		echo \
 "nameserver 10.0.2.1
 nameserver 10.0.3.1
-nameserver 172.16.0.1
-nameserver 172.16.251.1
+
+nameserver 192.168.0.1
+nameserver 192.168.1.1
+nameserver 192.168.88.1
 
 nameserver 1.1.1.1
 nameserver 8.8.8.8
@@ -58,7 +62,7 @@ nameserver 8.8.8.8
 	fi
 
 	if [[ -f /etc/systemd/resolved.conf ]]; then
-		sed -i "s/\#DNS=/DNS=10.0.2.1 10.0.3.1 172.16.0.1 172.16.251.1/g" /etc/systemd/resolved.conf
+		sed -i "s/\#DNS=/DNS=10.0.2.1 10.0.3.1 192.168.0.1 192.168.1.1 192.168.88.1/g" /etc/systemd/resolved.conf
 		sed -i "s/\#FallbackDNS=/FallbackDNS=1.1.1.1 8.8.8.8/g" /etc/systemd/resolved.conf
 		sed -i "s/\#Cache=yes/Cache=yes/g" /etc/systemd/resolved.conf
 		# cat /etc/systemd/resolved.conf | grep "DNS="
@@ -71,44 +75,44 @@ nameserver 8.8.8.8
 
 init_buster() {
 	echo \
-'deb http://repo.aisits.id/debian buster main contrib non-free
-deb http://repo.aisits.id/debian-security buster/updates main contrib non-free
-deb http://repo.aisits.id/debian buster-updates main contrib non-free
-deb http://repo.aisits.id/debian buster-proposed-updates main contrib non-free
-deb http://repo.aisits.id/debian buster-backports main contrib non-free
+'deb http://deb.debian.org/debian buster main contrib non-free
+deb http://deb.debian.org/debian-security buster/updates main contrib non-free
+deb http://deb.debian.org/debian buster-updates main contrib non-free
+deb http://deb.debian.org/debian buster-proposed-updates main contrib non-free
+deb http://deb.debian.org/debian buster-backports main contrib non-free
 
-deb-src http://repo.aisits.id/debian buster main contrib non-free
-deb-src http://repo.aisits.id/debian-security buster/updates main contrib non-free
-deb-src http://repo.aisits.id/debian buster-updates main contrib non-free
-deb-src http://repo.aisits.id/debian buster-proposed-updates main contrib non-free
-deb-src http://repo.aisits.id/debian buster-backports main contrib non-free
+deb-src http://deb.debian.org/debian buster main contrib non-free
+deb-src http://deb.debian.org/debian-security buster/updates main contrib non-free
+deb-src http://deb.debian.org/debian buster-updates main contrib non-free
+deb-src http://deb.debian.org/debian buster-proposed-updates main contrib non-free
+deb-src http://deb.debian.org/debian buster-backports main contrib non-free
 
-deb http://repo.aisits.id/mariadb/repo/10.6/debian buster main
-deb http://repo.aisits.id/zabbix/5.5/debian buster main
+#deb http://repo.omd.my.id/mariadb/repo/10.6/debian buster main
+#deb http://repo.omd.my.id/zabbix/5.5/debian buster main
 
-deb http://repo.aisits.id/mariadb-maxscale buster main
-deb http://repo.aisits.id/mariadb-tools buster main
+#deb http://repo.omd.my.id/mariadb-maxscale buster main
+#deb http://repo.omd.my.id/mariadb-tools buster main
 '>/etc/apt/sources.list
 }
 
 init_bullseye() {
 	echo \
-'deb http://repo.aisits.id/debian bullseye main contrib non-free
-deb http://repo.aisits.id/debian bullseye-updates main contrib non-free
-deb http://repo.aisits.id/debian bullseye-proposed-updates main contrib non-free
+'deb http://deb.debian.org/debian bullseye main contrib non-free
+deb http://deb.debian.org/debian bullseye-updates main contrib non-free
+deb http://deb.debian.org/debian bullseye-proposed-updates main contrib non-free
 
-deb-src http://repo.aisits.id/debian bullseye main contrib non-free
-deb-src http://repo.aisits.id/debian bullseye-updates main contrib non-free
-deb-src http://repo.aisits.id/debian bullseye-proposed-updates main contrib non-free
+deb-src http://deb.debian.org/debian bullseye main contrib non-free
+deb-src http://deb.debian.org/debian bullseye-updates main contrib non-free
+deb-src http://deb.debian.org/debian bullseye-proposed-updates main contrib non-free
 
-deb http://repo.aisits.id/debian bullseye-backports main contrib non-free
-deb-src http://repo.aisits.id/debian bullseye-backports main contrib non-free
+deb http://deb.debian.org/debian bullseye-backports main contrib non-free
+deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free
 
-deb http://repo.aisits.id/debian-security bullseye-security main
-deb-src http://repo.aisits.id/debian-security bullseye-security main
+deb http://deb.debian.org/debian-security bullseye-security main
+deb-src http://deb.debian.org/debian-security bullseye-security main
 
-deb http://repo.aisits.id/mariadb/repo/10.6/debian bullseye main
-deb http://repo.aisits.id/zabbix/5.5/debian bullseye main
+#deb http://repo.omd.my.id/mariadb/repo/10.6/debian bullseye main
+#deb http://repo.omd.my.id/zabbix/5.5/debian bullseye main
 '>/etc/apt/sources.list
 }
 
@@ -175,7 +179,7 @@ export LANGUAGE=en_US.UTF-8
 		2>&1 | grep -iv "newest\|reading\|building\|stable CLI"
 
 	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && dpkg-reconfigure locales &&\
-	apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys 2>&1 | grep --color "processed"
+	apt-key adv --fetch-keys http://repo.omd.my.id/trusted-keys 2>&1 | grep --color "processed"
 
 	aptold update 2>&1
 	aptold full-upgrade --auto-remove --purge -fy  \

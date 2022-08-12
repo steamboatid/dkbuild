@@ -18,7 +18,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 # fix keydb perm, purge pendings, del locks
@@ -39,14 +39,14 @@ ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}
 
 # prepare basic need: apt configs, sources list, etc
 #-------------------------------------------
-/bin/bash /tb2/build/dk-config-gen.sh
-/bin/bash /tb2/build/dk-prep-basic.sh
+/bin/bash /tb2/build-devomd/dk-config-gen.sh
+/bin/bash /tb2/build-devomd/dk-prep-basic.sh
 
-nohup /bin/bash /tb2/build/dk-prep-gits.sh >/dev/null 2>&1 &
+nohup /bin/bash /tb2/build-devomd/dk-prep-gits.sh >/dev/null 2>&1 &
 
-/bin/bash /tb2/build/dk-prep-deps-nginx.sh
-/bin/bash /tb2/build/dk-prep-core-php8.sh
-/bin/bash /tb2/build/dk-prep-deps-php8.sh
+/bin/bash /tb2/build-devomd/dk-prep-deps-nginx.sh
+/bin/bash /tb2/build-devomd/dk-prep-core-php8.sh
+/bin/bash /tb2/build-devomd/dk-prep-deps-php8.sh
 
 
 # NGINX, source via git

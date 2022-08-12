@@ -18,7 +18,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -42,8 +42,8 @@ prepare_build_flags
 
 # prepare dirs
 #-------------------------------------------
-mkdir -p /tb2/build/$RELNAME-lua-resty-core
-rm -rf /tb2/build/$RELNAME-lua-resty-core/*deb
+mkdir -p /tb2/build-devomd/$RELNAME-lua-resty-core
+rm -rf /tb2/build-devomd/$RELNAME-lua-resty-core/*deb
 mkdir -p /root/src/lua-resty-core
 
 
@@ -100,11 +100,11 @@ fi
 
 
 dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
--v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.aisits.id" -D buster -u high; \
+-v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.omd.my.id" -D buster -u high; \
 head debian/changelog
 sleep 2
 
-/bin/bash /tb2/build/dk-build-full.sh -d $BUILDDIR
+/bin/bash /tb2/build-devomd/dk-build-full.sh -d $BUILDDIR
 
 
 
@@ -116,13 +116,13 @@ find /root/src/lua-resty-core -type f -iname "*udeb" -delete
 find /root/src/lua-resty-core -type f -iname "*dbgsym*deb" -delete
 
 
-# upload to /tb2/build/{$RELNAME}-nginx
+# upload to /tb2/build-devomd/{$RELNAME}-nginx
 #-------------------------------------------
-mkdir -p /tb2/build/$RELNAME-lua-resty-core
-cp *.deb /tb2/build/$RELNAME-lua-resty-core/ -Rfav
-ls -la /tb2/build/$RELNAME-lua-resty-core/
+mkdir -p /tb2/build-devomd/$RELNAME-lua-resty-core
+cp *.deb /tb2/build-devomd/$RELNAME-lua-resty-core/ -Rfav
+ls -la /tb2/build-devomd/$RELNAME-lua-resty-core/
 
 
 # rebuild the repo
 #-------------------------------------------
-nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
+nohup ssh devomd "nohup /bin/bash /tb2/build-devomd/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &

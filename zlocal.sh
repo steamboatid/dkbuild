@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 printf "\n GIT repos behinds: \n"

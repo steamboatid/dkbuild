@@ -12,7 +12,7 @@ export TODATE=$(date +%Y%m%d)
 
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 apt autoclean >/dev/null 2>&1; apt clean >/dev/null 2>&1
 
 
@@ -121,8 +121,8 @@ systemctl enable apt-daily-upgrade.timer  >/dev/null 2>&1
 
 #--- install basics
 echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
-pkgs=(eatmydata nano rsync libterm-readline-gnu-perl apt-utils lsb-release locales net-tools)
-install_old $pkgs
+pkgs=(dnsutils eatmydata nano rsync libterm-readline-gnu-perl apt-utils lsb-release locales net-tools)
+apt update; install_old $pkgs
 
 #--- saving
 save_local_debs >/dev/null 2>&1 &

@@ -19,7 +19,7 @@ export TODATE=$(date +%Y%m%d)
 export ERRBASE=0
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -94,7 +94,7 @@ epoch_sury=$(( $epoch_src ))
 
 
 printf "\n --- get phideb: packages "
-epoch_phidep=$(get_url_lastmod_date "http://repo.aisits.id/phideb/dists/bullseye/main/binary-amd64/Packages.gz" |\
+epoch_phidep=$(get_url_lastmod_date "http://repo.omd.my.id/phideb/dists/bullseye/main/binary-amd64/Packages.gz" |\
 	grep "epoch" | cut -d' ' -f3-)
 epoch_phidep=$(( $epoch_phidep ))
 
@@ -125,13 +125,13 @@ if [[ $epoch_delta -gt 0 ]]; then
 	formatted=$(date -u "$format" -d "@$(printf "%010d\n" $epoch_delta)" | sed "s|^00:||")
 	printf " -- ${cyn} $formatted ${end} \n\n\n"
 
-	/bin/bash /tb2/build/xbuild-test-all.sh 2>&1 | tee /var/log/dkbuild/build-test-all.log
+	/bin/bash /tb2/build-devomd/xbuild-test-all.sh 2>&1 | tee /var/log/dkbuild/build-test-all.log
 fi
 
 
-# if [[ $HOSTNAME == "argo" ]]; then
+# if [[ $HOSTNAME == "devomd" ]]; then
 # 	printf "\n --- execute: xbuild-test-all.sh "
-# 	/bin/bash /tb2/build/xbuild-test-all.sh
+# 	/bin/bash /tb2/build-devomd/xbuild-test-all.sh
 # fi
 
 printf "\n\n --- done \n\n"

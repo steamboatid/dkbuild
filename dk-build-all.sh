@@ -19,7 +19,7 @@ export TODATE=$(date +%Y%m%d)
 export ERRBASE=0
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -51,15 +51,15 @@ wait_build_full(){
 check_installed_pkgs(){
 	printf "\n\n"
 	export ERRBASE=0
-	if [[ $(dpkg -l | grep "^ii" | grep db4 | grep aisits | wc -l) -lt 1 ]]; then
+	if [[ $(dpkg -l | grep "^ii" | grep db4 | grep omd | wc -l) -lt 1 ]]; then
 		printf "\n --- ${red}db4 failed ${end}"
 		export ERRBASE=1
 	fi
-	if [[ $(dpkg -l | grep "^ii" | grep pcre | grep aisits | wc -l) -lt 1 ]]; then
+	if [[ $(dpkg -l | grep "^ii" | grep pcre | grep omd | wc -l) -lt 1 ]]; then
 		printf "\n --- ${red}pcre failed ${end}"
 		export ERRBASE=1
 	fi
-	if [[ $(dpkg -l | grep "^ii" | grep zip | grep aisits | wc -l) -lt 1 ]]; then
+	if [[ $(dpkg -l | grep "^ii" | grep zip | grep omd | wc -l) -lt 1 ]]; then
 		printf "\n --- ${red}libzip failed ${end}"
 		export ERRBASE=1
 	fi
@@ -84,20 +84,20 @@ stop_services
 
 # gen config
 #-------------------------------------------
-/bin/bash /tb2/build/dk-config-gen.sh
+/bin/bash /tb2/build-devomd/dk-config-gen.sh
 
 
 #--- delete OLD files
-mkdir -p /root/org.src /root/src /tb2/build/$RELNAME-all
+mkdir -p /root/org.src /root/src /tb2/build-devomd/$RELNAME-all
 find /root/src -type f -iname "*deb" -delete
-find /tb2/build/$RELNAME-all -type f -iname "*deb" -delete
+find /tb2/build-devomd/$RELNAME-all -type f -iname "*deb" -delete
 
 
 # some job at foreground: build & istall base packages
 #-------------------------------------------
-doback_bash /tb2/build/dk-build-libzip.sh
-doback_bash /tb2/build/dk-build-pcre.sh
-doback_bash /tb2/build/dk-build-db4.sh
+doback_bash /tb2/build-devomd/dk-build-libzip.sh
+doback_bash /tb2/build-devomd/dk-build-pcre.sh
+doback_bash /tb2/build-devomd/dk-build-db4.sh
 
 wait_build_full
 check_installed_pkgs
@@ -105,18 +105,18 @@ check_installed_pkgs
 
 # some job at background
 #-------------------------------------------
-doback_bash /tb2/build/dk-build-nutcracker.sh
-doback_bash /tb2/build/dk-build-keydb.sh
-doback_bash /tb2/build/dk-build-lua-resty-lrucache.sh
-doback_bash /tb2/build/dk-build-lua-resty-core.sh
-doback_bash /tb2/build/dk-build-sshfs-fuse.sh
+doback_bash /tb2/build-devomd/dk-build-nutcracker.sh
+doback_bash /tb2/build-devomd/dk-build-keydb.sh
+doback_bash /tb2/build-devomd/dk-build-lua-resty-lrucache.sh
+doback_bash /tb2/build-devomd/dk-build-lua-resty-core.sh
+doback_bash /tb2/build-devomd/dk-build-sshfs-fuse.sh
 
 
 # some job at foreground, wait first
 #-------------------------------------------
 wait_build_full
-doback_bash /tb2/build/dk-build-nginx.sh
-doback_bash /tb2/build/dk-build-php8.sh
+doback_bash /tb2/build-devomd/dk-build-nginx.sh
+doback_bash /tb2/build-devomd/dk-build-php8.sh
 
 
 # wait all background jobs
@@ -136,16 +136,16 @@ find /root/src -type f -iname "*dbgsym*deb" -delete
 
 
 #--- delete old debs
-mkdir -p /tb2/build/$RELNAME-all
-rm -rf /tb2/build/$RELNAME-all/*deb
+mkdir -p /tb2/build-devomd/$RELNAME-all
+rm -rf /tb2/build-devomd/$RELNAME-all/*deb
 
 
 #--- COPY to $RELNAME-all
-printf "\n\n\n-- copying files to /tb2/build/$RELNAME-all/ \n\n"
+printf "\n\n\n-- copying files to /tb2/build-devomd/$RELNAME-all/ \n\n"
 
 for afile in $(find /root/src -type f -name "*deb" | sort -u | sort); do
 	printf "\n $afile "
-	cp $afile /tb2/build/$RELNAME-all/ -f
+	cp $afile /tb2/build-devomd/$RELNAME-all/ -f
 done
 printf "\n\n"
 
@@ -153,13 +153,13 @@ NUMDEBS=$(find /root/src -type f -name "*deb" | wc -l)
 printf "\n NUMDEBS= $NUMDEBS \n\n"
 
 # debs nums
-numLUA=$(find   /tb2/build/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "lua"   | wc -l)
-numNGINX=$(find /tb2/build/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "nginx" | wc -l)
-numPHPA=$(find  /tb2/build/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "php"   | wc -l)
-numPHP8=$(find  /tb2/build/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "php8"  | wc -l)
-numKEYDB=$(find /tb2/build/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "keydb" | wc -l)
-numNUTC=$(find  /tb2/build/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "nutcr" | wc -l)
-numLZIP=$(find  /tb2/build/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "zip"   | wc -l)
+numLUA=$(find   /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "lua"   | wc -l)
+numNGINX=$(find /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "nginx" | wc -l)
+numPHPA=$(find  /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "php"   | wc -l)
+numPHP8=$(find  /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "php8"  | wc -l)
+numKEYDB=$(find /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "keydb" | wc -l)
+numNUTC=$(find  /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "nutcr" | wc -l)
+numLZIP=$(find  /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "zip"   | wc -l)
 
 printf "\n lua:    $numLUA"
 printf "\n nginx:  $numNGINX"
@@ -184,7 +184,7 @@ cat /tmp/all.git | grep "http" | sort -u | sort >/root/all.git
 
 # rebuild the repo
 #-------------------------------------------
-nohup ssh argo "nohup /bin/bash /tb2/build/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
+nohup ssh devomd "nohup /bin/bash /tb2/build-devomd/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
 
 
 printf "\n\n --- done \n\n\n"

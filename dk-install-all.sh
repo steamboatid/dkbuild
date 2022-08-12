@@ -18,7 +18,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -26,7 +26,7 @@ source /tb2/build/dk-build-0libs.sh
 # gen config, delete locks
 #-------------------------------------------
 delete_apt_lock
-/bin/bash /tb2/build/dk-config-gen.sh
+/bin/bash /tb2/build-devomd/dk-config-gen.sh
 
 
 
@@ -88,13 +88,13 @@ export LANGUAGE=en_US.UTF-8
 
 
 	echo \
-"deb [trusted=yes] http://repo.aisits.id/phideb ${RELNAME} main
-#deb-src [trusted=yes] http://repo.aisits.id/phideb ${RELNAME} main
+"deb [trusted=yes] http://repo.omd.my.id/phideb ${RELNAME} main
+#deb-src [trusted=yes] http://repo.omd.my.id/phideb ${RELNAME} main
 ">/etc/apt/sources.list.d/phideb.list
 
 	>/etc/apt/sources.list.d/nginx-ppa-devel.list
-	>/etc/apt/sources.list.d/nginx-devel-aisits.list
-	>/etc/apt/sources.list.d/php-aisits.list
+	>/etc/apt/sources.list.d/nginx-devel-omd.list
+	>/etc/apt/sources.list.d/php-omd.list
 	>/etc/apt/sources.list.d/php-sury.list
 	>/etc/apt/sources.list.d/keydb-ppa.list
 
@@ -106,7 +106,7 @@ export LANGUAGE=en_US.UTF-8
 	gnupg2 apt-utils tzdata curl \
 		2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen
-	apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys | grep -iv "not changed"
+	apt-key adv --fetch-keys http://repo.omd.my.id/trusted-keys | grep -iv "not changed"
 	aptnew update; aptnew full-upgrade -fy
 
 	echo "1" > /run/done.init.dkbuild.txt
@@ -263,4 +263,4 @@ complete_php_installs "php8.1" "8.1"
 
 
 #--- check packages installed
-/bin/bash /tb2/build/dk-install-check.sh
+/bin/bash /tb2/build-devomd/dk-install-check.sh

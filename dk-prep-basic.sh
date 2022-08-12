@@ -18,7 +18,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
@@ -27,7 +27,6 @@ source /tb2/build/dk-build-0libs.sh
 #--- init
 #-------------------------------------------
 init_dkbuild
-dig packages.sury.org @172.16.0.1
 dig packages.sury.org @1.1.1.1
 
 
@@ -159,57 +158,66 @@ export PATH=$PATH:/usr/sbin
 timedatectl set-timezone Asia/Jakarta
 
 
-echo \
-'# deb http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu bionic main
-# deb-src http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu bionic main
-'>/etc/apt/sources.list.d/nginx-ppa-devel.list
+rm -rf /etc/apt/sources.list.d/nginx-devel-ppa.list
+rm -rf /etc/apt/sources.list.d/nginx-ppa-devel.list
+rm -rf /etc/apt/sources.list.d/php-ppa.list
+rm -rf /etc/apt/sources.list.d/keydb-ppa.list
 
-echo \
-'deb http://repo.aisits.id/nginx-devel devel main
-deb-src http://repo.aisits.id/nginx-devel devel main
-'>/etc/apt/sources.list.d/nginx-devel-aisits.list
+# echo \
+# '# deb http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu bionic main
+# # deb-src http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu bionic main
+# '>/etc/apt/sources.list.d/nginx-ppa-devel.list
 
+# echo \
+# '# deb http://ppa.launchpad.net/eqalpha/keydb-server/ubuntu bionic main
+# # deb-src http://ppa.launchpad.net/eqalpha/keydb-server/ubuntu bionic main
+# '>/etc/apt/sources.list.d/keydb-ppa.list
+
+
+
+#--- mariadb sources.list
+rm -rf mariadb_repo_setup
+curl -LO https://r.mariadb.com/downloads/mariadb_repo_setup
+chmod +x mariadb_repo_setup
+./mariadb_repo_setup --skip-os-eol-check --skip-eol-check --skip-verify --os-type=debian
+
+
+#--- keydb sources.list
+echo "deb https://download.keydb.dev/open-source-dist $(lsb_release -sc) main" |\
+tee /etc/apt/sources.list.d/keydb.list
+wget -O /etc/apt/trusted.gpg.d/keydb.gpg https://download.keydb.dev/open-source-dist/keyring.gpg
+apt update
+apt install keydb
+
+#--- php sources.list
 echo \
 "#-- deb https://packages.sury.org/php/ ${RELNAME} main
 deb-src https://packages.sury.org/php/ ${RELNAME} main
 ">/etc/apt/sources.list.d/php-sury.list
 
-echo \
-"deb http://repo.aisits.id/php/ ${RELNAME} main
-#-- deb-src http://repo.aisits.id/php/ ${RELNAME} main
-">/etc/apt/sources.list.d/php-aisits.list
 
-echo \
-'# deb http://ppa.launchpad.net/eqalpha/keydb-server/ubuntu bionic main
-# deb-src http://ppa.launchpad.net/eqalpha/keydb-server/ubuntu bionic main
-'>/etc/apt/sources.list.d/keydb-ppa.list
-
-echo \
-'deb http://repo.aisits.id/keydb-server/ubuntu bionic main
-deb-src http://repo.aisits.id/keydb-server/ubuntu bionic main
-'>/etc/apt/sources.list.d/keydb-aisits.list
-
-
-# apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys B9316A7BC7917B12
-# apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
-# aptold install -y wget curl; apt-key del 95BD4743; \
-# /usr/bin/curl -sS "https://packages.sury.org/php/apt.gpg" | apt-key add -
+aptold install -fy gnupg2
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys B9316A7BC7917B12
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+aptold install -y wget curl; apt-key del 95BD4743; \
+/usr/bin/curl -sS "https://packages.sury.org/php/apt.gpg" | apt-key add -
 # /usr/bin/wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 
 
 cd `mktemp -d`
 aptold update
 dpkg --configure -a
-aptold install -y locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
+aptold install -yf locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
 gnupg2 apt-utils tzdata curl ssh rsync libxmlrpc* \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends"
 echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen
 
 
-apt-key adv --fetch-keys http://repo.aisits.id/trusted-keys \
-	2>&1 | grep -iv "not changed"
+# apt-key adv --fetch-keys http://repo.omd.my.id/trusted-keys \
+# 	2>&1 | grep -iv "not changed"
 
-aptold update; aptold full-upgrade --auto-remove --purge -fy
+aptold update; \
+aptold full-upgrade --auto-remove --purge -fy
 
 #--- just incase needed
 #-------------------------------------------
