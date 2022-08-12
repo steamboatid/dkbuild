@@ -179,7 +179,7 @@ rm -rf /etc/apt/sources.list.d/keydb-ppa.list
 rm -rf mariadb_repo_setup
 curl -LO https://r.mariadb.com/downloads/mariadb_repo_setup
 chmod +x mariadb_repo_setup
-./mariadb_repo_setup --skip-os-eol-check --skip-eol-check --skip-verify --os-type=debian
+./mariadb_repo_setup --skip-os-eol-check --skip-eol-check --skip-verify
 
 
 #--- keydb sources.list
@@ -197,6 +197,7 @@ deb-src https://packages.sury.org/php/ ${RELNAME} main
 
 
 aptold install -fy gnupg2
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys EFE0AC8B31B6305B
 apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys B9316A7BC7917B12
 apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
 aptold install -y wget curl; apt-key del 95BD4743; \

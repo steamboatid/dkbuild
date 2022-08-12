@@ -154,15 +154,15 @@ create_release bullseye > Release
 
 printf "\n\n chown folders & files: "
 printf "folders "
-find -L /w3repo/phideb -type d -group root  -exec chown webme:webme {} \;
-find -L /w3repo/phideb -type d -user root  -exec chown webme:webme {} \;
+find -L /tb2/phideb -type d -group root  -exec chown webme:webme {} \;
+find -L /tb2/phideb -type d -user root  -exec chown webme:webme {} \;
 
 printf "files "
-find -L /w3repo/phideb -type f -group root  -exec chown webme:webme {} \;
-find -L /w3repo/phideb -type f -user root  -exec chown webme:webme {} \;
+find -L /tb2/phideb -type f -group root  -exec chown webme:webme {} \;
+find -L /tb2/phideb -type f -user root  -exec chown webme:webme {} \;
 
 printf "\n\n touch folders & files: "
-find -L /w3repo/phideb -exec touch {} \;
+find -L /tb2/phideb -exec touch {} \;
 
 /bin/bash /root/clear-nginx-cache.sh
 /bin/bash /root/cf-clear.sh

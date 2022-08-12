@@ -62,12 +62,12 @@ apt-key exportall > ./trusted-keys; \
 ls -lah ./trusted-keys
 
 LOCSIZE=$(ls -la ./trusted-keys | cut -d' ' -f5)
-OMDSIZE=$(ssh devomd -C "ls -la /w3repo/trusted-keys | cut -d' ' -f5")
+OMDSIZE=$(ssh devomd -C "ls -la /tb2/phideb/trusted-keys | cut -d' ' -f5")
 OMDSIZE2=$(( $OMDSIZE * 2 ))
 
 printf "\n\n SIZES: local=$LOCSIZE omd=$OMDSIZE \n"
 if [[ $LOCSIZE -gt $OMDSIZE ]] && [[ $LOCSIZE -lt $OMDSIZE2 ]]; then
-	scp ./trusted-keys devomd:/w3repo/
+	scp ./trusted-keys devomd:/tb2/phideb/
 fi
 
 printf "\n\n"
