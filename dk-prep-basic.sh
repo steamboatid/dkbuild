@@ -21,7 +21,8 @@ export TODATE=$(date +%Y%m%d)
 source /tb2/build-devomd/dk-build-0libs.sh
 
 
-
+# bug
+rm -rf /etc/apt/sources.list.d/mariadb.list.*
 
 
 #--- init
