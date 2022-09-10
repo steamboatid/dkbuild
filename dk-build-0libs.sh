@@ -842,10 +842,14 @@ EOT
 		systemctl restart systemd-resolved.service
 		systemd-resolve --status
 
-		/sbin/dhclient -4 -v -i -pf /run/dhclient.eth0.pid \
-		-lf /var/lib/dhcp/dhclient.eth0.leases \
-		-I -df /var/lib/dhcp/dhclient6.eth0.leases eth0
-		systemctl restart systemd-resolved.service
+		ip a s eth0 | grep inet
+		hasip=$(ip a s eth0 | grep inet | wc -l)
+		if [[ $hasip -lt 1 ]]; then
+			/sbin/dhclient -4 -v -i -pf /run/dhclient.eth0.pid \
+			-lf /var/lib/dhcp/dhclient.eth0.leases \
+			-I -df /var/lib/dhcp/dhclient6.eth0.leases eth0
+			systemctl restart systemd-resolved.service
+		fi
 
 		if [[ ! -e /etc/resolv.conf ]]; then
 			cat << EOT > /etc/resolv.conf
