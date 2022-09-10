@@ -45,7 +45,7 @@ cd /root/org.src/nginx
 chown -Rf _apt:root /root/org.src/nginx
 
 cat $FDST | grep "Package:" | sed "s/Package\: //g" | \
-grep -iv "resty\|ldap\|brotli\|pam" | \
+grep -iv "resty\|ldap\|brotli\|pam\|js" | \
 tr "\n" " " > $FNOW
 
 cat $FNOW | xargs aptold build-dep -fy
