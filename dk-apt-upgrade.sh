@@ -115,3 +115,6 @@ dpkg --configure -a
 
 aptold full-upgrade --auto-remove --purge --fix-missing -fy \
   -o Dpkg::Options::="--force-overwrite"
+
+aptold install -o Dpkg::Options::="--force-overwrite" -fy db4.8* libdb4* \
+	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
