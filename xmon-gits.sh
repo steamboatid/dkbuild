@@ -121,6 +121,7 @@ populate_cache_urls(){
 		get_compare_commit_lastdate "$ext_git" "$int_git" "$counter" >/dev/null 2>&1 &
 	done < "/tmp/gits-list.txt"
 
+	printf " ins="
 	wait_jobs
 }
 
@@ -156,7 +157,7 @@ rm -rf /tmp/cache-curl*
 # populate caches
 populate_cache_urls
 wait_jobs
-printf "\n"
+printf "\n\n"
 # exit 0;
 
 
