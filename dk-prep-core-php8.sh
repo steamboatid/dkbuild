@@ -186,7 +186,8 @@ aptold install -fy \
 libboost*-dev libboost-atomic*-dev \
 libboost-chrono*-dev libboost-date-time*-dev libboost-date-time-dev \
 libboost-serialization*-dev libboost-system*-dev libboost-system-dev \
-libboost-thread*-dev libboost-thread-dev \
+libboost-thread*-dev libboost-thread-dev  \
+	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 aptold install -fy \
 libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
