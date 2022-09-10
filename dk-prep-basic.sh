@@ -264,7 +264,7 @@ echo "libxml*dev" >>  /tmp/deps.pkgs
 echo "dh-python libpython3*dev python3*dev rename" >>  /tmp/deps.pkgs
 echo "hspell libdbus*dev libhunspell*dev libvoikko*dev" >>  /tmp/deps.pkgs
 echo "liblzma*dev zlib1g*dev" >>  /tmp/deps.pkgs
-echo "libzip4 libdb4.8 libdb4.8++ db4.8-util" >>  /tmp/deps.pkgs
+# echo "libzip4 libdb4.8 libdb4.8++ db4.8-util" >>  /tmp/deps.pkgs
 echo "psmisc" >>  /tmp/deps.pkgs
 
 apt-cache search libpcre | cut -d" " -f1 | \
@@ -276,6 +276,57 @@ sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g"  >>  /tmp/deps.pkgs
 
 cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
 	xargs aptold install -y --ignore-missing \
+	2>&1 | grep -iv "newest"
+
+
+aptold install -fydu  --no-install-recommends --fix-missing \
+-o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" \
+-o Dpkg::Options::="--force-overwrite" \
+openssh-* nano devscripts build-essential debhelper git git-extras wget axel \
+zlib1g-dev lua-zlib-dev libmemcached-dev libcurl4-openssl-dev \
+apt-utils gnupg2 apt-utils tzdata curl \
+debian-archive-keyring debian-keyring debian-ports-archive-keyring \
+gnome-keyring mercurial-keyring \
+python3-keyring \
+debian-archive-keyring debian-ports-archive-keyring leap-archive-keyring \
+neurodebian-archive-keyring \
+firmware-atheros firmware-linux firmware-linux-free firmware-linux-nonfree \
+firmware-misc-nonfree firmware-realtek firmware-samsung firmware-iwlwifi firmware-intelwimax \
+firmware-amd-graphics \
+firmware-brcm80211 firmware-libertas firmware-misc-nonfree \
+mlocate locate zip tar unzip rsync \
+apt-utils binutils bsdmainutils bsdutils coreutils \
+debconf-utils debianutils diffutils dnsutils dosfstools e2fsprogs findutils gettext-base \
+gzip host hostname ifupdown iproute2 iptables iputils-arping iputils-ping iputils-tracepath \
+login logrotate make mtools net-tools procps psutils sharutils \
+util-linux libpcre3-dev libnet-ssleay-perl libssl-dev openssl ssl-cert \
+tcpdump nmap locate zip tar unzip rsync memcached dnsutils \
+openssl ssl-cert zip tar unzip wget axel links2 curl rblcheck bzip2 \
+ca-certificates debian-archive-keyring openssh-server openssh-client build-essential nano \
+fakeroot wget bzip2 curl git \
+apt-utils binutils bridge-utils bsdmainutils bsdutils coreutils \
+debconf-utils debianutils diffutils dnsutils findutils pciutils psutils usbutils \
+locate zip tar unzip rsync apt-utils binutils \
+bsdmainutils bsdutils coreutils debconf-utils debianutils diffutils dnsutils \
+dosfstools e2fsprogs findutils gettext-base gzip host hostname ifupdown iproute2 iptables iputils-arping \
+iputils-ping iputils-tracepath login logrotate make mtools net-tools procps \
+psutils sharutils util-linux openssl ssl-cert nano \
+mtr-tiny iptraf-ng nmap tcpdump openssh-server openssh-client nload \
+dirmngr software-properties-common sudo build-essential dkms mysqltuner bc nload \
+apt aptitude accountsservice mc p7zip-full htop \
+libgsf-bin ffmpegthumbnailer tumbler libpoppler-glib8 tumbler-plugins-extra xfonts-75dpi \
+pdftk qpdf libimage-exiftool-perl xvfb ghostscript \
+optipng pngquant gifsicle jpegoptim \
+wkhtmltopdf xbase-clients x11-xfs-utils x11-common xorg software-properties-common dirmngr xvfb \
+dos2unix unrar-free p7zip-full vlan \
+ipmitool ifenslave nfs-common \
+ipset ipcalc rkhunter chkrootkit bridge-utils ifenslave nfs-common traceroute \
+debootstrap squashfs-tools xorriso grub-pc-bin grub-efi-amd64-bin mtools \
+iotop saidar byobu tmux fping lsb-release apt-transport-https ca-certificates apt-utils \
+ipcalc ipset whois libterm-readkey-perl libterm-termkey-perl libdbd-mysql-perl linux-cpupower \
+libterm-readkey-perl libdbd-mysql-perl libgeo-osm-tiles-perl lshw cron screen \
+linux-headers-amd64 linux-image-amd64 udev ccache psmisc cheese \
+ebtables arptables ipcalc ipset whois \
 	2>&1 | grep -iv "newest"
 
 
