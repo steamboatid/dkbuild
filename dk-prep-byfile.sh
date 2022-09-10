@@ -33,14 +33,16 @@ source /tb2/build-devomd/dk-build-0libs.sh
 # https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db4-util_4.8.30-buster1_amd64.deb
 # https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db4-doc_4.8.30-buster1_all.deb
 
+# taken from:
+# https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+sourcepub/236865/+listing-archive-extra
 
 mkdir -p /root/org.src/db4 /root/src/db4
 cd /root/org.src/db4
 # find /root/org.src/db4 -mindepth 1 -type d -exec rm -rf {} \;
 
-fetch_url "https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db4_4.8.30.orig.tar.gz"
-fetch_url "https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db4_4.8.30-buster1.dsc"
-fetch_url "https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db4_4.8.30-buster1.debian.tar.gz"
+fetch_url "https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db4.8_4.8.30.orig.tar.gz"
+fetch_url "https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db4.8_4.8.30-buster1.dsc"
+fetch_url "https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db4.8_4.8.30-buster1.debian.tar.gz"
 
 dpkg-source --no-check --ignore-bad-version -x db4_4.8.30-buster1.dsc
 
