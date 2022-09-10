@@ -85,7 +85,7 @@ for apv in "${PHPVERS[@]}"; do
 	$apv-cli $apv-fpm $apv-common $apv-curl $apv-fpm $apv-gd \
 	$apv-bcmath $apv-bz2 $apv-gmp $apv-ldap $apv-mbstring $apv-mysql \
 	$apv-opcache $apv-readline $apv-soap $apv-tidy $apv-xdebug $apv-xml $apv-xsl $apv-zip \
-	php-memcached php-redis php-igbinary php-msgpack php-apcu \
+	php-memcached php-redis php-igbinary php-msgpack php-apcu php-xdebug \
 	pkg-php-tools libdistro-info-perl php-all-dev \
 		2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends\|$"
 done
@@ -203,8 +203,8 @@ for apv in "${PHPVERS[@]}"; do
 	$apv-cli $apv-fpm $apv-common $apv-curl $apv-fpm $apv-gd \
 	$apv-bcmath $apv-bz2 $apv-gmp $apv-ldap $apv-mbstring $apv-mysql \
 	$apv-opcache $apv-readline $apv-soap $apv-tidy $apv-xdebug $apv-xml $apv-xsl $apv-zip \
-	php-memcached php-redis php-igbinary php-msgpack php-apcu \
-		2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends\|$"
+	php-memcached php-redis php-igbinary php-msgpack php-apcu php-xdebug \
+		2>&1 | grep -iv "newest\|reading \|building \|picking " | grep --color=auto "Depends\|$"
 done
 
 aptold build-dep -fy php-http php-raphf \
@@ -238,7 +238,7 @@ for apv in "${PHPVERS[@]}"; do
 	$apv-raphf $apv-readline $apv-redis $apv-snmp $apv-soap \
 	$apv-sqlite3 $apv-sybase $apv-tidy $apv-xdebug $apv-xml \
 	$apv-xsl $apv-zip \
-	php-memcached php-redis php-igbinary php-msgpack php-apcu \
+	php-memcached php-redis php-igbinary php-msgpack php-apcu php-xdebug \
 	php-raphf
 
 	aptold source -my php-pecl-http
