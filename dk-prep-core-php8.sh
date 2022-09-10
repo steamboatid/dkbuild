@@ -228,7 +228,7 @@ cd /root/org.src/php
 chown_apt
 
 for apv in "${PHPVERS[@]}"; do
-	aptold source -my \
+	aptold -qqq source -my \
 	php-defaults \
 	$apv $apv-apcu $apv-ast $apv-bcmath $apv-bz2 $apv-cli $apv-common \
 	$apv-curl $apv-dba $apv-dev $apv-enchant $apv-fpm $apv-gd $apv-gmp \
@@ -241,8 +241,9 @@ for apv in "${PHPVERS[@]}"; do
 	php-memcached php-redis php-igbinary php-msgpack php-apcu php-xdebug \
 	php-raphf
 
-	aptold source -my php-pecl-http
-	aptold source -my $apv-http
+	aptold -qqq source -my php-xdebug
+	aptold -qqq source -my php-pecl-http
+	aptold -qqq source -my $apv-http
 done
 
 
@@ -257,7 +258,17 @@ apt-cache search ast | cut -d' ' -f1 | grep php |  grep -iv "xcache\|solr" |\
 grep -i "\-dev"  >>/tmp/php-pkgs.txt
 
 chown_apt
-cat /tmp/php-pkgs.txt | xargs aptold install -fy
+cat /tmp/php-pkgs.txt | grep -iv "yac\|xcache\|swoole\|solr\|imagick" | \
+xargs aptold install -fy \
+	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
+
+cat /tmp/php-pkgs.txt | grep -iv "yac\|xcache\|swoole\|solr\|imagick" | \
+xargs aptold build-dep -fy \
+	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
+
+cat /tmp/php-pkgs.txt | grep -iv "yac\|xcache\|swoole\|solr\|imagick" | \
+xargs aptold source -my -qqq \
+	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
 
 # cat /tmp/php-pkgs.txt | xargs aptold build-dep -fy
 # cat /tmp/php-pkgs.txt | xargs aptold source -my
