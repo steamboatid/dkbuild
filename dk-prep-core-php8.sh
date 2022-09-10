@@ -262,11 +262,11 @@ cat /tmp/php-pkgs.txt | grep -iv "yac\|xcache\|swoole\|solr\|imagick" | \
 xargs aptold install -fy \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
 
-cat /tmp/php-pkgs.txt | grep -iv "yac\|xcache\|swoole\|solr\|imagick" | \
+cat /tmp/php-pkgs.txt | \
 xargs aptold build-dep -fy \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
 
-cat /tmp/php-pkgs.txt | grep -iv "yac\|xcache\|swoole\|solr\|imagick" | \
+cat /tmp/php-pkgs.txt | \
 xargs aptold source -my -qqq \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
 
