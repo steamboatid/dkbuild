@@ -176,7 +176,7 @@ rm -rf /etc/apt/sources.list.d/keydb-ppa.list
 
 
 #--- mariadb sources.list
-rm -rf mariadb_repo_setup
+rm -rf mariadb_repo_setup /etc/apt/sources.list.d/mariadb.list*
 curl -LO https://r.mariadb.com/downloads/mariadb_repo_setup
 chmod +x mariadb_repo_setup
 ./mariadb_repo_setup --skip-os-eol-check --skip-eol-check --skip-verify
@@ -197,13 +197,13 @@ deb-src https://packages.sury.org/php/ ${RELNAME} main
 
 
 aptold install -fy gnupg2
-apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys EFE0AC8B31B6305B
-apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys B9316A7BC7917B12
-apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys EFE0AC8B31B6305B &
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys B9316A7BC7917B12 &
+apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C &
+wait
 aptold install -y wget curl; apt-key del 95BD4743; \
-/usr/bin/curl -sS "https://packages.sury.org/php/apt.gpg" | apt-key add -
-# /usr/bin/wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
-
+/usr/bin/curl -sS "https://packages.sury.org/php/apt.gpg" | gpg --dearmor \
+> /etc/apt/trusted.gpg.d/sury-php.gpg
 
 cd `mktemp -d`
 aptold update
