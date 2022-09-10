@@ -82,6 +82,7 @@ get_commit_lastdate(){
 get_compare_commit_lastdate(){
 	ext_git="$1"
 	int_git="$2"
+	counter="$3"
 
 	# get_commit_lastdate $ext_git
 	# get_commit_lastdate $int_git
@@ -106,16 +107,18 @@ get_compare_commit_lastdate(){
 populate_cache_urls(){
 	printf "\n --- populate url caches "
 
+	counter=0
 	while IFS= read -r aline || [[ -n "$aline" ]]; do
 		[[ -z "$aline" ]] && continue;
 
+		counter=$(( counter+1 ))
 		aline=$(printf "$aline" | sed -r 's/\s+/ /g')
 
 		ext_git=$(printf "$aline" | cut -d' ' -f1)
 		int_git=$(printf "$aline" | cut -d' ' -f2)
-		# printf "\n --- $ext_git --- $int_git"
+		# printf "\n --- $ext_git --- $int_git -- $counter"
 
-		get_compare_commit_lastdate "$ext_git" "$int_git" >/dev/null 2>&1 &
+		get_compare_commit_lastdate "$ext_git" "$int_git" "$counter" >/dev/null 2>&1 &
 	done < "/tmp/gits-list.txt"
 
 	wait_jobs
@@ -139,11 +142,15 @@ nih-at/libzip   steamboatid/libzip
 
 EQ-Alpha/KeyDB   steamboatid/keydb
 phpredis/phpredis   steamboatid/phpredis
+
 EOF
 
 
 # install jq
 apt install -fy jq >/dev/null 2>&1
+
+# delete cache
+rm -rf /tmp/cache-curl*
 
 
 # populate caches
@@ -154,8 +161,11 @@ printf "\n"
 
 
 sum_delta=0
+counter=0
 while IFS= read -r aline || [[ -n "$aline" ]]; do
 	[[ -z "$aline" ]] && continue;
+
+	counter=$(( counter+1 ))
 
 	aline=$(printf "$aline" | sed -r 's/\s+/ /g')
 	ext_git=$(printf "$aline" | cut -d' ' -f1)
@@ -182,9 +192,9 @@ while IFS= read -r aline || [[ -n "$aline" ]]; do
 
 	if [[ $epoch_delta -gt 0 ]]; then
 		sum_delta=$(( $sum_delta + $epoch_delta ))
-		printf "\n --- delta: ${green}$epoch_delta ${end} "
+		printf "\n --- delta: ${green}$epoch_delta ${end} --- idx=$counter"
 	else
-		printf "\n --- delta: $epoch_delta "
+		printf "\n --- delta: $epoch_delta --- idx=$counter"
 	fi
 	# exit 0
 
