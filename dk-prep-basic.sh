@@ -28,6 +28,7 @@ source /tb2/build-devomd/dk-build-0libs.sh
 #-------------------------------------------
 init_dkbuild
 dig packages.sury.org @1.1.1.1
+exit 0
 
 
 #--- clean up previous
