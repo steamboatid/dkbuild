@@ -816,10 +816,14 @@ init_dkbuild(){
 	if [[ $(grep "buster" /etc/apt/sources.list | wc -l) -gt 0 ]]; then
 		rm -rf /etc/resolvconf/run; /etc/init.d/resolvconf restart
 
-		/sbin/dhclient -4 -v -i -pf /run/dhclient.eth0.pid \
-		-lf /var/lib/dhcp/dhclient.eth0.leases \
-		-I -df /var/lib/dhcp/dhclient6.eth0.leases eth0
-		rm -rf /etc/resolvconf/run; /etc/init.d/resolvconf restart
+		hasip=$(ip a s eth0 | grep inet | wc -l)
+		if [[ $hasip -lt 1 ]]; then
+			/sbin/dhclient -4 -v -i -pf /run/dhclient.eth0.pid \
+			--dad-wait-time 2 \
+			-lf /var/lib/dhcp/dhclient.eth0.leases \
+			-I -df /var/lib/dhcp/dhclient6.eth0.leases eth0
+			rm -rf /etc/resolvconf/run; /etc/init.d/resolvconf restart
+		fi
 
 		if [[ ! -e /etc/resolv.conf ]]; then
 			cat << EOT > /etc/resolv.conf
