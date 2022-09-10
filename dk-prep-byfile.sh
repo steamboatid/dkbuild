@@ -22,7 +22,7 @@ source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
-# https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/libdb4_4.8.30-buster1_amd64.deb
+# https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/libdb4.8_4.8.30-buster1_amd64.deb
 # https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/libdb4-tcl_4.8.30-buster1_amd64.deb
 # https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/libdb4-dev_4.8.30-buster1_amd64.deb
 # https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/libdb4-dbg_4.8.30-buster1_amd64.deb
@@ -45,7 +45,7 @@ fetch_url "https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db
 fetch_url "https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db4.8_4.8.30-buster1.dsc"
 fetch_url "https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db4.8_4.8.30-buster1.debian.tar.gz"
 
-dpkg-source --no-check --ignore-bad-version -x db4.8_4.8.30-buster1.dsc
+dpkg-source --no-check --ignore-bad-version -x db4*.dsc
 
 
 #--- wait
