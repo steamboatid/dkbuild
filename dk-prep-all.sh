@@ -67,12 +67,12 @@ libluajit*dev luajit \
 webp libwebp-dev libgeoip-dev lua-geoip-dev libsodium-dev meson \
 liblua5*-dev libluajit-5*-dev libtexluajit-dev luajit uthash-dev \
 libtexluajit*dev libluajit-*dev libxslt*-dev libxslt1.1 \
-	2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping " | grep --color=auto "Depends"
 
 aptold build-dep -fydu nginx lua-resty-core lua-resty-lrucache libpcre3 libsodium-dev \
-	2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping " | grep --color=auto "Depends"
 aptold install -fydu --fix-broken  --allow-downgrades --allow-change-held-packages \
-	2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping " | grep --color=auto "Depends"
 save_local_debs
 
 
@@ -122,11 +122,11 @@ rm -rf /root/src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
 killall -9 keydb-server 2>&1 >/dev/null
 aptold install -fy build-essential nasm autotools-dev autoconf libjemalloc-dev tcl tcl-dev \
 uuid-dev libcurl4-openssl-dev \
-	2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping " | grep --color=auto "Depends"
 aptold build-dep -fy keydb-server keydb-tools \
-	2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping " | grep --color=auto "Depends"
 aptold install -fy keydb-server keydb-tools \
-	2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping " | grep --color=auto "Depends"
 
 # fix keyd perm
 fix_keydb_permission_problem
@@ -159,9 +159,9 @@ get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"
 # NUTCRACKER, source via git
 #-------------------------------------------
 aptold install -fy build-essential fakeroot devscripts libyaml-dev libyaml-0* doxygen nutcracker \
-	2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping " | grep --color=auto "Depends"
 aptold build-dep -fy nutcracker \
-	2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping " | grep --color=auto "Depends"
 
 #--- recreate dir, delete debs
 #-------------------------------------------
@@ -177,9 +177,9 @@ get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nut
 # libzip, source via git
 #-------------------------------------------
 aptold install -fy build-essential fakeroot devscripts liblzma*dev zlib1g*dev bzip2 libzip-dev libzip-dev \
-	2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping " | grep --color=auto "Depends"
 aptold build-dep -fy libzip4 \
-	2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping " | grep --color=auto "Depends"
 
 #--- recreate dir, delete debs
 #-------------------------------------------
@@ -229,7 +229,7 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 #--- last
 save_local_debs
 aptold install -fy --auto-remove --purge \
-	2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping " | grep --color=auto "Depends"
 
 rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
 rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan

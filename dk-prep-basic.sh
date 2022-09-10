@@ -212,7 +212,7 @@ aptold update
 dpkg --configure -a
 aptold install -yf locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
 gnupg2 apt-utils tzdata curl ssh rsync libxmlrpc* \
-	2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping " | grep --color=auto "Depends"
 echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen
 
 
@@ -226,7 +226,7 @@ aptold full-upgrade --auto-remove --purge -fy
 #-------------------------------------------
 dpkg --configure -a; \
 aptold install -y linux-image-amd64 linux-headers-amd64 \
-	2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping " | grep --color=auto "Depends"
 
 #--- remove unneeded packages
 #-------------------------------------------
@@ -277,7 +277,7 @@ sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g"  >>  /tmp/deps.pkgs
 
 cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
 	xargs aptold install -y --ignore-missing \
-	2>&1 | grep -iv "newest\|reading \|building "
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping "
 
 
 aptold install -fydu  --no-install-recommends --fix-missing \
@@ -328,7 +328,7 @@ ipcalc ipset whois libterm-readkey-perl libterm-termkey-perl libdbd-mysql-perl l
 libterm-readkey-perl libdbd-mysql-perl libgeo-osm-tiles-perl lshw cron screen \
 linux-headers-amd64 linux-image-amd64 udev ccache psmisc cheese \
 ebtables arptables ipcalc ipset whois \
-	2>&1 | grep -iv "newest\|reading \|building "
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping "
 
 
 #--- wait
@@ -343,7 +343,7 @@ printf "\n\n --- wait finished... \n\n\n"
 #-------------------------------------------
 save_local_debs
 aptold install -fy --auto-remove --purge \
-	2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping " | grep --color=auto "Depends"
 
 rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
 rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
