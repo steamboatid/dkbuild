@@ -35,7 +35,7 @@ if [[ ! -e /run/done.init.dkbuild.txt ]]; then
 	# tweaks
 	echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io
 	aptnew install -y eatmydata lsb-release nano rsync \
-		2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+		2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
 
 
 	echo \
@@ -104,7 +104,7 @@ export LANGUAGE=en_US.UTF-8
 	dpkg --configure -a
 	aptnew install -y locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
 	gnupg2 apt-utils tzdata curl \
-		2>&1 | grep -iv "newest" | grep --color=auto "Depends"
+		2>&1 | grep -iv "newest\|reading \|building " | grep --color=auto "Depends"
 	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen
 	apt-key adv --fetch-keys http://repo.omd.my.id/trusted-keys | grep -iv "not changed"
 	aptnew update; aptnew full-upgrade -fy

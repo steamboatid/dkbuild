@@ -17,8 +17,8 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
-export PHPVERS=("php8.0" "php8.1")
-export PHPGREP=("php8.0\|php8.1")
+export PHPVERS=("php8.0" "php8.1" "php8.2")
+export PHPGREP=("php8.0\|php8.1\|php8.2")
 
 
 source /tb2/build-devomd/dk-build-0libs.sh
@@ -257,7 +257,8 @@ apt_source_build_dep_from_file "/tmp/php-pkgs.txt" "php"
 
 fixing_folders_by_dsc_files
 fixing_folders_by_dsc_files
-apt autoremove --auto-remove --purge -fy
+apt autoremove --auto-remove --purge -fy \
+ 2>&1 | grep --color "upgraded"
 
 
 # xmlrpc included in php-defaults
