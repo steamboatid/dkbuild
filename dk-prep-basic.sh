@@ -191,7 +191,7 @@ apt install keydb
 
 #--- php sources.list
 echo \
-"#-- deb https://packages.sury.org/php/ ${RELNAME} main
+"deb https://packages.sury.org/php/ ${RELNAME} main
 deb-src https://packages.sury.org/php/ ${RELNAME} main
 ">/etc/apt/sources.list.d/php-sury.list
 

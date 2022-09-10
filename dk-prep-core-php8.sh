@@ -54,7 +54,8 @@ aptold install -fy --fix-broken
 # apt-cache search libmagickwand  2>&1 | awk '{print $1}' | grep dev | xargs aptold install -y
 
 
-aptold install -fy pkg-config build-essential autoconf bison re2c meson \
+aptold install -fy --install-suggests \
+pkg-config build-essential autoconf bison re2c meson \
 libxml2-dev libsqlite3-dev curl make gcc devscripts debhelper dh-apache2 apache2-dev libc-client-dev \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
 
