@@ -327,7 +327,7 @@ iotop saidar byobu tmux fping lsb-release apt-transport-https ca-certificates ap
 ipcalc ipset whois libterm-readkey-perl libterm-termkey-perl libdbd-mysql-perl linux-cpupower \
 libterm-readkey-perl libdbd-mysql-perl libgeo-osm-tiles-perl lshw cron screen \
 linux-headers-amd64 linux-image-amd64 udev ccache psmisc cheese \
-ebtables arptables ipcalc ipset whois \
+ebtables arptables ipcalc ipset whois jq \
 	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping"
 
 
