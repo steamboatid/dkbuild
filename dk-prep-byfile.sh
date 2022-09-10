@@ -67,7 +67,7 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 #-------------------------------------------
 save_local_debs
 aptold install -fy --auto-remove --purge \
-	2>&1 | grep -iv "newest\|reading \|building \|picking \|skipping " | grep --color=auto "Depends"
+	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends"
 
 rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
 rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
