@@ -816,6 +816,7 @@ init_dkbuild(){
 	if [[ $(grep "buster" /etc/apt/sources.list | wc -l) -gt 0 ]]; then
 		rm -rf /etc/resolvconf/run; /etc/init.d/resolvconf restart
 
+		ip a s eth0 | grep inet
 		hasip=$(ip a s eth0 | grep inet | wc -l)
 		if [[ $hasip -lt 1 ]]; then
 			/sbin/dhclient -4 -v -i -pf /run/dhclient.eth0.pid \
