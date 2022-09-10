@@ -51,8 +51,8 @@ apt autoclean; apt clean; apt update --allow-unauthenticated
 
 dpkg --configure -a; \
 aptold install -y
-apt autoremove --auto-remove --purge -fy \
- 2>&1 | grep --color "upgraded"
+# apt autoremove --auto-remove --purge -fy \
+#  2>&1 | grep --color "upgraded"
 
 if [[ -e /usr/local/sbin/aptold ]]; then
 	aptold full-upgrade --auto-remove --purge --fix-missing \

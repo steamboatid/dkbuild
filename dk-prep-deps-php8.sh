@@ -257,8 +257,8 @@ apt_source_build_dep_from_file "/tmp/php-pkgs.txt" "php"
 
 fixing_folders_by_dsc_files
 fixing_folders_by_dsc_files
-apt autoremove --auto-remove --purge -fy \
- 2>&1 | grep --color "upgraded"
+# apt autoremove --auto-remove --purge -fy \
+#  2>&1 | grep --color "upgraded"
 
 
 # xmlrpc included in php-defaults

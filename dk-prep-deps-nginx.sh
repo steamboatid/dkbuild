@@ -63,8 +63,8 @@ cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
 
 aptold install -fy
-apt autoremove --auto-remove --purge -fy \
- 2>&1 | grep --color "upgraded"
+# apt autoremove --auto-remove --purge -fy \
+#  2>&1 | grep --color "upgraded"
 
 
 #--- sync to src

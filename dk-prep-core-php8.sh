@@ -48,8 +48,8 @@ grep -i "atomic\|chrono\|date-time\|serialization\|system\|thread" |\
 xargs aptold install -fy \
  2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
-apt autoremove --auto-remove --purge -fy \
- 2>&1 | grep --color "upgraded"
+# apt autoremove --auto-remove --purge -fy \
+#  2>&1 | grep --color "upgraded"
 
 
 
@@ -256,6 +256,8 @@ apt-cache search redis | cut -d' ' -f1 | grep php | grep -iv "swoole" | \
 grep -i "\-dev"  >>/tmp/php-pkgs.txt
 apt-cache search imagick | cut -d' ' -f1 | grep php | grep -i "\-dev"  >>/tmp/php-pkgs.txt
 apt-cache search ast | cut -d' ' -f1 | grep php |  grep -iv "xcache\|solr" |\
+grep -i "\-dev"  >>/tmp/php-pkgs.txt
+apt-cache search propro | cut -d' ' -f1 | grep php |\
 grep -i "\-dev"  >>/tmp/php-pkgs.txt
 
 chown_apt

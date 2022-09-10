@@ -218,7 +218,7 @@ wait_by_average_load
 
 # delete duplicate dirs
 #-------------------------------------------
-/bin/bash /tb2/build-devomd/dk-prep-del-dups.sh
+# /bin/bash /tb2/build-devomd/dk-prep-del-dups.sh
 
 
 # special version
