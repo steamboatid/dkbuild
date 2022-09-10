@@ -34,7 +34,7 @@ rm -rf /tmp/nginx
 mkdir -p /root/org.src/nginx /root/src/nginx /tmp/nginx /tb2/tmp
 
 
-URL="http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu/dists/focal/main/binary-amd64/Packages.gz"
+URL="http://ppa.launchpad.net/chris-lea/nginx-devel/ubuntu/dists/impish/main/binary-amd64/Packages.gz"
 FDST="/tb2/tmp/nginx-pkg-org.txt"
 FGZ="/tb2/tmp/nginx-pkg-org.gz"
 FNOW="/tb2/tmp/nginx-pkg-now.txt"

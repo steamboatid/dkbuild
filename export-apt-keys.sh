@@ -21,9 +21,9 @@ aptold install -yf gnupg2 apt-utils tzdata curl \
 	2>&1 | grep -iv "newest\|reading\|building\|stable CLI"
 
 #-- fetch from repo.omd.my.id
-printf "\n --- fetch from repo.omd.my.id \n"
-apt-key adv --fetch-keys http://repo.omd.my.id/trusted-keys \
-	2>&1 | grep --color -i "processed"
+# printf "\n --- fetch from repo.omd.my.id \n"
+# apt-key adv --fetch-keys http://repo.omd.my.id/trusted-keys \
+# 	2>&1 | grep --color -i "processed"
 
 #-- import from /etc/apt/trusted.gpg.d
 printf "\n\n --- import from /etc/apt/trusted.gpg.d \n"
@@ -68,6 +68,7 @@ OMDSIZE2=$(( $OMDSIZE * 2 ))
 printf "\n\n SIZES: local=$LOCSIZE omd=$OMDSIZE \n"
 if [[ $LOCSIZE -gt $OMDSIZE ]] && [[ $LOCSIZE -lt $OMDSIZE2 ]]; then
 	scp ./trusted-keys devomd:/tb2/phideb/
+	scp ./trusted-keys omd:/tb2/phideb/
 fi
 
 printf "\n\n"

@@ -142,10 +142,7 @@ libqdbm* libgdbm* libxqdbm* libxmlrpc-c*dev xmlrpc-api-utils \
 aptold install -fy --no-install-recommends  --allow-downgrades \
 apache2-dev autotools-dev *clang*dev default-libmysqlclient-dev devscripts dpkg-dev \
 firebird-dev freetds-dev libapparmor-dev libapr1-dev libargon2-dev libatomic-ops-dev \
-libavif*dev libavif-dev libb64-dev libboost1.67-dev libboost-atomic1.67-dev \
-libboost-chrono1.67-dev libboost-date-time1.67-dev libboost-date-time-dev \
-libboost-serialization1.67-dev libboost-system1.67-dev libboost-system-dev \
-libboost-thread1.67-dev libboost-thread-dev libbz2-dev libc6-dev libc-client*-dev \
+libavif*dev libavif-dev libb64-dev \
 libc-client-dev lib*clang*dev libclang*dev libclang-dev libconsole-bridge-dev \
 libcurl4-openssl-dev libdb*dev libdb5*dev libdb5*-dev libdb*dev libdb-dev \
 libdirectfb-dev libedit-dev libenchant-dev libevent-dev libexpat1-dev \
@@ -172,6 +169,18 @@ postgresql-server-dev-* postgresql-server-dev-all slapi-dev \
 systemtap-sdt-dev tcl-dev unixodbc-dev uuid-dev xorg-dev \
 zlib1g*dev zlib1g-dev \
 	2>&1 | grep -iv "newest" | grep --color=auto "Depends\|$"
+
+# libboost1.67-dev libboost-atomic1.67-dev \
+# libboost-chrono1.67-dev libboost-date-time1.67-dev libboost-date-time-dev \
+# libboost-serialization1.67-dev libboost-system1.67-dev libboost-system-dev \
+# libboost-thread1.67-dev libboost-thread-dev \
+# libbz2-dev libc6-dev libc-client*-dev \
+
+aptold install -fy \
+libboost*-dev libboost-atomic*-dev \
+libboost-chrono*-dev libboost-date-time*-dev libboost-date-time-dev \
+libboost-serialization*-dev libboost-system*-dev libboost-system-dev \
+libboost-thread*-dev libboost-thread-dev \
 
 aptold install -fy \
 libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
