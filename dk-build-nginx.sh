@@ -86,7 +86,7 @@ VERNEXT=$(echo ${VERNUM} | awk -F. -v OFS=. '{$NF=$NF+20;print}')
 printf "\n\n$adir --- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
 
 if [ -e "debian/changelog" ]; then
-	VERNUM=$(dpkg-parsechangelog --show-field Version | sed "s/[+~-]/\./g"| cut -f1 -d" ")
+	VERNUM=$(dpkg-parsechangelog --show-field Version | sed "s/[+~-]/ /g"| cut -f1 -d" ")
 	VERNEXT=$(echo ${VERNUM} | awk -F. -v OFS=. '{$NF=$NF+20;print}')
 	printf "\n by changelog \n--- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
 fi
@@ -101,7 +101,7 @@ dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELV
 -v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.omd.my.id" -D buster -u high; \
 head debian/changelog
 sleep 2
-exit 0
+# exit 0
 
 /bin/bash /tb2/build-devomd/dk-build-full.sh -d $BUILDDIR
 

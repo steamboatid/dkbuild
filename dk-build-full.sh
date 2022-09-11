@@ -181,7 +181,7 @@ if [[ $isfail -gt 0 ]] && [[ $isdeps -gt 0 ]]; then
 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
 	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
 	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
-	--no-lintian --no-tgz-check --no-sign -b -uc -us -D \
+	--no-lintian --no-tgz-check --no-sign -F -uc -us -D \
 		2>&1 | tee dkbuild.log
 fi
 
@@ -194,7 +194,7 @@ if [[ $isfail -gt 0 ]] && [[ $isflict -gt 0 ]]; then
 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
 	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
 	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
-	--no-lintian --no-tgz-check --no-sign -b -uc -us -d \
+	--no-lintian --no-tgz-check --no-sign -F -uc -us -d \
 		2>&1 | tee dkbuild.log
 fi
 
@@ -221,7 +221,7 @@ isok=$(tail -n100 dkbuild.log | grep -i "binary\-only" | wc -l)
 if [[ $isok -gt 0 ]]; then
 
 	# build the source package
-	dpkg-buildpackage -b -rfakeroot -us -uc
+	# dpkg-buildpackage -b -rfakeroot -us -uc
 
 	exit 0;
 fi
