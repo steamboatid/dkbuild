@@ -101,6 +101,7 @@ dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELV
 -v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.omd.my.id" -D buster -u high; \
 head debian/changelog
 sleep 2
+exit 0
 
 /bin/bash /tb2/build-devomd/dk-build-full.sh -d $BUILDDIR
 
@@ -121,6 +122,6 @@ cp *.deb /tb2/build-devomd/$RELNAME-nginx/ -Rfav
 ls -la /tb2/build-devomd/$RELNAME-nginx/
 
 
-# rebuild the repo
+# rebuild the repo, temporary commented !
 #-------------------------------------------
-nohup ssh devomd "nohup /bin/bash /tb2/build-devomd/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
+#--- nohup ssh devomd "nohup /bin/bash /tb2/build-devomd/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
