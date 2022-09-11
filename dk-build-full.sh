@@ -219,5 +219,9 @@ fi
 # if no error, then success
 isok=$(tail -n100 dkbuild.log | grep -i "binary\-only" | wc -l)
 if [[ $isok -gt 0 ]]; then
+
+	# build the source package
+	dpkg-buildpackage -b -rfakeroot -us -uc
+
 	exit 0;
 fi
