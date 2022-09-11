@@ -434,6 +434,7 @@ update_existing_git(){
 	printf "\n ---updating $DST \n"
 
 	if git reset --hard  >/dev/null 2>&1; then
+		git restore .
 		git reset; git checkout .; git reset --hard HEAD; git clean -fdx
 
 		git rm -r --cached . >/dev/null 2>&1
