@@ -328,6 +328,8 @@ ipcalc ipset whois libterm-readkey-perl libterm-termkey-perl libdbd-mysql-perl l
 libterm-readkey-perl libdbd-mysql-perl libgeo-osm-tiles-perl lshw cron screen \
 linux-headers-amd64 linux-image-amd64 udev ccache psmisc cheese \
 ebtables arptables ipcalc ipset whois jq \
+google-perftools libgoogle-perftools-dev libedit-dev devscripts \
+libfl-dev flex bison libsodium* libldap2-dev libpcre2-dev \
 	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping"
 
 

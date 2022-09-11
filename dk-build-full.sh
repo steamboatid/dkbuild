@@ -142,7 +142,8 @@ nproc2=1
 # dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
 export DH_VERBOSE=1; \
 export DEB_BUILD_PROFILES="noudep nocheck noinsttest nojava nosql"; \
-export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
+# export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
+export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest"; \
 debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 --no-lintian --no-tgz-check --no-sign -b -uc -us -d \
 	2>&1 | tee dkbuild.log
@@ -179,7 +180,8 @@ if [[ $isfail -gt 0 ]] && [[ $isdeps -gt 0 ]]; then
 	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
 	export DH_VERBOSE=1; \
 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
-	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
+	# export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
+	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest"; \
 	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 	--no-lintian --no-tgz-check --no-sign -F -uc -us -D \
 		2>&1 | tee dkbuild.log
@@ -192,7 +194,8 @@ if [[ $isfail -gt 0 ]] && [[ $isflict -gt 0 ]]; then
 	dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \
 	export DH_VERBOSE=1; \
 	export DEB_BUILD_PROFILES="noudep nocheck noinsttest"; \
-	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
+	# export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest parallel=${nproc2}"; \
+	export DEB_BUILD_OPTIONS="nostrip noddebs nocheck notest"; \
 	time debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 	--no-lintian --no-tgz-check --no-sign -F -uc -us -d \
 		2>&1 | tee dkbuild.log
