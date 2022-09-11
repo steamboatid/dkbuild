@@ -86,7 +86,7 @@ VERNEXT=$(echo ${VERNUM} | awk -F. -v OFS=. '{$NF=$NF+20;print}')
 printf "\n\n$adir --- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
 
 if [ -e "debian/changelog" ]; then
-	VERNUM=$(dpkg-parsechangelog --show-field Version | sed "s/[+~-]/ /g"| cut -f1 -d" ")
+	VERNUM=$(dpkg-parsechangelog --show-field Version | sed "s/[+~-]/\./g"| cut -f1 -d" ")
 	VERNEXT=$(echo ${VERNUM} | awk -F. -v OFS=. '{$NF=$NF+20;print}')
 	printf "\n by changelog \n--- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
 fi
