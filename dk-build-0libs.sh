@@ -950,6 +950,12 @@ reinstall_essential(){
 	cat /tmp/ess | sort -u | sort  | tr '\n' ' ' | xargs apt install --reinstall -fy
 }
 
+fix_apt_bookworm(){
+	if [[ "${RELNAME}" = "bookworm" ]]; then
+		sed -i 's/bookworm/bullseye/' /etc/apt/sources.list.d/php-sury.list
+		sed -i 's/bookworm/bullseye/' /etc/apt/sources.list.d/keydb.list
+	fi
+}
 
 #--- automatically call init
 init_dkbuild >/dev/null 2>&1 &

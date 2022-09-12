@@ -194,6 +194,7 @@ chmod +x mariadb_repo_setup
 echo "deb https://download.keydb.dev/open-source-dist $(lsb_release -sc) main" |\
 tee /etc/apt/sources.list.d/keydb.list
 wget -O /etc/apt/trusted.gpg.d/keydb.gpg https://download.keydb.dev/open-source-dist/keyring.gpg
+fix_apt_bookworm
 apt update
 apt install keydb
 
@@ -205,10 +206,7 @@ deb-src https://packages.sury.org/php/ ${RELNAME} main
 
 
 # fix apt sources
-if [[ "${RELNAME}" = "bookworm" ]]; then
-	sed -i 's/bookworm/bullseye/' /etc/apt/sources.list.d/php-sury.list
-	sed -i 's/bookworm/bullseye/' /etc/apt/sources.list.d/keydb.list
-fi
+fix_apt_bookworm
 
 
 aptold install -fy gnupg2
