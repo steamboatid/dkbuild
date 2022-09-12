@@ -215,6 +215,8 @@ apt-cache search php | grep http | grep -i pecl | \
 	cut -d" " -f1 | \
 	grep -iv "php-http-all-dev\|php5.6-http\|php7.0-http\|php7.1-http\|php7.2-http\|php7.3-http\|php7.4-http" | \
 	grep -iv "php8.0-http\|php8.1-http" | \
+	grep -iv "php8.*\-http" | \
+	grep -iv "php9.*\-http" | \
 	xargs aptold build-dep -fy | grep --color=auto "Depends\|$"
 
 

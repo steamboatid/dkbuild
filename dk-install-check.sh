@@ -54,6 +54,7 @@ check_php_installs() {
 }
 check_php_installs "php8.0"
 check_php_installs "php8.1"
+check_php_installs "php8.2"
 
 
 
@@ -63,6 +64,7 @@ check_php_installs "php8.1"
 [ -x /etc/init.d/keydb-server ] && /etc/init.d/keydb-server restart
 [ -x /etc/init.d/php8.0-fpm ] && mkdir -p /run/php && /etc/init.d/php8.0-fpm restart
 [ -x /etc/init.d/php8.1-fpm ] && mkdir -p /run/php && /etc/init.d/php8.1-fpm restart
+[ -x /etc/init.d/php8.2-fpm ] && mkdir -p /run/php && /etc/init.d/php8.2-fpm restart
 
 
 # check netstat
@@ -83,3 +85,4 @@ check_php_custom() {
 
 check_php_custom "php8.0"
 check_php_custom "php8.1"
+check_php_custom "php8.2"

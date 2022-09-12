@@ -173,7 +173,8 @@ nutcracker keydb-server keydb-tools nginx-extras
 aptnew install \
 --no-install-recommends --fix-missing --reinstall -fy \
 php8.0-fpm php8.0-cli php8.0-zip \
-php8.1-fpm php8.1-cli php8.1-zip
+php8.1-fpm php8.1-cli php8.1-zip \
+php8.2-fpm php8.2-cli php8.2-zip
 
 aptnew install -y; \
 netstat -nlpa | grep LIST | grep --color "nginx\|keydb\|nutcracker\|php"
@@ -260,6 +261,7 @@ complete_php_installs() {
 
 complete_php_installs "php8.0" "8.0"
 complete_php_installs "php8.1" "8.1"
+complete_php_installs "php8.2" "8.2"
 
 
 #--- check packages installed

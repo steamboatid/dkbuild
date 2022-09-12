@@ -40,7 +40,8 @@ libzip4 libdb4.8 libgeoip1 bison flex libsodium23
 aptnew install \
 --no-install-recommends --fix-missing --reinstall -fy \
 php8.0-fpm php8.0-cli php8.0-zip \
-php8.1-fpm php8.1-cli php8.1-zip
+php8.1-fpm php8.1-cli php8.1-zip \
+php8.2-fpm php8.2-cli php8.2-zip
 
 
 # complete install PHP8.x
@@ -86,6 +87,7 @@ complete_php_installs() {
 
 complete_php_installs "php8.0" "8.0"
 complete_php_installs "php8.1" "8.1"
+complete_php_installs "php8.2" "8.2"
 
 
 
@@ -107,12 +109,14 @@ check_php_installs() {
 }
 check_php_installs "php8.0"
 check_php_installs "php8.1"
+check_php_installs "php8.2"
 
 
 
 # restart using rc
 [ -x /etc/init.d/php8.0-fpm ] && mkdir -p /run/php && /etc/init.d/php8.0-fpm restart
 [ -x /etc/init.d/php8.1-fpm ] && mkdir -p /run/php && /etc/init.d/php8.1-fpm restart
+[ -x /etc/init.d/php8.2-fpm ] && mkdir -p /run/php && /etc/init.d/php8.2-fpm restart
 
 
 # check php custom
@@ -125,3 +129,4 @@ check_php_custom() {
 
 check_php_custom "php8.0"
 check_php_custom "php8.1"
+check_php_custom "php8.2"

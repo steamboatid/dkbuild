@@ -212,6 +212,8 @@ cat $FSRC2 | grep "${PHPGREP}" >> $FSRC3
 chown_apt
 cat $FSRC3 | \
 grep -iv "php8.1-http\|php8.0-http\|php-http" | \
+grep -iv "php8.*\-http" | \
+grep -iv "php9.*\-http" | \
 sort -u | sort  >>/tmp/php-pkgs.txt
 # cat $FSRC3 | sort -u | sort
 
@@ -227,7 +229,9 @@ apt-cache search php8 | cut -d" " -f1 | \
 	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" >>/tmp/php-pkgs.txt
 apt-cache search php8 | cut -d" " -f1 | \
 	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" | \
-	grep -iv "php8.1-http\|php8.0-http\|php-http"  >>/tmp/php-pkgs.txt
+	grep -iv "php8.1-http\|php8.0-http\|php-http" | \
+	grep -iv "php8.*\-http" | \
+	grep -iv "php9.*\-http"  >>/tmp/php-pkgs.txt
 
 apt-cache search sodium | cut -d" " -f1 | \
 	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5\|rust" | \

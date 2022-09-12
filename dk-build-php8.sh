@@ -237,7 +237,8 @@ prepare_build_flags
 #-------------------------------------------
 rm -rf /root/src/php8 /root/org.src/php8 \
 /root/src/php8.0 /root/org.src/php8.0 \
-/root/src/php8.1 /root/org.src/php8.1
+/root/src/php8.1 /root/org.src/php8.1 \
+/root/src/php8.2 /root/org.src/php8.2
 
 
 # prepare dirs

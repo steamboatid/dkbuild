@@ -422,30 +422,69 @@ global_git_config(){
 	git config  --global pull.ff only  >/dev/null 2>&1
 }
 
+reclone_git(){
+	URL="$2"
+	DST="$1"
+	FURL="$3"
+	BRA="$4" #branch
+
+	PDIR=$PWD
+	mkdir -p "$DST"
+	cd "$DST"
+	printf "\n ---recloning $URL into $DST \n"
+
+	# delete dst directory
+	rm -rf "$DST"
+
+	[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
+	ORIGIN=$(git config --get remote.origin.url)
+	printf "\n ORIGIN: $ORIGIN \n FURL:   $FURL \n DST:    $DST \n BRANCH: $BRA "
+
+	if [ ! -z $FURL ]; then
+		printf "\n Recloning: ${blu} ${FURL} ${OPS} ${end} \n\n"
+		git clone "$FURL" "$OPS" "$DST"
+	elif [ ! -z $ORIGIN ]; then
+		ADOM=$(echo ${ORIGIN} | awk -F[/:] '{print $4}')
+		printf "\n Recloning: ${blu} https://${ADOM}/${URL} ${OPS} ${end} \n\n"
+		git clone "https://${ADOM}/${URL}" $OPS "$DST"
+	else
+		#--- failed
+		printf "\n\n\n\n"
+		exit 1;
+	fi
+
+}
+
 update_existing_git(){
 	URL="$2"
 	DST="$1"
 	FURL="$3"
-	BRA="$4"
+	BRA="$4" #branch
 
 	PDIR=$PWD
 	mkdir -p "$DST"
 	cd "$DST"
 	printf "\n ---updating $DST \n"
 
+	# tmp file
+	atmp=$(mktemp /tmp/git-script.XXXXXX)
+
 	if git reset --hard  >/dev/null 2>&1; then
+
 		git stash; git stash clear
 		git reset; git checkout .; git reset --hard HEAD; git clean -fdx
 
-		git rm -r --cached . >/dev/null 2>&1
-		git submodule update --init --recursive -f  >/dev/null 2>&1
-		git fetch --all  >/dev/null 2>&1
+		git rm -r --cached . 2>&1 | tee -a $tmp
+		git submodule update --init --recursive -f  2>&1 | tee -a $tmp
+		git fetch --all  2>&1 | tee -a $tmp
 
-		git pull --update-shallow --ff-only  >/dev/null 2>&1
-		git pull --depth=1 --ff-only  >/dev/null 2>&1
-		git pull --ff-only  >/dev/null 2>&1
+		git pull --update-shallow --ff-only  2>&1 | tee -a $tmp
+		git pull --depth=1 --ff-only  2>&1 | tee -a $tmp
+		git pull --ff-only  2>&1 | tee -a $tmp
+
 	fi
 
+	DOCLONE=0
 	if git pull origin $(git rev-parse --abbrev-ref HEAD) --ff-only; then
 		printf " --- pull OK \n"
 	else
@@ -459,25 +498,39 @@ update_existing_git(){
 				# exit 1; # exit as error
 
 				# recloning
-				[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
-				ORIGIN=$(git config --get remote.origin.url)
-				printf "\n ORIGIN: $ORIGIN \n FURL:   $FURL \n DST:    $DST \n BRANCH: $BRA "
+				reclone_git "$1" "$2" "$3" "$4"
+				DOCLONE=1
 
-				if [ ! -z $FURL ]; then
-					printf "\n Recloning: ${blu} ${FURL} ${OPS} ${end} \n\n"
-					git clone "$FURL" "$OPS" "$DST"
-				elif [ ! -z $ORIGIN ]; then
-					ADOM=$(echo ${ORIGIN} | awk -F[/:] '{print $4}')
-					printf "\n Recloning: ${blu} https://${ADOM}/${URL} ${OPS} ${end} \n\n"
-					git clone "https://${ADOM}/${URL}" $OPS "$DST"
-				else
-					#--- failed
-					printf "\n\n\n\n"
-					exit 1;
-				fi
+				# # recloning
+				# [ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
+				# ORIGIN=$(git config --get remote.origin.url)
+				# printf "\n ORIGIN: $ORIGIN \n FURL:   $FURL \n DST:    $DST \n BRANCH: $BRA "
+
+				# if [ ! -z $FURL ]; then
+				# 	printf "\n Recloning: ${blu} ${FURL} ${OPS} ${end} \n\n"
+				# 	git clone "$FURL" "$OPS" "$DST"
+				# elif [ ! -z $ORIGIN ]; then
+				# 	ADOM=$(echo ${ORIGIN} | awk -F[/:] '{print $4}')
+				# 	printf "\n Recloning: ${blu} https://${ADOM}/${URL} ${OPS} ${end} \n\n"
+				# 	git clone "https://${ADOM}/${URL}" $OPS "$DST"
+				# 	DOCLONE=1
+				# else
+				# 	#--- failed
+				# 	printf "\n\n\n\n"
+				# 	exit 1;
+				# fi
 			fi
 		fi
 	fi
+
+	#--- IF FAILED
+	isfail=$(cat "$atmp" | grep -i "error\|warning\|fatal" * | grep -iv "is now" | wc -l)
+	if [[ $DOCLONE -lt 1 ]] && [[ $isfail -gt 0 ]]; then
+		reclone_git "$1" "$2" "$3" "$4"
+	fi
+	rm -rf "$atmp"
+
+
 	cd $PDIR
 	printf "\n\n"
 }
