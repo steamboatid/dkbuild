@@ -90,7 +90,7 @@ epoch_pkg=$(( $epoch_pkg ))
 
 # set epoch_sury
 epoch_sury=$(( $epoch_src ))
-[[ $epoch_pkg -gt $epoch_sury ]] && epoch_pkg$(( $epoch_sury ))
+[[ $epoch_pkg -gt $epoch_sury ]] && epoch_pkg=$(( $epoch_sury ))
 
 
 printf "\n --- get phideb: packages "
