@@ -304,5 +304,12 @@ aptold install -fy --auto-remove --purge \
 find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 
+
+#--- delete php8.2*
+# most php modules not support it yet
+#-------------------------------------------
+dpkg -l | grep php8.2 | awk '{print $2}' | tr "\n" ' ' | xargs apt purge -fy
+
+
 printf "\n\n\n"
 exit 0;
