@@ -313,6 +313,7 @@ wait_build_jobs_php
 cd /root/src/php
 find /root/src/php/ -type f -iname "*udeb" -delete
 find /root/src/php/ -type f -iname "*dbgsym*deb" -delete
+find /root/src/php/ -type f -iname "*dbgsym*deb" -delete
 
 
 # upload to /tb2/build-devomd/{$RELNAME}-php8.x
