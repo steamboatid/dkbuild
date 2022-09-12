@@ -60,6 +60,7 @@ if [[ $dir == *"php"* ]] && [[ ! -e debian/control.in ]]; then
 	phpver=$(/usr/sbin/phpquery -V | sort -nr | head -n1)
 	echo " " >> debian/control.in
 	echo "X-PHP-Versions: $phpver" >> debian/control.in
+	echo "X-PHP-Default-Version: $phpver" >> debian/control.in
 fi
 
 
