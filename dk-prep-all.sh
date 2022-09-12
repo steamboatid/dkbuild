@@ -241,6 +241,8 @@ find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 # most php modules not support it yet
 #-------------------------------------------
 dpkg -l | grep php8.2 | awk '{print $2}' | tr "\n" ' ' | xargs apt purge -fy
+dpkg -l | grep php7. | awk '{print $2}' | tr "\n" ' ' | xargs apt purge -fy
+dpkg -l | grep php5. | awk '{print $2}' | tr "\n" ' ' | xargs apt purge -fy
 
 
 printf "\n\n\n"

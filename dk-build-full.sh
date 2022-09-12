@@ -43,15 +43,24 @@ printf "\n --- LOOP: $loop \n"
 
 if [ -z "${dir}" ]; then
 	printf "\n --- Usage: $0 ${red}-d <debian_build_directory>${end} "
-	dir=$PWD
+	dir=$(realpath $PWD)
 	printf "\n --- using current directory as build dir: ${blue} $dir ${end} \n\n"
 else
+	dir=$(realpath $dir)
 	printf "\n --- using build dir: ${blue} $dir ${end} \n\n"
 
 	# change directory using argument
 	cd "$dir"
 fi
 
+
+# if build php
+if [[ $dir == *"php"* ]] && [[ ! -e debian/control.in ]]; then
+	cp debian/control debian/control.in
+	phpver=$(/usr/sbin/phpquery -V | sort -nr | head -n1)
+	echo " " >> debian/control.in
+	echo "X-PHP-Versions: $phpver" >> debian/control.in
+fi
 
 
 # reset default build flags
