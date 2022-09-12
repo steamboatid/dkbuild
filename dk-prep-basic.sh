@@ -280,7 +280,7 @@ cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
 	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping"
 
 
-aptold install -fydu  --no-install-recommends --fix-missing \
+aptold install -fy  --no-install-recommends --fix-missing \
 -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" \
 -o Dpkg::Options::="--force-overwrite" \
 openssh-* nano devscripts build-essential debhelper git git-extras wget axel \
