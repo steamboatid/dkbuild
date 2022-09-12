@@ -434,8 +434,9 @@ update_existing_git(){
 	printf "\n ---updating $DST \n"
 
 	if git reset --hard  >/dev/null 2>&1; then
-		git restore .
+		git stash; git stash clear
 		git reset; git checkout .; git reset --hard HEAD; git clean -fdx
+		git restore .
 
 		git rm -r --cached . >/dev/null 2>&1
 		git submodule update --init --recursive -f  >/dev/null 2>&1
