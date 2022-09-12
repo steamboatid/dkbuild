@@ -28,6 +28,11 @@ source /tb2/build-devomd/dk-build-0libs.sh
 /bin/bash /tb2/build-devomd/dk-config-gen.sh
 
 
+# fill /var/cache/apt/archives/
+#-------------------------------------------
+get_local_debs >/dev/null 2>&1 &
+
+
 
 init_resolver() {
 	if [ -f /etc/init.d/resolvconf ] && [ -f /etc/resolvconf/resolv.conf.d/head ]; then
@@ -37,6 +42,7 @@ nameserver 10.0.3.1
 
 nameserver 192.168.0.1
 nameserver 192.168.1.1
+nameserver 192.168.8.1
 nameserver 192.168.88.1
 
 nameserver 1.1.1.1
@@ -54,6 +60,7 @@ nameserver 10.0.3.1
 
 nameserver 192.168.0.1
 nameserver 192.168.1.1
+nameserver 192.168.8.1
 nameserver 192.168.88.1
 
 nameserver 1.1.1.1
@@ -62,7 +69,7 @@ nameserver 8.8.8.8
 	fi
 
 	if [[ -f /etc/systemd/resolved.conf ]]; then
-		sed -i "s/\#DNS=/DNS=10.0.2.1 10.0.3.1 192.168.0.1 192.168.1.1 192.168.88.1/g" /etc/systemd/resolved.conf
+		sed -i "s/\#DNS=/DNS=10.0.2.1 10.0.3.1 192.168.0.1 192.168.1.1 192.168.8.1 192.168.88.1/g" /etc/systemd/resolved.conf
 		sed -i "s/\#FallbackDNS=/FallbackDNS=1.1.1.1 8.8.8.8/g" /etc/systemd/resolved.conf
 		sed -i "s/\#Cache=yes/Cache=yes/g" /etc/systemd/resolved.conf
 		# cat /etc/systemd/resolved.conf | grep "DNS="
@@ -86,12 +93,6 @@ deb-src http://deb.debian.org/debian-security buster/updates main contrib non-fr
 deb-src http://deb.debian.org/debian buster-updates main contrib non-free
 deb-src http://deb.debian.org/debian buster-proposed-updates main contrib non-free
 deb-src http://deb.debian.org/debian buster-backports main contrib non-free
-
-#deb http://repo.omd.my.id/mariadb/repo/10.6/debian buster main
-#deb http://repo.omd.my.id/zabbix/5.5/debian buster main
-
-#deb http://repo.omd.my.id/mariadb-maxscale buster main
-#deb http://repo.omd.my.id/mariadb-tools buster main
 '>/etc/apt/sources.list
 }
 
@@ -105,14 +106,23 @@ deb-src http://deb.debian.org/debian bullseye main contrib non-free
 deb-src http://deb.debian.org/debian bullseye-updates main contrib non-free
 deb-src http://deb.debian.org/debian bullseye-proposed-updates main contrib non-free
 
-deb http://deb.debian.org/debian bullseye-backports main contrib non-free
-deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free
-
 deb http://deb.debian.org/debian-security bullseye-security main
 deb-src http://deb.debian.org/debian-security bullseye-security main
+'>/etc/apt/sources.list
+}
 
-#deb http://repo.omd.my.id/mariadb/repo/10.6/debian bullseye main
-#deb http://repo.omd.my.id/zabbix/5.5/debian bullseye main
+init_bookworm() {
+	echo \
+'deb http://deb.debian.org/debian bookworm main contrib non-free
+deb http://deb.debian.org/debian bookworm-updates main contrib non-free
+deb http://deb.debian.org/debian bookworm-proposed-updates main contrib non-free
+
+deb-src http://deb.debian.org/debian bookworm main contrib non-free
+deb-src http://deb.debian.org/debian bookworm-updates main contrib non-free
+deb-src http://deb.debian.org/debian bookworm-proposed-updates main contrib non-free
+
+deb http://deb.debian.org/debian-security bookworm-security main
+deb-src http://deb.debian.org/debian-security bookworm-security main
 '>/etc/apt/sources.list
 }
 
@@ -179,7 +189,11 @@ export LANGUAGE=en_US.UTF-8
 		2>&1 | grep -iv "newest\|reading\|building\|stable CLI"
 
 	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && dpkg-reconfigure locales &&\
-	apt-key adv --fetch-keys http://repo.omd.my.id/trusted-keys 2>&1 | grep --color "processed"
+	# apt-key adv --fetch-keys http://repo.omd.my.id/trusted-keys 2>&1 | grep --color "processed"
+
+	if [[ -e /tb2/phideb/trusted-keys ]]; then
+		cat /tb2/phideb/trusted-keys | gpg --dearmor > /etc/apt/trusted.gpg.d/trusted-keys.gpg
+	fi
 
 	aptold update 2>&1
 	aptold full-upgrade --auto-remove --purge -fy  \
@@ -214,10 +228,15 @@ init_basic_packages() {
 apt autoclean >/dev/null 2>&1; apt clean >/dev/null 2>&1
 init_resolver
 
+printf "\n --- wait...\n"
+wait
+
 if [[ "${RELNAME}" = "buster" ]]; then
 	init_buster
 elif [[ "${RELNAME}" = "bullseye" ]]; then
 	init_bullseye
+elif [[ "${RELNAME}" = "bookworm" ]]; then
+	init_bookworm
 fi
 cat /etc/apt/sources.list
 
@@ -226,4 +245,4 @@ init_ssh
 init_basic_packages
 
 #--- saving
-save_local_debs >/dev/null 2>&1 &
+# save_local_debs >/dev/null 2>&1 &

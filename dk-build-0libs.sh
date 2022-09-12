@@ -691,11 +691,18 @@ save_local_debs(){
 
 		DNUMS=$(find -L /var/cache/apt/archives/ -type f -iname "*.deb" | wc -l)
 		if [[ $DNUMS -gt 0 ]]; then
-			rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-			/var/cache/apt/archives/*deb /tb2/tmp/cachedebs/ \
+			rsync -aHAXztr --numeric-ids \
+			--include="*/" --include="*.deb" --exclude="*" \
+			/var/cache/apt/archives/ /tb2/tmp/cachedebs/ \
 			>/dev/null 2>&1 &
 		fi
 	fi
+}
+
+get_local_debs(){
+	rsync -aHAXztr --numeric-ids --ignore-existing \
+	--include="*/" --include="*.deb" --exclude="*" \
+	/tb2/tmp/cachedebs/ /var/cache/apt/archives/
 }
 
 
@@ -884,8 +891,10 @@ init_dkbuild(){
 
 		if [[ ! -e /etc/resolv.conf ]]; then
 			cat << EOT > /etc/resolv.conf
+nameserver 10.0.3.1
 nameserver 192.168.0.1
 nameserver 192.168.1.1
+nameserver 192.168.8.1
 nameserver 192.168.88.1
 
 nameserver 1.1.1.1
@@ -909,8 +918,10 @@ EOT
 
 		if [[ ! -e /etc/resolv.conf ]]; then
 			cat << EOT > /etc/resolv.conf
+nameserver 10.0.3.1
 nameserver 192.168.0.1
 nameserver 192.168.1.1
+nameserver 192.168.8.1
 nameserver 192.168.88.1
 
 nameserver 1.1.1.1

@@ -47,6 +47,7 @@ if [[ $islxc -gt 0 ]]; then
 			cat << EOT > /etc/resolv.conf
 nameserver 192.168.0.1
 nameserver 192.168.1.1
+nameserver 192.168.8.1
 nameserver 192.168.88.1
 
 nameserver 1.1.1.1
@@ -72,6 +73,7 @@ EOT
 			cat << EOT > /etc/resolv.conf
 nameserver 192.168.0.1
 nameserver 192.168.1.1
+nameserver 192.168.8.1
 nameserver 192.168.88.1
 
 nameserver 1.1.1.1

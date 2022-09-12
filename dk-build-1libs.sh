@@ -63,7 +63,8 @@ fix_php_ps(){
 	odir=$PWD
 	adir="$1"
 
-	cd /tmp;
+	cd /tmp; \
+	rm -rf ps-1.4.4.tgz; \
 	wget -c wget https://pecl.php.net/get/ps-1.4.4.tgz; \
 	tar xvzf ps-1.4.4.tgz
 

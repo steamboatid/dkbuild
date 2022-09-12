@@ -125,4 +125,4 @@ pkgs=(dnsutils eatmydata nano rsync libterm-readline-gnu-perl apt-utils lsb-rele
 apt update; install_old $pkgs
 
 #--- saving
-save_local_debs >/dev/null 2>&1 &
+# save_local_debs >/dev/null 2>&1 &

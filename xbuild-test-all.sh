@@ -51,15 +51,19 @@ mkdir -p /var/log/dkbuild
 printf "\n\n --- stop lxc \n"
 lxc-stop -kqn bus
 lxc-stop -kqn eye
+lxc-stop -kqn wor
 lxc-stop -kqn tbus
 lxc-stop -kqn teye
+lxc-stop -kqn twor
 sleep 1
 
 printf "\n\n --- start lxc \n"
 lxc-start -qn bus
 lxc-start -qn eye
+lxc-start -qn wor
 lxc-start -qn tbus
 lxc-start -qn teye
+lxc-start -qn twor
 sleep 1
 
 printf "\n\n --- apt upgrade \n"
