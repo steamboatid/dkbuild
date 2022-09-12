@@ -935,7 +935,11 @@ EOT
 	systemctl restart systemd-timesyncd.service  >/dev/null 2>&1 &
 }
 
+
 reinstall_essential(){
+	save_clean_apt_cache
+	apt autoclean; apt clean; apt update --allow-unauthenticated
+
 	dpkg-query -Wf '${Package;-40}${Essential}\n' | grep yes | awk '{print $1}' > /tmp/ess
 	dpkg-query -Wf '${Package;-40}${Priority}\n' | grep -E "required" | awk '{print $1}' >> /tmp/ess
 
