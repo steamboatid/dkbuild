@@ -524,7 +524,7 @@ update_existing_git(){
 	fi
 
 	#--- IF FAILED
-	isfail=$(cat "$atmp" | grep -i "error\|warning\|fatal" * | grep -iv "is now" | wc -l)
+	isfail=$(cat "$atmp" | grep -i "error\|warning\|fatal" | grep -iv "is now" | wc -l)
 	if [[ $DOCLONE -lt 1 ]] && [[ $isfail -gt 0 ]]; then
 		reclone_git "$1" "$2" "$3" "$4"
 	fi
