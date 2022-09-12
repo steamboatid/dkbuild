@@ -286,7 +286,8 @@ cd /root/src/php
 
 
 #--- initial build
-for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort -nr); do
+for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | \
+grep -v "git-phpredis\|libzip\|libvirt\|xcache\|tideways\|phalcon3\|lz4" | sort -nr); do
 	building_php "$adir"
 done
 

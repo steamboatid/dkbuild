@@ -54,7 +54,7 @@ fix_php_lz4(){
 
 	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control
 	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control.in
-	sed -i -r 's/^DH_PHP_VERSIONS_OVERRIDE/\# DH_PHP_VERSIONS_OVERRIDE/' debian/rules
+	# sed -i -r 's/^DH_PHP_VERSIONS_OVERRIDE/\# DH_PHP_VERSIONS_OVERRIDE/' debian/rules
 
 	cd "$odir"
 }
