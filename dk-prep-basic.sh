@@ -222,6 +222,9 @@ echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen
 aptold update; \
 aptold full-upgrade --auto-remove --purge -fy
 
+get_local_debs
+
+
 #--- just incase needed
 #-------------------------------------------
 dpkg --configure -a; \
@@ -279,6 +282,8 @@ cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
 	xargs aptold install -y --ignore-missing \
 	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping"
 
+
+get_local_debs
 
 aptold install -fy  --no-install-recommends --fix-missing \
 -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" \
