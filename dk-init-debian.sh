@@ -244,5 +244,7 @@ init_apt_keys
 init_ssh
 init_basic_packages
 
+reinstall_essential
+
 #--- saving
 save_local_debs >/dev/null 2>&1 &

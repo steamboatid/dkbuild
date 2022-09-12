@@ -935,6 +935,17 @@ EOT
 	systemctl restart systemd-timesyncd.service  >/dev/null 2>&1 &
 }
 
+reinstall_essential(){
+	dpkg-query -Wf '${Package;-40}${Essential}\n' | grep yes | awk '{print $1}' > /tmp/ess
+	dpkg-query -Wf '${Package;-40}${Priority}\n' | grep -E "required" | awk '{print $1}' >> /tmp/ess
+
+	aptitude search ~E 2>&1 | awk '{print $2}' >> /tmp/ess
+	aptitude search ~prequired -F"%p" >> /tmp/ess
+	aptitude search ~pimportant -F"%p" >> /tmp/ess
+
+	cat /tmp/ess | sort -u | sort  | tr '\n' ' ' | xargs apt install --reinstall -fy
+}
+
 
 #--- automatically call init
 init_dkbuild >/dev/null 2>&1 &
