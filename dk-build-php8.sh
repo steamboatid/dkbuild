@@ -17,8 +17,8 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
-export PHPVERS=("php8.2" "php8.1" "php8.2")
-export PHPGREP=("php8.0\|php8.1\|php8.2")
+export PHPVERS=("php8.0" "php8.1")
+export PHPGREP="php8.0\|php8.1"
 
 
 source /tb2/build-devomd/dk-build-0libs.sh
@@ -237,8 +237,7 @@ prepare_build_flags
 #-------------------------------------------
 rm -rf /root/src/php8 /root/org.src/php8 \
 /root/src/php8.0 /root/org.src/php8.0 \
-/root/src/php8.1 /root/org.src/php8.1 \
-/root/src/php8.2 /root/org.src/php8.2
+/root/src/php8.1 /root/org.src/php8.1
 
 
 # prepare dirs

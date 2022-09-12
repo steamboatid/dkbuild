@@ -17,8 +17,8 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
-export PHPVERS=("php8.2" "php8.1" "php8.2")
-export PHPGREP=("php8.0\|php8.1\|php8.2")
+export PHPVERS=("php8.0" "php8.1")
+export PHPGREP="php8.0\|php8.1"
 
 
 source /tb2/build-devomd/dk-build-0libs.sh
@@ -54,7 +54,6 @@ check_php_installs() {
 }
 check_php_installs "php8.0"
 check_php_installs "php8.1"
-check_php_installs "php8.2"
 
 
 
@@ -64,7 +63,6 @@ check_php_installs "php8.2"
 [ -x /etc/init.d/keydb-server ] && /etc/init.d/keydb-server restart
 [ -x /etc/init.d/php8.0-fpm ] && mkdir -p /run/php && /etc/init.d/php8.0-fpm restart
 [ -x /etc/init.d/php8.1-fpm ] && mkdir -p /run/php && /etc/init.d/php8.1-fpm restart
-[ -x /etc/init.d/php8.2-fpm ] && mkdir -p /run/php && /etc/init.d/php8.2-fpm restart
 
 
 # check netstat
@@ -85,4 +83,3 @@ check_php_custom() {
 
 check_php_custom "php8.0"
 check_php_custom "php8.1"
-check_php_custom "php8.2"
