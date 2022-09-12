@@ -245,4 +245,4 @@ init_ssh
 init_basic_packages
 
 #--- saving
-# save_local_debs >/dev/null 2>&1 &
+save_local_debs >/dev/null 2>&1 &

@@ -114,7 +114,7 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
 
 #--- last
 #-------------------------------------------
-# save_local_debs
+save_local_debs
 aptold install -fy --auto-remove --purge \
 	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends"
 
