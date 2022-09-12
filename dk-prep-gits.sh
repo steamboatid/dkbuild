@@ -36,14 +36,17 @@ get_update_new_github "steamboatid/lua-resty-lrucache" "/root/org.src/lua-resty-
 get_update_new_github "steamboatid/lua-resty-core" "/root/org.src/lua-resty-core/git-lua-resty-core"  >/dev/null 2>&1 &
 
 #-- taken from dk-prep-all.sh
-# get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"  >/dev/null 2>&1 &
+get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"  >/dev/null 2>&1 &
 get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"  >/dev/null 2>&1 &
 
 
+#-- /root/org.src/git-redis is old folder
+rm -rf /root/org.src/git-redis
+
 get_update_new_github "steamboatid/phpredis" "/root/org.src/git-phpredis"  >/dev/null 2>&1 &
 get_update_new_github "php/pecl-networking-gearman" "/root/org.src/git-gearman"  >/dev/null 2>&1 &
-# get_update_new_github "steamboatid/phpredis" "/root/org.src/git-redis"  >/dev/null 2>&1 &
+
 
 get_update_new_github "krakjoe/parallel" "/root/org.src/git-parallel"  >/dev/null 2>&1 &
 get_update_new_github "rosmanov/pecl-eio" "/root/org.src/git-eio"  >/dev/null 2>&1 &
@@ -77,7 +80,7 @@ get_update_new_github "steamboatid/debs-db4" "/root/org.src/db4/git-debs-db4"  >
 
 # debug
 # get_update_new_github "steamboatid/nginx" "/root/org.src/nginx/git-nginx"
-get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"
+# get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"
 
 
 
