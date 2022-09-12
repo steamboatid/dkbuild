@@ -295,7 +295,7 @@ apt-utils gnupg2 apt-utils tzdata curl \
 debian-archive-keyring debian-keyring debian-ports-archive-keyring \
 gnome-keyring mercurial-keyring \
 python3-keyring \
-debian-archive-keyring debian-ports-archive-keyring leap-archive-keyring \
+debian-archive-keyring debian-ports-archive-keyring \
 neurodebian-archive-keyring \
 firmware-atheros firmware-linux firmware-linux-free firmware-linux-nonfree \
 firmware-misc-nonfree firmware-realtek firmware-samsung firmware-iwlwifi firmware-intelwimax \
