@@ -30,6 +30,12 @@ rm -rf /etc/apt/sources.list.d/mariadb.list.*
 init_dkbuild
 dig packages.sury.org @1.1.1.1
 
+if [[ "${RELNAME}" = "bookworm" ]]; then
+	sed -i 's/bookworm/bullseye/' /etc/apt/sources.list.d/php-sury.list
+	sed -i 's/bookworm/bullseye/' /etc/apt/sources.list.d/keydb.list
+fi
+
+
 
 #--- clean up previous
 #-------------------------------------------
@@ -196,6 +202,13 @@ echo \
 "deb https://packages.sury.org/php/ ${RELNAME} main
 deb-src https://packages.sury.org/php/ ${RELNAME} main
 ">/etc/apt/sources.list.d/php-sury.list
+
+
+# fix apt sources
+if [[ "${RELNAME}" = "bookworm" ]]; then
+	sed -i 's/bookworm/bullseye/' /etc/apt/sources.list.d/php-sury.list
+	sed -i 's/bookworm/bullseye/' /etc/apt/sources.list.d/keydb.list
+fi
 
 
 aptold install -fy gnupg2
