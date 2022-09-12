@@ -905,7 +905,7 @@ EOT
 	else
 		systemctl enable systemd-resolved.service
 		systemctl restart systemd-resolved.service
-		systemd-resolve --status
+		# systemd-resolve --status
 
 		ip a s eth0 | grep inet
 		hasip=$(ip a s eth0 | grep inet | wc -l)

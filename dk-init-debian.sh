@@ -76,7 +76,7 @@ nameserver 8.8.8.8
 
 		systemctl enable systemd-resolved.service
 		systemctl restart systemd-resolved.service
-		systemd-resolve --status
+		# systemd-resolve --status
 	fi
 }
 
