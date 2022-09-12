@@ -247,4 +247,4 @@ init_basic_packages
 reinstall_essential
 
 #--- saving
-save_local_debs >/dev/null 2>&1 &
+# save_local_debs >/dev/null 2>&1 &

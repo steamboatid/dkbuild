@@ -182,12 +182,12 @@ EOT
 }
 
 
-# aptold create and check (version17)
+# aptold create and check (version18)
 #-------------------------------------------
 create_aptold(){
 	echo \
 '#!/bin/bash
-# version17
+# version18
 
 save_local_debs(){
 	mkdir -p /tb2/tmp/cachedebs/
@@ -223,7 +223,7 @@ if [[ $exs -lt 1 ]]; then
 		2>&1 | grep -iv "stable cli"
 fi
 
-save_local_debs &
+# save_local_debs &
 apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$@" \
 	2>&1 | grep -iv "stable cli"
 
@@ -232,12 +232,12 @@ apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$
 
 
 
-# aptnew create and check (version17)
+# aptnew create and check (version18)
 #-------------------------------------------
 create_aptnew(){
 	echo \
 '#!/bin/bash
-# version17
+# version18
 
 save_local_debs(){
 	mkdir -p /tb2/tmp/cachedebs/
@@ -273,7 +273,7 @@ if [[ $exs -lt 1 ]]; then
 		2>&1 | grep -iv "stable cli"
 fi
 
-save_local_debs &
+# save_local_debs &
 apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@" \
 	2>&1 | grep -iv "stable cli"
 
@@ -958,7 +958,7 @@ init_dkbuild >/dev/null 2>&1 &
 #--- update aptold
 if [ ! -e /usr/local/sbin/aptold ]; then
 	create_aptold
-elif [[ $(grep "version17" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version18" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
 	create_aptold
 fi
 chmod +x /usr/local/sbin/aptold
@@ -967,7 +967,7 @@ chmod +x /usr/local/sbin/aptold
 #--- update aptnew
 if [ ! -e /usr/local/sbin/aptnew ]; then
 	create_aptnew
-elif [[ $(grep "version17" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version18" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
 	create_aptnew
 fi
 chmod +x /usr/local/sbin/aptnew

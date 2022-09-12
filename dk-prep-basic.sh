@@ -345,7 +345,7 @@ printf "\n\n --- wait finished... \n\n\n"
 
 #--- last
 #-------------------------------------------
-save_local_debs
+# save_local_debs
 aptold install -fy --auto-remove --purge \
 	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends"
 
