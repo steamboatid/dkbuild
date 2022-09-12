@@ -30,7 +30,7 @@ source /tb2/build-devomd/dk-build-0libs.sh
 
 # fill /var/cache/apt/archives/
 #-------------------------------------------
-get_local_debs >/dev/null 2>&1 &
+# get_local_debs >/dev/null 2>&1 &
 
 
 
