@@ -347,10 +347,6 @@ wait_jobs; wait
 printf "\n\n --- wait finished... \n\n\n"
 
 
-#--- reinstall
-#-------------------------------------------
-reinstall_essential
-
 
 #--- last
 #-------------------------------------------
