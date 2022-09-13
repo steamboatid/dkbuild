@@ -200,4 +200,4 @@ printf "\n\n touch folders & files: "
 find -L /tb2/phideb -exec touch {} \;
 
 /bin/bash /root/clear-nginx-cache.sh
-/bin/bash /root/cf-clear.sh
+/bin/bash /root/clear-cloudflare.sh
