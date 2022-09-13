@@ -74,7 +74,7 @@ mkdir -p /tb2/phideb/{dists,pool}/{buster,bullseye,bookworm}
 mkdir -p /tb2/phideb/dists/{buster,bullseye,bookworm}/main/binary-amd64
 
 # delete old files
-find /tb2/phideb -type f -delete
+find /tb2/phideb -mindepth 2 -type f -delete
 rm -rf /tb2/phideb/pool
 
 folders=(php nginx nutcracker lua-resty-core lua-resty-lrucache keydb pcre libzip db4 sshfs)
@@ -185,6 +185,11 @@ create_release bullseye > Release
 
 cd /tb2/phideb/dists/bookworm
 create_release bookworm > Release
+
+
+# trusted-keys
+[[ ! -e /tb2/phideb/trusted-keys ]] && \
+	apt-key exportall > /tb2/phideb/trusted-keys 2>&1 >/dev/null
 
 
 printf "\n\n chown folders & files: "
