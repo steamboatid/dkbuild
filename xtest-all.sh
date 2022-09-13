@@ -56,16 +56,19 @@ mkdir -p /var/log/dkbuild
 printf "\n\n --- stop lxc \n"
 lxc-stop -kqn tbus
 lxc-stop -kqn teye
+lxc-stop -kqn twor
 sleep 1
 
 printf "\n\n --- start lxc \n"
 lxc-start -qn tbus
 lxc-start -qn teye
+lxc-start -qn twor
 sleep 1
 
 printf "\n\n --- testing at lxc \n"
 do_testing "tbus" >/dev/null 2>&1 &
 do_testing "teye" >/dev/null 2>&1 &
+do_testing "twor" >/dev/null 2>&1 &
 sleep 1
 
 printf "\n\n\n wait... "

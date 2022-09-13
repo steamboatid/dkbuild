@@ -69,6 +69,7 @@ sleep 1
 printf "\n\n --- apt upgrade \n"
 lxc-attach -n bus -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh
 lxc-attach -n eye -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh
+lxc-attach -n wor -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh
 sleep 1
 
 printf "\n\n --- prep-all \n"
@@ -76,6 +77,8 @@ lxc-attach -n bus -- /bin/bash /tb2/build-devomd/dk-prep-all.sh   2>&1 | \
 	tee /var/log/dkbuild/dk-bus-prep.log >/dev/null 2>&1 &
 lxc-attach -n eye -- /bin/bash /tb2/build-devomd/dk-prep-all.sh   2>&1 | \
 	tee /var/log/dkbuild/dk-eye-prep.log >/dev/null 2>&1 &
+lxc-attach -n wor -- /bin/bash /tb2/build-devomd/dk-prep-all.sh   2>&1 | \
+	tee /var/log/dkbuild/dk-wor-prep.log >/dev/null 2>&1 &
 wait
 sleep 1
 
@@ -85,6 +88,8 @@ lxc-attach -n bus -- /bin/bash /tb2/build-devomd/dk-build-all.sh  2>&1 | \
 	tee /var/log/dkbuild/dk-bus-build.log >/dev/null 2>&1 &
 lxc-attach -n eye -- /bin/bash /tb2/build-devomd/dk-build-all.sh  2>&1 | \
 	tee /var/log/dkbuild/dk-eye-build.log >/dev/null 2>&1 &
+lxc-attach -n eye -- /bin/bash /tb2/build-devomd/dk-build-all.sh  2>&1 | \
+	tee /var/log/dkbuild/dk-wor-build.log >/dev/null 2>&1 &
 wait
 sleep 1
 
