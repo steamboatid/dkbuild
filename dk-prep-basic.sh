@@ -344,6 +344,11 @@ google-perftools libgoogle-perftools-dev libedit-dev devscripts \
 libfl-dev flex bison libsodium* libldap2-dev libpcre2-dev zstd \
 	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping"
 
+apt-cache search libssl | grep -v "ocaml\|clojure" | \
+cut -d" " -f1 | tr "\n" ' ' | xargs aptold install -fy \
+	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping"
+
+
 
 #--- wait
 #-------------------------------------------
