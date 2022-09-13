@@ -352,10 +352,8 @@ prepare_build_flags(){
 	export CCACHE_SLOPPINESS=include_file_mtime
 	export CC="/usr/bin/ccache /usr/bin/gcc"
 
-	mkdir -p /tb2/tmp/ccache /root/.ccache
-	rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times \
-	/root/.ccache/ /tb2/tmp/ccache/
-	export CCACHE_BASEDIR="/tb2/tmp/ccache"
+	mkdir -p /root/.ccache
+	export CCACHE_BASEDIR="/root/.ccache"
 }
 
 

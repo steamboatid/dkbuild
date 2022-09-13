@@ -94,22 +94,17 @@ EOT
 #--- preparing ccache
 #-------------------------------------------
 aptold install -y ccache
-export CCACHE_DIR=/tb2/tmp/ccache
 mkdir -p $CCACHE_DIR ~/.ccache
+export CCACHE_DIR=/root/.ccache
 echo \
-'cache_dir = /tb2/tmp/ccache
+'cache_dir = ~/.ccache
 max_size = 100.0G
 '>~/.ccache/ccache.conf
 
 echo \
-'cache_dir = /tb2/tmp/ccache
+'cache_dir = ~/.ccache
 max_size = 100.0G
 '>/etc/ccache.conf
-
-echo \
-'cache_dir = /tb2/tmp/ccache
-max_size = 100.0G
-'>/tb2/tmp/ccache/ccache.conf
 
 
 #--- preparing apt sources.list
@@ -225,7 +220,7 @@ aptold update
 dpkg --configure -a
 aptold install -yf locales dialog apt-utils lsb-release apt-transport-https ca-certificates \
 gnupg2 apt-utils tzdata curl ssh rsync libxmlrpc* \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends"
 echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen
 
 
@@ -240,7 +235,7 @@ aptold full-upgrade --auto-remove --purge -fy
 #-------------------------------------------
 dpkg --configure -a; \
 aptold install -y linux-image-amd64 linux-headers-amd64 \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends"
 
 #--- remove unneeded packages
 #-------------------------------------------
@@ -291,7 +286,7 @@ sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g"  >>  /tmp/deps.pkgs
 
 cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
 	xargs aptold install -y --ignore-missing \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping"
 
 
 aptold install -fy  --no-install-recommends --fix-missing \
@@ -345,12 +340,20 @@ ebtables arptables ipcalc ipset whois jq \
 google-perftools libgoogle-perftools-dev libedit-dev devscripts \
 libfl-dev flex bison libsodium* libldap2-dev libpcre2-dev zstd \
 libboost-all-dev libboost-dev libboost-tools-dev \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping"
 
 apt-cache search libssl | grep -v "ocaml\|clojure" | \
 cut -d" " -f1 | tr "\n" ' ' | xargs aptold install -fy \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping"
 
+apt install -fy --install-suggests --install-recommends \
+build-essential fakeroot devscripts dh-exec dh-php dh-make dh-strip-nondeterminism \
+dh-sysuser \
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping"
+
+apt build-dep -fy build-essential fakeroot devscripts \
+dh-exec dh-php dh-make dh-strip-nondeterminism dh-sysuser \
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping"
 
 
 #--- wait
@@ -366,7 +369,7 @@ printf "\n\n --- wait finished... \n\n\n"
 #-------------------------------------------
 # save_local_debs
 aptold install -fy --auto-remove --purge \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends"
 
 rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
 rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan

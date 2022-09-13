@@ -41,6 +41,33 @@ kill_current_scripts(){
 	killall -9 ccache cc cc1 gcc g++  >/dev/null 2>&1
 }
 
+build_ops(){
+	alxc=$1
+	alog="/var/log/dkbuild/dk-$1-prep.log"
+
+	lxc-start -qn $alxc
+	>$alog
+
+	printf "\n\n --- apt upgrade -- $alxc \n"
+	lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh "$alxc" \
+		2>&1 | tee -a $alog
+
+	isfail=$(cat $alog | grep -i "error\|failed" | wc -l)
+	if [[ $isfail -lt 1 ]]; then
+		printf "\n\n --- prep-all -- $alxc \n"
+		lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-prep-all.sh "$alxc" \
+			2>&1 | tee -a $alog
+	fi
+
+	isfail=$(cat $alog | grep -i "error\|failed" | wc -l)
+	if [[ $isfail -lt 1 ]]; then
+		printf "\n\n --- build-all -- $alxc \n"
+		lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-build-all.sh "$alxc" \
+			2>&1 | tee -a $alog
+	fi
+}
+
+
 reset
 kill_current_scripts $$
 kill_current_scripts $$
@@ -66,30 +93,9 @@ lxc-start -qn teye
 lxc-start -qn twor
 sleep 1
 
-printf "\n\n --- apt upgrade \n"
-lxc-attach -n bus -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh
-lxc-attach -n eye -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh
-lxc-attach -n wor -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh
-sleep 1
-
-printf "\n\n --- prep-all \n"
-lxc-attach -n bus -- /bin/bash /tb2/build-devomd/dk-prep-all.sh   2>&1 | \
-	tee /var/log/dkbuild/dk-bus-prep.log >/dev/null 2>&1 &
-lxc-attach -n eye -- /bin/bash /tb2/build-devomd/dk-prep-all.sh   2>&1 | \
-	tee /var/log/dkbuild/dk-eye-prep.log >/dev/null 2>&1 &
-lxc-attach -n wor -- /bin/bash /tb2/build-devomd/dk-prep-all.sh   2>&1 | \
-	tee /var/log/dkbuild/dk-wor-prep.log >/dev/null 2>&1 &
-wait
-sleep 1
-
-
-printf "\n\n --- build-all \n"
-lxc-attach -n bus -- /bin/bash /tb2/build-devomd/dk-build-all.sh  2>&1 | \
-	tee /var/log/dkbuild/dk-bus-build.log >/dev/null 2>&1 &
-lxc-attach -n eye -- /bin/bash /tb2/build-devomd/dk-build-all.sh  2>&1 | \
-	tee /var/log/dkbuild/dk-eye-build.log >/dev/null 2>&1 &
-lxc-attach -n eye -- /bin/bash /tb2/build-devomd/dk-build-all.sh  2>&1 | \
-	tee /var/log/dkbuild/dk-wor-build.log >/dev/null 2>&1 &
+build_ops "bus"  >/dev/null 2>&1 &
+build_ops "eye"  >/dev/null 2>&1 &
+build_ops "wor"  >/dev/null 2>&1 &
 wait
 sleep 1
 

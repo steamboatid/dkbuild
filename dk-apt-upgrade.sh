@@ -90,6 +90,8 @@ fi
 # gen config
 #-------------------------------------------
 /bin/bash /tb2/build-devomd/dk-config-gen.sh
+apt update 2>&1 >/dev/null
+apt install -fy systemd-timesyncd 2>&1 >/dev/null
 
 
 

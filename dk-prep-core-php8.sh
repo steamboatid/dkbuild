@@ -41,12 +41,12 @@ purge_pending_installs
 # install libboost
 apt-cache search libboost1 | cut -d' ' -f1 | grep dev | \
 xargs aptold install -fy \
- 2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+ 2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 apt-cache search libboost | cut -d' ' -f1 | grep -i "\-dev" |\
 grep -i "atomic\|chrono\|date-time\|serialization\|system\|thread" |\
 xargs aptold install -fy \
- 2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+ 2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 # apt autoremove --auto-remove --purge -fy \
 #  2>&1 | grep --color "upgraded"
@@ -62,14 +62,14 @@ aptold install -fy --fix-broken
 aptold install -fy --install-suggests \
 pkg-config build-essential autoconf bison re2c meson \
 libxml2-dev libsqlite3-dev curl make gcc devscripts debhelper dh-apache2 apache2-dev libc-client-dev \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 aptold install -fy libwebp-dev \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 aptold install -fy libwebp-dev libwebp6 libgd-dev \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 aptold install -fy libgd-dev libgd3 \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 
 for apv in "${PHPVERS[@]}"; do
@@ -87,19 +87,19 @@ for apv in "${PHPVERS[@]}"; do
 	$apv-opcache $apv-readline $apv-soap $apv-tidy $apv-xdebug $apv-xml $apv-xsl $apv-zip \
 	php-memcached php-redis php-igbinary php-msgpack php-apcu php-xdebug \
 	pkg-php-tools libdistro-info-perl php-all-dev \
-		2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+		2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 done
 
 
 aptold install -my php-http php-raphf \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 apt-cache search php | grep http | grep -i pecl | \
 	cut -d" " -f1 | xargs aptold install -fy | grep --color=auto "Depends\|$"
 
 apt-cache search libsnmp | grep -iv "perl\|dbg\|pyth" | cut -d" " -f1 | \
 	xargs aptold install -fy \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
 devscripts build-essential lintian debhelper git git-extras wget axel dh-make dh-php ccache \
@@ -124,14 +124,14 @@ libxml2-dev libpcre3-dev libbz2-dev libcurl4-openssl-dev libjpeg-dev libxpm-dev 
 libgmp-dev libsasl2-dev libmhash-dev unixodbc-dev freetds-dev libpspell-dev libsnmp-dev libtidy-dev libxslt1-dev libmcrypt-dev \
 libpng*dev libdb5*-dev libfreetype*dev libxft*dev libgdchart-gd2-xpm-dev freetds-dev libldb-dev libldap2-dev \
 libdb5*dev libdb4*dev libdn*dev libidn*dev libomp-dev meson \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 apt-cache search libdb | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
 xargs aptold install -fy  --no-install-recommends  --allow-downgrades \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 apt-cache search db5 | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
 xargs aptold install -fy  --no-install-recommends  --allow-downgrades \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
 default-jdk libx11-dev xorg-dev libcurl4-openssl-dev \
@@ -143,7 +143,7 @@ libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
 php-dev libc6-dev libticonv-dev libiconv-hook-dev \
 libghc-iconv-dev libiconv-hook-dev libc-bin \
 libqdbm* libgdbm* libxqdbm* libxmlrpc-c*dev xmlrpc-api-utils \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 aptold install -fy --no-install-recommends  --allow-downgrades \
 apache2-dev autotools-dev *clang*dev default-libmysqlclient-dev devscripts dpkg-dev \
@@ -174,7 +174,7 @@ php-dev php-igbinary-all-dev php-memcached-all-dev \
 postgresql-server-dev-* postgresql-server-dev-all slapi-dev \
 systemtap-sdt-dev tcl-dev unixodbc-dev uuid-dev xorg-dev \
 zlib1g*dev zlib1g-dev \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 # libboost1.67-dev libboost-atomic1.67-dev \
 # libboost-chrono1.67-dev libboost-date-time1.67-dev libboost-date-time-dev \
@@ -187,7 +187,7 @@ libboost*-dev libboost-atomic*-dev \
 libboost-chrono*-dev libboost-date-time*-dev libboost-date-time-dev \
 libboost-serialization*-dev libboost-system*-dev libboost-system-dev \
 libboost-thread*-dev libboost-thread-dev  \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 aptold install -fy \
 libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
@@ -195,7 +195,7 @@ libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev \
 libssl-dev libxml2-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
 pkg-config build-essential autoconf bison re2c libxml2-dev libsqlite3-dev freetds-dev \
 libmagickwand-dev libmagickwand-6*dev libgraphicsmagick1-dev libmagickcore-6-arch-config \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 
 for apv in "${PHPVERS[@]}"; do
@@ -209,7 +209,7 @@ for apv in "${PHPVERS[@]}"; do
 done
 
 aptold build-dep -fy php-http php-raphf \
-	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 apt-cache search php | grep http | grep -i pecl | \
 	cut -d" " -f1 | \

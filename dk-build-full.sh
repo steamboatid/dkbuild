@@ -214,7 +214,7 @@ if [[ $isdeps -gt 0 ]]; then
 	sed "s/\s/\n/g" | sed '/^$/d' | sed "s/:any//g" | sort -u | sort > $ATMP
 	mv $ATMP ~/build.deps
 	cat ~/build.deps
-	cat ~/build.deps | xargs aptold install -fy 2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends"
+	cat ~/build.deps | xargs aptold install -fy 2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends"
 	printf "\n\n"
 	exit 1;
 fi
