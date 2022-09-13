@@ -193,7 +193,7 @@ tee /etc/apt/sources.list.d/keydb.list
 wget -O /etc/apt/trusted.gpg.d/keydb.gpg https://download.keydb.dev/open-source-dist/keyring.gpg
 fix_apt_bookworm
 apt update
-apt install keydb
+apt install keydb -fy
 
 #--- php sources.list
 echo \

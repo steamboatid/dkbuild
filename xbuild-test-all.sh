@@ -93,11 +93,21 @@ lxc-start -qn teye
 lxc-start -qn twor
 sleep 1
 
-build_ops "bus"  >/dev/null 2>&1 &
-build_ops "eye"  >/dev/null 2>&1 &
-build_ops "wor"  >/dev/null 2>&1 &
+blog="/var/log/dkbuild/dk-prep-build-all.log"
+>$blog
+build_ops "bus"  2>&1 | tee -a $blog >/dev/null 2>&1 &
+build_ops "eye"  2>&1 | tee -a $blog >/dev/null 2>&1 &
+build_ops "wor"  2>&1 | tee -a $blog >/dev/null 2>&1 &
 wait
 sleep 1
+
+# stop if failed
+isfail=$(cat $blog | grep -i "error\|failed" | wc -l)
+if [[ $isfail -gt 0 ]]; then
+	cat $blog
+	exit 1
+fi
+
 
 
 printf "\n\n --- xrepo-rebuild \n"
