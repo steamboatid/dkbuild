@@ -91,6 +91,7 @@ find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 #--- delete php8.2*
 # most php modules not support it yet
 #-------------------------------------------
+rm -rf /etc/php/8.2 /usr/share/php8.2* /usr/share/php/8.2
 dpkg -l | grep php8.2 | awk '{print $2}' | tr "\n" ' ' | xargs apt purge -fy
 
 

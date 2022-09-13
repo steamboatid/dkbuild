@@ -23,7 +23,7 @@ source /tb2/build-devomd/dk-build-0libs.sh
 
 # bug
 rm -rf /etc/apt/sources.list.d/mariadb.list.*
-
+fix_apt_bookworm
 
 #--- init
 #-------------------------------------------
@@ -54,6 +54,8 @@ rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
 mkdir -p /root/.local/share/nano/ /root/.config/procps/; \
 dpkg --configure -a; \
 apt autoclean; apt clean; apt update --allow-unauthenticated
+
+fix_apt_bookworm
 
 dpkg --configure -a; \
 aptold install -y
@@ -342,6 +344,7 @@ linux-headers-amd64 linux-image-amd64 udev ccache psmisc cheese \
 ebtables arptables ipcalc ipset whois jq \
 google-perftools libgoogle-perftools-dev libedit-dev devscripts \
 libfl-dev flex bison libsodium* libldap2-dev libpcre2-dev zstd \
+libboost-all-dev libboost-dev libboost-tools-dev \
 	2>&1 | grep -iv "newest\|picking\|reading\|building\|skipping"
 
 apt-cache search libssl | grep -v "ocaml\|clojure" | \
