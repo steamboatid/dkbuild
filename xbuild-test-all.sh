@@ -26,7 +26,7 @@ source /tb2/build-devomd/dk-build-0libs.sh
 
 
 kill_current_scripts(){
-	PID=$$
+	PID=$1
 	ps auxw | grep -v grep | grep "xbuild-test-all.sh" | \
 		awk '{print $2}' | grep -v "$PID" | xargs kill -9  >/dev/null 2>&1
 	sleep 0.3
@@ -42,8 +42,8 @@ kill_current_scripts(){
 }
 
 reset
-kill_current_scripts
-kill_current_scripts
+kill_current_scripts $$
+kill_current_scripts $$
 
 rm -rf /var/log/dkbuild
 mkdir -p /var/log/dkbuild
