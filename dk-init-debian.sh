@@ -124,6 +124,21 @@ deb-src http://deb.debian.org/debian bookworm-proposed-updates main contrib non-
 deb http://deb.debian.org/debian-security bookworm-security main
 deb-src http://deb.debian.org/debian-security bookworm-security main
 '>/etc/apt/sources.list
+
+	mkdir -p /etc/apt/sources.list.d/
+	echo \
+'deb http://deb.debian.org/debian bullseye main contrib non-free
+deb http://deb.debian.org/debian bullseye-updates main contrib non-free
+deb http://deb.debian.org/debian bullseye-proposed-updates main contrib non-free
+
+deb-src http://deb.debian.org/debian bullseye main contrib non-free
+deb-src http://deb.debian.org/debian bullseye-updates main contrib non-free
+deb-src http://deb.debian.org/debian bullseye-proposed-updates main contrib non-free
+
+deb http://deb.debian.org/debian-security bullseye-security main
+deb-src http://deb.debian.org/debian-security bullseye-security main
+'>/etc/apt/sources.list.d/bullseye.list
+
 }
 
 init_apt_keys() {

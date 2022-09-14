@@ -49,21 +49,21 @@ build_ops(){
 	>$alog
 
 	printf "\n\n --- apt upgrade -- $alxc \n"
-	lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh "$alxc" \
-		2>&1 | tee -a $alog
+	lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh -l "$alxc" \
+		2>&1 | tee -a $alog  2>&1 >/dev/null
 
 	isfail=$(cat $alog | grep -i "fatal failed" | wc -l)
 	if [[ $isfail -lt 1 ]]; then
 		printf "\n\n --- prep-all -- $alxc \n"
-		lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-prep-all.sh "$alxc" \
-			2>&1 | tee -a $alog
+		lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-prep-all.sh -l "$alxc" \
+			2>&1 | tee -a $alog  2>&1 >/dev/null
 	fi
 
 	isfail=$(cat $alog | grep -i "fatal failed" | wc -l)
 	if [[ $isfail -lt 1 ]]; then
 		printf "\n\n --- build-all -- $alxc \n"
-		lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-build-all.sh "$alxc" \
-			2>&1 | tee -a $alog
+		lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-build-all.sh -l "$alxc" \
+			2>&1 | tee -a $alog  2>&1 >/dev/null
 	fi
 }
 
@@ -98,6 +98,25 @@ blog="/var/log/dkbuild/dk-prep-build-all.log"
 build_ops "bus"  2>&1 | tee -a $blog 2>&1 &
 build_ops "eye"  2>&1 | tee -a $blog 2>&1 &
 build_ops "wor"  2>&1 | tee -a $blog 2>&1 &
+
+printf "\n\n"
+aloop=0
+while :; do
+	sleep 1
+	numi=$(ps axww | grep -v grep | grep "dk-" | grep ".sh" | wc -l)
+	if [[ $numi -lt 1 ]]; then
+		sleep 0.5
+		break
+	fi
+	printf ".${numi} "
+
+	aloop=$(( aloop+1 ))
+	amod=$(expr $aloop % 5)
+	if [[ $amod -eq 1 ]]; then
+		ps w | grep -v grep| grep "dk-" | grep ".sh" | sed -r "s/\s+/ /g" | \
+		cut -d" " -f6- | sort -u
+	fi
+done
 wait
 sleep 1
 

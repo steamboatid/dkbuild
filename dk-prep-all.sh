@@ -21,6 +21,24 @@ export TODATE=$(date +%Y%m%d)
 source /tb2/build-devomd/dk-build-0libs.sh
 
 
+
+# read command parameter
+#-------------------------------------------
+# while getopts d:y:a: flag
+while getopts l: flag
+do
+	case "${flag}" in
+		l) alxc=${OPTARG};;
+	esac
+done
+
+# if empty lxc, the use hostname
+if [ -z "${alxc}" ]; then
+	alxc="$HOSTNAME"
+fi
+
+
+
 # fix keydb perm, purge pendings, del locks
 delete_apt_lock
 fix_keydb_permission_problem
@@ -39,14 +57,14 @@ ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}
 
 # prepare basic need: apt configs, sources list, etc
 #-------------------------------------------
-/bin/bash /tb2/build-devomd/dk-config-gen.sh
-/bin/bash /tb2/build-devomd/dk-prep-basic.sh
+/bin/bash /tb2/build-devomd/dk-config-gen.sh -l $alxc
+/bin/bash /tb2/build-devomd/dk-prep-basic.sh -l $alxc
 
-nohup /bin/bash /tb2/build-devomd/dk-prep-gits.sh >/dev/null 2>&1 &
+nohup /bin/bash /tb2/build-devomd/dk-prep-gits.sh -l $alxc >/dev/null 2>&1 &
 
-/bin/bash /tb2/build-devomd/dk-prep-deps-nginx.sh
-/bin/bash /tb2/build-devomd/dk-prep-core-php8.sh
-/bin/bash /tb2/build-devomd/dk-prep-deps-php8.sh
+/bin/bash /tb2/build-devomd/dk-prep-deps-nginx.sh -l $alxc
+/bin/bash /tb2/build-devomd/dk-prep-core-php8.sh -l $alxc
+/bin/bash /tb2/build-devomd/dk-prep-deps-php8.sh -l $alxc
 
 
 # NGINX, source via git

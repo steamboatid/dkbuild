@@ -23,9 +23,29 @@ source /tb2/build-devomd/dk-build-0libs.sh
 
 
 
+# read command parameter
+#-------------------------------------------
+# while getopts d:y:a: flag
+while getopts l: flag
+do
+	case "${flag}" in
+		l) alxc=${OPTARG};;
+	esac
+done
+
+# if empty lxc, the use hostname
+if [ -z "${alxc}" ]; then
+	alxc="$HOSTNAME"
+fi
+
+
+
+
+
+
 doback(){
-	/usr/bin/nohup /bin/bash $1 >/dev/null 2>&1 &
-	printf "\n\n exec back: $1 \n\n\n"
+	/usr/bin/nohup /bin/bash $1 -l $2 >/dev/null 2>&1 &
+	printf "\n\n exec back: $1 at $2 \n\n\n"
 	sleep 1
 }
 
@@ -84,7 +104,7 @@ stop_services
 
 # gen config
 #-------------------------------------------
-/bin/bash /tb2/build-devomd/dk-config-gen.sh
+/bin/bash /tb2/build-devomd/dk-config-gen.sh -l $alxc
 
 
 #--- delete OLD files
@@ -95,9 +115,9 @@ find /tb2/build-devomd/$RELNAME-all -type f -iname "*deb" -delete
 
 # some job at foreground: build & istall base packages
 #-------------------------------------------
-doback_bash /tb2/build-devomd/dk-build-libzip.sh
-doback_bash /tb2/build-devomd/dk-build-pcre.sh
-doback_bash /tb2/build-devomd/dk-build-db4.sh
+doback_bash /tb2/build-devomd/dk-build-libzip.sh "$alxc"
+doback_bash /tb2/build-devomd/dk-build-pcre.sh "$alxc"
+doback_bash /tb2/build-devomd/dk-build-db4.sh "$alxc"
 
 wait_build_full
 check_installed_pkgs
@@ -105,18 +125,18 @@ check_installed_pkgs
 
 # some job at background
 #-------------------------------------------
-doback_bash /tb2/build-devomd/dk-build-nutcracker.sh
-doback_bash /tb2/build-devomd/dk-build-keydb.sh
-doback_bash /tb2/build-devomd/dk-build-lua-resty-lrucache.sh
-doback_bash /tb2/build-devomd/dk-build-lua-resty-core.sh
-doback_bash /tb2/build-devomd/dk-build-sshfs-fuse.sh
+doback_bash /tb2/build-devomd/dk-build-nutcracker.sh "$alxc"
+doback_bash /tb2/build-devomd/dk-build-keydb.sh "$alxc"
+doback_bash /tb2/build-devomd/dk-build-lua-resty-lrucache.sh "$alxc"
+doback_bash /tb2/build-devomd/dk-build-lua-resty-core.sh "$alxc"
+doback_bash /tb2/build-devomd/dk-build-sshfs-fuse.sh "$alxc"
 
 
 # some job at foreground, wait first
 #-------------------------------------------
 wait_build_full
-doback_bash /tb2/build-devomd/dk-build-nginx.sh
-doback_bash /tb2/build-devomd/dk-build-php8.sh
+doback_bash /tb2/build-devomd/dk-build-nginx.sh "$alxc"
+doback_bash /tb2/build-devomd/dk-build-php8.sh "$alxc"
 
 
 # wait all background jobs
