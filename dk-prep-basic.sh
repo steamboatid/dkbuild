@@ -201,8 +201,8 @@ deb-src https://packages.sury.org/php/ ${RELNAME} main
 # fix apt sources
 fix_apt_bookworm
 
-cat /etc/apt/sources.list.d/php-sury.list /etc/apt/sources.list.d/keydb.list
-exit 0
+# cat /etc/apt/sources.list.d/php-sury.list /etc/apt/sources.list.d/keydb.list
+# exit 0
 
 
 aptold install -fy gnupg2
