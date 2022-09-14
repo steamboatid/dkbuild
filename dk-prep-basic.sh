@@ -19,6 +19,10 @@ export TODATE=$(date +%Y%m%d)
 
 
 source /tb2/build-devomd/dk-build-0libs.sh
+fix_apt_bookworm
+
+cat /etc/apt/sources.list.d/php-sury.list /etc/apt/sources.list.d/keydb.list
+exit 0
 
 
 # bug
