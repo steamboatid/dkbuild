@@ -104,7 +104,7 @@ build_ops "wor"  2>&1 | tee -a $blog 2>&1 &
 printf "\n\n"
 aloop=0
 while :; do
-	sleep 1
+	sleep 2
 	numi=$(ps axww | grep -v grep | grep "dk-" | grep ".sh" | wc -l)
 	if [[ $numi -lt 1 ]]; then
 		sleep 0.5
@@ -112,12 +112,12 @@ while :; do
 	fi
 	printf ".${numi} "
 
-	aloop=$(( aloop+1 ))
-	amod=$(expr $aloop % 5)
-	if [[ $amod -eq 1 ]]; then
-		ps w | grep -v grep| grep "dk-" | grep ".sh" | sed -r "s/\s+/ /g" | \
-		cut -d" " -f6- | sort -u
-	fi
+	# aloop=$(( aloop+1 ))
+	# amod=$(expr $aloop % 15)
+	# if [[ $amod -eq 1 ]]; then
+	# 	ps w | grep -v grep| grep "dk-" | grep ".sh" | sed -r "s/\s+/ /g" | \
+	# 	cut -d" " -f6- | sort -u
+	# fi
 done
 wait
 sleep 1
