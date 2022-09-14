@@ -260,8 +260,7 @@ elif [[ "${RELNAME}" = "bullseye" ]]; then
 	init_bullseye
 elif [[ "${RELNAME}" = "bookworm" ]]; then
 	init_bookworm
-	sed -i 's/bookworm/bullseye/' /etc/apt/sources.list.d/php-sury.list
-	sed -i 's/bookworm/bullseye/' /etc/apt/sources.list.d/keydb.list
+	fix_apt_bookworm
 fi
 cat /etc/apt/sources.list
 
