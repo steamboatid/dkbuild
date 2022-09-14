@@ -148,6 +148,7 @@ cp $FPKGS $FDST1
 FNOW1="/tb2/tmp/php-pkg-now-1.txt"
 FNOW2="/tb2/tmp/php-pkg-now-2.txt"
 FNOW3="/tb2/tmp/php-pkg-now-3.txt"
+FMISS="/tb2/tmp/php-miss.txt"
 
 FSRC1="/tb2/tmp/php-pkg-src-1.txt"
 FSRC2="/tb2/tmp/php-pkg-src-2.txt"
@@ -191,12 +192,14 @@ cat $FNOW2 | sort -u | sort > $FNOW3
 
 #--- check by apt-cache search
 >$FNOW2
+>$FMISS
 printf "\n\n missing packages: \n"
 for apkg in $(cat $FNOW3); do
 	if [[ $(apt-cache search "$apkg" | wc -l) -gt 0 ]]; then
 		echo "${apkg}" >> $FNOW2
 	else
 		printf " --- $apkg \n"
+		echo "${apkg}" >> $FMISS
 	fi
 done
 
