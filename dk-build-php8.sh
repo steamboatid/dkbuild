@@ -313,6 +313,8 @@ cd /root/src/php
 #--- raph
 build_install_raph_debs &
 build_install_propro_debs &
+wait
+dpkg -i --force-all /root/src/php/php*-raph*deb /root/src/php/php*-propro*deb
 exit 0
 
 
