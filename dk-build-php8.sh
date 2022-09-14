@@ -1,6 +1,7 @@
 #!/bin/bash
 
 
+sdir=$(dirname $0)
 export DEBIAN_FRONTEND="noninteractive"
 
 export DEBFULLNAME="Dwi Kristianto"
@@ -24,6 +25,7 @@ export PHPGREP="php8.0\|php8.1\|php8.2"
 source /tb2/build-devomd/dk-build-0libs.sh
 fix_relname_bookworm
 fix_apt_bookworm
+
 source /tb2/build-devomd/dk-build-1libs.sh
 
 
@@ -122,10 +124,19 @@ wait_build_jobs_php(){
 	printf "\n\n"
 }
 
+build_install_raph_debs(){
+	build_raph=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "raph" | wc -l)
+	if [[ $build_raph -lt 1 ]]; then
+		raph_dir=$(find /root/src/php -maxdepth 1 -type d -iname "php*raph*" | sort -nr | head -n1)
+		/bin/bash $sdir/dk-build-full.sh -d $raph_dir
+		dpkg -i --force-all /root/src/php*-raph*deb
+	fi
+}
+
 install_propro_debs(){
 	build_propro=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "propro" | wc -l)
 	debs_propro=$(find -L /root/src/php -type f -iname "php*-propro*deb" | wc -l)
-	if [[ $debs_propro -gt 0 ]] && [[ $build_propro -lt 1 ]]; then
+	if [[ $debs_propro -gt 0 ]] && [[ $build_propro -lt 0 ]]; then
 		dpkg -i --force-all /root/src/php*-propro*deb
 	fi
 }
@@ -286,6 +297,12 @@ cd /root/src/php
 
 # for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "phalcon3\|http\|lz4\|\-ps\-" | sort -nr); do
 # for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep "http" | sort -nr); do
+
+
+#--- build & install some extensions first
+#--- raph
+build_install_raph_debs
+exit 0
 
 
 #--- initial build
