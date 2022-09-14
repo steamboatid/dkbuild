@@ -91,7 +91,7 @@ libtexluajit*dev libluajit-*dev libxslt*-dev libxslt1.1 \
 
 aptold build-dep -fydu nginx lua-resty-core lua-resty-lrucache libpcre3 libsodium-dev \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends"
-aptold install -fydu --fix-broken  --allow-downgrades --allow-change-held-packages \
+aptold install -fy --fix-broken  --allow-downgrades --allow-change-held-packages \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends"
 # save_local_debs
 
