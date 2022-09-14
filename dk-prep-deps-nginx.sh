@@ -19,7 +19,7 @@ export TODATE=$(date +%Y%m%d)
 
 
 source /tb2/build-devomd/dk-build-0libs.sh
-
+fix_apt_bookworm
 
 
 

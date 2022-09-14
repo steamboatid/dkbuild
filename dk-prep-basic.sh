@@ -29,6 +29,7 @@ fix_apt_bookworm
 #-------------------------------------------
 init_dkbuild
 dig packages.sury.org @1.1.1.1
+fix_apt_bookworm
 
 if [[ "${RELNAME}" = "bookworm" ]]; then
 	sed -i 's/bookworm/bullseye/' /etc/apt/sources.list.d/php-sury.list
@@ -55,7 +56,6 @@ mkdir -p /root/.local/share/nano/ /root/.config/procps/; \
 dpkg --configure -a; \
 apt autoclean; apt clean; apt update --allow-unauthenticated
 
-fix_apt_bookworm
 
 dpkg --configure -a; \
 aptold install -y

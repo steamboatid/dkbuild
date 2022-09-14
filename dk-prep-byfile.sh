@@ -19,7 +19,7 @@ export TODATE=$(date +%Y%m%d)
 
 
 source /tb2/build-devomd/dk-build-0libs.sh
-
+fix_apt_bookworm
 
 
 # https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/libdb4.8_4.8.30-buster1_amd64.deb

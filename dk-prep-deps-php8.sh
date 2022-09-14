@@ -22,7 +22,7 @@ export PHPGREP="php8.0\|php8.1"
 
 
 source /tb2/build-devomd/dk-build-0libs.sh
-
+fix_apt_bookworm
 
 
 
