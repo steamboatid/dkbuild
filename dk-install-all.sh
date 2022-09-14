@@ -32,6 +32,14 @@ delete_apt_lock
 
 
 
+echo \
+'Acquire {
+  ftp::proxy "http://10.0.3.1:3128";
+  http::proxy "http://10.0.3.1:3128";
+  https::proxy "http://10.0.3.1:3128";
+}'>/etc/apt/apt.conf.d/02proxy
+
+
 if [[ ! -e /run/done.init.dkbuild.txt ]]; then
 
 	# tweaks
