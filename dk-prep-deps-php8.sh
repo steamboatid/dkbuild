@@ -305,11 +305,14 @@ find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 
 
-#--- delete php8.2*
-# most php modules not support it yet
+#--- mark as manual installed,
+# for nginx, php, redis, keydb, memcached
 #-------------------------------------------
-rm -rf /etc/php/8.2 /usr/share/php8.2* /usr/share/php/8.2
-dpkg -l | grep php8.2 | awk '{print $2}' | tr "\n" ' ' | xargs apt purge -fy
+dpkg -l | grep "PHP\|nginx\|memcache\|keydb\|redis" | \
+awk '{print $2}' | tr "\n" " " | xargs apt-mark manual \
+ >/dev/null 2>&1
+apt-mark manual libssl1.1 libssl3 libssl-dev libffi7 libffi8 libffi-dev \
+ >/dev/null 2>&1
 
 
 printf "\n\n\n"
