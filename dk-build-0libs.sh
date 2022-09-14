@@ -950,7 +950,7 @@ reinstall_essential(){
 
 fix_relname_bookworm(){
 	export RELNAME=$(lsb_release -sc)
-	if [[ $(lsb_release -a | grep bookworm | wc -l) -gt 0 ]] ||
+	if [[ $(lsb_release -a 2>&1 | grep bookworm | wc -l) -gt 0 ]] ||
 		[[ $(cat /etc/debian_version | grep bookworm | wc -l) -gt 0 ]] ||
 		[[ $(cat /etc/issue | grep bookworm | wc -l) -gt 0 ]]; then
 		export RELNAME="bookworm"
