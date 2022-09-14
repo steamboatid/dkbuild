@@ -2,6 +2,8 @@
 
 
 source /tb2/build-devomd/dk-build-0libs.sh
+fix_relname_bookworm
+fix_apt_bookworm
 
 #-- kill prev apts
 ps auxw | grep -v grep | grep "apt-key add\|gpg" | awk '{print $2}' | xargs kill -9 >/dev/null 2>&1
