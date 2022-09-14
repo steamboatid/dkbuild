@@ -31,8 +31,8 @@ init_dkbuild
 dig packages.sury.org @1.1.1.1
 fix_apt_bookworm
 
-cat /etc/apt/sources.list.d/php-sury.list /etc/apt/sources.list.d/keydb.list
-exit 0
+# cat /etc/apt/sources.list.d/php-sury.list /etc/apt/sources.list.d/keydb.list
+# exit 0
 
 
 #--- clean up previous
