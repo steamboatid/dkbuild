@@ -33,7 +33,9 @@ digdom(){
 # check dns resolve
 digdom "github.com"
 digdom "github.com" "@10.0.3.1"
+digdom "github.com" "@192.168.0.1"
 digdom "github.com" "@192.168.1.1"
+digdom "github.com" "@1.1.1.1"
 # dig github.com | grep -v ";" | grep "IN" | grep "A" | grep -v "AAAA" | grep "github.com"
 # dig github.com @10.0.3.1 | grep -v ";" | grep "IN" | grep "A" | grep -v "AAAA" | grep "github.com"
 # dig github.com @192.168.1.1 | grep -v ";" | grep "IN" | grep "A" | grep -v "AAAA" | grep "github.com"
