@@ -36,6 +36,8 @@ if [[ "${RELNAME}" = "bookworm" ]]; then
 	sed -i 's/bookworm/bullseye/' /etc/apt/sources.list.d/keydb.list
 fi
 
+cat /etc/apt/sources.list.d/php-sury.list /etc/apt/sources.list.d/keydb.list
+exit 0
 
 
 #--- clean up previous
