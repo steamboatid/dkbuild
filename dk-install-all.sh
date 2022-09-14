@@ -117,7 +117,7 @@ fi
 
 #--- for logging
 ip a
-dhclient eth0
+get_dhcp_ip "eth0"
 
 
 find /var/lib/apt/lists/ -type f -delete; \

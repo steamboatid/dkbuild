@@ -871,6 +871,19 @@ apt_source_build_dep_from_file(){
 
 
 
+get_dhcp_ip(){
+	anic=$1
+
+	ip a s $anic | grep inet
+	hasip=$(ip a s $anic | grep inet | wc -l)
+	if [[ $hasip -lt 1 ]]; then
+		/sbin/dhclient -4 -v -i -pf /run/dhclient.$anic.pid \
+		-lf /var/lib/dhcp/dhclient.$anic.leases \
+		-I -df /var/lib/dhcp/dhclient6.$anic.leases $anic
+		rm -rf /etc/resolvconf/run; /etc/init.d/resolvconf restart
+	fi
+}
+
 init_dkbuild(){
 	# global config
 	global_git_config  &
@@ -884,15 +897,7 @@ init_dkbuild(){
 	if [[ $(grep "buster" /etc/apt/sources.list | wc -l) -gt 0 ]]; then
 		rm -rf /etc/resolvconf/run; /etc/init.d/resolvconf restart
 
-		ip a s eth0 | grep inet
-		hasip=$(ip a s eth0 | grep inet | wc -l)
-		if [[ $hasip -lt 1 ]]; then
-			/sbin/dhclient -4 -v -i -pf /run/dhclient.eth0.pid \
-			--dad-wait-time 2 \
-			-lf /var/lib/dhcp/dhclient.eth0.leases \
-			-I -df /var/lib/dhcp/dhclient6.eth0.leases eth0
-			rm -rf /etc/resolvconf/run; /etc/init.d/resolvconf restart
-		fi
+		get_dhcp_ip "eth0"
 
 		if [[ ! -e /etc/resolv.conf ]]; then
 			cat << EOT > /etc/resolv.conf
@@ -912,14 +917,7 @@ EOT
 		systemctl restart systemd-resolved.service
 		# systemd-resolve --status
 
-		ip a s eth0 | grep inet
-		hasip=$(ip a s eth0 | grep inet | wc -l)
-		if [[ $hasip -lt 1 ]]; then
-			/sbin/dhclient -4 -v -i -pf /run/dhclient.eth0.pid \
-			-lf /var/lib/dhcp/dhclient.eth0.leases \
-			-I -df /var/lib/dhcp/dhclient6.eth0.leases eth0
-			systemctl restart systemd-resolved.service
-		fi
+		get_dhcp_ip "eth0"
 
 		if [[ ! -e /etc/resolv.conf ]]; then
 			cat << EOT > /etc/resolv.conf

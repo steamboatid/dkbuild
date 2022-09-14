@@ -35,13 +35,7 @@ if [[ $islxc -gt 0 ]]; then
 	if [[ $(grep "buster" /etc/apt/sources.list | wc -l) -gt 0 ]]; then
 		rm -rf /etc/resolvconf/run; /etc/init.d/resolvconf restart
 
-		ip a s eth0 | grep inet
-		hasip=$(ip a s eth0 | grep inet | wc -l)
-		if [[ $hasip -lt 1 ]]; then
-			/sbin/dhclient -4 -v -i -pf /run/dhclient.eth0.pid \
-			-lf /var/lib/dhcp/dhclient.eth0.leases \
-			-I -df /var/lib/dhcp/dhclient6.eth0.leases eth0
-		fi
+		get_dhcp_ip "eth0"
 
 		rm -rf /etc/resolvconf/run; /etc/init.d/resolvconf restart
 
@@ -62,14 +56,7 @@ EOT
 		systemctl restart systemd-resolved.service
 		# systemd-resolve --status
 
-		ip a s eth0 | grep inet
-		hasip=$(ip a s eth0 | grep inet | wc -l)
-		if [[ $hasip -lt 1 ]]; then
-			/sbin/dhclient -4 -v -i -pf /run/dhclient.eth0.pid \
-			-lf /var/lib/dhcp/dhclient.eth0.leases \
-			-I -df /var/lib/dhcp/dhclient6.eth0.leases eth0
-			systemctl restart systemd-resolved.service
-		fi
+		get_dhcp_ip "eth0"
 
 		if [[ ! -e /etc/resolv.conf ]]; then
 			cat << EOT > /etc/resolv.conf
