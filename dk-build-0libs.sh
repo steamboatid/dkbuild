@@ -950,11 +950,11 @@ reinstall_essential(){
 
 fix_apt_bookworm(){
 	if [[ "${RELNAME}" = "bookworm" ]]; then
-		sed -ir 's/n\/a/bullseye/' /etc/apt/sources.list.d/php-sury.list
-		sed -ir 's/bookworm/bullseye/' /etc/apt/sources.list.d/php-sury.list
+		sed -ir 's/n\/a/bullseye/g' /etc/apt/sources.list.d/php-sury.list
+		sed -ir 's/bookworm/bullseye/g' /etc/apt/sources.list.d/php-sury.list
 
-		sed -ir 's/n\/a/bullseye/' /etc/apt/sources.list.d/keydb.list
-		sed -ir 's/bookworm/bullseye/' /etc/apt/sources.list.d/keydb.list
+		sed -ir 's/n\/a/bullseye/g' /etc/apt/sources.list.d/keydb.list
+		sed -ir 's/bookworm/bullseye/g' /etc/apt/sources.list.d/keydb.list
 
 		apt update --allow-unauthenticated >/dev/null 2>&1
 	fi
