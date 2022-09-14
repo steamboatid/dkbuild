@@ -26,7 +26,8 @@ fix_apt_bookworm
 
 
 digdom(){
-	dig $1 $2 | grep -v ";" | grep "IN" | grep "A" | grep -v "AAAA" | grep "$1"
+	dig $1 $2 | grep -v ";" | grep "IN" | grep "A" | grep -v "AAAA" | grep "$1" |\
+		sed -r 's/\s+/ /g'
 }
 
 # check dns resolve
