@@ -166,7 +166,7 @@ install_aptfast(){
 cat << EOT >/etc/apt/sources.list.d/apt-fast.list
 deb http://ppa.launchpad.net/apt-fast/stable/ubuntu bionic main
 EOT
-	apt-key adv --keyserver keyserver.ubuntu.com \
+	apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 \
 	--recv-keys A2166B8DE8BDC3367D1901C11EE2FF37CA8DA16B \
 		2>&1 | grep --color "processed"
 

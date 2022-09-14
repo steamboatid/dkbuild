@@ -138,7 +138,15 @@ deb-src http://deb.debian.org/debian bullseye-proposed-updates main contrib non-
 deb http://deb.debian.org/debian-security bullseye-security main
 deb-src http://deb.debian.org/debian-security bullseye-security main
 '>/etc/apt/sources.list.d/bullseye.list
+}
 
+init_db4(){
+	mkdir -p /etc/apt/sources.list.d/
+	echo \
+'deb https://ppa.launchpadcontent.net/sickpig/db4.8/ubuntu xenial main
+deb-src https://ppa.launchpadcontent.net/sickpig/db4.8/ubuntu xenial main
+'>/etc/apt/sources.list.d/db48.list
+	apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 4D44E2F3A9D33F98
 }
 
 init_apt_keys() {
@@ -233,7 +241,7 @@ init_ssh() {
 init_basic_packages() {
 	pkgs=(eatmydata nano rsync libterm-readline-gnu-perl apt-utils lsb-release \
 	locales locales-all net-tools dnsutils \
-	apt aptitude apt-utils nload zstd)
+	apt aptitude apt-utils nload zstd jq)
 	install_old $pkgs
 }
 
@@ -257,6 +265,7 @@ elif [[ "${RELNAME}" = "bookworm" ]]; then
 fi
 cat /etc/apt/sources.list
 
+init_db4
 init_apt_keys
 init_ssh
 init_basic_packages
