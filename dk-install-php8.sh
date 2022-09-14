@@ -17,8 +17,8 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
-export PHPVERS=("php8.0" "php8.1")
-export PHPGREP="php8.0\|php8.1"
+export PHPVERS=("php8.0" "php8.1" "php8.2")
+export PHPGREP="php8.0\|php8.1\|php8.2"
 
 
 source /tb2/build-devomd/dk-build-0libs.sh
@@ -39,10 +39,9 @@ aptnew install  -o Dpkg::Options::="--force-overwrite" \
 --no-install-recommends --fix-missing --reinstall -fy \
 libzip4 libdb4.8 libgeoip1 bison flex libsodium23
 
-aptnew install \
---no-install-recommends --fix-missing --reinstall -fy \
-php8.0-fpm php8.0-cli php8.0-zip \
-php8.1-fpm php8.1-cli php8.1-zip
+apt-cache search php8 | grep -v "dbgsym" | \
+grep -i "\-zip\|\-cli\|\-fpm" | awk '{print $1}' | \
+xargs aptnew install -fy
 
 
 # complete install PHP8.x
@@ -88,6 +87,7 @@ complete_php_installs() {
 
 complete_php_installs "php8.0" "8.0"
 complete_php_installs "php8.1" "8.1"
+complete_php_installs "php8.2" "8.2"
 
 
 
@@ -109,12 +109,14 @@ check_php_installs() {
 }
 check_php_installs "php8.0"
 check_php_installs "php8.1"
+check_php_installs "php8.2"
 
 
 
 # restart using rc
 [ -x /etc/init.d/php8.0-fpm ] && mkdir -p /run/php && /etc/init.d/php8.0-fpm restart
 [ -x /etc/init.d/php8.1-fpm ] && mkdir -p /run/php && /etc/init.d/php8.1-fpm restart
+[ -x /etc/init.d/php8.2-fpm ] && mkdir -p /run/php && /etc/init.d/php8.2-fpm restart
 
 
 # check php custom
@@ -127,3 +129,4 @@ check_php_custom() {
 
 check_php_custom "php8.0"
 check_php_custom "php8.1"
+check_php_custom "php8.2"

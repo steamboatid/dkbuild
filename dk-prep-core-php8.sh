@@ -17,8 +17,8 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
-export PHPVERS=("php8.0" "php8.1")
-export PHPGREP="php8.0\|php8.1"
+export PHPVERS=("php8.0" "php8.1" "php8.2")
+export PHPGREP="php8.0\|php8.1\|php8.2"
 
 
 source /tb2/build-devomd/dk-build-0libs.sh
@@ -216,7 +216,7 @@ aptold build-dep -fy php-http php-raphf \
 apt-cache search php | grep http | grep -i pecl | \
 	cut -d" " -f1 | \
 	grep -iv "php-http-all-dev\|php5.6-http\|php7.0-http\|php7.1-http\|php7.2-http\|php7.3-http\|php7.4-http" | \
-	grep -iv "php8.0-http\|php8.1-http" | \
+	grep -iv "php8.0-http\|php8.1-http\|php8.2-http" | \
 	grep -iv "php8.*\-http" | \
 	grep -iv "php9.*\-http" | \
 	xargs aptold build-dep -fy | grep --color=auto "Depends\|$"
