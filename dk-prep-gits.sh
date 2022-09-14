@@ -31,19 +31,16 @@ digdom(){
 }
 
 # check dns resolve
-digdom "github.com"
-digdom "github.com" "@10.0.3.1"
-digdom "github.com" "@192.168.0.1"
-digdom "github.com" "@192.168.1.1"
-digdom "github.com" "@1.1.1.1"
-digdom "github.com" "@8.8.8.8"
-# dig github.com | grep -v ";" | grep "IN" | grep "A" | grep -v "AAAA" | grep "github.com"
-# dig github.com @10.0.3.1 | grep -v ";" | grep "IN" | grep "A" | grep -v "AAAA" | grep "github.com"
-# dig github.com @192.168.1.1 | grep -v ";" | grep "IN" | grep "A" | grep -v "AAAA" | grep "github.com"
-# dig github.com @192.168.0.1 | grep -v ";" | grep "IN" | grep "A" | grep -v "AAAA" | grep "github.com"
-# dig github.com @1.1.1.1 | grep -v ";" | grep "IN" | grep "A" | grep -v "AAAA" | grep "github.com"
-# dig github.com @8.8.8.8 | grep -v ";" | grep "IN" | grep "A" | grep -v "AAAA" | grep "github.com"
+digdom "github.com" &
+digdom "github.com" "@10.0.3.1" &
+digdom "github.com" "@192.168.0.1" &
+digdom "github.com" "@192.168.1.1" &
+digdom "github.com" "@1.1.1.1" &
+digdom "github.com" "@8.8.8.8" &
+wait
 exit 0
+
+
 
 #  kill slow git
 ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
