@@ -62,7 +62,8 @@ ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}
 /bin/bash /tb2/build-devomd/dk-prep-basic.sh -l $alxc
 
 nohup /bin/bash /tb2/build-devomd/dk-prep-gits.sh -l $alxc >/dev/null 2>&1 &
-nohup /bin/bash /tb2/build-devomd/dk-prep-deps-nginx.sh -l $alxc >/dev/null 2>&1 &
+
+/bin/bash /tb2/build-devomd/dk-prep-deps-nginx.sh -l $alxc
 
 /bin/bash /tb2/build-devomd/dk-prep-core-php8.sh -l $alxc
 /bin/bash /tb2/build-devomd/dk-prep-deps-php8.sh -l $alxc
