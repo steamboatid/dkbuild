@@ -962,11 +962,11 @@ fix_apt_bookworm(){
 	fix_relname_bookworm
 
 	if [[ "${RELNAME}" = "bookworm" ]]; then
-		sed -ir 's/n\/a/bullseye/g' /etc/apt/sources.list.d/php-sury.list
-		sed -ir 's/bookworm/bullseye/g' /etc/apt/sources.list.d/php-sury.list
+		sed -i -r 's/n\/a/bullseye/g' /etc/apt/sources.list.d/php-sury.list
+		sed -i -r 's/bookworm/bullseye/g' /etc/apt/sources.list.d/php-sury.list
 
-		sed -ir 's/n\/a/bullseye/g' /etc/apt/sources.list.d/keydb.list
-		sed -ir 's/bookworm/bullseye/g' /etc/apt/sources.list.d/keydb.list
+		sed -i -r 's/n\/a/bullseye/g' /etc/apt/sources.list.d/keydb.list
+		sed -i -r 's/bookworm/bullseye/g' /etc/apt/sources.list.d/keydb.list
 
 		apt update --allow-unauthenticated >/dev/null 2>&1
 	fi
