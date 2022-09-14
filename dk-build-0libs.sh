@@ -950,7 +950,8 @@ reinstall_essential(){
 
 fix_apt_bookworm(){
 	export RELNAME=$(lsb_release -sc)
-	
+	printf "\n\n rel= $RELNAME \n\n"
+
 	if [[ "${RELNAME}" = "bookworm" ]]; then
 		sed -ir 's/n\/a/bullseye/g' /etc/apt/sources.list.d/php-sury.list
 		sed -ir 's/bookworm/bullseye/g' /etc/apt/sources.list.d/php-sury.list
