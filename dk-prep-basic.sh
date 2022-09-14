@@ -31,9 +31,6 @@ init_dkbuild
 dig packages.sury.org @1.1.1.1
 fix_apt_bookworm
 
-# cat /etc/apt/sources.list.d/php-sury.list /etc/apt/sources.list.d/keydb.list
-# exit 0
-
 
 #--- clean up previous
 #-------------------------------------------
@@ -201,6 +198,9 @@ deb-src https://packages.sury.org/php/ ${RELNAME} main
 
 # fix apt sources
 fix_apt_bookworm
+
+cat /etc/apt/sources.list.d/php-sury.list /etc/apt/sources.list.d/keydb.list
+exit 0
 
 
 aptold install -fy gnupg2
