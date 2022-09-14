@@ -469,16 +469,21 @@ update_existing_git(){
 
 	if git reset --hard  >/dev/null 2>&1; then
 
-		git stash; git stash clear
-		git reset; git checkout .; git reset --hard HEAD; git clean -fdx
+		git stash  2>&1 | tee -a $tmp  >/dev/null 2>&1
+		git stash clear  2>&1 | tee -a $tmp  >/dev/null 2>&1
 
-		git rm -r --cached . 2>&1 | tee -a $tmp
-		git submodule update --init --recursive -f  2>&1 | tee -a $tmp
-		git fetch --all  2>&1 | tee -a $tmp
+		git reset  2>&1 | tee -a $tmp  >/dev/null 2>&1
+		git checkout .  2>&1 | tee -a $tmp  >/dev/null 2>&1
+		git reset --hard HEAD  2>&1 | tee -a $tmp  >/dev/null 2>&1
+		git clean -fdx  2>&1 | tee -a $tmp  >/dev/null 2>&1
 
-		git pull --update-shallow --ff-only  2>&1 | tee -a $tmp
-		git pull --depth=1 --ff-only  2>&1 | tee -a $tmp
-		git pull --ff-only  2>&1 | tee -a $tmp
+		git rm -r --cached . 2>&1 | tee -a $tmp  >/dev/null 2>&1
+		git submodule update --init --recursive -f  2>&1 | tee -a $tmp  >/dev/null 2>&1
+		git fetch --all  2>&1 | tee -a $tmp  >/dev/null 2>&1
+
+		git pull --update-shallow --ff-only  2>&1 | tee -a $tmp  >/dev/null 2>&1
+		git pull --depth=1 --ff-only  2>&1 | tee -a $tmp  >/dev/null 2>&1
+		git pull --ff-only  2>&1 | tee -a $tmp  >/dev/null 2>&1
 
 	fi
 
