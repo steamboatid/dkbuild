@@ -36,3 +36,5 @@ for alxc in "${lxcs[@]}"; do
 	rm -rf $alxc/rootfs/var/cache/apt/archives
 	rm -rf $alxc/rootfs/root/org.src/ $alxc/rootfs/root/src
 done
+
+printf "\n\n\n"
