@@ -261,7 +261,11 @@ init_apt_keys
 init_ssh
 init_basic_packages
 
-reinstall_essential
+# reinstall_essential
+
+if [[ "${RELNAME}" = "bookworm" ]]; then
+	apt install -fy libssl1.1 libssl3 libssl-dev libffi7 libffi8 libffi-dev
+fi
 
 #--- saving
 # save_local_debs >/dev/null 2>&1 &
