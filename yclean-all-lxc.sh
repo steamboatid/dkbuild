@@ -29,6 +29,7 @@ cd /tb2/var-lib-lxc
 lxcs=( "bus" "eye" "wor" "tbus" "teye" "twor" )
 
 for alxc in "${lxcs[@]}"; do
+	printf "\n --- $alxc "
 	lxc-stop -kqn $alxc
 
 	rm -rf $alxc/rootfs/root/.ccache
