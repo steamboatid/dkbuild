@@ -261,6 +261,7 @@ init_apt_proxy(){
 #-------------------------------------------
 apt autoclean >/dev/null 2>&1; apt clean >/dev/null 2>&1
 init_resolver
+init_apt_proxy &
 
 printf "\n --- wait...\n"
 wait
