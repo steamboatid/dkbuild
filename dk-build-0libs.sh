@@ -545,6 +545,8 @@ get_update_new_github(){
 	DST="$2"
 	BRA="$3"
 
+	printf "\n $URL $DST $BRA"
+
 	if [ ! -d ${DST} ]; then
 		[ ! -z $BRA ] && OPS="-b $BRA" || OPS=""
 		printf "\n ---new clone to: $DST \n---from: https://github.com/${URL} $OPS $DST "
