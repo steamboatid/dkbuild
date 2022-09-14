@@ -258,7 +258,7 @@ find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 #--- mark as manual installed,
 # for nginx, php, redis, keydb, memcached
 #-------------------------------------------
-dpkg -l | grep "PHP\|nginx\|memcache\|keydb\|redis" | \
+dpkg -l | grep "PHP\|nginx\|memcache\|keydb\|redis\|db4" | \
 awk '{print $2}' | tr "\n" " " | xargs apt-mark manual \
  >/dev/null 2>&1
 apt-mark manual libssl1.1 libssl3 libssl-dev libffi7 libffi8 libffi-dev \
