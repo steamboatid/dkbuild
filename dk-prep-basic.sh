@@ -22,13 +22,10 @@ source /tb2/build-devomd/dk-build-0libs.sh
 fix_relname_bookworm
 fix_apt_bookworm
 
-cat /etc/apt/sources.list.d/php-sury.list /etc/apt/sources.list.d/keydb.list
-exit 0
 
 
 # bug
 rm -rf /etc/apt/sources.list.d/mariadb.list.*
-fix_apt_bookworm
 
 #--- init
 #-------------------------------------------
