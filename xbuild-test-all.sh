@@ -52,14 +52,14 @@ build_ops(){
 	lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh "$alxc" \
 		2>&1 | tee -a $alog
 
-	isfail=$(cat $alog | grep -i "error\|failed" | wc -l)
+	isfail=$(cat $alog | grep -i "fatal failed" | wc -l)
 	if [[ $isfail -lt 1 ]]; then
 		printf "\n\n --- prep-all -- $alxc \n"
 		lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-prep-all.sh "$alxc" \
 			2>&1 | tee -a $alog
 	fi
 
-	isfail=$(cat $alog | grep -i "error\|failed" | wc -l)
+	isfail=$(cat $alog | grep -i "fatal failed" | wc -l)
 	if [[ $isfail -lt 1 ]]; then
 		printf "\n\n --- build-all -- $alxc \n"
 		lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-build-all.sh "$alxc" \
@@ -95,14 +95,14 @@ sleep 1
 
 blog="/var/log/dkbuild/dk-prep-build-all.log"
 >$blog
-build_ops "bus"  2>&1 | tee -a $blog >/dev/null 2>&1 &
-build_ops "eye"  2>&1 | tee -a $blog >/dev/null 2>&1 &
-build_ops "wor"  2>&1 | tee -a $blog >/dev/null 2>&1 &
+build_ops "bus"  2>&1 | tee -a $blog 2>&1 &
+build_ops "eye"  2>&1 | tee -a $blog 2>&1 &
+build_ops "wor"  2>&1 | tee -a $blog 2>&1 &
 wait
 sleep 1
 
 # stop if failed
-isfail=$(cat $blog | grep -i "error\|failed" | wc -l)
+isfail=$(cat $blog | grep -i "fatal failed" | wc -l)
 if [[ $isfail -gt 0 ]]; then
 	cat $blog
 	exit 1

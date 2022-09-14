@@ -52,20 +52,20 @@ check_installed_pkgs(){
 	printf "\n\n"
 	export ERRBASE=0
 	if [[ $(dpkg -l | grep "^ii" | grep db4 | grep omd | wc -l) -lt 1 ]]; then
-		printf "\n --- ${red}db4 failed ${end}"
+		printf "\n --- ${red}db4 fatal failed ${end}"
 		export ERRBASE=1
 	fi
 	if [[ $(dpkg -l | grep "^ii" | grep pcre | grep omd | wc -l) -lt 1 ]]; then
-		printf "\n --- ${red}pcre failed ${end}"
+		printf "\n --- ${red}pcre fatal failed ${end}"
 		export ERRBASE=1
 	fi
 	if [[ $(dpkg -l | grep "^ii" | grep zip | grep omd | wc -l) -lt 1 ]]; then
-		printf "\n --- ${red}libzip failed ${end}"
+		printf "\n --- ${red}libzip fatal failed ${end}"
 		export ERRBASE=1
 	fi
 
 	if [[ $ERRBASE -gt 0 ]]; then
-		printf "\n\n --- ${red}base packages: failed ${end} \n\n"
+		printf "\n\n --- ${red}base packages: fatal failed ${end} \n\n"
 		exit 1
 	else
 		printf "\n\n --- ${green}base packages: OK ${end} \n\n"
