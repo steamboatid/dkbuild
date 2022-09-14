@@ -129,7 +129,7 @@ build_install_raph_debs(){
 	if [[ $build_raph -lt 1 ]]; then
 		raph_dir=$(find /root/src/php -maxdepth 1 -type d -iname "php*raph*" | sort -nr | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -d $raph_dir
-		dpkg -i --force-all /root/src/php*-raph*deb
+		dpkg -i --force-all /root/src/php/php*-raph*deb
 	fi
 }
 
@@ -138,6 +138,7 @@ install_propro_debs(){
 	debs_propro=$(find -L /root/src/php -type f -iname "php*-propro*deb" | wc -l)
 	if [[ $debs_propro -gt 0 ]] && [[ $build_propro -lt 0 ]]; then
 		dpkg -i --force-all /root/src/php*-propro*deb
+		dpkg -i --force-all /root/src/php/php*-propro*deb
 	fi
 }
 
