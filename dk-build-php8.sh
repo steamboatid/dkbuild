@@ -133,6 +133,15 @@ build_install_raph_debs(){
 	fi
 }
 
+build_install_propro_debs(){
+	build_propro=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "propro" | wc -l)
+	if [[ $build_propro -lt 1 ]]; then
+		propro_dir=$(find /root/src/php -maxdepth 1 -type d -iname "php*propro*" | sort -nr | head -n1)
+		/bin/bash $sdir/dk-build-full.sh -d $propro_dir
+		dpkg -i --force-all /root/src/php/php*-propro*deb
+	fi
+}
+
 install_propro_debs(){
 	build_propro=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "propro" | wc -l)
 	debs_propro=$(find -L /root/src/php -type f -iname "php*-propro*deb" | wc -l)
@@ -302,7 +311,8 @@ cd /root/src/php
 
 #--- build & install some extensions first
 #--- raph
-build_install_raph_debs
+build_install_raph_debs &
+build_install_propro_debs &
 exit 0
 
 
@@ -313,7 +323,7 @@ grep -v "git-phpredis\|libzip\|libvirt\|xcache\|tideways\|phalcon3\|lz4" | sort 
 done
 
 #--- immediate install
-install_propro_debs
+# install_propro_debs
 
 #--- rebuild if dkbuild.log not found
 for adir in $(find /root/src/php -mindepth 1 -maxdepth 1 -type d | sort -n); do
