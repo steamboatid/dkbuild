@@ -38,7 +38,7 @@ digdom "github.com" "@192.168.1.1" &
 digdom "github.com" "@1.1.1.1" &
 digdom "github.com" "@8.8.8.8" &
 wait
-exit 0
+# exit 0
 
 
 
