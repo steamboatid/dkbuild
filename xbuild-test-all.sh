@@ -50,6 +50,10 @@ build_ops(){
 	lxc-start -qn $alxc
 	>$alog
 
+	printf "\n\n --- init debian -- $alxc \n"
+	lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-init-debian.sh -l "$alxc" \
+		2>&1 | tee -a $alog  2>&1 >/dev/null
+
 	printf "\n\n --- apt upgrade -- $alxc \n"
 	lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh -l "$alxc" \
 		2>&1 | tee -a $alog  2>&1 >/dev/null
