@@ -66,6 +66,7 @@ nohup /bin/bash /tb2/build-devomd/dk-prep-deps-nginx.sh -l $alxc >/dev/null 2>&1
 
 /bin/bash /tb2/build-devomd/dk-prep-core-php8.sh -l $alxc
 /bin/bash /tb2/build-devomd/dk-prep-deps-php8.sh -l $alxc
+wait
 
 
 # NGINX, source via git
@@ -171,7 +172,8 @@ rm -rf /root/src/keydb/*deb
 
 # get source if not exists via github
 #-------------------------------------------
-get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb"
+get_update_new_github "steamboatid/keydb" "/root/org.src/keydb/git-keydb" \
+	2>&1 >/dev/null &
 
 
 
@@ -189,7 +191,8 @@ rm -rf /root/src/nutcracker/*deb
 
 # get source if not exists via github
 #-------------------------------------------
-get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker"
+get_update_new_github "steamboatid/nutcracker" "/root/org.src/nutcracker/git-nutcracker" \
+	2>&1 >/dev/null &
 
 
 
@@ -207,7 +210,8 @@ rm -rf /root/src/libzip/*deb
 
 # get source if not exists via github
 #-------------------------------------------
-get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip"
+get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip" \
+	2>&1 >/dev/null &
 
 
 # sshfs, libfuse

@@ -90,15 +90,15 @@ EOT
 #--- preparing ccache
 #-------------------------------------------
 aptold install -y ccache
-mkdir -p $CCACHE_DIR ~/.ccache
+mkdir -p $CCACHE_DIR /root/.ccache
 export CCACHE_DIR=/root/.ccache
 echo \
-'cache_dir = ~/.ccache
+'cache_dir = /root/.ccache
 max_size = 100.0G
-'>~/.ccache/ccache.conf
+'>/root/.ccache/ccache.conf
 
 echo \
-'cache_dir = ~/.ccache
+'cache_dir = /root/.ccache
 max_size = 100.0G
 '>/etc/ccache.conf
 
