@@ -98,7 +98,14 @@ fi
 
 if [ -n "$VEROVR" ]; then
 	VERNEXT=$VEROVR
-	printf "\n\n$adir --- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
+
+	if [[ $VERNUM = *":"* ]]; then
+		AHEAD=$(echo $VERNUM | cut -d':' -f1)
+		AHEAD=$(( $AHEAD + 20 ))
+		VERNEXT="$AHEAD:$VERNEXT"
+	fi
+
+	printf "\n\n by VEROVR --- $adir \n--- VERNUM= $VERNUM NEXT= $VERNEXT ---\n"
 fi
 
 

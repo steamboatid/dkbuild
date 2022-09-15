@@ -112,7 +112,14 @@ do_build_sshfs_fuse() {
 
 	if [ -n "$VEROVR" ]; then
 		VERNEXT=$VEROVR
-		printf "\n by verovr \n$adir --- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
+
+		if [[ $VERNUM = *":"* ]]; then
+			AHEAD=$(echo $VERNUM | cut -d':' -f1)
+			AHEAD=$(( $AHEAD + 20 ))
+			VERNEXT="$AHEAD:$VERNEXT"
+		fi
+
+		printf "\n by VEROVR \n$adir --- VERNUM= $VERNUM NEXT= $VERNEXT---\n"
 	fi
 
 

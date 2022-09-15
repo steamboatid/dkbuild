@@ -92,6 +92,13 @@ override_dh_shlibdeps:
 
 	if [ -n "$VEROVR" ]; then
 		VERNEXT=$VEROVR
+
+		if [[ $VERNUM = *":"* ]]; then
+			AHEAD=$(echo $VERNUM | cut -d':' -f1)
+			AHEAD=$(( $AHEAD + 20 ))
+			VERNEXT="$AHEAD:$VERNEXT"
+		fi
+
 		printf "\n by VEROVR \n--- VERNUM= $VERNUM NEXT= $VERNEXT---\n\n\n"
 		sleep 1
 	fi
