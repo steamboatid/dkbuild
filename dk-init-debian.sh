@@ -38,6 +38,7 @@ fix_apt_bookworm
 
 reset_apt(){
 	systemctl daemon-reload; \
+	systemctl daemon-reexec; \
 	systemctl restart systemd-resolved.service; \
 	systemctl restart systemd-timesyncd.service; \
 	killall -9 apt; sleep 1; killall -9 apt; \
@@ -58,7 +59,7 @@ reset_apt(){
 		-o Dpkg::Options::="--force-overwrite"
 
 	apt update; \
-	apt full-upgrade -f --auto-remove --purge --fix-missing \
+	apt full-upgrade -fy --auto-remove --purge --fix-missing \
 		-o Dpkg::Options::="--force-overwrite"
 }
 

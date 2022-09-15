@@ -620,7 +620,8 @@ fix_keydb_permission_problem(){
 
 	cd `mktemp -d`; \
 	systemctl stop redis-server; systemctl disable redis-server; systemctl mask redis-server; \
-	systemctl daemon-reload; apt remove -y redis-server
+	systemctl daemon-reload; systemctl daemon-reexec; \
+	apt remove -y redis-server
 	mkdir -p /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
 	chown keydb.keydb -Rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
 	find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type d -exec chmod 775 {} \; ; \
@@ -894,6 +895,7 @@ init_dkbuild(){
 
 	# restart
 	systemctl daemon-reload
+	systemctl daemon-reexec
 
 	if [[ $(grep "buster" /etc/apt/sources.list | wc -l) -gt 0 ]]; then
 		rm -rf /etc/resolvconf/run; /etc/init.d/resolvconf restart

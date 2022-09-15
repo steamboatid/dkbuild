@@ -37,6 +37,7 @@ fix_apt_bookworm
 #--- clean up previous
 #-------------------------------------------
 systemctl daemon-reload; \
+systemctl daemon-reexec; \
 systemctl restart systemd-resolved.service; \
 systemctl restart systemd-timesyncd.service; \
 killall -9 apt; sleep 1; killall -9 apt; \

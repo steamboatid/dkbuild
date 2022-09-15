@@ -31,6 +31,7 @@ islxc=$(cat /proc/1/environ | sed -r 's/container/\ncontainer/g; s/^\n//g' | \
 grep -a 'container=lxc' | wc -l)
 if [[ $islxc -gt 0 ]]; then
 	systemctl daemon-reload
+	systemctl daemon-reexec
 
 	if [[ $(grep "buster" /etc/apt/sources.list | wc -l) -gt 0 ]]; then
 		rm -rf /etc/resolvconf/run; /etc/init.d/resolvconf restart
@@ -85,6 +86,7 @@ apt install -fy systemd-timesyncd 2>&1 >/dev/null
 
 
 systemctl daemon-reload; \
+systemctl daemon-reexec; \
 systemctl restart systemd-resolved.service; \
 systemctl restart systemd-timesyncd.service; \
 killall -9 apt; sleep 1; killall -9 apt; \
