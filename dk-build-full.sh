@@ -147,7 +147,7 @@ fi
 chmod +x debian/rules
 
 >dkbuild.log
-nproc2=$(( `nproc` * 2 ))
+nproc2=$(( `nproc` / 2 ))
 # nproc2=1
 
 # dh clean; rm -rf debian/.debhelper; fakeroot debian/rules clean; \

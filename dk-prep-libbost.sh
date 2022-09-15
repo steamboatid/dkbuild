@@ -31,7 +31,7 @@ sed -r 's/libboost1\.//' | cut -d'-' -f1)
 
 apt-cache search libboost |\
 grep -i "\-dev" | grep "${lbver}" |\
-grep -i "atomic\|chrono\|date-time\|serialization\|system\|thread" \
+grep -i "atomic\|chrono\|date-time\|serialization\|system\|thread\|filesystem\|wave" \
 >> /tmp/libboost.pkgs
 
 cat /tmp/libboost.pkgs | awk '{print $1}' | sort -u > /tmp/libboost.uniq
