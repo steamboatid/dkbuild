@@ -159,7 +159,7 @@ KEYCHECK=$(keydb-server /etc/keydb/keydb.conf --loglevel verbose --daemonize yes
 if [[ $KEYCHECK -gt 0 ]]; then
 	printf "\n\n keydb: OK \n\n"
 else
-	printf "\n\n keydb: FATAL FAILED \n\n"
+	printf "\n\n keydb: FAILED INSTALL \n\n"
 fi
 
 killall -9 keydb-server 2>&1 >/dev/null
