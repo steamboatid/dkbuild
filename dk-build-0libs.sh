@@ -361,8 +361,9 @@ prepare_build_flags(){
 #-------------------------------------------
 doback_bash(){
 	app="$1"
+	host="$2"
 	printf "\n\n exec back: "$app" \n"
-	/usr/bin/nohup /bin/bash "$app" >/dev/null 2>&1 &
+	/usr/bin/nohup /bin/bash "$app" -l "$host" >/dev/null 2>&1 &
 	sleep 1
 }
 
