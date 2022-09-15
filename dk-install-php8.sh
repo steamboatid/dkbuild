@@ -39,7 +39,7 @@ aptnew install  -o Dpkg::Options::="--force-overwrite" \
 --no-install-recommends --fix-missing --reinstall -fy \
 libzip4 libdb4.8 libgeoip1 bison flex libsodium23
 
-apt-cache search php8 | grep -v "dbgsym" | \
+apt-cache search php8.1 | grep -v "dbgsym" | \
 grep -i "\-zip\|\-cli\|\-fpm" | awk '{print $1}' | \
 xargs aptnew install -fy
 
