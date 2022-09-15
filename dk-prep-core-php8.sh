@@ -210,7 +210,7 @@ for apv in "${PHPVERS[@]}"; do
 		2>&1 | grep -iv "newest\|reading \|building \|picking " | grep --color=auto "Depends\|$"
 done
 
-aptold build-dep -fy php-http php-raphf \
+aptold build-dep -fy php-http php-raphf php-propro \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 apt-cache search php | grep http | grep -i pecl | \
@@ -219,7 +219,7 @@ apt-cache search php | grep http | grep -i pecl | \
 	grep -iv "php8.0-http\|php8.1-http\|php8.2-http" | \
 	grep -iv "php8.*\-http" | \
 	grep -iv "php9.*\-http" | \
-	grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
+	grep -iv "php.*all\-dev\|php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	xargs aptold build-dep -fy | grep --color=auto "Depends\|$"
 
 
@@ -267,18 +267,18 @@ grep -i "\-dev"  >>/tmp/php-pkgs.txt
 
 chown_apt
 cat /tmp/php-pkgs.txt | grep -iv "yac\|xcache\|swoole\|solr\|imagick" | \
-grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
+grep -iv "php.*all\-dev\|php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 xargs aptold install -fy \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
 
 cat /tmp/php-pkgs.txt | \
 xargs aptold build-dep -fy \
-grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
+grep -iv "php.*all\-dev\|php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
 
 cat /tmp/php-pkgs.txt | \
 xargs aptold source -my -qqq \
-grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
+grep -iv "php.*all\-dev\|php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
 
 # cat /tmp/php-pkgs.txt | xargs aptold build-dep -fy
