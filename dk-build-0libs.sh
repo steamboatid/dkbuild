@@ -182,12 +182,12 @@ EOT
 }
 
 
-# aptold create and check (version18)
+# aptold create and check (version19)
 #-------------------------------------------
 create_aptold(){
 	echo \
 '#!/bin/bash
-# version18
+# version19
 
 save_local_debs(){
 	mkdir -p /tb2/tmp/cachedebs/
@@ -232,12 +232,12 @@ apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" "$
 
 
 
-# aptnew create and check (version18)
+# aptnew create and check (version19)
 #-------------------------------------------
 create_aptnew(){
 	echo \
 '#!/bin/bash
-# version18
+# version19
 
 save_local_debs(){
 	mkdir -p /tb2/tmp/cachedebs/
@@ -985,7 +985,7 @@ init_dkbuild >/dev/null 2>&1 &
 #--- update aptold
 if [ ! -e /usr/local/sbin/aptold ]; then
 	create_aptold
-elif [[ $(grep "version18" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version19" /usr/local/sbin/aptold | wc -l) -lt 1 ]]; then
 	create_aptold
 fi
 chmod +x /usr/local/sbin/aptold
@@ -994,7 +994,7 @@ chmod +x /usr/local/sbin/aptold
 #--- update aptnew
 if [ ! -e /usr/local/sbin/aptnew ]; then
 	create_aptnew
-elif [[ $(grep "version18" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
+elif [[ $(grep "version19" /usr/local/sbin/aptnew | wc -l) -lt 1 ]]; then
 	create_aptnew
 fi
 chmod +x /usr/local/sbin/aptnew
