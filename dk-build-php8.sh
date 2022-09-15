@@ -153,7 +153,7 @@ build_install_http_debs(){
 
 install_propro_debs(){
 	build_propro=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "propro" | wc -l)
-	debs_propro=$(find -L /root/src/php -type f -iname "php*-propro*deb" | wc -l)
+	debs_propro=$(find -L /root/src/php -maxdepth 2 -type f -iname "php*-propro*deb" | wc -l)
 	if [[ $debs_propro -gt 0 ]] && [[ $build_propro -lt 0 ]]; then
 		dpkg -i --force-all /root/src/php*-propro*deb
 		dpkg -i --force-all /root/src/php/php*-propro*deb

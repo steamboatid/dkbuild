@@ -264,7 +264,7 @@ find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 #--- mark as manual installed,
 # for nginx, php, redis, keydb, memcached
 #-------------------------------------------
-apt purge -fy php5* php7.0* php7.1* php7.2* php7.3*; \
+apt purge -fy php5* php7.0* php7.1* php7.2* php7.3* --allow-change-held-packages; \
 dpkg -l | grep "PHP\|nginx\|memcache\|keydb\|redis\|db4" | \
 awk '{print $2}' | tr "\n" " " | xargs apt-mark manual \
  >/dev/null 2>&1
