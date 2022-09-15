@@ -158,7 +158,8 @@ debuild --preserve-envvar=CCACHE_DIR --prepend-path=/usr/lib/ccache \
 --no-lintian --no-tgz-check --no-sign -b -uc -us -d \
 	2>&1 | tee dkbuild.log
 
-wait; sync; sleep 1
+wait
+sleep 1
 
 
 #--- missing dkbuild.log
