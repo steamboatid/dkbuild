@@ -127,7 +127,7 @@ wait_build_jobs_php(){
 build_install_raph_debs(){
 	build_raph=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "raph" | wc -l)
 	if [[ $build_raph -lt 1 ]]; then
-		raph_dir=$(find /root/src/php -maxdepth 1 -type d -iname "php*raph*" | sort -nr | head -n1)
+		raph_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*raph*" | sort -nr | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -d $raph_dir
 		dpkg -i --force-all /root/src/php/php*-raph*deb
 	fi
@@ -136,7 +136,7 @@ build_install_raph_debs(){
 build_install_propro_debs(){
 	build_propro=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "propro" | wc -l)
 	if [[ $build_propro -lt 1 ]]; then
-		propro_dir=$(find /root/src/php -maxdepth 1 -type d -iname "php*propro*" | sort -nr | head -n1)
+		propro_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*propro*" | sort -nr | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -d $propro_dir
 		dpkg -i --force-all /root/src/php/php*-propro*deb
 	fi
@@ -145,7 +145,7 @@ build_install_propro_debs(){
 build_install_http_debs(){
 	build_http=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "http" | wc -l)
 	if [[ $build_http -lt 1 ]]; then
-		http_dir=$(find /root/src/php -maxdepth 1 -type d -iname "php*http*" | sort -nr | head -n1)
+		http_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*http*" | sort -nr | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -d $http_dir
 		dpkg -i --force-all /root/src/php/php*-http*deb
 	fi
@@ -213,7 +213,7 @@ building_php(){
 
 	if [[ $adir == *"http"* ]]; then
 		cdir=$PWD
-		propro_dir=$(find /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*propro*" | sort | tail -n1)
+		propro_dir=$(find -L /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*propro*" | sort | tail -n1)
 		cd "$propro_dir"
 		prepare_php_build "$propro_dir"
 		fix_debian_controls "$propro_dir"
@@ -311,11 +311,11 @@ fi
 cd /root/src/php
 
 # pwd
-# find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip"
+# find -L /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip"
 # exit 0;
 
-# for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "phalcon3\|http\|lz4\|\-ps\-" | sort -nr); do
-# for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | grep "http" | sort -nr); do
+# for adir in $(find -L /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -i "phalcon3\|http\|lz4\|\-ps\-" | sort -nr); do
+# for adir in $(find -L /root/src/php -maxdepth 1 -mindepth 1 -type d | grep "http" | sort -nr); do
 
 
 #--- build & install some extensions first
@@ -331,7 +331,7 @@ dpkg -i --force-all /root/src/php/php*-http*deb
 
 
 #--- initial build
-for adir in $(find /root/src/php -maxdepth 1 -mindepth 1 -type d | \
+for adir in $(find -L /root/src/php -maxdepth 1 -mindepth 1 -type d | \
 grep -v "git-phpredis\|libzip\|libvirt\|xcache\|tideways\|phalcon3\|lz4" | sort -nr); do
 	building_php "$adir"
 done
@@ -340,7 +340,7 @@ done
 # install_propro_debs
 
 #--- rebuild if dkbuild.log not found
-for adir in $(find /root/src/php -mindepth 1 -maxdepth 1 -type d | sort -n); do
+for adir in $(find -L /root/src/php -mindepth 1 -maxdepth 1 -type d | sort -n); do
 	if [[ $(find $adir -maxdepth 1 -type f -iname "dkbuild.log" | wc -l) -lt 1 ]]; then
 		building_php "$adir"
 	fi
@@ -357,9 +357,8 @@ wait_build_jobs_php
 # delete unneeded packages
 #-------------------------------------------
 cd /root/src/php
-find /root/src/php/ -type f -iname "*udeb" -delete
-find /root/src/php/ -type f -iname "*dbgsym*deb" -delete
-find /root/src/php/ -type f -iname "*dbgsym*deb" -delete
+find -L /root/src/php/ -maxdepth 3 -type f -iname "*udeb" -delete
+find -L /root/src/php/ -maxdepth 3 -type f -iname "*dbgsym*deb" -delete
 
 
 # upload to /tb2/build-devomd/{$RELNAME}-php8.x

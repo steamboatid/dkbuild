@@ -128,7 +128,7 @@ do_build_sshfs_fuse() {
 
 # build FUSE
 #-------------------------------------------
-dirname=$(find /root/src/sshfs -mindepth 1 -maxdepth 1 -type d -iname "*fuse*" | grep -v "sshfs\-" | head -n1)
+dirname=$(find -L /root/src/sshfs -mindepth 1 -maxdepth 1 -type d -iname "*fuse*" | grep -v "sshfs\-" | head -n1)
 cd $dirname
 pwd
 do_build_sshfs_fuse "$dirname"
@@ -136,7 +136,7 @@ do_build_sshfs_fuse "$dirname"
 
 # build SSHFS
 #-------------------------------------------
-dirname=$(find /root/src/sshfs -mindepth 1 -maxdepth 1 -type d -iname "*sshfs*" | head -n1)
+dirname=$(find -L /root/src/sshfs -mindepth 1 -maxdepth 1 -type d -iname "*sshfs*" | head -n1)
 cd $dirname
 pwd
 # hack iosize
@@ -150,8 +150,8 @@ do_build_sshfs_fuse "$dirname"
 #-------------------------------------------
 mkdir -p /root/src/sshfs
 cd /root/src/sshfs
-find /root/src/sshfs -type f -iname "*udeb" -delete
-find /root/src/sshfs -type f -iname "*dbgsym*deb" -delete
+find -L /root/src/sshfs -maxdepth 3 -type f -iname "*udeb" -delete
+find -L /root/src/sshfs -maxdepth 3 -type f -iname "*dbgsym*deb" -delete
 
 
 # upload to /tb2/build-devomd/{$RELNAME}-nginx

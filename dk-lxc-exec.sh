@@ -42,7 +42,7 @@ echo 'nameserver 1.1.1.1' > /etc/resolv.conf; \
 echo 'nameserver 8.8.8.8' >> /etc/resolv.conf; \
 dhclient >/dev/null 2>&1"
 
-lxcrun "echo '103.94.190.3    repo.omd.my.id devomd' >> /etc/hosts"
+lxcrun "echo '103.94.190.3    repo.omd.id devomd' >> /etc/hosts"
 
 lxcrun "printf '\
 deb http://deb.debian.org/debian buster main contrib non-free \n\

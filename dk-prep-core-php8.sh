@@ -305,8 +305,8 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 aptold install -fy --auto-remove --purge \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
 
-find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
-find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 
 
 #--- mark as manual installed,

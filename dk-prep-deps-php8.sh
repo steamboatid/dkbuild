@@ -37,7 +37,7 @@ fixing_folders_by_dsc_files(){
 	cd "$odir"
 	chown_apt
 	>/tmp/php-pkgs.txt
-	for afile in $(find /root/org.src/php -maxdepth 1 -type f -iname "*.dsc"); do
+	for afile in $(find -L /root/org.src/php -maxdepth 1 -type f -iname "*.dsc"); do
 		bname=$(basename $afile)
 		ahead=$(printf "$bname" | cut -d"_" -f1)
 		if [[ $ahead = *"xmlrpc"* ]]; then continue; fi
@@ -50,7 +50,7 @@ fixing_folders_by_dsc_files(){
 			bdir=$(printf "$bdir" | sed -r "s/$apatt//g")
 		done
 
-		anum=$(find /root/org.src/php -maxdepth 1 -type d -iname "*${bdir}-*" | wc -l)
+		anum=$(find -L /root/org.src/php -maxdepth 1 -type d -iname "*${bdir}-*" | wc -l)
 		if [[ $anum -lt 1 ]]; then
 			printf "\n\n --- Dir ${read}$adir -- $bdir ${end} missing \n"
 			echo "$adir" >>/tmp/php-pkgs.txt
@@ -93,10 +93,10 @@ FDEPF="/tmp/php-deps-final.pkgs"
 
 URL="https://packages.sury.org/php/dists/bullseye/main/binary-amd64/Packages"
 URL="https://packages.sury.org/php/dists/buster/main/binary-amd64/Packages"
-# URL="http://repo.omd.my.id/php/dists/buster/main/binary-amd64/Packages"
+# URL="http://repo.omd.id/php/dists/buster/main/binary-amd64/Packages"
 
 # rm -rf $FPKGS
-# URL="http://repo.omd.my.id/php/dists/${RELNAME}/main/binary-amd64/Packages"
+# URL="http://repo.omd.id/php/dists/${RELNAME}/main/binary-amd64/Packages"
 get_package_file $URL $FPKGS
 
 # # if $FPKGS empty
@@ -287,8 +287,8 @@ fixing_folders_by_dsc_files
 
 
 # xmlrpc included in php-defaults
-dsc_num=$(find /root/org.src/php -maxdepth 1 -type f -iname "*.dsc" | grep -iv "xmlrpc" | wc -l)
-dir_num=$(find /root/org.src/php -maxdepth 1 -type d | wc -l)
+dsc_num=$(find -L /root/org.src/php -maxdepth 1 -type f -iname "*.dsc" | grep -iv "xmlrpc" | wc -l)
+dir_num=$(find -L /root/org.src/php -maxdepth 1 -type d | wc -l)
 printf "\n\n\n --- DSC=${blue}$dsc_num ${end} --- DIR=${blue}$dir_num ${end} \n\n"
 
 
@@ -322,8 +322,8 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 aptold install -fy --auto-remove --purge \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
 
-find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
-find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 
 
 #--- mark as manual installed,

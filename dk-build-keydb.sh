@@ -115,8 +115,8 @@ sleep 2
 # delete unneeded packages
 #-------------------------------------------
 cd /root/src/keydb
-find /root/src/keydb/ -type f -iname "*udeb" -delete
-find /root/src/keydb/ -type f -iname "*dbgsym*deb" -delete
+find -L /root/src/keydb/ -maxdepth 3 -type f -iname "*udeb" -delete
+find -L /root/src/keydb/ -maxdepth 3 -type f -iname "*dbgsym*deb" -delete
 
 
 # upload to /tb2/build-devomd/{$RELNAME}-keydb

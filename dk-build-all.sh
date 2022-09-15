@@ -111,8 +111,8 @@ stop_services
 
 #--- delete OLD files
 mkdir -p /root/org.src /root/src /tb2/build-devomd/$RELNAME-all
-find /root/src -type f -iname "*deb" -delete
-find /tb2/build-devomd/$RELNAME-all -type f -iname "*deb" -delete
+find -L /root/src -type f -iname "*deb" -delete
+find -L /tb2/build-devomd/$RELNAME-all -type f -iname "*deb" -delete
 
 
 # some job at foreground: build & istall base packages
@@ -153,8 +153,8 @@ check_build_log
 
 
 #--- delete unneeded files
-find /root/src -type f -iname "*udeb" -delete
-find /root/src -type f -iname "*dbgsym*deb" -delete
+find -L /root/src -maxdepth 3 -type f -iname "*udeb" -delete
+find -L /root/src -maxdepth 3 -type f -iname "*dbgsym*deb" -delete
 
 
 #--- delete old debs
@@ -165,21 +165,21 @@ rm -rf /tb2/build-devomd/$RELNAME-all/*deb
 #--- COPY to $RELNAME-all
 printf "\n\n\n-- copying files to /tb2/build-devomd/$RELNAME-all/ \n\n"
 
-for afile in $(find /root/src -type f -name "*deb" | sort -u | sort); do
+for afile in $(find -L /root/src -type f -name "*deb" | sort -u | sort); do
 	printf "\n $afile "
 	cp $afile /tb2/build-devomd/$RELNAME-all/ -f
 done
 printf "\n\n"
 
-NUMDEBS=$(find /root/src -type f -name "*deb" | wc -l)
+NUMDEBS=$(find -L /root/src -type f -name "*deb" | wc -l)
 printf "\n NUMDEBS= $NUMDEBS \n\n"
 
 # debs nums
 numLUA=$(find   /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "lua"   | wc -l)
-numNGINX=$(find /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "nginx" | wc -l)
+numNGINX=$(find -L /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "nginx" | wc -l)
 numPHPA=$(find  /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "php"   | wc -l)
 numPHP8=$(find  /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "php8"  | wc -l)
-numKEYDB=$(find /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "keydb" | wc -l)
+numKEYDB=$(find -L /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "keydb" | wc -l)
 numNUTC=$(find  /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "nutcr" | wc -l)
 numLZIP=$(find  /tb2/build-devomd/$RELNAME-all -iname "*deb" | grep -v "dbg\|udeb" | grep "zip"   | wc -l)
 
@@ -197,7 +197,7 @@ printf "\n\n\n"
 >/tmp/all.git
 >/root/all.git
 
-for afile in $(find /root/src -type f -name "*dsc" | sort -u | sort); do
+for afile in $(find -L /root/src -type f -name "*dsc" | sort -u | sort); do
 	printf "\n $afile "
 	cat $afile | grep -i vcs | awk '{print $NF}' | sort -u >>/tmp/all.git
 done

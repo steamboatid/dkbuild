@@ -113,8 +113,8 @@ sleep 2
 # delete unneeded packages
 #-------------------------------------------
 cd /root/src/nutcracker
-find /root/src/nutcracker/ -type f -iname "*udeb" -delete
-find /root/src/nutcracker/ -type f -iname "*dbgsym*deb" -delete
+find -L /root/src/nutcracker/ -maxdepth 3 -type f -iname "*udeb" -delete
+find -L /root/src/nutcracker/ -maxdepth 3 -type f -iname "*dbgsym*deb" -delete
 
 
 # upload to /tb2/build-devomd/{$RELNAME}-nutcracker

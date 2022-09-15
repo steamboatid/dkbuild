@@ -203,7 +203,7 @@ save_local_debs(){
 		fi
 	fi
 
-	find /tb2/tmp/cachedebs -type f -mtime +1 -delete >/dev/null 2>&1 &
+	find -L /tb2/tmp/cachedebs -type f -mtime +1 -delete >/dev/null 2>&1 &
 }
 
 chown -Rf _apt:root /var/cache/apt/archives/partial/
@@ -253,7 +253,7 @@ save_local_debs(){
 		fi
 	fi
 
-	find /tb2/tmp/cachedebs -type f -mtime +1 -delete >/dev/null 2>&1 &
+	find -L /tb2/tmp/cachedebs -type f -mtime +1 -delete >/dev/null 2>&1 &
 }
 
 chown -Rf _apt:root /var/cache/apt/archives/partial/
@@ -374,7 +374,7 @@ check_build_log(){
 	printf "\n\n---check dkbuild.log \n"
 	export TOTFAIL=0
 	export TOTLOG=0
-	for alog in $(find /root/src -maxdepth 3 -type f -iname "dkbuild.log" | sort -u); do
+	for alog in $(find -L /root/src -maxdepth 3 -type f -iname "dkbuild.log" | sort -u); do
 		printf " --- $alog ---\n"
 		NUMFAIL=$(tail -n100 ${alog} | tr -d '\000' | grep -a "buildpackage" | grep -a "failed" | wc -l)
 		NUMSUCC=$(tail -n100 ${alog} | tr -d '\000' | grep -a "buildpackage" | grep -a "binary-only upload" | wc -l)
@@ -394,9 +394,9 @@ check_build_log(){
 	fi
 	printf "\n\n TOTAL LOGS = ${yel}$TOTLOG ${end} \n"
 
-	PHPLOGS=$(find /root/src/php -maxdepth 2 -iname "dkbuild.log" | wc -l)
+	PHPLOGS=$(find -L /root/src/php -maxdepth 2 -iname "dkbuild.log" | wc -l)
 	PHPDIRS=0
-	for adir in $(find /root/src/php -mindepth 1 -maxdepth 1 -type d | sort -n); do
+	for adir in $(find -L /root/src/php -mindepth 1 -maxdepth 1 -type d | sort -n); do
 		if [[ $(find $adir -maxdepth 1 -type f -iname "dkbuild.log" | wc -l) -lt 1 ]]; then
 			printf "\n --- no dkbuild.log: $adir "
 		fi
@@ -624,8 +624,8 @@ fix_keydb_permission_problem(){
 	apt remove -y redis-server
 	mkdir -p /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
 	chown keydb.keydb -Rf /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb; \
-	find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type d -exec chmod 775 {} \; ; \
-	find /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type f -exec chmod 664 {} \;
+	find -L /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type d -exec chmod 775 {} \; ; \
+	find -L /var/lib/keydb /var/log/keydb /var/run/keydb /run/keydb -type f -exec chmod 664 {} \;
 
 	# force modify config file
 	if [ -e /etc/keydb/keydb.conf ]; then
@@ -645,8 +645,8 @@ fix_keydb_permission_problem(){
 }
 
 delete_apt_lock(){
-	find /var/lib/apt/lists/ -type f -delete; \
-	find /var/cache/apt/ -type f -delete; \
+	find -L /var/lib/apt/lists/ -type f -delete; \
+	find -L /var/cache/apt/ -type f -delete; \
 	rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
 	/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/ \
 	/etc/apt/preferences.d/00-revert-stable \
@@ -741,13 +741,13 @@ fix_usr_lib_symlinks(){
 	PREV=$PWD
 	cd /usr/lib
 
-	NUMS=$(find /usr/lib/x86_64-linux-gnu -maxdepth 1 -type f -iname "*.so" | wc -l)
+	NUMS=$(find -L /usr/lib/x86_64-linux-gnu -maxdepth 1 -type f -iname "*.so" | wc -l)
 	printf "\n\n --- /usr/lib/x86_64-linux-gnu/*.so lib files= $NUMS \n"
 
-	for afile in $(find /usr/lib/x86_64-linux-gnu -maxdepth 1 -type f -iname "*.so"); do
+	for afile in $(find -L /usr/lib/x86_64-linux-gnu -maxdepth 1 -type f -iname "*.so"); do
 		printf "."
 		BFILE=$(basename $afile)
-		FINUM=$(find /usr/lib -iname "${BFILE}" | wc -l)
+		FINUM=$(find -L /usr/lib -iname "${BFILE}" | wc -l)
 		if [[ $FINUM -lt 1 ]]; then
 			printf "\n $afile"
 			ln -s $afile .
@@ -777,8 +777,9 @@ wait_by_average_load(){
 	LASTLOAD=0
 	while :; do
 		AVGL=$(cat /proc/loadavg | cut -d" " -f1 | cut -d"." -f1)
-		AVGL=$(( $AVGL + 1))
+		AVGL=$(( $AVGL + 1 ))
 		CORE=$(( `nproc` ))
+		if [[ $CORE -gt 3 ]]; then AVGL=$(( $AVGL + 1 )); fi
 		if [[ $AVGL -lt $CORE ]]; then break; fi
 
 		if [[ $AVGL -ne $LASTLOAD ]]; then
@@ -787,6 +788,7 @@ wait_by_average_load(){
 		else
 			printf "."
 		fi
+
 		LASTLOAD=$AVGL
 		LOOPLOAD=$(( $LOOPLOAD + 1 ))
 		sleep 3
@@ -844,7 +846,7 @@ get_package_file_gz(){
 }
 
 stop_services(){
-	for ainit in $(find /etc/init.d/ -type f | grep "fpm\|nginx\|keydb\|nutc"); do
+	for ainit in $(find -L /etc/init.d/ -type f | grep "fpm\|nginx\|keydb\|nutc"); do
 		/bin/bash $ainit stop
 	done
 }

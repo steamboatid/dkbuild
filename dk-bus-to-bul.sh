@@ -56,8 +56,8 @@ remove_old_pkgs(){
 clean_apt_caches(){
 	killall -9 apt aptold aptnew
 
-	find /var/lib/apt/lists/ -type f -delete; \
-	find /var/cache/apt/ -type f -delete; \
+	find -L /var/lib/apt/lists/ -type f -delete; \
+	find -L /var/cache/apt/ -type f -delete; \
 	rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
 	/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/ \
 	/etc/apt/preferences.d/00-revert-stable \
@@ -274,38 +274,38 @@ deb http://deb.debian.org/debian-security bullseye-security main
 # deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free
 # deb-src http://deb.debian.org/debian-security bullseye-security main
 
-deb [arch=amd64] http://repo.omd.my.id/mariadb/repo/10.6/debian bullseye main
-deb [arch=amd64] http://repo.omd.my.id/zabbix/5.5/debian bullseye main
+deb [arch=amd64] http://repo.omd.id/mariadb/repo/10.6/debian bullseye main
+deb [arch=amd64] http://repo.omd.id/zabbix/5.5/debian bullseye main
 
-deb http://repo.omd.my.id/keydb-server/ubuntu bionic main
+deb http://repo.omd.id/keydb-server/ubuntu bionic main
 
-# deb http://repo.omd.my.id/php bullseye main
-# deb http://repo.omd.my.id/nginx bullseye nginx
-# deb http://repo.omd.my.id/nginx-devel devel nginx
+# deb http://repo.omd.id/php bullseye main
+# deb http://repo.omd.id/nginx bullseye nginx
+# deb http://repo.omd.id/nginx-devel devel nginx
 
-# deb http://repo.omd.my.id/wine bullseye main
-# deb http://repo.omd.my.id/node16 bullseye main
-# deb http://repo.omd.my.id/virtualbox bullseye contrib
+# deb http://repo.omd.id/wine bullseye main
+# deb http://repo.omd.id/node16 bullseye main
+# deb http://repo.omd.id/virtualbox bullseye contrib
 
-# deb http://repo.omd.my.id/spotify stable non-free
-# deb http://repo.omd.my.id/audacity bionic main
-# deb http://repo.omd.my.id/skype stable main
-# deb http://repo.omd.my.id/multimedia bullseye main non-free
+# deb http://repo.omd.id/spotify stable non-free
+# deb http://repo.omd.id/audacity bionic main
+# deb http://repo.omd.id/skype stable main
+# deb http://repo.omd.id/multimedia bullseye main non-free
 
-# deb http://repo.omd.my.id/opera stable non-free
-# deb http://repo.omd.my.id/chrome stable main
-# deb http://repo.omd.my.id/vivaldi stable main
+# deb http://repo.omd.id/opera stable non-free
+# deb http://repo.omd.id/chrome stable main
+# deb http://repo.omd.id/vivaldi stable main
 
-# deb http://repo.omd.my.id/earth stable main
-# deb http://repo.omd.my.id/vscode stable main
+# deb http://repo.omd.id/earth stable main
+# deb http://repo.omd.id/vscode stable main
 
 EOT
 #--- end of /etc/apt/sources.list
 
 #--- add phideb
 echo \
-"deb [trusted=yes arch=amd64] http://repo.omd.my.id/phideb ${RELNAME} main
-#deb-src [trusted=yes arch=amd64] http://repo.omd.my.id/phideb ${RELNAME} main
+"deb [trusted=yes arch=amd64] http://repo.omd.id/phideb ${RELNAME} main
+#deb-src [trusted=yes arch=amd64] http://repo.omd.id/phideb ${RELNAME} main
 ">/etc/apt/sources.list.d/phideb.list
 
 
@@ -374,7 +374,7 @@ echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen
 aptold install -yf gnupg2 apt-utils tzdata curl \
 		2>&1 | grep -iv "not installed\|newest\|reading\|building\|stable CLI"
 
-apt-key adv --fetch-keys http://repo.omd.my.id/trusted-keys \
+apt-key adv --fetch-keys http://repo.omd.id/trusted-keys \
 	2>&1 | grep --color "processed"
 
 aptold full-upgrade --auto-remove --purge -fy \

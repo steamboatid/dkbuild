@@ -96,7 +96,7 @@ epoch_sury=$(( $epoch_src ))
 
 
 printf "\n --- get phideb: packages "
-epoch_phidep=$(get_url_lastmod_date "http://repo.omd.my.id/phideb/dists/bullseye/main/binary-amd64/Packages.gz" |\
+epoch_phidep=$(get_url_lastmod_date "http://repo.omd.id/phideb/dists/bullseye/main/binary-amd64/Packages.gz" |\
 	grep "epoch" | cut -d' ' -f3-)
 epoch_phidep=$(( $epoch_phidep ))
 

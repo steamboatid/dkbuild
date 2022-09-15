@@ -47,9 +47,9 @@ build_ops(){
 	alxc=$1
 
 	lxc-start -qn $alxc
-	
+
 	mkdir -p /tmp/dkbuild
-	alog="/tmp/dkbuild/dk-$1-prep.log"
+	alog="/tmp/dkbuild/dk-$1-build-ops.log"
 	>$alog
 
 	printf "\n\n --- init debian -- $alxc \n"
@@ -103,11 +103,11 @@ lxc-start -qn teye
 lxc-start -qn twor
 sleep 1
 
-blog="/var/log/dkbuild/dk-prep-build-all.log"
+blog="/tmp/dkbuild/dk-prep-build-all-lxc.log"
 >$blog
 build_ops "bus"  2>&1 | tee -a $blog 2>&1 &
-build_ops "eye"  2>&1 | tee -a $blog 2>&1 &
 build_ops "wor"  2>&1 | tee -a $blog 2>&1 &
+build_ops "eye"  2>&1 | tee -a $blog 2>&1 &
 
 printf "\n\n"
 aloop=0

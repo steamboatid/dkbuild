@@ -66,9 +66,9 @@ rm -rf /root/src/pcre/*deb
 # build
 #-------------------------------------------
 cd /root/src/pcre
-find /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*"
+find -L /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*"
 
-for adir in $(find /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*" | sort -nr); do
+for adir in $(find -L /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre*" | sort -nr); do
 	cd $adir
 	pwd
 
@@ -116,8 +116,8 @@ done
 #-------------------------------------------
 mkdir -p /root/src/pcre
 cd /root/src/pcre
-find /root/src/pcre -type f -iname "*udeb" -delete
-find /root/src/pcre -type f -iname "*dbgsym*deb" -delete
+find -L /root/src/pcre -maxdepth 3 -type f -iname "*udeb" -delete
+find -L /root/src/pcre -maxdepth 3 -type f -iname "*dbgsym*deb" -delete
 
 
 # install current debs

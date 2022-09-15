@@ -114,8 +114,8 @@ sleep 2
 #-------------------------------------------
 mkdir -p /root/src/libzip
 cd /root/src/libzip
-find /root/src/libzip -type f -iname "*udeb" -delete
-find /root/src/libzip -type f -iname "*dbgsym*deb" -delete
+find -L /root/src/libzip -maxdepth 3 -type f -iname "*udeb" -delete
+find -L /root/src/libzip -maxdepth 3 -type f -iname "*dbgsym*deb" -delete
 
 
 # install current debs

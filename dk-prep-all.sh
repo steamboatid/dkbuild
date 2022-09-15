@@ -48,8 +48,8 @@ purge_pending_installs
 
 # delete unpacked folders
 mkdir -p /root/org.src /root/src
-# find /root/org.src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
-# find /root/src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
+# find -L /root/org.src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
+# find -L /root/src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
 
 #  kill slow git
 ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
@@ -239,7 +239,7 @@ printf "\n\n --- wait finished... \n\n\n"
 
 #--- final delete all *deb
 #-------------------------------------------
-find /root/src -type f -iname "*.deb" -delete
+find -L /root/src -type f -iname "*.deb" -delete
 
 #--- final rsync org.src to src {WITHOUT delete}
 #--- sync to src
@@ -257,8 +257,8 @@ aptold install -fy --auto-remove --purge \
 
 rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
 rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
-find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
-find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 
 
 #--- mark as manual installed,

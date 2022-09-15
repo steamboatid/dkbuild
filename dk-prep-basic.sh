@@ -42,8 +42,8 @@ systemctl restart systemd-resolved.service; \
 systemctl restart systemd-timesyncd.service; \
 killall -9 apt; sleep 1; killall -9 apt; \
 killall -9 apt; sleep 1; killall -9 apt; \
-find /var/lib/apt/lists/ -type f -delete; \
-find /var/cache/apt/ -type f -delete; \
+find -L /var/lib/apt/lists/ -type f -delete; \
+find -L /var/cache/apt/ -type f -delete; \
 rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
 /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/ \
 /etc/apt/preferences.d/00-revert-stable \
@@ -224,7 +224,7 @@ gnupg2 apt-utils tzdata curl ssh rsync libxmlrpc* \
 echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen
 
 
-# apt-key adv --fetch-keys http://repo.omd.my.id/trusted-keys \
+# apt-key adv --fetch-keys http://repo.omd.id/trusted-keys \
 # 	2>&1 | grep -iv "not changed"
 
 aptold update; \
@@ -376,8 +376,8 @@ aptold install -fy --auto-remove --purge \
 
 rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
 rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
-find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
-find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 
 printf "\n\n\n"
 exit 0;

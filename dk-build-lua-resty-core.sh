@@ -114,8 +114,8 @@ sleep 2
 #-------------------------------------------
 mkdir -p /root/src/lua-resty-core
 cd /root/src/lua-resty-core
-find /root/src/lua-resty-core -type f -iname "*udeb" -delete
-find /root/src/lua-resty-core -type f -iname "*dbgsym*deb" -delete
+find -L /root/src/lua-resty-core -maxdepth 3 -type f -iname "*udeb" -delete
+find -L /root/src/lua-resty-core -maxdepth 3 -type f -iname "*dbgsym*deb" -delete
 
 
 # upload to /tb2/build-devomd/{$RELNAME}-nginx

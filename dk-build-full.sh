@@ -147,7 +147,7 @@ fi
 chmod +x debian/rules
 
 >dkbuild.log
-nproc2=$(( `nproc` / 4 ))
+nproc2=$(( `nproc` / 5 ))
 if [[ $nproc2 -lt 1 ]]; then nproc2=1; fi
 # nproc2=1
 

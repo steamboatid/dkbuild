@@ -98,8 +98,8 @@ export LANGUAGE=en_US.UTF-8
 
 
 	echo \
-"deb [trusted=yes] http://repo.omd.my.id/phideb ${RELNAME} main
-#deb-src [trusted=yes] http://repo.omd.my.id/phideb ${RELNAME} main
+"deb [trusted=yes] http://repo.omd.id/phideb ${RELNAME} main
+#deb-src [trusted=yes] http://repo.omd.id/phideb ${RELNAME} main
 ">/etc/apt/sources.list.d/phideb.list
 
 	>/etc/apt/sources.list.d/nginx-ppa-devel.list
@@ -116,7 +116,7 @@ export LANGUAGE=en_US.UTF-8
 	gnupg2 apt-utils tzdata curl \
 		2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends"
 	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen
-	apt-key adv --fetch-keys http://repo.omd.my.id/trusted-keys | grep -iv "not changed"
+	apt-key adv --fetch-keys http://repo.omd.id/trusted-keys | grep -iv "not changed"
 	aptnew update; aptnew full-upgrade -fy
 
 	echo "1" > /run/done.init.dkbuild.txt
@@ -128,8 +128,8 @@ ip a
 get_dhcp_ip "eth0"
 
 
-find /var/lib/apt/lists/ -type f -delete; \
-find /var/cache/apt/ -type f -delete; \
+find -L /var/lib/apt/lists/ -type f -delete; \
+find -L /var/cache/apt/ -type f -delete; \
 rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
 /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/ \
 /etc/apt/preferences.d/00-revert-stable \

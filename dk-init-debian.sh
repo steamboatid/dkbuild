@@ -43,8 +43,8 @@ reset_apt(){
 	systemctl restart systemd-timesyncd.service; \
 	killall -9 apt; sleep 1; killall -9 apt; \
 	killall -9 apt; sleep 1; killall -9 apt; \
-	find /var/lib/apt/lists/ -type f -delete; \
-	find /var/cache/apt/ -type f -delete; \
+	find -L /var/lib/apt/lists/ -type f -delete; \
+	find -L /var/cache/apt/ -type f -delete; \
 	rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
 	/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/ \
 	/etc/apt/preferences.d/00-revert-stable \
@@ -242,7 +242,7 @@ export LANGUAGE=en_US.UTF-8
 		2>&1 | grep -iv "newest\|reading\|building\|stable CLI"
 
 	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && dpkg-reconfigure locales &&\
-	# apt-key adv --fetch-keys http://repo.omd.my.id/trusted-keys 2>&1 | grep --color "processed"
+	# apt-key adv --fetch-keys http://repo.omd.id/trusted-keys 2>&1 | grep --color "processed"
 
 	if [[ -e /tb2/phideb/trusted-keys ]]; then
 		cat /tb2/phideb/trusted-keys | gpg --dearmor > /etc/apt/trusted.gpg.d/trusted-keys.gpg

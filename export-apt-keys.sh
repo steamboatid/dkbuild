@@ -12,9 +12,9 @@ ps auxw | grep -v grep | grep "apt-key add\|gpg" | awk '{print $2}' | xargs kill
 sleep 0.2
 
 #-- delete empty files
-find /etc/apt/trusted.gpg.d -type f -empty -delete
-find /etc/apt/trusted.gpg.d -type f -name ".#*" -delete
-find /etc/apt/trusted.gpg.d -type f -name "*gpg~" -delete
+find -L /etc/apt/trusted.gpg.d -type f -empty -delete
+find -L /etc/apt/trusted.gpg.d -type f -name ".#*" -delete
+find -L /etc/apt/trusted.gpg.d -type f -name "*gpg~" -delete
 chmod -x /etc/apt/trusted.gpg.d/*
 
 #-- apt install
@@ -22,9 +22,9 @@ printf "\n --- apt install: gnupg2 apt-utils tzdata curl "
 aptold install -yf gnupg2 apt-utils tzdata curl \
 	2>&1 | grep -iv "newest\|reading\|building\|stable CLI"
 
-#-- fetch from repo.omd.my.id
-# printf "\n --- fetch from repo.omd.my.id \n"
-# apt-key adv --fetch-keys http://repo.omd.my.id/trusted-keys \
+#-- fetch from repo.omd.id
+# printf "\n --- fetch from repo.omd.id \n"
+# apt-key adv --fetch-keys http://repo.omd.id/trusted-keys \
 # 	2>&1 | grep --color -i "processed"
 
 #-- import from /etc/apt/trusted.gpg.d

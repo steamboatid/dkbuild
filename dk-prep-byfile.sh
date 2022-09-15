@@ -38,8 +38,8 @@ fix_apt_bookworm
 
 mkdir -p /root/org.src/db4 /root/src/db4
 cd /root/org.src/db4
-# find /root/org.src/db4 -mindepth 1 -type d -exec rm -rf {} \;
-find /root/org.src/db4 -type f -empty | grep -i "gz\|dsc" | xargs rm -rf
+# find -L /root/org.src/db4 -mindepth 1 -type d -exec rm -rf {} \;
+find -L /root/org.src/db4 -type f -empty | grep -i "gz\|dsc" | xargs rm -rf
 
 fetch_url "https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db4.8_4.8.30.orig.tar.gz"
 fetch_url "https://quickbuild.io/~luke-jr/+archive/ubuntu/bitcoinknots/+files/db4.8_4.8.30-buster1.dsc"
@@ -71,8 +71,8 @@ aptold install -fy --auto-remove --purge \
 
 rm -rf org.src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
 rm -rf src/nginx/git-nginx/debian/modules/nchan/dev/nginx-pkg/nchan
-find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
-find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
+find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 
 printf "\n\n\n"
 exit 0;

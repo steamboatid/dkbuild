@@ -14,7 +14,7 @@ rsync -aHAXvztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 
 cd /tb2/root/github/dkbuild/
 
-for afile in $(find /tb2/root/github/dkbuild/ -mindepth 1 -maxdepth 1 | sort -nr); do
+for afile in $(find -L /tb2/root/github/dkbuild/ -mindepth 1 -maxdepth 1 | sort -nr); do
 	bname=$(basename $afile)
 	if [[ "$bname" == ".git"* ]]; then continue; fi
 

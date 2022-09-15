@@ -26,8 +26,8 @@ fix_apt_bookworm
 
 
 clean_apt_cache() {
-	find /var/lib/apt/lists/ -type f -delete; \
-	find /var/cache/apt/ -type f -delete; \
+	find -L /var/lib/apt/lists/ -type f -delete; \
+	find -L /var/cache/apt/ -type f -delete; \
 	rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
 	/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/ \
 	/etc/apt/preferences.d/00-revert-stable \
