@@ -46,7 +46,7 @@ fi
 
 
 doback(){
-	/usr/bin/nohup /bin/bash $1 -l $2 >/dev/null 2>&1 &
+	/usr/bin/nohup /bin/bash $1 -l "$2" >/dev/null 2>&1 &
 	printf "\n\n exec back: $1 at $2 \n\n\n"
 	sleep 1
 }
