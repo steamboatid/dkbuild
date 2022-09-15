@@ -219,7 +219,7 @@ get_update_new_github "steamboatid/libzip" "/root/org.src/libzip/git-libzip" \
 #-------------------------------------------
 mkdir -p /root/org.src/sshfs /root/src/sshfs
 cd /root/org.src/sshfs
-apt install fuse3 libfuse3*
+apt install fuse3 libfuse3* -fy
 aptold source -y sshfs libfuse3-dev
 
 

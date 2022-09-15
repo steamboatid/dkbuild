@@ -17,8 +17,8 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
-export PHPVERS=("php8.0" "php8.1")
-export PHPGREP="php8.0\|php8.1"
+export PHPVERS=("php8.1")
+export PHPGREP="php8.1"
 
 
 source /tb2/build-devomd/dk-build-0libs.sh
@@ -54,7 +54,7 @@ check_php_installs() {
 	printf "\n --- Output of ${yel}php -v${end} \n"
 	eval "$phpv -v"
 }
-check_php_installs "php8.0"
+# check_php_installs "php8.0"
 check_php_installs "php8.1"
 
 
@@ -63,9 +63,9 @@ check_php_installs "php8.1"
 [ -x /etc/init.d/nutcracker ] && /etc/init.d/nutcracker restart
 [ -x /etc/init.d/nginx ] && /etc/init.d/nginx restart
 [ -x /etc/init.d/keydb-server ] && /etc/init.d/keydb-server restart
-[ -x /etc/init.d/php8.0-fpm ] && mkdir -p /run/php && /etc/init.d/php8.0-fpm restart
+# [ -x /etc/init.d/php8.0-fpm ] && mkdir -p /run/php && /etc/init.d/php8.0-fpm restart
 [ -x /etc/init.d/php8.1-fpm ] && mkdir -p /run/php && /etc/init.d/php8.1-fpm restart
-[ -x /etc/init.d/php8.2-fpm ] && mkdir -p /run/php && /etc/init.d/php8.2-fpm restart
+# [ -x /etc/init.d/php8.2-fpm ] && mkdir -p /run/php && /etc/init.d/php8.2-fpm restart
 
 
 # check netstat
@@ -84,5 +84,5 @@ check_php_custom() {
 	printf "\n\n--- ${cyan}$phpv packages${end}: ${yel}default=$NUMNON  ${blu}CUSTOM=$NUMCUS ${end}\n"
 }
 
-check_php_custom "php8.0"
+# check_php_custom "php8.0"
 check_php_custom "php8.1"

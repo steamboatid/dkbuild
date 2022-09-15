@@ -180,7 +180,7 @@ aptnew install \
 --no-install-recommends --fix-missing --reinstall -fy \
 nutcracker keydb-server keydb-tools nginx-extras
 
-apt-cache search php8 | grep -v "dbgsym" | \
+apt-cache search php8.1 | grep -v "dbgsym" | \
 grep -i "\-zip\|\-cli\|\-fpm" | awk '{print $1}' | \
 xargs aptnew install -fy
 
@@ -268,7 +268,7 @@ complete_php_installs() {
 	cat /tmp/pkg-php0.txt
 }
 
-complete_php_installs "php8.0" "8.0"
+# complete_php_installs "php8.0" "8.0"
 complete_php_installs "php8.1" "8.1"
 
 

@@ -136,7 +136,7 @@ RUN git clone https://github.com/steamboatid/dkbuild /tb2/build-devomd &&\
 	# docker run $DNAME \
 	# /bin/bash -c "echo 'nameserver 192.168.1.1'>/etc/resolv.conf; \
 	# echo '192.168.88.11 repo.omd.id devomd'>>/etc/hosts; apt update; \
-	# apt install git; rm -rf /tb2/build-devomd; \
+	# apt install -fy git; rm -rf /tb2/build-devomd; \
 	# git clone https://github.com/steamboatid/dkbuild /tb2/build-devomd; \
 	# /bin/bash /tb2/build-devomd/dk-init-debian.sh &&\
 	# /bin/bash /tb2/build-devomd/zins.sh"
