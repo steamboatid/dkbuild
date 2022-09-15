@@ -142,6 +142,15 @@ build_install_propro_debs(){
 	fi
 }
 
+build_install_http_debs(){
+	build_http=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "http" | wc -l)
+	if [[ $build_http -lt 1 ]]; then
+		http_dir=$(find /root/src/php -maxdepth 1 -type d -iname "php*http*" | sort -nr | head -n1)
+		/bin/bash $sdir/dk-build-full.sh -d $http_dir
+		dpkg -i --force-all /root/src/php/php*-http*deb
+	fi
+}
+
 install_propro_debs(){
 	build_propro=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "propro" | wc -l)
 	debs_propro=$(find -L /root/src/php -type f -iname "php*-propro*deb" | wc -l)
@@ -315,7 +324,10 @@ build_install_raph_debs &
 build_install_propro_debs &
 wait
 dpkg -i --force-all /root/src/php/php*-raph*deb /root/src/php/php*-propro*deb
-# exit 0
+
+build_install_http_debs
+dpkg -i --force-all /root/src/php/php*-http*deb
+exit 0
 
 
 #--- initial build
