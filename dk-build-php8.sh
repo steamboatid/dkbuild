@@ -105,7 +105,7 @@ override_dh_shlibdeps:
 
 
 	dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELVER)" \
-	-v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.omd.my.id" -D buster -u high; \
+	-v "$VERNEXT+$TODAY+$RELVER+$RELNAME+dk.omd.id" -D buster -u high; \
 	head debian/changelog
 
 	cd "$odir"

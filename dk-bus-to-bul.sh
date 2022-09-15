@@ -240,7 +240,7 @@ cat /etc/systemd/resolved.conf | grep "DNS="
 rm -rf /etc/resolv.conf; touch /etc/resolv.conf
 cat <<\EOT >/etc/resolv.conf
 domain omd.id
-search omd.my.id omd.web.id omd.id
+search omd.id omd.web.id omd.id
 
 #--devomd
 #-- nameserver 127.0.0.1
