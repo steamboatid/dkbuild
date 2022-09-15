@@ -32,7 +32,7 @@ for alxc in "${lxcs[@]}"; do
 	printf "\n --- $alxc "
 	lxc-stop -kqn $alxc
 
-	cd $alxc/rootfs
+	cd /tb2/var-lib-lxc/$alxc/rootfs
 	rm -rf root/.ccache var/cache/apt/archives
 	rm -rf root/org.src root/src
 	rm -rf var/cache/apt/* var/lib/dpkg/lock var/lib/dpkg/lock-frontend \
