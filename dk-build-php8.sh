@@ -300,7 +300,7 @@ delete_bad_php_ext
 export ERRFIX=0
 /bin/bash /tb2/build-devomd/dk-fix-php-sources.sh
 if [[ $ERRFIX -gt 0 ]]; then
-	printf "\n\n\n FATAL ERROR \n\n"
+	printf "\n\n\n ERROR \n\n"
 	exit 10
 fi
 
@@ -327,7 +327,7 @@ dpkg -i --force-all /root/src/php/php*-raph*deb /root/src/php/php*-propro*deb
 
 build_install_http_debs
 dpkg -i --force-all /root/src/php/php*-http*deb
-exit 0
+# exit 0
 
 
 #--- initial build
