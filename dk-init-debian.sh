@@ -36,6 +36,33 @@ fix_apt_bookworm
 
 
 
+reset_apt(){
+	systemctl daemon-reload; \
+	systemctl restart systemd-resolved.service; \
+	systemctl restart systemd-timesyncd.service; \
+	killall -9 apt; sleep 1; killall -9 apt; \
+	killall -9 apt; sleep 1; killall -9 apt; \
+	find /var/lib/apt/lists/ -type f -delete; \
+	find /var/cache/apt/ -type f -delete; \
+	rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
+	/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/ \
+	/etc/apt/preferences.d/00-revert-stable \
+	/var/cache/debconf/ /var/lib/apt/lists/* \
+	/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/; \
+	mkdir -p /root/.local/share/nano/ /root/.config/procps/; \
+	dpkg --configure -a; \
+	apt autoclean; apt clean; apt update --allow-unauthenticated
+
+
+	apt full-upgrade -fydu --auto-remove --purge --fix-missing \
+		-o Dpkg::Options::="--force-overwrite"
+
+	apt update; \
+	apt full-upgrade -f --auto-remove --purge --fix-missing \
+		-o Dpkg::Options::="--force-overwrite"
+}
+
+
 init_resolver() {
 	if [ -f /etc/init.d/resolvconf ] && [ -f /etc/resolvconf/resolv.conf.d/head ]; then
 		echo \
@@ -266,6 +293,7 @@ init_apt_proxy &
 printf "\n --- wait...\n"
 wait
 
+
 if [[ "${RELNAME}" = "buster" ]]; then
 	init_buster
 elif [[ "${RELNAME}" = "bullseye" ]]; then
@@ -275,6 +303,8 @@ elif [[ "${RELNAME}" = "bookworm" ]]; then
 	fix_apt_bookworm
 fi
 cat /etc/apt/sources.list
+
+reset_apt
 
 init_db4
 init_apt_keys
