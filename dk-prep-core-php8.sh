@@ -311,9 +311,14 @@ find /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 
 #--- mark as manual installed,
 # for nginx, php, redis, keydb, memcached
+# 5.6  7.0  7.1  7.2  7.3  8.2
 #-------------------------------------------
-apt-mark hold php5* php7.0* php7.1* php7.2* php7.3*; \
-apt purge -fy php5* php7.0* php7.1* php7.2* php7.3* --allow-change-held-packages; \
+rm -rf /etc/php/5.6 /etc/php/7.0 /etc/php/7.1 /etc/php/7.2 /etc/php/7.3 \
+/etc/php/7.4 /etc/php/8.2 \
+/usr/share/php/5.6 /usr/share/php/7.0 /usr/share/php/7.1 \
+/usr/share/php/7.2 /usr/share/php/7.3 /usr/share/php/7.4 /usr/share/php/8.2; \
+apt-mark hold php*; \
+apt remove -fy php5* php7.0* php7.1* php7.2* php7.3* php8.2* --allow-change-held-packages; \
 dpkg -l | grep "PHP\|nginx\|memcache\|keydb\|redis\|db4" | \
 awk '{print $2}' | tr "\n" " " | xargs apt-mark manual \
  >/dev/null 2>&1
