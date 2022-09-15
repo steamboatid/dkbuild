@@ -24,8 +24,6 @@ export PHPGREP="php8.0\|php8.1"
 source /tb2/build-devomd/dk-build-0libs.sh
 fix_relname_bookworm
 fix_apt_bookworm
-fix_apt_bookworm
-
 
 # delete phideb
 delete_phideb
@@ -41,14 +39,7 @@ purge_pending_installs
 
 
 # install libboost
-apt-cache search libboost1 | cut -d' ' -f1 | grep dev | \
-xargs aptold install -fy \
- 2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
-
-apt-cache search libboost | cut -d' ' -f1 | grep -i "\-dev" |\
-grep -i "atomic\|chrono\|date-time\|serialization\|system\|thread" |\
-xargs aptold install -fy \
- 2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+/bin/bash /tb2/build-devomd/dk-prep-libboost.sh
 
 # apt autoremove --auto-remove --purge -fy \
 #  2>&1 | grep --color "upgraded"
@@ -178,18 +169,6 @@ systemtap-sdt-dev tcl-dev unixodbc-dev uuid-dev xorg-dev \
 zlib1g*dev zlib1g-dev \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
-# libboost1.67-dev libboost-atomic1.67-dev \
-# libboost-chrono1.67-dev libboost-date-time1.67-dev libboost-date-time-dev \
-# libboost-serialization1.67-dev libboost-system1.67-dev libboost-system-dev \
-# libboost-thread1.67-dev libboost-thread-dev \
-# libbz2-dev libc6-dev libc-client*-dev \
-
-aptold install -fy \
-libboost*-dev libboost-atomic*-dev \
-libboost-chrono*-dev libboost-date-time*-dev libboost-date-time-dev \
-libboost-serialization*-dev libboost-system*-dev libboost-system-dev \
-libboost-thread*-dev libboost-thread-dev  \
-	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 aptold install -fy \
 libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \

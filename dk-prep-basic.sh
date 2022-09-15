@@ -288,6 +288,10 @@ cat /tmp/deps.pkgs | sort -u | sort | tr "\n" " " | \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping"
 
 
+# install libboost
+/bin/bash /tb2/build-devomd/dk-prep-libboost.sh
+
+
 aptold install -fy  --no-install-recommends --fix-missing \
 -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" \
 -o Dpkg::Options::="--force-overwrite" \
@@ -338,7 +342,6 @@ linux-headers-amd64 linux-image-amd64 udev ccache psmisc cheese \
 ebtables arptables ipcalc ipset whois jq \
 google-perftools libgoogle-perftools-dev libedit-dev devscripts \
 libfl-dev flex bison libsodium* libldap2-dev libpcre2-dev zstd \
-libboost-all-dev libboost-dev libboost-tools-dev \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping"
 
 apt-cache search libssl | grep -v "ocaml\|clojure" | \
