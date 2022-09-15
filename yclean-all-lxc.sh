@@ -32,9 +32,14 @@ for alxc in "${lxcs[@]}"; do
 	printf "\n --- $alxc "
 	lxc-stop -kqn $alxc
 
-	rm -rf $alxc/rootfs/root/.ccache
-	rm -rf $alxc/rootfs/var/cache/apt/archives
-	rm -rf $alxc/rootfs/root/org.src/ $alxc/rootfs/root/src
+	cd $alxc/rootfs
+	rm -rf root/.ccache var/cache/apt/archives
+	rm -rf root/org.src root/src
+	rm -rf var/cache/apt/* var/lib/dpkg/lock var/lib/dpkg/lock-frontend \
+		var/lib/dpkg/lock var/lib/dpkg/lock-frontend var/cache/debconf \
+		etc/apt/preferences.d/00-revert-stable \
+		var/cache/debconf var/lib/apt/lists/* \
+		var/lib/dpkg/lock var/lib/dpkg/lock-frontend var/cache/debconf
 done
 
 printf "\n\n\n"

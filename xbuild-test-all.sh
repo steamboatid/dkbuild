@@ -45,9 +45,11 @@ kill_current_scripts(){
 
 build_ops(){
 	alxc=$1
-	alog="/var/log/dkbuild/dk-$1-prep.log"
 
 	lxc-start -qn $alxc
+	
+	mkdir -p /tmp/dkbuild
+	alog="/tmp/dkbuild/dk-$1-prep.log"
 	>$alog
 
 	printf "\n\n --- init debian -- $alxc \n"
@@ -58,6 +60,7 @@ build_ops(){
 	lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh -l "$alxc" \
 		2>&1 | tee -a $alog  2>&1 >/dev/null
 
+	cat $alog | grep -i "fatal failed"
 	isfail=$(cat $alog | grep -i "fatal failed" | wc -l)
 	if [[ $isfail -lt 1 ]]; then
 		printf "\n\n --- prep-all -- $alxc \n"
@@ -65,6 +68,7 @@ build_ops(){
 			2>&1 | tee -a $alog  2>&1 >/dev/null
 	fi
 
+	cat $alog | grep -i "fatal failed"
 	isfail=$(cat $alog | grep -i "fatal failed" | wc -l)
 	if [[ $isfail -lt 1 ]]; then
 		printf "\n\n --- build-all -- $alxc \n"
