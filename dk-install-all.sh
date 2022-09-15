@@ -230,10 +230,10 @@ complete_php_installs() {
 	vnum="$2"
 	> /tmp/pkg-php0.txt
 
-	apt-cache search db4.8 | grep -iv "cil\|tcl\|doc" | \
+	apt-cache search db4.8 | grep -iv "cil\|tcl\|doc\|dev\|dbg\|java" | \
 	cut -d" " -f1 | xargs aptnew install -fy -o Dpkg::Options::="--force-overwrite"
 
-	apt-cache search db4.8 | grep -iv "cil\|tcl\|doc" | \
+	apt-cache search db4.8 | grep -iv "cil\|tcl\|doc\|dev\|dbg\|java" | \
 	cut -d" " -f1  >> /tmp/pkg-php0.txt
 
 	apt-cache search $phpv | \
