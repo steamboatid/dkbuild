@@ -270,7 +270,6 @@ complete_php_installs() {
 
 complete_php_installs "php8.0" "8.0"
 complete_php_installs "php8.1" "8.1"
-complete_php_installs "php8.2" "8.2"
 
 
 #--- check packages installed

@@ -17,8 +17,8 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
-export PHPVERS=("php8.0" "php8.1" "php8.2")
-export PHPGREP="php8.0\|php8.1\|php8.2"
+export PHPVERS=("php8.0" "php8.1")
+export PHPGREP="php8.0\|php8.1"
 
 
 source /tb2/build-devomd/dk-build-0libs.sh
@@ -118,22 +118,27 @@ get_package_file $URL $FPKGS
 
 cat $FPKGS | grep "Depends:" | sed -r "s/Depends: //g"| \
 sed "s/\,//g" | sed "s/) /)\n/g" | sed -E 's/\((.*)\)//g' | sed "s/\s/\n/g" | sed '/^$/d' | \
+grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 grep -iv "\-embed\|\-dbg\|dbgsym\|libtiff-dev\|posix0\|apache2" | \
 grep -iv "dictionary\|mysqlnd\|tmpfiles\|php-curl-all-dev\|\-ps\|\-json\|Pre-php-common\|yac" | \
 grep -iv "php5\|php7\|yac\|gmagick\|xcache\|solr\|swoole\|recode\|phalcon\|apache2" | \
 cut -d":" -f1 | sort -u | sort  >  $FDEPS
 
 apt-cache search php | grep "\-dev" | \
+grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 grep -iv "php5\|php7\|yac\|gmagick\|xcache\|solr\|swoole\|recode\|phalcon\|apache2" | \
 grep -iv "\-embed\|\-dbg\|dbgsym" | \
 cut -d" " -f1  >>  $FDEPS
 
 cat $FDEPS | sort -u | sort | sed -r 's/\|//g' | sed '/^$/d' | \
+grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 grep -iv "php5\|php7\|yac\|gmagick\|xcache\|solr\|swoole\|recode\|phalcon\|apache2" | \
 grep -iv "\-embed\|\-dbg\|dbgsym" | \
   >>  $FDEPF
 
-cat $FDEPF | tr "\n" " " | xargs aptold install -my \
+cat $FDEPF | \
+	grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
+	tr "\n" " " | xargs aptold install -my \
 	2>&1 | grep -iv "nable to locate\|not installed\|newest\|picking\|reading\|building\|stable CLI"
 
 
@@ -172,17 +177,21 @@ echo "libicu-dev" >> $FNOW1
 
 
 apt-cache search "php" | awk '{print $1}' | grep "${PHPGREP}" | \
+	grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	grep -iv "embed\|dbgsym\|dbg\|apache" >> $FNOW1
 apt-cache search php | grep "php\-" | grep "\-dev" | awk '{print $1}' | \
+	grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	grep -iv "embed\|dbgsym\|dbg\|apache" >> $FNOW1
 
 apt-cache search php8 | cut -d" " -f1 | \
+	grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	grep -iv "symfony\|apache\|embed\|dbgsym" >> $FNOW1
 
 echo "php-pecl-http php-pecl-http-dev" | tr " " "\n" >> $FNOW1
 
 
 cat $FNOW1 | grep -i "${PHPGREP}\|php\-" | \
+	grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	sort -u | sort | \
 	sed 's/(\([^\)]*\))//g' > $FNOW2
 
@@ -216,6 +225,7 @@ cat $FSRC2 | grep "${PHPGREP}" >> $FSRC3
 
 chown_apt
 cat $FSRC3 | \
+grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 grep -iv "php8.2-http\|php8.1-http\|php8.0-http\|php-http" | \
 grep -iv "php8.*\-http" | \
 grep -iv "php9.*\-http" | \
@@ -228,30 +238,38 @@ sort -u | sort  >>/tmp/php-pkgs.txt
 cd /root/org.src/php
 
 apt-cache search php8 | cut -d" " -f1 | \
+	grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" | xargs aptold install -fy
 
 apt-cache search php8 | cut -d" " -f1 | \
+	grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" >>/tmp/php-pkgs.txt
 apt-cache search php8 | cut -d" " -f1 | \
+	grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" | \
 	grep -iv "php8.2-http\|php8.1-http\|php8.0-http\|php-http" | \
 	grep -iv "php8.*\-http" | \
 	grep -iv "php9.*\-http"  >>/tmp/php-pkgs.txt
 
 apt-cache search sodium | cut -d" " -f1 | \
+	grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5\|rust" | \
 	xargs aptold install -fy
 apt-cache search sodium | cut -d" " -f1 | \
+	grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5\|rust" \
 	>>/tmp/php-pkgs.txt
 
 apt-cache search libicu | cut -d" " -f1 | \
+	grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	grep -iv "java\|dbg\|sym\|hb" | xargs aptold install -fy
 apt-cache search libicu | cut -d" " -f1 | \
+	grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	grep -iv "java\|dbg\|sym\|hb" \
 	>>/tmp/php-pkgs.txt
 
 apt-cache search libxmlrpc | cut -d" " -f1 | \
+	grep -iv "php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	grep -iv "perl\|java\|ocaml" | xargs aptold install -fy
 
 

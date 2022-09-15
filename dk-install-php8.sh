@@ -17,8 +17,8 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
-export PHPVERS=("php8.0" "php8.1" "php8.2")
-export PHPGREP="php8.0\|php8.1\|php8.2"
+export PHPVERS=("php8.0" "php8.1")
+export PHPGREP="php8.0\|php8.1"
 
 
 source /tb2/build-devomd/dk-build-0libs.sh
@@ -87,7 +87,6 @@ complete_php_installs() {
 
 complete_php_installs "php8.0" "8.0"
 complete_php_installs "php8.1" "8.1"
-complete_php_installs "php8.2" "8.2"
 
 
 
@@ -109,7 +108,6 @@ check_php_installs() {
 }
 check_php_installs "php8.0"
 check_php_installs "php8.1"
-check_php_installs "php8.2"
 
 
 
@@ -129,4 +127,3 @@ check_php_custom() {
 
 check_php_custom "php8.0"
 check_php_custom "php8.1"
-check_php_custom "php8.2"
