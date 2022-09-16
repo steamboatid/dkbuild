@@ -154,7 +154,7 @@ build_install_raph_debs(){
 	build_raph=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "raph" | wc -l)
 	if [[ $build_raph -lt 1 ]]; then
 		raph_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*raph*" | sort -nr | head -n1)
-		/bin/bash $sdir/dk-build-full.sh -d $raph_dir
+		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$raph_dir"
 		dpkg -i --force-all /root/src/php/php*-raph*deb
 	fi
 }
@@ -163,7 +163,7 @@ build_install_propro_debs(){
 	build_propro=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "propro" | wc -l)
 	if [[ $build_propro -lt 1 ]]; then
 		propro_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*propro*" | sort -nr | head -n1)
-		/bin/bash $sdir/dk-build-full.sh -d $propro_dir
+		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$propro_dir"
 		dpkg -i --force-all /root/src/php/php*-propro*deb
 	fi
 }
@@ -172,7 +172,7 @@ build_install_http_debs(){
 	build_http=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "http" | wc -l)
 	if [[ $build_http -lt 1 ]]; then
 		http_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*http*" | sort -nr | head -n1)
-		/bin/bash $sdir/dk-build-full.sh -d $http_dir
+		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$http_dir"
 		dpkg -i --force-all /root/src/php/php*-http*deb
 	fi
 }

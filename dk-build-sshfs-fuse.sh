@@ -97,6 +97,7 @@ rm -rf /root/src/sshfs/*deb
 
 do_build_sshfs_fuse() {
 	bdir="$1"
+	alxc="$2"
 
 	# revert backup if exists
 	if [ -e "debian/changelog.1" ]; then
@@ -145,7 +146,7 @@ do_build_sshfs_fuse() {
 	head debian/changelog
 	sleep 2
 
-	/bin/bash /tb2/build-devomd/dk-build-full.sh -d "$bdir"
+	/bin/bash /tb2/build-devomd/dk-build-full.sh -h "$alxc" -d "$bdir"
 }
 
 
@@ -155,7 +156,7 @@ do_build_sshfs_fuse() {
 dirname=$(find -L /root/src/sshfs -mindepth 1 -maxdepth 1 -type d -iname "*fuse*" | grep -v "sshfs\-" | head -n1)
 cd $dirname
 pwd
-do_build_sshfs_fuse "$dirname"
+do_build_sshfs_fuse "$dirname" "$alxc"
 
 
 # build SSHFS
@@ -165,7 +166,7 @@ cd $dirname
 pwd
 # hack iosize
 sed -i -r "s/sshfs\.blksize = 4096/sshfs\.blksize = 104857600/g" sshfs.c
-do_build_sshfs_fuse "$dirname"
+do_build_sshfs_fuse "$dirname" "$alxc"
 
 
 

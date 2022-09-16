@@ -132,7 +132,7 @@ for adir in $(find -L /root/src/pcre -maxdepth 1 -mindepth 1 -type d -name "pcre
 	head debian/changelog
 	sleep 2
 
-	/bin/bash /tb2/build-devomd/dk-build-full.sh -d "$adir"
+	/bin/bash /tb2/build-devomd/dk-build-full.sh -h "$alxc" -d "$adir"
 done
 
 

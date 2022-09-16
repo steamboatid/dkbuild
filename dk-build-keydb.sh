@@ -132,7 +132,7 @@ dch -p -b "simple rebuild $RELNAME + O3 flag (custom build debian $RELNAME $RELV
 head debian/changelog
 sleep 2
 
-/bin/bash /tb2/build-devomd/dk-build-full.sh -d $BUILDDIR
+/bin/bash /tb2/build-devomd/dk-build-full.sh -h "$alxc" -d $BUILDDIR
 
 
 
