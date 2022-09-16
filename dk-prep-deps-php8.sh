@@ -136,7 +136,7 @@ grep -iv "\-embed\|\-dbg\|dbgsym" | \
 
 cat $FDEPF | \
 	grep -iv "php.*all\-dev\|php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
-	tr "\n" " " | xargs aptold install -my \
+	tr "\n" " " | xargs aptnew install -my \
 	2>&1 | grep -iv "nable to locate\|not installed\|newest\|picking\|reading\|building\|stable CLI"
 
 
@@ -237,7 +237,7 @@ cd /root/org.src/php
 
 apt-cache search php8 | cut -d" " -f1 | \
 	grep -iv "php.*all\-dev\|php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
-	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" | xargs aptold install -fy
+	grep -iv "symfony\|apache\|embed\|dbgsym\|yac\|gmagick" | xargs aptnew install -fy
 
 apt-cache search php8 | cut -d" " -f1 | \
 	grep -iv "php.*all\-dev\|php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
@@ -252,7 +252,7 @@ apt-cache search php8 | cut -d" " -f1 | \
 apt-cache search sodium | cut -d" " -f1 | \
 	grep -iv "php.*all\-dev\|php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5\|rust" | \
-	xargs aptold install -fy
+	xargs aptnew install -fy
 apt-cache search sodium | cut -d" " -f1 | \
 	grep -iv "php.*all\-dev\|php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	grep -iv "python\|ruby\|dbg\|cran\|apache\|embed\|php7\|php5\|rust" \
@@ -260,7 +260,7 @@ apt-cache search sodium | cut -d" " -f1 | \
 
 apt-cache search libicu | cut -d" " -f1 | \
 	grep -iv "php.*all\-dev\|php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
-	grep -iv "java\|dbg\|sym\|hb" | xargs aptold install -fy
+	grep -iv "java\|dbg\|sym\|hb" | xargs aptnew install -fy
 apt-cache search libicu | cut -d" " -f1 | \
 	grep -iv "php.*all\-dev\|php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
 	grep -iv "java\|dbg\|sym\|hb" \
@@ -268,7 +268,7 @@ apt-cache search libicu | cut -d" " -f1 | \
 
 apt-cache search libxmlrpc | cut -d" " -f1 | \
 	grep -iv "php.*all\-dev\|php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
-	grep -iv "perl\|java\|ocaml" | xargs aptold install -fy
+	grep -iv "perl\|java\|ocaml" | xargs aptnew install -fy
 
 
 apt search php 2>&1 | grep -iv "stable cli" | grep 2021 | \
@@ -319,7 +319,7 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 #--- last
 #-------------------------------------------
 # save_local_debs
-aptold install -fy --auto-remove --purge \
+aptnew install -fy --auto-remove --purge \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends"
 
 find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1

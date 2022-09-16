@@ -48,25 +48,25 @@ purge_pending_installs
 
 # PHP8.x, source via default + git
 #-------------------------------------------
-aptold install -fy --fix-broken
-# apt-cache search libmagickwand  2>&1 | awk '{print $1}' | grep dev | xargs aptold install -y
+aptnew install -fy --fix-broken
+# apt-cache search libmagickwand  2>&1 | awk '{print $1}' | grep dev | xargs aptnew install -y
 
 
-aptold install -fy --install-suggests \
+aptnew install -fy --install-suggests \
 pkg-config build-essential autoconf bison re2c meson \
 libxml2-dev libsqlite3-dev curl make gcc devscripts debhelper dh-apache2 apache2-dev libc-client-dev \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
-aptold install -fy libwebp-dev \
+aptnew install -fy libwebp-dev \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
-aptold install -fy libwebp-dev libwebp6 libgd-dev \
+aptnew install -fy libwebp-dev libwebp6 libgd-dev \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
-aptold install -fy libgd-dev libgd3 \
+aptnew install -fy libgd-dev libgd3 \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 
 for apv in "${PHPVERS[@]}"; do
-	aptold install -my --no-install-recommends  --allow-downgrades \
+	aptnew install -my --no-install-recommends  --allow-downgrades \
 	$apv $apv-apcu $apv-ast $apv-bcmath $apv-bz2 $apv-cli $apv-common \
 	$apv-curl $apv-dba $apv-dev $apv-enchant $apv-fpm $apv-gd $apv-gmp \
 	$apv-igbinary $apv-imagick $apv-imap $apv-interbase \
@@ -84,17 +84,17 @@ for apv in "${PHPVERS[@]}"; do
 done
 
 
-aptold install -my php-http php-raphf \
+aptnew install -my php-http php-raphf \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 apt-cache search php | grep http | grep -i pecl | \
-	cut -d" " -f1 | xargs aptold install -fy | grep --color=auto "Depends\|$"
+	cut -d" " -f1 | xargs aptnew install -fy | grep --color=auto "Depends\|$"
 
 apt-cache search libsnmp | grep -iv "perl\|dbg\|pyth" | cut -d" " -f1 | \
-	xargs aptold install -fy \
+	xargs aptnew install -fy \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
-aptold install -fy --no-install-recommends  --allow-downgrades \
+aptnew install -fy --no-install-recommends  --allow-downgrades \
 devscripts build-essential lintian debhelper git git-extras wget axel dh-make dh-php ccache \
 aspell aspell-en chrpath default-libmysqlclient-dev dictionaries-common emacsen-common firebird-dev firebird3.0-common firebird3.0-common-doc flex freetds-common \
 freetds-dev libapparmor-dev libargon2-dev libaspell-dev libaspell15 libblkid-dev libbsd-dev libbz2-dev libct4 libcurl4-openssl-dev libdb-dev libdb5.3-dev libedit-dev \
@@ -120,13 +120,13 @@ libdb5*dev libdb4*dev libdn*dev libidn*dev libomp-dev meson \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 apt-cache search libdb | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
-xargs aptold install -fy  --no-install-recommends  --allow-downgrades \
+xargs aptnew install -fy  --no-install-recommends  --allow-downgrades \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 apt-cache search db5 | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
-xargs aptold install -fy  --no-install-recommends  --allow-downgrades \
+xargs aptnew install -fy  --no-install-recommends  --allow-downgrades \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
-aptold install -fy --no-install-recommends  --allow-downgrades \
+aptnew install -fy --no-install-recommends  --allow-downgrades \
 default-jdk libx11-dev xorg-dev libcurl4-openssl-dev \
 mandoc apache2-dev dh-apache2 libdb-dev \
 liblz4-dev lz4 liblz4-* libdirectfb-dev liblzf-dev liblzf-dev \
@@ -138,7 +138,7 @@ libghc-iconv-dev libiconv-hook-dev libc-bin \
 libqdbm* libgdbm* libxqdbm* libxmlrpc-c*dev xmlrpc-api-utils \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
-aptold install -fy --no-install-recommends  --allow-downgrades \
+aptnew install -fy --no-install-recommends  --allow-downgrades \
 apache2-dev autotools-dev *clang*dev default-libmysqlclient-dev devscripts dpkg-dev \
 firebird-dev freetds-dev libapparmor-dev libapr1-dev libargon2-dev libatomic-ops-dev \
 libavif*dev libavif-dev libb64-dev \
@@ -170,7 +170,7 @@ zlib1g*dev zlib1g-dev \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 
-aptold install -fy \
+aptnew install -fy \
 libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
 libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev \
 libssl-dev libxml2-dev libzip-dev libpng-dev libjpeg-dev libwebp-dev libsodium-dev libavif*dev \
@@ -247,7 +247,7 @@ grep -i "\-dev"  >>/tmp/php-pkgs.txt
 chown_apt
 cat /tmp/php-pkgs.txt | grep -iv "yac\|xcache\|swoole\|solr\|imagick" | \
 grep -iv "php.*all\-dev\|php5\|php7\.0\|php7\.1\|php7\.2\|php7\.3\|php8\.2" | \
-xargs aptold install -fy \
+xargs aptnew install -fy \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
 
 cat /tmp/php-pkgs.txt | \
@@ -302,7 +302,7 @@ rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 #--- last
 #-------------------------------------------
 # save_local_debs
-aptold install -fy --auto-remove --purge \
+aptnew install -fy --auto-remove --purge \
 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
 
 find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
