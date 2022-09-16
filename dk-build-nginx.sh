@@ -24,6 +24,23 @@ fix_apt_bookworm
 
 
 
+# read command parameter
+#-------------------------------------------
+# while getopts d:y:a: flag
+while getopts h: flag
+do
+	case "${flag}" in
+		h) alxc=${OPTARG};;
+	esac
+done
+
+# if empty lxc, the use hostname
+if [ -z "${alxc}" ]; then
+	alxc="$HOSTNAME"
+fi
+
+
+
 
 # wait until average load is OK
 #-------------------------------------------
@@ -112,7 +129,7 @@ head debian/changelog
 sleep 2
 # exit 0
 
-/bin/bash /tb2/build-devomd/dk-build-full.sh -d $BUILDDIR
+/bin/bash /tb2/build-devomd/dk-build-full.sh -h "$alxc" -d $BUILDDIR
 
 
 
@@ -133,4 +150,4 @@ ls -la /tb2/build-devomd/$RELNAME-nginx/
 
 # rebuild the repo, temporary commented !
 #-------------------------------------------
-#--- nohup ssh devomd "nohup /bin/bash /tb2/build-devomd/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
+#--- #--- nohup ssh devomd "nohup /bin/bash /tb2/build-devomd/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &

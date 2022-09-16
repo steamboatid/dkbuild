@@ -28,10 +28,10 @@ fix_apt_bookworm
 # read command parameter
 #-------------------------------------------
 # while getopts d:y:a: flag
-while getopts l: flag
+while getopts h: flag
 do
 	case "${flag}" in
-		l) alxc=${OPTARG};;
+		h) alxc=${OPTARG};;
 	esac
 done
 
@@ -106,7 +106,7 @@ stop_services
 
 # gen config
 #-------------------------------------------
-/bin/bash /tb2/build-devomd/dk-config-gen.sh -l $alxc
+/bin/bash /tb2/build-devomd/dk-config-gen.sh -h "$alxc"
 
 
 #--- delete OLD files
@@ -206,7 +206,9 @@ cat /tmp/all.git | grep "http" | sort -u | sort >/root/all.git
 
 # rebuild the repo
 #-------------------------------------------
-nohup ssh devomd "nohup /bin/bash /tb2/build-devomd/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
+# #--- nohup ssh devomd "nohup /bin/bash /tb2/build-devomd/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
+printf "\n\n\n === rebuild the repo \n"
+/bin/bash /tb2/build-devomd/xrepo-rebuild.sh -h "$alxc"  >/dev/null 2>&1
 
 
 printf "\n\n --- done \n\n\n"

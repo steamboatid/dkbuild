@@ -27,11 +27,12 @@ fix_apt_bookworm
 # read command parameter
 #-------------------------------------------
 # while getopts d:y:a: flag
-while getopts d:l: flag
+while getopts d:l:h: flag
 do
 	case "${flag}" in
 		d) dir=${OPTARG};;
 		l) loop=${OPTARG};;
+		h) host=${OPTARG};;
 	esac
 done
 

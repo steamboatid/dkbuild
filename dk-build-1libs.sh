@@ -77,7 +77,7 @@ fix_php_ps(){
 	cp debian/control debian/control.in
 	sed -i -r 's/dh-php \(>= 0.12~/dh-php \(>= 4~/' debian/control
 	sed -i -r 's/dh-php \(>= 0.12~/dh-php \(>= 4~/' debian/control.in
-	sed -i -r 's/<min>4.3.10/<min>7.0.33/' package.xml
+	sed -i -r 's/<min>4.3.10/<min>8.0.0/' package.xml
 	sed -i -r 's/<release>1.4.1/<release>1.4.4/' package.xml
 
 	cd "$odir"
@@ -88,7 +88,7 @@ fix_php_pinba(){
 	adir="$1"
 	cd "$adir"
 
-	sed -i -r 's/<min>4.4.8/<min>7.0.0/' package.xml
+	sed -i -r 's/<min>4.4.8/<min>8.0.0/' package.xml
 
 	cd "$odir"
 }
@@ -176,4 +176,31 @@ delete_bad_php_ext(){
 	if [[ $pinba_110 -gt 0 ]] && [[ $pinba_112 -gt 0 ]]; then
 		find -L /root/src/php -maxdepth 1 -mindepth 1 -type d -iname "*pinba-1.1.0*" | xargs rm -rf
 	fi
+}
+
+
+#--- mark as manual installed,
+# for nginx, php, redis, keydb, memcached
+# 5.6  7.0  7.1  7.2  7.3  7.4  8.2
+#-------------------------------------------
+limit_php8x_only(){
+	rm -rf /etc/php/5.6 /etc/php/7.0 /etc/php/7.1 /etc/php/7.2 /etc/php/7.3 \
+	/etc/php/7.4 /etc/php/8.2 \
+	/usr/share/php/5.6 /usr/share/php/7.0 /usr/share/php/7.1 \
+	/usr/share/php/7.2 /usr/share/php/7.3 /usr/share/php/7.4 /usr/share/php/8.2; \
+	apt-mark hold php*
+
+	apt-cache search php | grep "all-dev" | awk '{print $1}' | \
+	xargs apt remove -fy --allow-change-held-packages
+
+	apt remove -fy --allow-change-held-packages \
+	php5* php7.0* php7.1* php7.2* php7.3* php7.4* php8.2* \
+	php-propro php-propro-dev php-all-dev php-sodium
+
+	dpkg -l | grep "PHP\|nginx\|memcache\|keydb\|redis\|db4" | \
+	awk '{print $2}' | tr "\n" " " | xargs apt-mark manual \
+	>/dev/null 2>&1
+
+	apt-mark manual libssl1.1 libssl3 libssl-dev libffi7 libffi8 libffi-dev \
+	>/dev/null 2>&1
 }

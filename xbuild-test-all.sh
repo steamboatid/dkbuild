@@ -48,23 +48,23 @@ build_ops(){
 
 	lxc-start -qn $alxc
 
-	mkdir -p /tmp/dkbuild
-	alog="/tmp/dkbuild/dk-$1-build-ops.log"
+	mkdir -p /var/log/dkbuild
+	alog="/var/log/dkbuild/dk-$1-build-ops.log"
 	>$alog
 
 	printf "\n\n --- init debian -- $alxc \n"
-	lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-init-debian.sh -l "$alxc" \
+	lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-init-debian.sh -h "$alxc" \
 		2>&1 | tee -a $alog  2>&1 >/dev/null
 
 	printf "\n\n --- apt upgrade -- $alxc \n"
-	lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh -l "$alxc" \
+	lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh -h "$alxc" \
 		2>&1 | tee -a $alog  2>&1 >/dev/null
 
 	cat $alog | grep -i "fatal failed"
 	isfail=$(cat $alog | grep -i "fatal failed" | wc -l)
 	if [[ $isfail -lt 1 ]]; then
 		printf "\n\n --- prep-all -- $alxc \n"
-		lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-prep-all.sh -l "$alxc" \
+		lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-prep-all.sh -h "$alxc" \
 			2>&1 | tee -a $alog  2>&1 >/dev/null
 	fi
 
@@ -72,7 +72,7 @@ build_ops(){
 	isfail=$(cat $alog | grep -i "fatal failed" | wc -l)
 	if [[ $isfail -lt 1 ]]; then
 		printf "\n\n --- build-all -- $alxc \n"
-		lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-build-all.sh -l "$alxc" \
+		lxc-attach -n $alxc -- /bin/bash /tb2/build-devomd/dk-build-all.sh -h "$alxc" \
 			2>&1 | tee -a $alog  2>&1 >/dev/null
 	fi
 }
@@ -111,14 +111,23 @@ build_ops "eye"  2>&1 | tee -a $blog 2>&1 &
 
 printf "\n\n"
 aloop=0
+numi=0
+numa=0
 while :; do
 	sleep 2
+
 	numi=$(ps axww | grep -v grep | grep "dk-" | grep ".sh" | wc -l)
 	if [[ $numi -lt 1 ]]; then
 		sleep 0.5
 		break
 	fi
-	printf ".${numi} "
+
+	if [[ $numa -ne $numi ]]; then
+		printf ".${numi} "
+	else
+		printf "."
+		numa=$numi
+	fi
 
 	# aloop=$(( aloop+1 ))
 	# amod=$(expr $aloop % 15)
@@ -149,5 +158,18 @@ printf "\n\n --- clear nginx cache \n"
 printf "\n\n --- test-all \n"
 /bin/bash $MYDIR/xtest-all.sh
 wait
+
+
+
+printf "\n\n\n TBUS \n"
+lxc-attach -n tbus -- /bin/bash /tb2/build-devomd/dk-install-check.sh
+
+printf "\n\n\n TEYE \n"
+lxc-attach -n teye -- /bin/bash /tb2/build-devomd/dk-install-check.sh
+
+printf "\n\n\n TWOR \n"
+lxc-attach -n twor -- /bin/bash /tb2/build-devomd/dk-install-check.sh
+
+
 
 printf "\n\n done. \n\n"

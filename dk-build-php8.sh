@@ -30,18 +30,37 @@ source /tb2/build-devomd/dk-build-1libs.sh
 
 
 
+# read command parameter
+#-------------------------------------------
+# while getopts d:y:a: flag
+while getopts h: flag
+do
+	case "${flag}" in
+		h) alxc=${OPTARG};;
+	esac
+done
+
+# if empty lxc, the use hostname
+if [ -z "${alxc}" ]; then
+	alxc="$HOSTNAME"
+fi
+
+
+
 doback(){
 	adir="$1"
+	ahost="$2"
 	cd "$adir"
-	/usr/bin/nohup /bin/bash /tb2/build-devomd/dk-build-full.sh -d "$adir" 2>&1 >/dev/null 2>&1 &
+	/usr/bin/nohup /bin/bash /tb2/build-devomd/dk-build-full.sh -h $ahost -d "$adir" 2>&1 >/dev/null 2>&1 &
 	printf "\n\n\n"
 	sleep 1
 }
 
 dofore(){
 	adir="$1"
+	ahost="$2"
 	cd "$adir"
-	/bin/bash /tb2/build-devomd/dk-build-full.sh -d "$adir"
+	/bin/bash /tb2/build-devomd/dk-build-full.sh -h $ahost -d "$adir"
 	printf "\n\n\n"
 	sleep 1
 }
@@ -168,6 +187,7 @@ install_propro_debs(){
 }
 
 building_php(){
+	ahost="$2"
 	adir="$1"
 	odir=$PWD
 
@@ -225,7 +245,7 @@ building_php(){
 		prepare_php_build "$propro_dir"
 		fix_debian_controls "$propro_dir"
 		pwd
-		doback "$propro_dir"
+		doback "$propro_dir" "$ahost"
 		wait_build_jobs_php
 
 		sleep 1
@@ -236,7 +256,7 @@ building_php(){
 	fi
 
 	# always do background, avg load already checked in the beginning loop
-	doback "$adir"
+	doback "$adir" "$ahost"
 	sleep 1
 
 	# install after build
@@ -340,7 +360,7 @@ dpkg -i --force-all /root/src/php/php*-http*deb
 #--- initial build
 for adir in $(find -L /root/src/php -maxdepth 1 -mindepth 1 -type d | \
 grep -v "git-phpredis\|libzip\|libvirt\|xcache\|tideways\|phalcon3\|lz4" | sort -nr); do
-	building_php "$adir"
+	building_php "$adir" "$ahost"
 done
 
 #--- immediate install
@@ -349,7 +369,7 @@ done
 #--- rebuild if dkbuild.log not found
 for adir in $(find -L /root/src/php -mindepth 1 -maxdepth 1 -type d | sort -n); do
 	if [[ $(find $adir -maxdepth 1 -type f -iname "dkbuild.log" | wc -l) -lt 1 ]]; then
-		building_php "$adir"
+		building_php "$adir" "$ahost"
 	fi
 done
 
@@ -377,4 +397,4 @@ ls -la /tb2/build-devomd/$RELNAME-php/
 
 # rebuild the repo
 #-------------------------------------------
-nohup ssh devomd "nohup /bin/bash /tb2/build-devomd/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
+#--- nohup ssh devomd "nohup /bin/bash /tb2/build-devomd/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
