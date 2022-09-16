@@ -284,12 +284,25 @@ init_apt_proxy(){
 }'>/etc/apt/apt.conf.d/02proxy
 }
 
+init_apt_pref_php8x(){
+	echo \
+'Package: php5*
+Pin: release *
+Pin-Priority: -1
+
+Package: php7*
+Pin: release *
+Pin-Priority: -1
+'>/etc/apt/preferences.d/dkbuild.pref
+}
+
 
 # main
 #-------------------------------------------
 apt autoclean >/dev/null 2>&1; apt clean >/dev/null 2>&1
 init_resolver
 init_apt_proxy &
+init_apt_pref_php8x &
 
 printf "\n --- wait...\n"
 wait

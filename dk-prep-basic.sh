@@ -178,19 +178,23 @@ rm -rf /etc/apt/sources.list.d/keydb-ppa.list
 
 
 #--- mariadb sources.list
-rm -rf mariadb_repo_setup /etc/apt/sources.list.d/mariadb.list*
-curl -LO https://r.mariadb.com/downloads/mariadb_repo_setup
-chmod +x mariadb_repo_setup
-./mariadb_repo_setup --skip-os-eol-check --skip-eol-check --skip-verify
+rm -rf mariadb_repo_setup /etc/apt/sources.list.d/mariadb.list.*
+if [[ ! -e /etc/apt/sources.list.d/mariadb.list ]]; then
+	curl -LO https://r.mariadb.com/downloads/mariadb_repo_setup
+	chmod +x mariadb_repo_setup
+	./mariadb_repo_setup --skip-os-eol-check --skip-eol-check --skip-verify
+fi
 
 
 #--- keydb sources.list
-echo "deb https://download.keydb.dev/open-source-dist $(lsb_release -sc) main" |\
-tee /etc/apt/sources.list.d/keydb.list
-wget -O /etc/apt/trusted.gpg.d/keydb.gpg https://download.keydb.dev/open-source-dist/keyring.gpg
-fix_apt_bookworm
-apt update
-apt install keydb -fy
+if [[ ! -e /etc/apt/sources.list.d/keydb.list ]]; then
+	echo "deb https://download.keydb.dev/open-source-dist $(lsb_release -sc) main" |\
+	tee /etc/apt/sources.list.d/keydb.list
+	wget -O /etc/apt/trusted.gpg.d/keydb.gpg https://download.keydb.dev/open-source-dist/keyring.gpg
+	fix_apt_bookworm
+	apt update
+	apt install keydb -fy
+fi
 
 #--- php sources.list
 echo \

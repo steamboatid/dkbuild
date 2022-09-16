@@ -205,4 +205,7 @@ limit_php8x_only(){
 
 	apt-mark manual libssl1.1 libssl3 libssl-dev libffi7 libffi8 libffi-dev \
 		>/dev/null 2>&1
+
+	rm -rf /root/src/git-raphf/src/php_raphf.h
+	rm -rf /root/org.src/git-raphf/src/php_raphf.h
 }
