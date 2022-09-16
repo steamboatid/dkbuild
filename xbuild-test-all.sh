@@ -124,9 +124,9 @@ while :; do
 
 	if [[ $numa -ne $numi ]]; then
 		printf ".${numi} "
+		numa=$numi
 	else
 		printf "."
-		numa=$numi
 	fi
 
 	# aloop=$(( aloop+1 ))
