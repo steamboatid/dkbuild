@@ -290,7 +290,19 @@ init_apt_pref_php8x(){
 Pin: release *
 Pin-Priority: -1
 
-Package: php7*
+Package: php7.0*
+Pin: release *
+Pin-Priority: -1
+
+Package: php7.1*
+Pin: release *
+Pin-Priority: -1
+
+Package: php7.2*
+Pin: release *
+Pin-Priority: -1
+
+Package: php7.3*
 Pin: release *
 Pin-Priority: -1
 '>/etc/apt/preferences.d/dkbuild.pref

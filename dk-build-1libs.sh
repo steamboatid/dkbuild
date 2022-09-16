@@ -185,9 +185,9 @@ delete_bad_php_ext(){
 #-------------------------------------------
 limit_php8x_only(){
 	rm -rf /etc/php/5.6 /etc/php/7.0 /etc/php/7.1 /etc/php/7.2 /etc/php/7.3 \
-	/etc/php/7.4 /etc/php/8.2 \
+	/etc/php/8.2 \
 	/usr/share/php/5.6 /usr/share/php/7.0 /usr/share/php/7.1 \
-	/usr/share/php/7.2 /usr/share/php/7.3 /usr/share/php/7.4 /usr/share/php/8.2 \
+	/usr/share/php/7.2 /usr/share/php/7.3 /usr/share/php/8.2 \
 	/usr/share/php5* /usr/share/php7* /usr/share/php8.2*
 
 	apt-mark hold php*
@@ -196,7 +196,7 @@ limit_php8x_only(){
 	xargs apt remove -fy --allow-change-held-packages
 
 	apt remove -fy --allow-change-held-packages \
-	php5* php7.0* php7.1* php7.2* php7.3* php7.4* php8.2* \
+	php5* php7.0* php7.1* php7.2* php7.3* php8.2* \
 	php-propro php-propro-dev php-all-dev php-sodium
 
 	dpkg -l | grep "PHP\|nginx\|memcache\|keydb\|redis\|db4" | \
