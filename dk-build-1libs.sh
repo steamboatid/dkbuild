@@ -244,7 +244,7 @@ limit_php8x_only(){
 }
 
 
-fix_package_5_xml(){
+fix_package_57_xml(){
 	odir=$PWD
 
 	xmlfixes=0
@@ -265,6 +265,24 @@ fix_package_5_xml(){
 
 		xmlfixes=$(( xmlfixes+1 ))
 	done
+
+	find /root/org.src/php/ -maxdepth 3 -type f -iname "package-7.xml" |\
+	while read afile; do
+		pdir=$(dirname $afile)
+		p7file="$pdir/package-7.xml"
+
+		if [[ -e $p7file ]]; then
+			pfile="$pdir/package.xml"
+			if [[ -e $pfile ]]; then
+				rm -rf "$p7file"
+			else
+				mv "$p7file" "$pfile"
+			fi
+		fi
+
+		xmlfixes=$(( xmlfixes+1 ))
+	done
+
 
 	find /root/org.src/php/ -maxdepth 3 -type f -iname "package.xml" |\
 	while read afile; do

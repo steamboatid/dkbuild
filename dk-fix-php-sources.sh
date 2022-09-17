@@ -132,7 +132,7 @@ delete_duplicate_dirs "/root/org.src/php"
 delete_duplicate_dirs "/root/org.src/php"
 
 printf "\n\n --- fix package-5.xml "
-fix_package_5_xml
+fix_package_57_xml
 
 printf "\n\n ----------------------"
 printf "\n\n --- rsync from org.src "

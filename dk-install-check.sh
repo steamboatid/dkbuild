@@ -30,7 +30,7 @@ fix_apt_bookworm
 # check PHP8.x installs
 check_php_installs() {
 	phpv="$1"
-	eval "$phpv -m" | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis"
+	eval "$phpv -m" | sort -u | grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|propro"
 
 	miss_strs=""
 	miss_nums=0
