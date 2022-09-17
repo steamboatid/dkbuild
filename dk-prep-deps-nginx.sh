@@ -92,7 +92,7 @@ find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 # for nginx, php, redis, keydb, memcached
 # 5.6  7.0  7.1  7.2  7.3  7.4  8.2
 #-------------------------------------------
-limit_php8x_only
+# limit_php8x_only
 
 
 printf "\n\n\n"

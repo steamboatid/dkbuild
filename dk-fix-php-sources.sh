@@ -152,7 +152,7 @@ if [[ $ERRFIX -gt 0 ]]; then
 	fix_controls_rules
 
 	if [[ $ERRFIX -lt 1 ]]; then
-		printf " --- OK \n"
+		printf " --- OK (2nd try) \n"
 	fi
 else
 	printf " --- OK \n"

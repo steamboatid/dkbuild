@@ -54,6 +54,9 @@ printf "\n\n --- init debian -- $alxc \n"
 printf "\n\n --- apt upgrade -- $alxc \n"
 /bin/bash /tb2/build-devomd/dk-apt-upgrade.sh -h "$alxc"
 
+# printf "\n\n --- fix base files -- $alxc \n"
+# /bin/bash /tb2/build-devomd/dk-fix-base-files.sh -h "$alxc"
+
 cat $alog | grep -i "fatal failed"
 isfail=$(cat $alog | grep -i "fatal failed" | wc -l)
 if [[ $isfail -lt 1 ]]; then

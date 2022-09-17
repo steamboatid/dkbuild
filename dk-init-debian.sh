@@ -314,7 +314,8 @@ Pin-Priority: -1
 apt autoclean >/dev/null 2>&1; apt clean >/dev/null 2>&1
 init_resolver
 init_apt_proxy &
-init_apt_pref_php8x &
+>/etc/apt/preferences.d/dkbuild.pref
+# init_apt_pref_php8x &
 
 printf "\n --- wait...\n"
 wait
