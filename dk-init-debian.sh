@@ -311,6 +311,12 @@ Pin-Priority: -1
 
 # main
 #-------------------------------------------
+
+# fixed ip
+systemctl stop systemd-networkd
+systemctl disable systemd-networkd
+
+
 apt autoclean >/dev/null 2>&1; apt clean >/dev/null 2>&1
 init_resolver
 init_apt_proxy &

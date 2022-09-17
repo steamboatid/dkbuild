@@ -207,8 +207,8 @@ cat /tmp/all.git | grep "http" | sort -u | sort >/root/all.git
 # rebuild the repo
 #-------------------------------------------
 # #--- nohup ssh devomd "nohup /bin/bash /tb2/build-devomd/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
-printf "\n\n\n === rebuild the repo \n"
-/bin/bash /tb2/build-devomd/xrepo-rebuild.sh -h "$alxc"  >/dev/null 2>&1
+# printf "\n\n\n === rebuild the repo \n"
+# /bin/bash /tb2/build-devomd/xrepo-rebuild.sh -h "$alxc"  >/dev/null 2>&1
 
 
 printf "\n\n --- done \n\n\n"

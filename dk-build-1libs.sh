@@ -223,14 +223,14 @@ limit_php8x_only(){
 	/usr/share/php/7.2 /usr/share/php/7.3 /usr/share/php/8.2 \
 	/usr/share/php5* /usr/share/php7* /usr/share/php8.2*
 
-	apt-mark hold php*
-
 	apt-cache search php | grep "all-dev" | awk '{print $1}' | \
 	xargs apt remove -fy --allow-change-held-packages
 
 	apt remove -fy --allow-change-held-packages \
 	php5* php7.0* php7.1* php7.2* php7.3* php8.2* \
 	php-propro php-propro-dev php-all-dev php-sodium
+
+	apt-mark hold php*
 
 	dpkg -l | grep "PHP\|nginx\|memcache\|keydb\|redis\|db4" | \
 	awk '{print $2}' | tr "\n" " " | xargs apt-mark manual \
