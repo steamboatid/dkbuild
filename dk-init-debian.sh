@@ -227,11 +227,9 @@ export LANGUAGE=en_US.UTF-8
 	export PATH=$PATH:/usr/sbin
 	timedatectl set-timezone Asia/Jakarta
 
-	apkg=""
+	apkg="gnupg2 gpgv"
 	if [[ "${RELNAME}" = "buster" ]]; then
 		apkg="gnupg2"
-	elif [[ "${RELNAME}" = "bullseye" ]]; then
-		apkg="gnupg2 gpgv"
 	fi
 
 
