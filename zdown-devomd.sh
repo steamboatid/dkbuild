@@ -18,5 +18,5 @@ ln -sf /tb2/build-devomd/*sh /usr/local/sbin/
 # /tb2/build-devomd/dk-build-0libs.sh
 # update aptold aptnew
 [[ -f /tb2/build-devomd/dk-build-0libs.sh ]] && source /tb2/build-devomd/dk-build-0libs.sh
-fix_relname_relname_bookworm
+fix_relname_relver_bookworm
 fix_apt_bookworm
