@@ -65,7 +65,7 @@ prepare_build_flags
 #-------------------------------------------
 mkdir -p /root/org.src/pcre /root/src/pcre
 cd /root/org.src/pcre
-aptold source -y libpcre3
+aptold source -y pcre3 pcre2
 
 
 #--- sync to src
