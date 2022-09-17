@@ -249,23 +249,6 @@ fix_package_57_xml(){
 
 	xmlfixes=0
 
-	find /root/org.src/php/ -maxdepth 3 -type f -iname "package-5.xml" |\
-	while read afile; do
-		pdir=$(dirname $afile)
-		p5file="$pdir/package-5.xml"
-
-		if [[ -e $p5file ]]; then
-			pfile="$pdir/package.xml"
-			if [[ -e $pfile ]]; then
-				rm -rf "$p5file"
-			else
-				mv "$p5file" "$pfile"
-			fi
-		fi
-
-		xmlfixes=$(( xmlfixes+1 ))
-	done
-
 	find /root/org.src/php/ -maxdepth 3 -type f -iname "package-7.xml" |\
 	while read afile; do
 		pdir=$(dirname $afile)
@@ -277,6 +260,23 @@ fix_package_57_xml(){
 				rm -rf "$p7file"
 			else
 				mv "$p7file" "$pfile"
+			fi
+		fi
+
+		xmlfixes=$(( xmlfixes+1 ))
+	done
+
+	find /root/org.src/php/ -maxdepth 3 -type f -iname "package-5.xml" |\
+	while read afile; do
+		pdir=$(dirname $afile)
+		p5file="$pdir/package-5.xml"
+
+		if [[ -e $p5file ]]; then
+			pfile="$pdir/package.xml"
+			if [[ -e $pfile ]]; then
+				rm -rf "$p5file"
+			else
+				mv "$p5file" "$pfile"
 			fi
 		fi
 
