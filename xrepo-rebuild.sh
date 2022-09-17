@@ -75,7 +75,7 @@ mkdir -p /tb2/phideb/dists/{buster,bullseye,bookworm}/main/binary-amd64
 
 # delete old files
 find -L /tb2/phideb -mindepth 2 -type f -delete
-rm -rf /tb2/phideb/pool
+rm -rf /tb2/phideb/pool /tb2/phideb/dists
 
 folders=(php nginx nutcracker lua-resty-core lua-resty-lrucache keydb pcre libzip db4 sshfs)
 for afolder in "${folders[@]}"; do
