@@ -103,8 +103,8 @@ lxc-start -qn teye
 lxc-start -qn twor
 sleep 1
 
-blog="/tmp/dkbuild/dk-prep-build-all-lxc.log"
->$blog
+blog="/var/log/dkbuild/dk-prep-build-all-lxc.log"
+>"$blog:
 build_ops "bus"  2>&1 | tee -a $blog 2>&1 &
 build_ops "wor"  2>&1 | tee -a $blog 2>&1 &
 build_ops "eye"  2>&1 | tee -a $blog 2>&1 &
