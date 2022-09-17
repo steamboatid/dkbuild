@@ -44,4 +44,10 @@ done
 
 wait
 
+for alxc in "${lxcs[@]}"; do
+	printf "\n --- $alxc "
+	lxc-start -qn $alxc
+done
+
+
 printf "\n\n\n"
