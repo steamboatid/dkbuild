@@ -107,6 +107,39 @@ fix_php_phalcon3(){
 	cd "$odir"
 }
 
+fix_php_imagick(){
+	odir=$PWD
+	adir="$1"
+	cd "$adir"
+
+	if [[ -e package.xml ]]; then
+		phpver=$(cat package.xml | grep "<php>" -A1 | tail -n1 | sed -r 's/\s+//g' | sed 's/<\/min>//g')
+		cp package.xml package.xml.bak -f
+		sed -i -r "s/${phpver}/<min>8.0.0/" package.xml
+	fi
+
+	cd "$odir"
+}
+
+fix_php_pecl_package_xml(){
+	odir=$PWD
+	adir="$1"
+	cd "$adir"
+
+	if [[ $adir == *"php"* ]] && [[ -e package.xml ]]; then
+		phpverall=$(cat package.xml | grep "<php>" -A1 | tail -n1 | sed -r 's/\s+//g' | sed 's/<\/min>//g')
+		phpmajor=$(echo $phpverall | sed 's/<min>//' | cut -d'.' -f1)
+		phpmajor=$(( phpmajor ))
+
+		if [[ $phpmajor -lt 8 ]]; then
+			cp package.xml package.xml.old -f
+			sed -i -r "s/${phpverall}/<min>8.0.0/" package.xml
+		fi
+	fi
+
+	cd "$odir"
+}
+
 fix_debian_controls(){
 	bdir="$1"
 	odir=$PWD

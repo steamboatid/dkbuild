@@ -86,8 +86,16 @@ fix_controls_rules(){
 		if [[ $adir == *"pinba"* ]]; then
 			fix_php_pinba "$adir"
 		fi
+		if [[ $adir == *"imagick"* ]]; then
+			fix_php_imagick "$adir"
+		fi
 		if [[ $adir == *"-ps-"* ]] && [[ $adir == *"1.4.1"* ]]; then
 			fix_php_ps "$adir"
+		fi
+
+		#---
+		if [[ $adir == *"php"* ]]; then
+			fix_php_pecl_package_xml "$adir"
 		fi
 
 		#---
