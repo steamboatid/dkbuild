@@ -50,11 +50,27 @@ for alxc in "${lxcs[@]}"; do
 done
 
 wait
+sleep 1
 
-for alxc in "${lxcs[@]}"; do
-	printf "\n --- $alxc "
-	lxc-start -qn $alxc
+
+printf "\n\n\n\n --------- INIT DEBIAN \n"
+while :; do
+	>/tmp/init-clean.log
+	for alxc in "${lxcs[@]}"; do
+		printf "\n --- $alxc "
+		lxc-start -qn $alxc
+		sleep 1
+		lxc-attach -n $alxc -- bash /tb2/build-devomd/dk-init-debian.sh 2>&1 | tee -a /tmp/init-clean.log &
+	done
+	lxc-ls --fancy
+
+	wait
+	sleep 1
+
+	cat /tmp/init-clean.log | grep -i "setting up \|unpacking\|preparing"
+	newp=$(cat /tmp/init-clean.log | grep -i "setting up \|unpacking\|preparing" | wc -l)
+	if [[ $newp -lt 1 ]]; then break; fi
+	sleep 1
 done
-lxc-ls --fancy
 
 printf "\n\n\n"
