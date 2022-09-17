@@ -211,10 +211,10 @@ fix_apt_bookworm
 
 
 aptold install -fy gnupg2
-# apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys EFE0AC8B31B6305B &
-# apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys B9316A7BC7917B12 &
-# apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 4F4EA0AAE5267A6C &
-# wait
+apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys EFE0AC8B31B6305B &
+apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys B9316A7BC7917B12 &
+apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 4F4EA0AAE5267A6C &
+wait
 aptold install -y wget curl; apt-key del 95BD4743; \
 /usr/bin/curl -sS "https://packages.sury.org/php/apt.gpg" | gpg --dearmor \
 > /etc/apt/trusted.gpg.d/sury-php.gpg
