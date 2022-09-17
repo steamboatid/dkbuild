@@ -264,7 +264,7 @@ complete_php_installs() {
 		aptnew install -fy
 	fi
 
-	apt-cache search php | grep $phpv | \
+	apt-cache search $phpv | \
 		grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|propro" | \
 		awk '{print $1}' | xargs aptnew install -fy
 
