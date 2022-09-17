@@ -55,6 +55,6 @@ for alxc in "${lxcs[@]}"; do
 	printf "\n --- $alxc "
 	lxc-start -qn $alxc
 done
-
+lxc-ls --fancy
 
 printf "\n\n\n"
