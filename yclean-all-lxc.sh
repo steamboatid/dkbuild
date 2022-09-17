@@ -40,6 +40,13 @@ for alxc in "${lxcs[@]}"; do
 		etc/apt/preferences.d/00-revert-stable \
 		var/cache/debconf var/lib/apt/lists/* \
 		var/lib/dpkg/lock var/lib/dpkg/lock-frontend var/cache/debconf &
+
+	rm -rf \
+		etc/systemd/system/network-online.target.wants/systemd-networkd-wait-online.service \
+		etc/systemd/system/sockets.target.wants/systemd-networkd.socket \
+		etc/systemd/system/dbus-org.freedesktop.network1.service \
+		etc/systemd/system/multi-user.target.wants/systemd-networkd.service &
+
 done
 
 wait
