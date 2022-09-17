@@ -958,18 +958,21 @@ reinstall_essential(){
 	cat /tmp/ess | sort -u | sort  | tr '\n' ' ' | xargs apt install --reinstall -fy
 }
 
-fix_relname_bookworm(){
+fix_relname_relname_bookworm(){
 	export RELNAME=$(lsb_release -sc)
 	if [[ $(lsb_release -a 2>&1 | grep bookworm | wc -l) -gt 0 ]] ||
 		[[ $(cat /etc/debian_version | grep bookworm | wc -l) -gt 0 ]] ||
 		[[ $(cat /etc/issue | grep bookworm | wc -l) -gt 0 ]]; then
 		export RELNAME="bookworm"
 	fi
+
+	export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{print $2}' | tail -n1)
+	if [[ "$RELVER" = "11-updates" ]]; then export RELVER=12; fi
 }
 
 fix_apt_bookworm(){
 	export RELNAME=$(lsb_release -sc)
-	fix_relname_bookworm
+	fix_relname_relname_bookworm
 
 	if [[ "${RELNAME}" = "bookworm" ]]; then
 		sed -i -r 's/n\/a/bullseye/g' /etc/apt/sources.list.d/php-sury.list

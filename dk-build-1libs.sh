@@ -20,7 +20,7 @@ export TODATE=$(date +%Y%m%d)
 
 
 source /tb2/build-devomd/dk-build-0libs.sh
-fix_relname_bookworm
+fix_relname_relname_bookworm
 fix_apt_bookworm
 
 
@@ -241,4 +241,36 @@ limit_php8x_only(){
 
 	rm -rf /root/src/git-raphf/src/php_raphf.h
 	rm -rf /root/org.src/git-raphf/src/php_raphf.h
+}
+
+
+fix_package_5_xml(){
+	odir=$PWD
+
+	xmlfixes=0
+
+	find /root/org.src/php/ -maxdepth 3 -type f -iname "package-5.xml" |\
+	while read afile; do
+		pdir=$(dirname $afile)
+		p5file="$pdir/package-5.xml"
+
+		if [[ -e $p5file ]]; then
+			pfile="$pdir/package.xml"
+			if [[ -e $pfile ]]; then
+				rm -rf "$p5file"
+			else
+				mv "$p5file" "$pfile"
+			fi
+		fi
+
+		xmlfixes=$(( xmlfixes+1 ))
+	done
+
+	find /root/org.src/php/ -maxdepth 3 -type f -iname "package.xml" |\
+	while read afile; do
+		pdir=$(dirname $afile)
+		fix_php_pecl_package_xml "$pdir"
+	done
+
+	cd "$odir"
 }

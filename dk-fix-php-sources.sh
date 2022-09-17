@@ -22,10 +22,9 @@ export PHPGREP="php8.1"
 export ERRFIX=0
 
 
-source /tb2/build-devomd/dk-build-0libs.sh
-fix_relname_bookworm
-fix_apt_bookworm
 source /tb2/build-devomd/dk-build-1libs.sh
+fix_relname_relname_bookworm
+fix_apt_bookworm
 
 
 
@@ -143,6 +142,9 @@ delete_duplicate_dirs "/root/src/php"
 
 printf "\n\n --- delete bad ext "
 delete_bad_php_ext
+
+printf "\n\n --- fix package-5.xml "
+fix_package_5_xml
 
 printf "\n\n --- fix controls, rules, etc \n"
 ERRFIX=0

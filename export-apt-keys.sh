@@ -2,7 +2,7 @@
 
 
 # source /tb2/build-devomd/dk-build-0libs.sh
-# fix_relname_bookworm
+# fix_relname_relname_bookworm
 # fix_apt_bookworm
 
 # #-- kill prev apts
