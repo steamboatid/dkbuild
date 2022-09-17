@@ -66,6 +66,8 @@ prepare_build_flags
 mkdir -p /root/org.src/pcre /root/src/pcre
 cd /root/org.src/pcre
 aptold source -y pcre3 pcre2
+apt-cache search libpcre2 | grep -iv "dbgsym\|dbg" | awk '{print $1}' | \
+xargs aptnew source -y
 
 
 #--- sync to src
