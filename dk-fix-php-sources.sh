@@ -134,6 +134,7 @@ delete_duplicate_dirs "/root/org.src/php"
 printf "\n\n --- fix package-5.xml "
 fix_package_5_xml
 
+printf "\n\n ----------------------"
 printf "\n\n --- rsync from org.src "
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 --exclude ".git" \
