@@ -144,7 +144,7 @@ delete_duplicate_dirs "/root/src/php"
 printf "\n\n --- delete bad ext "
 delete_bad_php_ext
 
-printf "\n\n --- fix controls, rules, etc "
+printf "\n\n --- fix controls, rules, etc \n"
 ERRFIX=0
 fix_controls_rules
 if [[ $ERRFIX -gt 0 ]]; then
