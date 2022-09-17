@@ -77,7 +77,7 @@ fix_php_ps(){
 	cp debian/control debian/control.in
 	sed -i -r 's/dh-php \(>= 0.12~/dh-php \(>= 4~/' debian/control
 	sed -i -r 's/dh-php \(>= 0.12~/dh-php \(>= 4~/' debian/control.in
-	sed -i -r 's/<min>4.3.10/<min>8.0.0/' package.xml
+	sed -i -r 's/<min>4.3.10/<min>8.1.0/' package.xml
 	sed -i -r 's/<release>1.4.1/<release>1.4.4/' package.xml
 
 	cd "$odir"
@@ -88,7 +88,7 @@ fix_php_pinba(){
 	adir="$1"
 	cd "$adir"
 
-	sed -i -r 's/<min>4.4.8/<min>8.0.0/' package.xml
+	sed -i -r 's/<min>4.4.8/<min>8.1.0/' package.xml
 
 	cd "$odir"
 }
@@ -115,7 +115,7 @@ fix_php_imagick(){
 	if [[ -e package.xml ]]; then
 		phpver=$(cat package.xml | grep "<php>" -A1 | tail -n1 | sed -r 's/\s+//g' | sed 's/<\/min>//g')
 		cp package.xml package.xml.bak -f
-		sed -i -r "s/${phpver}/<min>8.0.0/" package.xml
+		sed -i -r "s/${phpver}/<min>8.1.0/" package.xml
 	fi
 
 	cd "$odir"
@@ -133,7 +133,7 @@ fix_php_pecl_package_xml(){
 
 		if [[ $phpmajor -lt 8 ]]; then
 			cp package.xml package.xml.old -f
-			sed -i -r "s/${phpverall}/<min>8.0.0/" package.xml
+			sed -i -r "s/${phpverall}/<min>8.1.0/" package.xml
 		fi
 	fi
 
