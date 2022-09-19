@@ -105,6 +105,7 @@ get_update_new_github "steamboatid/debs-db4" "/root/org.src/db4/git-debs-db4"  >
 bname=$(basename $0)
 # printf "\n\n wait for all background process... [$bname] "
 wait_backs_wpatt "dk-prep-gits.sh"
+wait
 printf "\n\n --- wait finished... \n\n\n"
 
 

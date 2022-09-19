@@ -146,7 +146,7 @@ find -L /root/src/nginx/ -maxdepth 3 -type f -iname "*dbgsym*deb" -delete
 mkdir -p /tb2/build-devomd/$RELNAME-nginx
 cp *.deb /tb2/build-devomd/$RELNAME-nginx/ -Rfav
 ls -la /tb2/build-devomd/$RELNAME-nginx/
-ls -la /tb2/build-devomd/$RELNAME-nginx/ | grep -i "sticky\|geoip2"
+ls /tb2/build-devomd/$RELNAME-nginx/ | grep -i "sticky\|geoip2"
 
 
 # rebuild the repo, temporary commented !
