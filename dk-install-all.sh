@@ -116,7 +116,7 @@ export LANGUAGE=en_US.UTF-8
 	gnupg2 apt-utils tzdata curl \
 		2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends"
 	echo 'en_US.UTF-8 UTF-8'>/etc/locale.gen && locale-gen
-	apt-key adv --fetch-keys http://repo.omd.id/trusted-keys | grep -iv "not changed"
+	apt-key adv --fetch-keys http://repo.omd.id/trusted-keys 2>&1 | grep -iv "not changed"
 	aptnew update; aptnew full-upgrade -fy
 
 	echo "1" > /run/done.init.dkbuild.txt
@@ -216,12 +216,14 @@ fi
 # complete install NGINX
 apt-cache search lua-resty | awk '{print $1}' > /tmp/pkg-nginx0.txt
 apt-cache search nginx | awk '{print $1}' | sort -u | \
-grep -v "nginx-light\|nginx-full\|nginx-core\|lua\|zabbix\|python\|prometheus" | \
+grep -v "nginx-light\|nginx-full\|nginx-core\|nginx-static" | \
+grep -v "lua\|zabbix\|python\|prometheus" | \
 grep "libnginx\|nginx-" >> /tmp/pkg-nginx0.txt
 
 cat /tmp/pkg-nginx0.txt > /tmp/pkg-nginx1.txt
 cat /tmp/pkg-nginx1.txt | tr "\n" " " > /tmp/pkg-nginx2.txt
-cat /tmp/pkg-nginx2.txt | xargs aptnew install -y --no-install-recommends --fix-missing
+cat /tmp/pkg-nginx2.txt | \
+xargs aptnew install -y --no-install-recommends --fix-missing --reinstall
 
 
 # complete install PHP8.x
@@ -255,7 +257,8 @@ complete_php_installs() {
 
 	cat /tmp/pkg-php0.txt | sort -u | sort | tr "\n" " " > /tmp/pkg-php1.txt
 
-	cat /tmp/pkg-php1.txt | xargs aptnew install -fy \
+	cat /tmp/pkg-php1.txt | \
+	xargs aptnew install -fy --no-install-recommends --fix-missing --reinstall \
 		2>&1 | grep -iv "nable to locate\|not installed\|newest\|reading\|building\|stable CLI"
 
 	# fix arginfo on uploadprogress

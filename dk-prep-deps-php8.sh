@@ -276,6 +276,9 @@ grep -iv "php5\|php7\|embed\|apache\|dbg\|sym\|dh-php\|dev\|common\|default\|\-h
 cut -d"/" -f1  | sort -u | sort  \
 	>>/tmp/php-pkgs.txt
 
+echo "libgd3" >>/tmp/php-pkgs.txt
+# cat /tmp/php-pkgs.txt
+
 apt_source_build_dep_from_file "/tmp/php-pkgs.txt" "php"
 
 

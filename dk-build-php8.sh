@@ -398,7 +398,7 @@ cp *.deb /tb2/build-devomd/$RELNAME-php/ -Rfav
 ls -la /tb2/build-devomd/$RELNAME-php/
 
 ls -la /tb2/build-devomd/$RELNAME-php/ | grep omd | grep 8.1 |\
- grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|propro"
+	grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|propro"
 
 
 # rebuild the repo
