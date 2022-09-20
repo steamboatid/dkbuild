@@ -61,8 +61,8 @@ prepare_build_flags
 
 # prepare dirs
 #-------------------------------------------
+rm -rf /tb2/build-devomd/$RELNAME-libzip
 mkdir -p /tb2/build-devomd/$RELNAME-libzip
-rm -rf /tb2/build-devomd/$RELNAME-libzip/*deb
 mkdir -p /root/src/libzip
 
 

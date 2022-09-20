@@ -56,8 +56,8 @@ VEROVR="3.10.3"
 
 # delete old debs
 #-------------------------------------------
+rm -rf /tb2/build-devomd/$RELNAME-sshfs
 mkdir -p /tb2/build-devomd/$RELNAME-sshfs
-rm -rf /tb2/build-devomd/$RELNAME-sshfs/*deb
 mkdir -p /root/src/sshfs
 rm -rf /root/src/sshfs/*deb
 
@@ -77,8 +77,8 @@ aptold source -y sshfs libfuse3-dev
 
 # prepare dirs
 #-------------------------------------------
+rm -rf /tb2/build-devomd/$RELNAME-sshfs
 mkdir -p /tb2/build-devomd/$RELNAME-sshfs
-rm -rf /tb2/build-devomd/$RELNAME-sshfs/*deb
 mkdir -p /root/src/sshfs
 
 

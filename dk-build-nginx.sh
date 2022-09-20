@@ -60,8 +60,8 @@ prepare_build_flags
 
 # prepare dirs
 #-------------------------------------------
+rm -rf /tb2/build-devomd/$RELNAME-nginx
 mkdir -p /tb2/build-devomd/$RELNAME-nginx
-rm -rf /tb2/build-devomd/$RELNAME-nginx/*deb
 mkdir -p /root/src/nginx
 
 

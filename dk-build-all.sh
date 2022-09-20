@@ -111,8 +111,15 @@ stop_services
 
 #--- delete OLD files
 mkdir -p /root/org.src /root/src /tb2/build-devomd/$RELNAME-all
-find -L /root/src -type f -iname "*deb" -delete
+find -L /root/src/ -maxdepth 4 -type f -iname "*deb" -delete
 find -L /tb2/build-devomd/$RELNAME-all -type f -iname "*deb" -delete
+rm -rf /tb2/build-devomd/$RELNAME-all
+
+folders=(php nginx nutcracker lua-resty-core lua-resty-lrucache keydb pcre libzip db4 sshfs)
+for afolder in "${folders[@]}"; do
+	rm -rf /tb2/build-devomd/$RELNAME-$afolder /tb2/phideb/pool/$RELNAME/$afolder &
+done
+wait
 
 
 # some job at foreground: build & istall base packages
@@ -158,8 +165,8 @@ find -L /root/src -maxdepth 3 -type f -iname "*dbgsym*deb" -delete
 
 
 #--- delete old debs
+rm -rf /tb2/build-devomd/$RELNAME-all
 mkdir -p /tb2/build-devomd/$RELNAME-all
-rm -rf /tb2/build-devomd/$RELNAME-all/*deb
 
 
 #--- COPY to $RELNAME-all

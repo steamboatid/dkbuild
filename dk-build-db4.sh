@@ -74,7 +74,8 @@ cp /root/src/db4/git-debs-db4/* /root/src/db4/
 
 # delete old debs
 #-------------------------------------------
-rm -rf /tb2/build-devomd/$RELNAME-db4/*deb
+rm -rf /tb2/build-devomd/$RELNAME-db4
+mkdir -p /tb2/build-devomd/$RELNAME-db4
 rm -rf /root/src/db4/*deb
 
 

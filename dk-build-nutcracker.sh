@@ -60,8 +60,8 @@ prepare_build_flags
 
 # prepare dirs
 #-------------------------------------------
+rm -rf /tb2/build-devomd/$RELNAME-nutcracker
 mkdir -p /tb2/build-devomd/$RELNAME-nutcracker
-rm -rf /tb2/build-devomd/$RELNAME-nutcracker/*deb
 mkdir -p /root/src/nutcracker
 
 

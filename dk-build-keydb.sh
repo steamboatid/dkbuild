@@ -59,8 +59,8 @@ prepare_build_flags
 
 # prepare dirs
 #-------------------------------------------
+rm -rf /tb2/build-devomd/$RELNAME-keydb
 mkdir -p /tb2/build-devomd/$RELNAME-keydb
-rm -rf /tb2/build-devomd/$RELNAME-keydb/*deb
 mkdir -p /root/src/keydb
 
 

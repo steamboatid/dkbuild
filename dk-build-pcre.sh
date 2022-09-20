@@ -49,8 +49,8 @@ wait_by_average_load
 
 # delete old debs
 #-------------------------------------------
+rm -rf /tb2/build-devomd/$RELNAME-pcre
 mkdir -p /tb2/build-devomd/$RELNAME-pcre
-rm -rf /tb2/build-devomd/$RELNAME-pcre/*deb
 mkdir -p /root/src/pcre
 rm -rf /root/src/pcre/*deb
 

@@ -61,8 +61,8 @@ prepare_build_flags
 
 # prepare dirs
 #-------------------------------------------
+rm -rf /tb2/build-devomd/$RELNAME-lua-resty-core
 mkdir -p /tb2/build-devomd/$RELNAME-lua-resty-core
-rm -rf /tb2/build-devomd/$RELNAME-lua-resty-core/*deb
 mkdir -p /root/src/lua-resty-core
 
 

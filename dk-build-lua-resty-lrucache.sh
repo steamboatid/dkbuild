@@ -61,8 +61,8 @@ prepare_build_flags
 
 # prepare dirs
 #-------------------------------------------
+rm -rf /tb2/build-devomd/$RELNAME-lua-resty-lrucache
 mkdir -p /tb2/build-devomd/$RELNAME-lua-resty-lrucache
-rm -rf /tb2/build-devomd/$RELNAME-lua-resty-lrucache/*deb
 mkdir -p /root/src/lua-resty-lrucache
 
 

@@ -305,8 +305,8 @@ rm -rf /root/src/php8 /root/org.src/php8 \
 
 # prepare dirs
 #-------------------------------------------
+rm -rf /tb2/build-devomd/$RELNAME-php
 mkdir -p /tb2/build-devomd/$RELNAME-php
-rm -rf /tb2/build-devomd/$RELNAME-php/*deb
 mkdir -p /root/src/php
 
 
