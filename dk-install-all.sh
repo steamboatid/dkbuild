@@ -98,8 +98,8 @@ export LANGUAGE=en_US.UTF-8
 
 
 	echo \
-"deb [trusted=yes] http://repo.omd.id/phideb ${RELNAME} main
-#deb-src [trusted=yes] http://repo.omd.id/phideb ${RELNAME} main
+"deb [trusted=yes arch=amd64] http://repo.omd.id/phideb ${RELNAME} main
+#deb-src [trusted=yes arch=amd64] http://repo.omd.id/phideb ${RELNAME} main
 ">/etc/apt/sources.list.d/phideb.list
 
 	>/etc/apt/sources.list.d/nginx-ppa-devel.list
@@ -223,7 +223,7 @@ grep "libnginx\|nginx-" >> /tmp/pkg-nginx0.txt
 cat /tmp/pkg-nginx0.txt > /tmp/pkg-nginx1.txt
 cat /tmp/pkg-nginx1.txt | tr "\n" " " > /tmp/pkg-nginx2.txt
 cat /tmp/pkg-nginx2.txt | \
-xargs aptnew install -y --no-install-recommends --fix-missing --reinstall
+	xargs aptnew install -y --no-install-recommends --fix-missing --reinstall
 
 
 # complete install PHP8.x
