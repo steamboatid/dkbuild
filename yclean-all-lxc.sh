@@ -51,15 +51,17 @@ done
 
 wait
 sleep 1
+/etc/init.d/squid restart
 
 
 printf "\n\n\n\n --------- INIT DEBIAN \n"
 while :; do
 	>/tmp/init-clean.log
 	for alxc in "${lxcs[@]}"; do
-		printf "\n --- $alxc "
+		printf "\n --- INIT DEBIAN: $alxc "
 		lxc-start -qn $alxc
 		sleep 1
+		lxc-attach -n $alxc -- reset
 		lxc-attach -n $alxc -- bash /tb2/build-devomd/dk-init-debian.sh 2>&1 | tee -a /tmp/init-clean.log &
 	done
 	lxc-ls --fancy
