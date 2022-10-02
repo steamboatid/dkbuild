@@ -130,6 +130,7 @@ populate_cache_urls(){
 
 
 cat << EOF > /tmp/gits-list.txt
+
 nginx/nginx   steamboatid/nginx
 m6w6/ext-http   steamboatid/ext-http
 X4BNet/nginx_accept_language_module   steamboatid/nginx_accept_language_module
@@ -143,7 +144,7 @@ libfuse/sshfs   steamboatid/sshfs
 libfuse/libfuse   steamboatid/libfuse
 nih-at/libzip   steamboatid/libzip
 
-EQ-Alpha/KeyDB   steamboatid/keydb
+Snapchat/KeyDB   steamboatid/keydb
 phpredis/phpredis   steamboatid/phpredis
 
 EOF
