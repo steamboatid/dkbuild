@@ -134,7 +134,7 @@ delete_duplicate_dirs "/root/org.src/php"
 printf "\n\n --- fix package-5.xml "
 fix_package_57_xml
 
-printf "\n\n ----------------------"
+printf "\n\n -------------------------------"
 printf "\n\n --- rsync from org.src "
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 --exclude ".git" \
@@ -147,6 +147,7 @@ delete_duplicate_dirs "/root/src/php"
 printf "\n\n --- delete bad ext "
 delete_bad_php_ext
 
+printf "\n\n -------------------------------"
 printf "\n\n --- fix controls, rules, etc \n"
 ERRFIX=0
 fix_controls_rules
@@ -162,6 +163,7 @@ else
 fi
 
 
+printf "\n\n -------------------------------"
 printf "\n\n --- check missing controls "
 olderr=$ERRFIX
 ERRFIX=0
