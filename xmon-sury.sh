@@ -127,7 +127,7 @@ if [[ $epoch_delta -gt 0 ]]; then
 	formatted=$(date -u "$format" -d "@$(printf "%010d\n" $epoch_delta)" | sed "s|^00:||")
 	printf " -- ${cyn} $formatted ${end} \n\n\n"
 
-	/bin/bash /tb2/build-devomd/xbuild-test-all.sh 2>&1 | tee /var/log/dkbuild/build-test-all.log
+	# /bin/bash /tb2/build-devomd/xbuild-test-all.sh 2>&1 | tee /var/log/dkbuild/build-test-all.log
 fi
 
 

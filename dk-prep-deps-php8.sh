@@ -171,7 +171,12 @@ for atail in "${tails[@]}"; do
 	apt-cache search "\-${atail}" | grep "php\-\|${PHPV}" | cut -d" " -f1  >> $FNOW1
 done
 
-echo "libicu-dev" >> $FNOW1
+echo "
+libgd3
+libxml2-dev
+libxml2
+libicu-dev
+" >> $FNOW1
 
 
 apt-cache search "php" | awk '{print $1}' | grep "${PHPGREP}" | \
@@ -280,6 +285,7 @@ echo "
 libgd3
 libxml2-dev
 libxml2
+libicu-dev
 " >>/tmp/php-pkgs.txt
 # cat /tmp/php-pkgs.txt
 

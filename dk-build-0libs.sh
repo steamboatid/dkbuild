@@ -329,7 +329,7 @@ prepare_build_flags(){
 
 	LD=gcc
 	# LDFLAGS="-Wl,-lm -Wl,-ldl -Wl,-lstdc++ -Wl,-lpthread ${CFLAGS} ${LDFLAGS}"
-	LDFLAGS="${CFLAGS} ${LDFLAGS}"
+	LDFLAGS="-lcurl -lssl -lcrypto ${CFLAGS} ${LDFLAGS}"
 	export LDFLAGS
 	# export LIBS=$LDFLAGS
 	# export LDLIBS=$LDFLAGS
