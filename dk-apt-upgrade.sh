@@ -115,7 +115,14 @@ aptold full-upgrade --auto-remove --purge --fix-missing -fy \
 
 
 # aptold install -o Dpkg::Options::="--force-overwrite" -fy db4.8* libdb4*
-aptold install -o Dpkg::Options::="--force-overwrite" -fy \
-db4.8-util libdb4.8 libdb4.8-dev \
-libdb4.8++ libdb4.8++-dev \
-	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
+# aptold install -o Dpkg::Options::="--force-overwrite" -fy \
+# db4.8-util libdb4.8 libdb4.8-dev \
+# libdb4.8++ libdb4.8++-dev \
+# 	2>&1 | grep -iv "newest\|picking\|reading\|building" | grep --color=auto "Depends\|$"
+
+
+dpkg -l | grep db4.8 | grep omd | awk '{print $2}' | xargs apt remove -fy
+
+apt-cache search db4.8 | grep -v "cil\|gcj" | \
+	awk '{print $1}' | \
+	xargs aptold install -o Dpkg::Options::="--force-overwrite" -fy
