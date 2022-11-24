@@ -215,6 +215,10 @@ if [[ -z "$PHPVER" ]]; then
 		PHPVER="php8.1"
 	elif [[ "$HOSTNAME" == "php82" ]]; then
 		PHPVER="php8.2"
+	elif [[ "$HOSTNAME" == "php83" ]]; then
+		PHPVER="php8.3"
+	elif [[ "$HOSTNAME" == "php84" ]]; then
+		PHPVER="php8.4"
 	fi
 fi
 

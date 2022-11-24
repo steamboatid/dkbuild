@@ -43,6 +43,29 @@ if [ -z "${alxc}" ]; then
 	alxc="$HOSTNAME"
 fi
 
+reinstall_db48(){
+	find /var/lib/apt/lists/ -type f -delete; \
+	find /var/cache/apt/ -type f -delete; \
+	rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
+	/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/ \
+	/etc/apt/preferences.d/00-revert-stable \
+	/var/cache/debconf/ /var/lib/apt/lists/* \
+	/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/; \
+	mkdir -p /root/.local/share/nano/ /root/.config/procps/; \
+	dpkg --configure -a; \
+	systemctl restart systemd-timesyncd.service; \
+	apt autoclean; apt clean; apt update --allow-unauthenticated
+
+	aptold full-upgrade --auto-remove --purge --fix-missing -fy \
+		-o Dpkg::Options::="--force-overwrite"
+
+	dpkg -l | grep db4.8 | grep omd | awk '{print $2}' | xargs apt remove -fy
+
+	apt-cache search db4.8 | grep -v "cil\|gcj" | \
+		awk '{print $1}' | \
+		xargs aptold install -o Dpkg::Options::="--force-overwrite" -fy
+}
+
 
 
 doback(){
@@ -276,6 +299,7 @@ building_php(){
 # wait until average load is OK
 #-------------------------------------------
 wait_by_average_load
+reinstall_db48
 
 
 # delete duplicate dirs
@@ -300,7 +324,8 @@ prepare_build_flags
 rm -rf /root/src/php8 /root/org.src/php8 \
 /root/src/php8.0 /root/org.src/php8.0 \
 /root/src/php8.1 /root/org.src/php8.1 \
-/root/src/php8.2 /root/org.src/php8.2
+/root/src/php8.2 /root/org.src/php8.2 \
+/root/src/php8.3 /root/org.src/php8.3
 
 
 # prepare dirs

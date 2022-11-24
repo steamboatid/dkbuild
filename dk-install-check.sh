@@ -66,6 +66,7 @@ check_php_installs "php8.1"
 # [ -x /etc/init.d/php8.0-fpm ] && mkdir -p /run/php && /etc/init.d/php8.0-fpm restart
 [ -x /etc/init.d/php8.1-fpm ] && mkdir -p /run/php && /etc/init.d/php8.1-fpm restart
 # [ -x /etc/init.d/php8.2-fpm ] && mkdir -p /run/php && /etc/init.d/php8.2-fpm restart
+# [ -x /etc/init.d/php8.3-fpm ] && mkdir -p /run/php && /etc/init.d/php8.3-fpm restart
 
 
 # check netstat
