@@ -243,6 +243,17 @@ limit_php8x_only(){
 	rm -rf /root/org.src/git-raphf/src/php_raphf.h
 }
 
+set_php81_as_default(){
+	apt remove -fy \
+		php8.2-dev php8.2-cli php8.2-common php8.2-mbstring \
+		php8.2-opcache php8.2-readline php8.2-xml
+
+	update-alternatives --set php /usr/bin/php8.1
+	update-alternatives --set phar /usr/bin/phar8.1
+	update-alternatives --set phar.phar /usr/bin/phar.phar8.1
+	update-alternatives --set phpize /usr/bin/phpize8.1
+	update-alternatives --set php-config /usr/bin/php-config8.1
+}
 
 fix_package_57_xml(){
 	odir=$PWD
