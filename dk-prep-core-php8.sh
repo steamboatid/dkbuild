@@ -37,7 +37,8 @@ find /root/org.src/php -maxdepth 2 -name "php7*-7*" | xargs rm -rf
 find /root/org.src/php -maxdepth 2 -name "php8*-8*" | xargs rm -rf
 
 # remove libdb5
-apt purge -fy libdb5*dev libdb++-dev libdb5.3-tcl
+apt install -fy
+apt purge -fy libdb5*dev libdb++-dev libdb-dev libdb5.3-tcl
 
 # list of package source
 #-------------------------------------------

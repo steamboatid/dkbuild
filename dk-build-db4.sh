@@ -146,7 +146,8 @@ find -L /root/src/db4 -maxdepth 3 -type f -iname "*dbgsym*deb" -delete
 # install all after build
 #-------------------------------------------
 cd /root/src/db4
-apt purge -fy libdb5*dev libdb++-dev libdb5.3-tcl
+apt install -fy
+apt purge -fy libdb5*dev libdb++-dev libdb-dev libdb5.3-tcl
 dpkg -i --force-all *deb
 
 
