@@ -46,6 +46,13 @@ fix_keydb_permission_problem
 purge_pending_installs
 
 
+#--- mark as manual installed,
+# for nginx, php, redis, keydb, memcached
+# 5.6  7.0  7.1  7.2  7.3  7.4  8.2
+#-------------------------------------------
+limit_php8x_only
+
+
 # delete unpacked folders
 mkdir -p /root/org.src /root/src
 # find -L /root/org.src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
