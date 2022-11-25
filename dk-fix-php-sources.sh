@@ -68,6 +68,13 @@ delete_duplicate_dirs(){
 	cd "$odir"
 }
 
+fix_missing_control_in(){
+	for adir in $(find -L /root/src/php -maxdepth 1 -mindepth 1 -type d | sort -n); do
+		cd $adir
+		[[ ! -e debian/control.in ]] && cp debian/control debian/control.in
+	done
+}
+
 fix_controls_rules(){
 	for adir in $(find -L /root/src/php -maxdepth 1 -mindepth 1 -type d | \
 		grep -v "git-phpredis\|libzip\|libgd\|libxml" | sort -n); do
@@ -171,6 +178,7 @@ printf "\n\n -------------------------------"
 printf "\n\n --- check missing controls "
 olderr=$ERRFIX
 ERRFIX=0
+fix_missing_control_in
 check_missing_controls
 if [[ $ERRFIX -lt 1 ]]; then
 	printf " --- OK \n"
