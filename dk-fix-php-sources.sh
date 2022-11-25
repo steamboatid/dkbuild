@@ -69,7 +69,9 @@ delete_duplicate_dirs(){
 }
 
 fix_controls_rules(){
-	for adir in $(find -L /root/src/php -maxdepth 1 -mindepth 1 -type d | grep -v "git-phpredis\|libzip" | sort -n); do
+	for adir in $(find -L /root/src/php -maxdepth 1 -mindepth 1 -type d | \
+		grep -v "git-phpredis\|libzip\|libgd\|libxml" | sort -n); do
+
 		cd $adir
 
 		# temporary solution
