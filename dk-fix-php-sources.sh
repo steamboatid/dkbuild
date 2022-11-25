@@ -102,7 +102,8 @@ fix_controls_rules(){
 		#---
 		if [[ $adir != *"defaults"* ]] && [[ $adir != *"php8"* ]] && \
 			 [[ $adir != *"icu"* ]] && [[ $adir != *"libsodium"* ]] && \
-			 [[ $adir != *"libgd"* ]] && [[ $adir != *"libxml"* ]]; then
+			 [[ $adir != *"libzip"* ]] &&[[ $adir != *"libgd"* ]] && \
+			 [[ $adir != *"libxml"* ]]; then
 			fix_debian_controls "$adir"
 			/usr/share/dh-php/gen-control
 
