@@ -23,6 +23,10 @@ fix_relname_relver_bookworm
 fix_apt_bookworm
 
 
+#-- install alldev
+apt install libboost-all-dev libroscpp-core-dev
+
+
 >/tmp/libboost.pkgs
 
 lbver=$(apt-cache search libboost | grep "tools\-dev" | \
