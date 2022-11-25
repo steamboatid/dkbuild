@@ -255,6 +255,7 @@ apt-cache search ast | cut -d' ' -f1 | grep php |  grep -iv "xcache\|solr" |\
 grep -i "\-dev"  >>/tmp/php-pkgs.txt
 apt-cache search propro | cut -d' ' -f1 | grep php |\
 grep -i "\-dev"  >>/tmp/php-pkgs.txt
+exit 0;
 
 chown_apt
 cat /tmp/php-pkgs.txt | grep -iv "yac\|xcache\|swoole\|solr\|imagick" | \
@@ -282,7 +283,7 @@ apt-cache search php | cut -d' ' -f1 | grep "^php-" |\
 grep -i "\-dev" | grep -iv "horde\|dbg\|sym\|embed" \
 	>>/tmp/php-pkgs.txt
 
-# apt_source_build_dep_from_file "/tmp/php-pkgs.txt" "php"
+apt_source_build_dep_from_file "/tmp/php-pkgs.txt" "php"
 
 
 #--- sync to src
