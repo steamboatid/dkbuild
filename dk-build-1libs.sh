@@ -244,6 +244,7 @@ limit_php8x_only(){
 }
 
 set_php81_as_default(){
+	rm -rf /etc/php/8.2; \
 	apt remove -fy php8.2* php8.2-cli php8.2-common php8.2-mbstring \
 		php8.2-opcache php8.2-readline php8.2-xml
 
