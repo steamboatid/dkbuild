@@ -62,7 +62,6 @@ apt-cache search db4.8 | grep -v "cil\|gcj" | \
 #-------------------------------------------
 aptnew install -fy --fix-broken
 # apt-cache search libmagickwand  2>&1 | awk '{print $1}' | grep dev | xargs aptnew install -y
-# exit 0;
 
 aptnew install -fy --install-suggests \
 pkg-config build-essential autoconf bison re2c meson \
@@ -94,6 +93,7 @@ for apv in "${PHPVERS[@]}"; do
 	pkg-php-tools libdistro-info-perl php-all-dev \
 		2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 done
+exit 0;
 
 
 aptnew install -my php-http php-raphf \
