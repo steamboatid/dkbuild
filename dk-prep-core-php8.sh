@@ -171,7 +171,7 @@ libsasl2-dev libsnmp-dev libsodium-dev \
 libsodium-dev libsqlite3-dev libssl-dev libsystemd-dev libticonv-dev \
 libtidy-dev libtiff-dev libwebp-dev libwrap0-dev libx11-dev libxft*dev libxml2-dev \
 libxml-light-ocaml-dev libxmlrpc-c++8-dev libxmlrpc-core-c3-dev libxmlrpc-epi-dev \
-libxmlrpc-light-ocaml-dev libxmlrpcpp-dev libxmltok1-dev libxpm-dev libxslt1-dev \
+libxmlrpc-light-ocaml-dev libxmltok1-dev libxpm-dev libxslt1-dev \
 libyaml-dev libzip-dev libzip-ocaml-dev libzstd*dev libzstd-dev lua-geoip-dev \
 lua-ldap-dev lua-zlib-dev php-all-dev \
 php-dev php-igbinary-all-dev php-memcached-all-dev \
