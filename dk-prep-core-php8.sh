@@ -39,6 +39,11 @@ find /root/org.src/php -maxdepth 2 -name "php8*-8*" | xargs rm -rf
 # remove libdb5
 apt install -fy
 apt purge -fy libdb5*dev libdb++-dev libdb-dev libdb5.3-tcl
+dpkg -l | grep db4.8 | grep omd | awk '{print $2}' | xargs apt remove -fy
+apt-cache search db4.8 | grep -v "cil\|gcj" | \
+	awk '{print $1}' | \
+	xargs aptold install -o Dpkg::Options::="--force-overwrite" -fy
+
 
 # list of package source
 #-------------------------------------------

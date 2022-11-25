@@ -38,9 +38,9 @@ grep -i "\-dev" | grep "${lbver}" |\
 grep -i "atomic\|chrono\|date-time\|serialization\|system\|thread\|filesystem\|wave" \
 >> /tmp/libboost.pkgs
 
-cat "libroscpp-core-dev" >> /tmp/libboost.pkgs
 
 cat /tmp/libboost.pkgs | awk '{print $1}' | sort -u > /tmp/libboost.uniq
+cat "libroscpp-core-dev" >> /tmp/libboost.uniq
 
 cat /tmp/libboost.uniq | xargs aptnew install -fy \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping"
