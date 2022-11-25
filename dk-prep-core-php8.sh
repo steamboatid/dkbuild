@@ -103,7 +103,7 @@ apt-cache search libsnmp | grep -iv "perl\|dbg\|pyth" | cut -d" " -f1 | \
 aptnew install -fy --no-install-recommends  --allow-downgrades \
 devscripts build-essential lintian debhelper git git-extras wget axel dh-make dh-php ccache \
 aspell aspell-en chrpath default-libmysqlclient-dev dictionaries-common emacsen-common firebird-dev firebird3.0-common firebird3.0-common-doc flex freetds-common \
-freetds-dev libapparmor-dev libargon2-dev libaspell-dev libaspell15 libblkid-dev libbsd-dev libbz2-dev libct4 libcurl4-openssl-dev libdb-dev libedit-dev \
+freetds-dev libapparmor-dev libargon2-dev libaspell-dev libaspell15 libblkid-dev libbsd-dev libbz2-dev libct4 libcurl4-openssl-dev libedit-dev \
 libenchant-dev libenchant1c2a libevent-* libevent-dev libfbclient2 libffi-dev \
 libgcrypt20-dev libglib2.0-bin libglib2.0-data libglib2.0-dev libglib2.0-dev-bin libgmp-dev libgmp3-dev libgmpxx4ldbl libgpg-error-dev libhunspell-1.7-0 libib-util \
 libkrb5-dev liblmdb-dev libltdl-dev libltdl7 libmagic-dev libmariadb-dev libmariadb-dev-compat libmhash-dev libmhash2 libmount-dev libncurses-dev libnss-myhostname \
@@ -115,7 +115,7 @@ bison libbison-dev libc-client2007e libc-client2007e-dev libpam0g-dev libsqlite3
 libgd-dev libgd3 libwebp6 libgd-dev \
 libmemcached*dev zlib1g-dev \
 apache2-dev autoconf automake bison chrpath debhelper default-libmysqlclient-dev libmysqlclient-dev dh-apache2 dpkg-dev firebird-dev flex freetds-dev \
-libapparmor-dev libapr1-dev libargon2-dev libbz2-dev libc-client-dev libdb-dev libedit-dev libenchant-dev libevent-dev libexpat1-dev libffi-dev libfreetype6-dev \
+libapparmor-dev libapr1-dev libargon2-dev libbz2-dev libc-client-dev libedit-dev libenchant-dev libevent-dev libexpat1-dev libffi-dev libfreetype6-dev \
 libgcrypt20-dev libglib2.0-dev libgmp3-dev libicu-dev libjpeg-dev libjpeg*dev libkrb5-dev libldap2-dev liblmdb-dev libmagic-dev libmhash-dev libnss-myhostname libonig-dev \
 libpam0g-dev libpcre2-dev libpng-dev libpq-dev libpspell-dev libqdbm-dev libsasl2-dev libsnmp-dev libsodium-dev libsqlite3-dev libssl-dev libsystemd-dev libtidy-dev libtool \
 libwrap0-dev libxml2-dev libxmltok1-dev libxslt1-dev libzip-dev locales-all netbase netcat-openbsd re2c systemtap-sdt-dev tzdata unixodbc-dev zlib1g-dev \
@@ -134,7 +134,7 @@ xargs aptnew install -fy  --no-install-recommends  --allow-downgrades \
 
 aptnew install -fy --no-install-recommends  --allow-downgrades \
 default-jdk libx11-dev xorg-dev libcurl4-openssl-dev \
-mandoc apache2-dev dh-apache2 libdb-dev \
+mandoc apache2-dev dh-apache2 \
 liblz4-dev lz4 liblz4-* libdirectfb-dev liblzf-dev liblzf-dev \
 libbz2-dev libc-client-dev libkrb5-dev libcurl4-openssl-dev libffi-dev libgmp-dev \
 libldap2-dev libonig-dev libpq-dev libpspell-dev libreadline-dev libssl-dev libxml2-dev \
@@ -149,7 +149,7 @@ apache2-dev autotools-dev *clang*dev default-libmysqlclient-dev devscripts dpkg-
 firebird-dev freetds-dev libapparmor-dev libapr1-dev libargon2-dev libatomic-ops-dev \
 libavif*dev libavif-dev libb64-dev \
 libc-client-dev lib*clang*dev libclang*dev libclang-dev libconsole-bridge-dev \
-libcurl4-openssl-dev libdb*dev libdb*dev libdb-dev \
+libcurl4-openssl-dev \
 libdirectfb-dev libedit-dev libenchant-dev libevent-dev libexpat1-dev \
 libexpat-dev libffi-dev libfindlib-ocaml-dev libfreetype6-dev libfreetype*dev \
 libgcrypt20-dev libgdchart-gd2-xpm-dev \
