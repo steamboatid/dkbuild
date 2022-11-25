@@ -308,6 +308,7 @@ building_php(){
 #-------------------------------------------
 wait_by_average_load
 reinstall_db48
+set_php81_as_default
 
 
 # delete duplicate dirs
