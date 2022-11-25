@@ -653,6 +653,8 @@ delete_apt_lock(){
 	/var/cache/debconf/ /var/lib/apt/lists/* \
 	/var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/debconf/; \
 	mkdir -p /root/.local/share/nano/ /root/.config/procps/
+
+	apt update >/dev/null 2>&1
 }
 
 purge_pending_installs(){
