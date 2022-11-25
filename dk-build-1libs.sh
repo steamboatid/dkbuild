@@ -254,6 +254,16 @@ set_php81_as_default(){
 	update-alternatives --set phar.phar /usr/bin/phar.phar8.1
 	update-alternatives --set phpize /usr/bin/phpize8.1
 	update-alternatives --set php-config /usr/bin/php-config8.1
+
+	# delete old sources
+	find /root/org.src/php -maxdepth 1 -type d -name "php8.0*" | xargs rm -rf
+	find /root/org.src/php -maxdepth 1 -type d -name "php8.1-8.1*" | \
+		sort -nr | tail -n +2 | xargs rm -rf
+
+	find /root/src/php -maxdepth 1 -type d -name "php8.0*" | xargs rm -rf
+	find /root/src/php -maxdepth 1 -type d -name "php8.1-8.1*" | \
+		sort -nr | tail -n +2 | xargs rm -rf
+
 }
 
 fix_package_57_xml(){
