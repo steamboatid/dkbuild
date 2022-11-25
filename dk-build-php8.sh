@@ -43,7 +43,9 @@ if [ -z "${alxc}" ]; then
 	alxc="$HOSTNAME"
 fi
 
-reinstall_db48(){
+
+
+clean_apt_lock(){
 	find /var/lib/apt/lists/ -type f -delete; \
 	find /var/cache/apt/ -type f -delete; \
 	rm -rf /var/cache/apt/* /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend \
@@ -58,6 +60,10 @@ reinstall_db48(){
 
 	aptold full-upgrade --auto-remove --purge --fix-missing -fy \
 		-o Dpkg::Options::="--force-overwrite"
+}
+
+reinstall_db48(){
+	clean_apt_lock
 
 	dpkg -l | grep db4.8 | grep omd | awk '{print $2}' | xargs apt remove -fy
 
@@ -375,6 +381,7 @@ cd /root/src/php
 
 #--- build & install some extensions first
 #--- raph
+clean_apt_lock
 build_install_raph_debs &
 build_install_propro_debs &
 wait
@@ -384,6 +391,8 @@ build_install_http_debs
 dpkg -i --force-all /root/src/php/php*-http*deb
 # exit 0
 
+#--- clean apt lock first
+clean_apt_lock
 
 #--- initial build
 for adir in $(find -L /root/src/php -maxdepth 1 -mindepth 1 -type d | \
