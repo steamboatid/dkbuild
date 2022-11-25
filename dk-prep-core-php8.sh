@@ -129,14 +129,13 @@ libgmp-dev libsasl2-dev libmhash-dev unixodbc-dev freetds-dev libpspell-dev libs
 libpng*dev libfreetype*dev libxft*dev libgdchart-gd2-xpm-dev freetds-dev libldb-dev libldap2-dev \
 libdb4*dev libdn*dev libidn*dev libomp-dev meson \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
-exit 0;
 
 apt-cache search libdb | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
 xargs aptnew install -fy  --no-install-recommends  --allow-downgrades \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
-apt-cache search db5 | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
-xargs aptnew install -fy  --no-install-recommends  --allow-downgrades \
-	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+# apt-cache search db5 | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
+# xargs aptnew install -fy  --no-install-recommends  --allow-downgrades \
+# 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 aptnew install -fy --no-install-recommends  --allow-downgrades \
 default-jdk libx11-dev xorg-dev libcurl4-openssl-dev \
@@ -149,6 +148,7 @@ php-dev libc6-dev libticonv-dev libiconv-hook-dev \
 libghc-iconv-dev libiconv-hook-dev libc-bin \
 libqdbm* libgdbm* libxqdbm* libxmlrpc-c*dev xmlrpc-api-utils \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+exit 0;
 
 aptnew install -fy --no-install-recommends  --allow-downgrades \
 apache2-dev autotools-dev *clang*dev default-libmysqlclient-dev devscripts dpkg-dev \
@@ -168,7 +168,7 @@ libmaxminddb-dev libmcrypt-dev libmemcached-dev libmhash-dev \
 libmm-dev libmysqlclient-dev libnethttpd-ocaml-dev libocamlnet-ocaml-dev libonig-dev \
 libpam0g-dev libpcre2-dev libpcre3-dev libpcre++-dev libpcre-ocaml-dev libperl-dev \
 libpng*dev libpng-dev libpq-dev libpspell-dev libqdbm-dev libreadline-dev \
-libroscpp-core-dev libsasl2-dev libsnmp-dev libsodium-dev \
+libsasl2-dev libsnmp-dev libsodium-dev \
 libsodium-dev libsqlite3-dev libssl-dev libsystemd-dev libticonv-dev \
 libtidy-dev libtiff-dev libwebp-dev libwrap0-dev libx11-dev libxft*dev libxml2-dev \
 libxml-light-ocaml-dev libxmlrpc-c++8-dev libxmlrpc-core-c3-dev libxmlrpc-epi-dev \
