@@ -46,13 +46,6 @@ fix_keydb_permission_problem
 purge_pending_installs
 
 
-#--- mark as manual installed,
-# for nginx, php, redis, keydb, memcached
-# 5.6  7.0  7.1  7.2  7.3  7.4  8.2
-#-------------------------------------------
-# limit_php8x_only
-
-
 # delete unpacked folders
 mkdir -p /root/org.src /root/src
 # find -L /root/org.src -mindepth 2 -maxdepth 2 -type d -exec rm -rf {} \;
@@ -276,6 +269,9 @@ find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 # 5.6  7.0  7.1  7.2  7.3  7.4  8.2
 #-------------------------------------------
 # limit_php8x_only
+apt remove -fy \
+php8.2-dev php8.2-cli php8.2-common php8.2-mbstring \
+php8.2-opcache php8.2-readline php8.2-xml
 
 
 printf "\n\n\n"
