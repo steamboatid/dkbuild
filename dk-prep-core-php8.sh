@@ -36,6 +36,8 @@ purge_pending_installs
 find /root/org.src/php -maxdepth 2 -name "php7*-7*" | xargs rm -rf
 find /root/org.src/php -maxdepth 2 -name "php8*-8*" | xargs rm -rf
 
+# remove libdb5
+apt purge -fy libdb5*dev libdb++-dev libdb5.3-tcl
 
 # list of package source
 #-------------------------------------------
@@ -101,7 +103,7 @@ apt-cache search libsnmp | grep -iv "perl\|dbg\|pyth" | cut -d" " -f1 | \
 aptnew install -fy --no-install-recommends  --allow-downgrades \
 devscripts build-essential lintian debhelper git git-extras wget axel dh-make dh-php ccache \
 aspell aspell-en chrpath default-libmysqlclient-dev dictionaries-common emacsen-common firebird-dev firebird3.0-common firebird3.0-common-doc flex freetds-common \
-freetds-dev libapparmor-dev libargon2-dev libaspell-dev libaspell15 libblkid-dev libbsd-dev libbz2-dev libct4 libcurl4-openssl-dev libdb-dev libdb5.3-dev libedit-dev \
+freetds-dev libapparmor-dev libargon2-dev libaspell-dev libaspell15 libblkid-dev libbsd-dev libbz2-dev libct4 libcurl4-openssl-dev libdb-dev libedit-dev \
 libenchant-dev libenchant1c2a libevent-* libevent-dev libfbclient2 libffi-dev \
 libgcrypt20-dev libglib2.0-bin libglib2.0-data libglib2.0-dev libglib2.0-dev-bin libgmp-dev libgmp3-dev libgmpxx4ldbl libgpg-error-dev libhunspell-1.7-0 libib-util \
 libkrb5-dev liblmdb-dev libltdl-dev libltdl7 libmagic-dev libmariadb-dev libmariadb-dev-compat libmhash-dev libmhash2 libmount-dev libncurses-dev libnss-myhostname \
@@ -119,8 +121,8 @@ libpam0g-dev libpcre2-dev libpng-dev libpq-dev libpspell-dev libqdbm-dev libsasl
 libwrap0-dev libxml2-dev libxmltok1-dev libxslt1-dev libzip-dev locales-all netbase netcat-openbsd re2c systemtap-sdt-dev tzdata unixodbc-dev zlib1g-dev \
 libxml2-dev libpcre3-dev libbz2-dev libcurl4-openssl-dev libjpeg-dev libxpm-dev libfreetype6-dev libmysqlclient-dev postgresql-server-dev-all \
 libgmp-dev libsasl2-dev libmhash-dev unixodbc-dev freetds-dev libpspell-dev libsnmp-dev libtidy-dev libxslt1-dev libmcrypt-dev \
-libpng*dev libdb5*-dev libfreetype*dev libxft*dev libgdchart-gd2-xpm-dev freetds-dev libldb-dev libldap2-dev \
-libdb5*dev libdb4*dev libdn*dev libidn*dev libomp-dev meson \
+libpng*dev libfreetype*dev libxft*dev libgdchart-gd2-xpm-dev freetds-dev libldb-dev libldap2-dev \
+libdb4*dev libdn*dev libidn*dev libomp-dev meson \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 apt-cache search libdb | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
@@ -147,7 +149,7 @@ apache2-dev autotools-dev *clang*dev default-libmysqlclient-dev devscripts dpkg-
 firebird-dev freetds-dev libapparmor-dev libapr1-dev libargon2-dev libatomic-ops-dev \
 libavif*dev libavif-dev libb64-dev \
 libc-client-dev lib*clang*dev libclang*dev libclang-dev libconsole-bridge-dev \
-libcurl4-openssl-dev libdb*dev libdb5*dev libdb5*-dev libdb*dev libdb-dev \
+libcurl4-openssl-dev libdb*dev libdb*dev libdb-dev \
 libdirectfb-dev libedit-dev libenchant-dev libevent-dev libexpat1-dev \
 libexpat-dev libffi-dev libfindlib-ocaml-dev libfreetype6-dev libfreetype*dev \
 libgcrypt20-dev libgdchart-gd2-xpm-dev \
