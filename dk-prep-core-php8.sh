@@ -96,6 +96,7 @@ for apv in "${PHPVERS[@]}"; do
 done
 
 
+apt update
 aptnew install -my php-http php-raphf \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
@@ -105,7 +106,6 @@ apt-cache search php | grep http | grep -i pecl | \
 apt-cache search libsnmp | grep -iv "perl\|dbg\|pyth" | cut -d" " -f1 | \
 	xargs aptnew install -fy \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
-exit 0;
 
 aptnew install -fy --no-install-recommends  --allow-downgrades \
 devscripts build-essential lintian debhelper git git-extras wget axel dh-make dh-php ccache \
@@ -256,7 +256,6 @@ apt-cache search ast | cut -d' ' -f1 | grep php |  grep -iv "xcache\|solr" |\
 grep -i "\-dev"  >>/tmp/php-pkgs.txt
 apt-cache search propro | cut -d' ' -f1 | grep php |\
 grep -i "\-dev"  >>/tmp/php-pkgs.txt
-exit 0;
 
 chown_apt
 cat /tmp/php-pkgs.txt | grep -iv "yac\|xcache\|swoole\|solr\|imagick" | \
