@@ -130,9 +130,9 @@ libpng*dev libfreetype*dev libxft*dev libgdchart-gd2-xpm-dev freetds-dev libldb-
 libdb4*dev libdn*dev libidn*dev libomp-dev meson \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
-apt-cache search libdb | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
-xargs aptnew install -fy  --no-install-recommends  --allow-downgrades \
-	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+# apt-cache search libdb | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
+# xargs aptnew install -fy  --no-install-recommends  --allow-downgrades \
+# 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 # apt-cache search db5 | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
 # xargs aptnew install -fy  --no-install-recommends  --allow-downgrades \
 # 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
