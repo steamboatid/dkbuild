@@ -23,10 +23,6 @@ fix_relname_relver_bookworm
 fix_apt_bookworm
 
 
-#-- install alldev
-# apt install libboost-all-dev libroscpp-core-dev
-
-
 >/tmp/libboost.pkgs
 
 lbver=$(apt-cache search libboost | grep "tools\-dev" | \
@@ -40,7 +36,6 @@ grep -i "all\|tool\|atomic\|chrono\|date-time\|serialization\|system\|thread\|fi
 
 
 cat /tmp/libboost.pkgs | awk '{print $1}' | sort -u > /tmp/libboost.uniq
-# echo "libboost-all-dev" >> /tmp/libboost.uniq
 echo "libroscpp-core-dev" >> /tmp/libboost.uniq
 
 cat /tmp/libboost.uniq | xargs aptnew install -fy \
