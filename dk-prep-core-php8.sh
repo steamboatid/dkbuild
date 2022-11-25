@@ -104,7 +104,6 @@ apt-cache search php | grep http | grep -i pecl | \
 apt-cache search libsnmp | grep -iv "perl\|dbg\|pyth" | cut -d" " -f1 | \
 	xargs aptnew install -fy \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
-exit 0;
 
 aptnew install -fy --no-install-recommends  --allow-downgrades \
 devscripts build-essential lintian debhelper git git-extras wget axel dh-make dh-php ccache \
@@ -130,6 +129,7 @@ libgmp-dev libsasl2-dev libmhash-dev unixodbc-dev freetds-dev libpspell-dev libs
 libpng*dev libfreetype*dev libxft*dev libgdchart-gd2-xpm-dev freetds-dev libldb-dev libldap2-dev \
 libdb4*dev libdn*dev libidn*dev libomp-dev meson \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+exit 0;
 
 apt-cache search libdb | grep -v 4.8 | grep -i berkeley | awk '{print $1}' | \
 xargs aptnew install -fy  --no-install-recommends  --allow-downgrades \
