@@ -32,6 +32,10 @@ delete_phideb
 # purge pendings
 purge_pending_installs
 
+# delete old php source
+find /root/org.src/php -maxdepth 2 -name "php7*-7*" | xargs rm -rf
+find /root/org.src/php -maxdepth 2 -name "php8*-8*" | xargs rm -rf
+
 
 # list of package source
 #-------------------------------------------
