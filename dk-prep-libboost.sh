@@ -24,7 +24,7 @@ fix_apt_bookworm
 
 
 #-- install alldev
-apt install libboost-all-dev libroscpp-core-dev
+# apt install libboost-all-dev libroscpp-core-dev
 
 
 >/tmp/libboost.pkgs
@@ -37,6 +37,8 @@ apt-cache search libboost |\
 grep -i "\-dev" | grep "${lbver}" |\
 grep -i "atomic\|chrono\|date-time\|serialization\|system\|thread\|filesystem\|wave" \
 >> /tmp/libboost.pkgs
+
+cat "libroscpp-core-dev" >> /tmp/libboost.pkgs
 
 cat /tmp/libboost.pkgs | awk '{print $1}' | sort -u > /tmp/libboost.uniq
 
