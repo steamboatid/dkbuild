@@ -93,7 +93,6 @@ for apv in "${PHPVERS[@]}"; do
 	pkg-php-tools libdistro-info-perl php-all-dev \
 		2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 done
-exit 0;
 
 
 aptnew install -my php-http php-raphf \
@@ -105,6 +104,7 @@ apt-cache search php | grep http | grep -i pecl | \
 apt-cache search libsnmp | grep -iv "perl\|dbg\|pyth" | cut -d" " -f1 | \
 	xargs aptnew install -fy \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+exit 0;
 
 aptnew install -fy --no-install-recommends  --allow-downgrades \
 devscripts build-essential lintian debhelper git git-extras wget axel dh-make dh-php ccache \
