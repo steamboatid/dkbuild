@@ -34,13 +34,8 @@ grep -iv "libboost-tools-dev" | sort -nr | head -n1 | \
 sed -r 's/libboost1\.//' | cut -d'-' -f1)
 
 apt-cache search libboost |\
-grep -i "\-dev" |\
-grep -i "atomic\|chrono\|date-time\|serialization\|system\|thread\|filesystem\|wave" \
->> /tmp/libboost.pkgs
-
-apt-cache search libboost |\
 grep -i "\-dev" | grep "${lbver}" |\
-grep -i "atomic\|chrono\|date-time\|serialization\|system\|thread\|filesystem\|wave" \
+grep -i "all\|tool\|atomic\|chrono\|date-time\|serialization\|system\|thread\|filesystem\|wave" \
 >> /tmp/libboost.pkgs
 
 
