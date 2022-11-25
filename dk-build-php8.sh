@@ -180,7 +180,8 @@ build_install_raph_debs(){
 	if [[ $build_raph -lt 1 ]]; then
 		raph_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*raph*" | sort -nr | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$raph_dir"
-		dpkg -i --force-all /root/src/php/php*-raph*deb
+		find -L /root/src/php -maxdepth 1 -type f -iname "php*http*deb" | \
+			xargs dpkg -i --force-all
 	fi
 }
 
@@ -189,7 +190,8 @@ build_install_propro_debs(){
 	if [[ $build_propro -lt 1 ]]; then
 		propro_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*propro*" | sort -nr | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$propro_dir"
-		dpkg -i --force-all /root/src/php/php*-propro*deb
+		find -L /root/src/php -maxdepth 1 -type f -iname "php*propro*deb" | \
+			xargs dpkg -i --force-all
 	fi
 }
 
@@ -206,8 +208,8 @@ install_propro_debs(){
 	build_propro=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "propro" | wc -l)
 	debs_propro=$(find -L /root/src/php -maxdepth 2 -type f -iname "php*-propro*deb" | wc -l)
 	if [[ $debs_propro -gt 0 ]] && [[ $build_propro -lt 0 ]]; then
-		dpkg -i --force-all /root/src/php*-propro*deb
-		dpkg -i --force-all /root/src/php/php*-propro*deb
+		find -L /root/src/php -maxdepth 2 -type f -iname "php*-propro*deb" | \
+			xargs dpkg -i --force-all
 	fi
 }
 
@@ -385,10 +387,16 @@ clean_apt_lock
 build_install_raph_debs &
 build_install_propro_debs &
 wait
+find -L /root/src/php -maxdepth 1 -type f -iname "php*raph*deb" | \
+	xargs dpkg -i --force-all
+find -L /root/src/php -maxdepth 1 -type f -iname "php*propro*deb" | \
+	xargs dpkg -i --force-all
+
 dpkg -i --force-all /root/src/php/php*-raph*deb /root/src/php/php*-propro*deb
 
 build_install_http_debs
-dpkg -i --force-all /root/src/php/php*-http*deb
+find -L /root/src/php -maxdepth 1 -type f -iname "php*http*deb" | \
+	xargs dpkg -i --force-all
 # exit 0
 
 #--- clean apt lock first

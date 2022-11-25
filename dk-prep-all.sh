@@ -55,6 +55,9 @@ mkdir -p /root/org.src /root/src
 ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
 ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
 
+# delete old source
+find /root/org.src/php -maxdepth 2 -name "php7*-7*" | xargs rm -rf
+find /root/org.src/php -maxdepth 2 -name "php8*-8*" | xargs rm -rf
 
 # prepare basic need: apt configs, sources list, etc
 #-------------------------------------------
