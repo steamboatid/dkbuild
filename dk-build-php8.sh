@@ -176,6 +176,7 @@ wait_build_jobs_php(){
 }
 
 build_install_msgpack_debs(){
+	printf "\n\n --- $sdir \n\n"
 	build_msgpack=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "msgpack" | wc -l)
 	if [[ $build_msgpack -lt 1 ]]; then
 		msgpack_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*msgpack*" | sort -n | head -n1)
@@ -184,6 +185,7 @@ build_install_msgpack_debs(){
 }
 
 build_install_igbinary_debs(){
+	printf "\n\n --- $sdir \n\n"
 	build_igbinary=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "igbinary" | wc -l)
 	if [[ $build_igbinary -lt 1 ]]; then
 		igbinary_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*igbinary*" | sort -n | head -n1)
@@ -192,6 +194,7 @@ build_install_igbinary_debs(){
 }
 
 build_install_raph_debs(){
+	printf "\n\n --- $sdir \n\n"
 	build_raph=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "raph" | wc -l)
 	if [[ $build_raph -lt 1 ]]; then
 		raph_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*raph*" | sort -n | head -n1)
@@ -200,6 +203,7 @@ build_install_raph_debs(){
 }
 
 build_install_propro_debs(){
+	printf "\n\n --- $sdir \n\n"
 	build_propro=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "propro" | wc -l)
 	if [[ $build_propro -lt 1 ]]; then
 		propro_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*propro*" | sort -n | head -n1)
@@ -208,6 +212,7 @@ build_install_propro_debs(){
 }
 
 build_install_http_debs(){
+	printf "\n\n --- $sdir \n\n"
 	build_http=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "http" | wc -l)
 	if [[ $build_http -lt 1 ]]; then
 		http_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*http*" | sort -n | head -n1)
