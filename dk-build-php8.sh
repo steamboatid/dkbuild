@@ -424,6 +424,7 @@ build_install_msgpack_debs &
 #--- pre-request for pecl-http
 build_install_raph_debs &
 build_install_propro_debs &
+wait_jobs
 wait_build_jobs_php
 
 #--- install first
@@ -440,6 +441,7 @@ for aext in "${exts[@]}"; do
 		exit 0;
 	fi
 done
+printf "\n\n"
 wait_jobs
 
 
@@ -447,13 +449,14 @@ wait_jobs
 build_install_http_debs &
 build_install_redis_debs &
 build_install_memcached_debs &
+wait_jobs
 wait_build_jobs_php
 
 #--- install first
 exts=("http" "redis" "memcached")
 for aext in "${exts[@]}"; do
 	ftmp1=$(mktemp)
-	find -L /root/src/php -maxdepth 1 -type f -iname "php*${aext}*deb" > $ftmp1
+	find -L /root/src/php -maxdepth 1 -type f -iname "php*${aext}*deb" | sort -nr > $ftmp1
 
 	if [[ -s $ftmp1 ]]; then
 		printf "\n\n $aext \tOK --- installing "
@@ -463,8 +466,9 @@ for aext in "${exts[@]}"; do
 		exit 0;
 	fi
 done
+printf "\n\n"
 wait_jobs
-# exit 0
+exit 0
 
 #--- clean apt lock first
 clean_apt_lock
