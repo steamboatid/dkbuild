@@ -175,33 +175,64 @@ wait_build_jobs_php(){
 	printf "\n\n"
 }
 
+build_install_msgpack_debs(){
+	build_msgpack=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "msgpack" | wc -l)
+	if [[ $build_msgpack -lt 1 ]]; then
+		msgpack_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*msgpack*" | sort -n | head -n1)
+		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$msgpack_dir"
+	fi
+
+	#-- install
+	find -L /root/src/php -maxdepth 1 -type f -iname "php*msgpack*deb" | \
+		xargs dpkg -i --force-all
+}
+
+build_install_igbinary_debs(){
+	build_igbinary=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "igbinary" | wc -l)
+	if [[ $build_igbinary -lt 1 ]]; then
+		igbinary_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*igbinary*" | sort -n | head -n1)
+		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$igbinary_dir"
+	fi
+
+	#-- install
+	find -L /root/src/php -maxdepth 1 -type f -iname "php*igbinary*deb" | \
+		xargs dpkg -i --force-all
+}
+
 build_install_raph_debs(){
 	build_raph=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "raph" | wc -l)
 	if [[ $build_raph -lt 1 ]]; then
-		raph_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*raph*" | sort -nr | head -n1)
+		raph_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*raph*" | sort -n | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$raph_dir"
-		find -L /root/src/php -maxdepth 1 -type f -iname "php*http*deb" | \
-			xargs dpkg -i --force-all
 	fi
+
+	#-- install
+	find -L /root/src/php -maxdepth 1 -type f -iname "php*raph*deb" | \
+		xargs dpkg -i --force-all
 }
 
 build_install_propro_debs(){
 	build_propro=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "propro" | wc -l)
 	if [[ $build_propro -lt 1 ]]; then
-		propro_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*propro*" | sort -nr | head -n1)
+		propro_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*propro*" | sort -n | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$propro_dir"
-		find -L /root/src/php -maxdepth 1 -type f -iname "php*propro*deb" | \
-			xargs dpkg -i --force-all
 	fi
+
+	#-- install
+	find -L /root/src/php -maxdepth 1 -type f -iname "php*propro*deb" | \
+		xargs dpkg -i --force-all
 }
 
 build_install_http_debs(){
 	build_http=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "http" | wc -l)
 	if [[ $build_http -lt 1 ]]; then
-		http_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*http*" | sort -nr | head -n1)
+		http_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*http*" | sort -n | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$http_dir"
-		dpkg -i --force-all /root/src/php/php*-http*deb
 	fi
+
+	#-- install
+	find -L /root/src/php -maxdepth 1 -type f -iname "php*http*deb" | \
+		xargs dpkg -i --force-all
 }
 
 install_propro_debs(){
@@ -383,21 +414,18 @@ cd /root/src/php
 
 
 #--- build & install some extensions first
-#--- raph
 clean_apt_lock
+#--- pre-request for redis + memcached
+build_install_igbinary_debs &
+build_install_msgpack_debs &
+
+#--- pre-request for pecl-http
 build_install_raph_debs &
 build_install_propro_debs &
-wait
-find -L /root/src/php -maxdepth 1 -type f -iname "php*raph*deb" | \
-	xargs dpkg -i --force-all
-find -L /root/src/php -maxdepth 1 -type f -iname "php*propro*deb" | \
-	xargs dpkg -i --force-all
-
-dpkg -i --force-all /root/src/php/php*-raph*deb /root/src/php/php*-propro*deb
+wait_build_jobs_php
 
 build_install_http_debs
-find -L /root/src/php -maxdepth 1 -type f -iname "php*http*deb" | \
-	xargs dpkg -i --force-all
+wait_build_jobs_php
 # exit 0
 
 #--- clean apt lock first
