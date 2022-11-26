@@ -280,8 +280,6 @@ limit_php8x_only(){
 	php5* php7.0* php7.1* php7.2* php7.3* php8.0* \
 	php-propro php-propro-dev php-all-dev php-sodium
 
-	apt-mark hold php*
-
 	dpkg -l | grep "PHP\|nginx\|memcache\|keydb\|redis\|db4" | \
 	awk '{print $2}' | tr "\n" " " | xargs apt-mark manual \
 		>/dev/null 2>&1
@@ -294,6 +292,12 @@ limit_php8x_only(){
 }
 
 set_php81_as_default(){
+
+	update-alternatives --remove php /usr/bin/php8.2
+	update-alternatives --remove phar /usr/bin/phar8.2
+	update-alternatives --remove phar.phar /usr/bin/phar.phar8.2
+	update-alternatives --remove phpize /usr/bin/phpize8.2
+	update-alternatives --remove php-config /usr/bin/php-config8.2
 
 	update-alternatives --set php /usr/bin/php8.1
 	update-alternatives --set phar /usr/bin/phar8.1

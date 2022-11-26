@@ -486,12 +486,14 @@ ls -la /tb2/build-devomd/$RELNAME-php/ | grep omd | grep 8.1 |\
 	grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|propro"
 
 
+printf "\n\n --- check essential extensions \n"
 essphp=("apcu" "http" "igbinary" "imagick" "memcached" "msgpack" "raphf" "redis" "propro")
 for pkg in "${essphp[@]}"; do
 	num=$(find -L /root/src/php/ -maxdepth 2 -type f -iname "*$pkg*deb" | wc -l)
 	printf "\n --- $pkg \t-- $num"
 	[[ $num -lt 1 ]] && printf " \t--- MISS "
 done
+printf "\n\n"
 
 # rebuild the repo
 #-------------------------------------------

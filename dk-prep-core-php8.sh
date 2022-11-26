@@ -79,25 +79,26 @@ aptnew install -fy libgd-dev libgd3 \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
 
 
+aptold install -fy
 for apv in "${PHPVERS[@]}"; do
-	aptnew install -my --no-install-recommends  --allow-downgrades \
-	$apv $apv-apcu $apv-ast $apv-bcmath $apv-bz2 $apv-cli $apv-common \
+	aptnew install -my --no-install-recommends  --allow-downgrades --allow-change-held-packages \
+	$apv $apv-bcmath $apv-bz2 $apv-cli $apv-common \
 	$apv-curl $apv-dba $apv-dev $apv-enchant $apv-fpm $apv-gd $apv-gmp \
-	$apv-igbinary $apv-imagick $apv-imap $apv-interbase \
-	$apv-intl $apv-ldap $apv-mbstring $apv-memcached $apv-msgpack \
-	$apv-mysql $apv-odbc $apv-opcache $apv-pgsql $apv-pspell $apv-raphf \
-	$apv-readline $apv-redis $apv-snmp $apv-soap $apv-sqlite3 $apv-sybase \
-	$apv-tidy $apv-xml $apv-xsl $apv-zip \
-	$apv \
-	$apv-cli $apv-fpm $apv-common $apv-curl $apv-fpm $apv-gd \
-	$apv-bcmath $apv-bz2 $apv-gmp $apv-ldap $apv-mbstring $apv-mysql \
-	$apv-opcache $apv-readline $apv-soap $apv-tidy $apv-xdebug $apv-xml $apv-xsl $apv-zip \
+	$apv-imap $apv-interbase $apv-intl $apv-ldap $apv-mbstring $apv-mysql \
+	$apv-odbc $apv-opcache $apv-pgsql $apv-pspell $apv-readline \
+	$apv-snmp $apv-soap $apv-sqlite3 $apv-sybase $apv-tidy \
+	$apv-xml $apv-xsl $apv-zip \
 		2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | \
 		grep --color=auto "Depends\|$"
 
-	aptnew install -my --no-install-recommends  --allow-downgrades \
+	aptnew install -my --no-install-recommends  --allow-downgrades --allow-change-held-packages \
 	$apv-apcu $apv-ast $apv-imagick $apv-igbinary $apv-msgpack \
 	$apv-memcached $apv-redis $apv-xdebug \
+		2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | \
+		grep --color=auto "Depends\|$"
+
+	aptnew install -my --no-install-recommends  --allow-downgrades --allow-change-held-packages \
+	$apv-raphf \
 		2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | \
 		grep --color=auto "Depends\|$"
 done
@@ -109,9 +110,9 @@ php-memcached php-redis php-xdebug \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | \
 	grep --color=auto "Depends\|$"
 
-apt update
-aptnew install -my php-http php-raphf \
-	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
+aptnew install -my php-http php-raphf php-propro \
+	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | \
+	grep --color=auto "Depends\|$"
 
 apt-cache search php | grep http | grep -i pecl | \
 	cut -d" " -f1 | xargs aptnew install -fy | grep --color=auto "Depends\|$"
