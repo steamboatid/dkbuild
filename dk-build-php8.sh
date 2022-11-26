@@ -468,7 +468,7 @@ for aext in "${exts[@]}"; do
 done
 printf "\n\n"
 wait_jobs
-exit 0
+# exit 0
 
 #--- clean apt lock first
 clean_apt_lock
