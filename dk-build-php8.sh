@@ -224,6 +224,34 @@ build_install_http_debs(){
 		xargs dpkg -i --force-all
 }
 
+build_install_redis_debs(){
+	printf "\n\n --- $sdir \n\n"
+	build_redis=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "redis" | wc -l)
+	if [[ $build_redis -lt 1 ]]; then
+		redis_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*redis*" | sort -n | head -n1)
+		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$redis_dir"
+	fi
+
+	#-- install
+	find -L /root/src/php -maxdepth 1 -type f -iname "php*redis*deb" | \
+		xargs dpkg -i --force-all
+}
+
+build_install_memcached_debs(){
+	printf "\n\n --- $sdir \n\n"
+	build_memcached=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "memcached" | wc -l)
+	if [[ $build_memcached -lt 1 ]]; then
+		memcached_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*memcached*" | sort -n | head -n1)
+		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$memcached_dir"
+	fi
+
+	#-- install
+	find -L /root/src/php -maxdepth 1 -type f -iname "php*memcached*deb" | \
+		xargs dpkg -i --force-all
+}
+
+
+
 install_propro_debs(){
 	build_propro=$(ps axww | grep -v grep | grep "dk-build-full.sh" | grep -i "propro" | wc -l)
 	debs_propro=$(find -L /root/src/php -maxdepth 2 -type f -iname "php*-propro*deb" | wc -l)
@@ -429,8 +457,10 @@ wait_jobs
 
 #--- build install pecl-http
 build_install_http_debs
+build_install_redis_debs
+build_install_memcached_debs
 wait_build_jobs_php
-# exit 0
+exit 0
 
 #--- clean apt lock first
 clean_apt_lock
