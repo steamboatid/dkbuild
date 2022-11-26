@@ -414,11 +414,11 @@ wait_build_jobs_php
 exts=("msgpack" "igbinary" "raph" "propro")
 for aext in "${exts[@]}"; do
 	ftmp1=$(mktemp)
-	find -L /root/src/php -maxdepth 1 -type f -iname "php*msgpack*deb" > $ftmp1
+	find -L /root/src/php -maxdepth 1 -type f -iname "php*${aext}*deb" > $ftmp1
 
 	if [[ -s $ftmp1 ]]; then
 		printf "\n\n $aext \tOK --- installing "
-		cat $ftmp1 | xargs dpkg -i --force-all >/dev/null 2>&1 &
+		cat $ftmp1 | xargs dpkg -i --force-all >/dev/null 2>&1
 	else
 		printf "\n\n $aext \tFAILED "
 		exit 0;
@@ -426,15 +426,6 @@ for aext in "${exts[@]}"; do
 done
 wait_jobs
 
-
-# find -L /root/src/php -maxdepth 1 -type f -iname "php*msgpack*deb" | \
-# 	xargs dpkg -i --force-all
-# find -L /root/src/php -maxdepth 1 -type f -iname "php*igbinary*deb" | \
-# 	xargs dpkg -i --force-all
-# find -L /root/src/php -maxdepth 1 -type f -iname "php*raph*deb" | \
-# 	xargs dpkg -i --force-all
-# find -L /root/src/php -maxdepth 1 -type f -iname "php*propro*deb" | \
-# 	xargs dpkg -i --force-all
 
 #--- build install pecl-http
 build_install_http_debs
