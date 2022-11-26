@@ -407,7 +407,7 @@ build_install_msgpack_debs &
 
 #--- pre-request for pecl-http
 build_install_raph_debs &
-# build_install_propro_debs &
+build_install_propro_debs &
 wait_build_jobs_php
 
 #--- install first
