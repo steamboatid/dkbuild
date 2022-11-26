@@ -31,13 +31,13 @@ kill_current_scripts(){
 	PID=$1
 	printf "\n\n --- PID=$PID BASHPID=$BASHPID\n\n"
 	ps auxw | grep -v grep | grep "xbuild-test-all.sh" | \
-		awk '{print $2}' | grep -v "$PID\|$BASHPID" | xargs kill -9  >/dev/null 2>&1
+		awk '{print $2}' | grep -v "$PID" | grep -v "$BASHPID" | xargs kill -9  >/dev/null 2>&1
 	sleep 0.3
 	ps auxw | grep -v grep | grep "xtest-all.sh" | \
-		awk '{print $2}' | grep -v "$PID\|$BASHPID" | xargs kill -9  >/dev/null 2>&1
+		awk '{print $2}' | grep -v "$PID" | grep -v "$BASHPID" | xargs kill -9  >/dev/null 2>&1
 	sleep 0.3
 	ps auxw | grep -v grep | grep "dk-" | grep ".sh" | \
-		awk '{print $2}' | grep -v "$PID\|$BASHPID" | xargs kill -9  >/dev/null 2>&1
+		awk '{print $2}' | grep -v "$PID" | grep -v "$BASHPID" | xargs kill -9  >/dev/null 2>&1
 
 	killall -9 ccache cc cc1 gcc g++  >/dev/null 2>&1
 	sleep 0.3
