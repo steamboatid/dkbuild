@@ -410,23 +410,39 @@ build_install_msgpack_debs &
 
 #--- pre-request for pecl-http
 build_install_raph_debs &
-build_install_propro_debs &
+# build_install_propro_debs &
 wait_build_jobs_php
 
 #--- install first
-find -L /root/src/php -maxdepth 1 -type f -iname "php*msgpack*deb" | \
-	xargs dpkg -i --force-all
-find -L /root/src/php -maxdepth 1 -type f -iname "php*igbinary*deb" | \
-	xargs dpkg -i --force-all
-find -L /root/src/php -maxdepth 1 -type f -iname "php*raph*deb" | \
-	xargs dpkg -i --force-all
-find -L /root/src/php -maxdepth 1 -type f -iname "php*propro*deb" | \
-	xargs dpkg -i --force-all
+exts=("msgpack" "igbinary" "raph" "propro")
+for aext in "${exts[@]}"; do
+	ftmp1=$(mktemp)
+	find -L /root/src/php -maxdepth 1 -type f -iname "php*msgpack*deb" > $ftmp1
+
+	if [[ -s $ftmp1 ]]; then
+		echo "\n\n $aext \tOK --- installing "
+		cat $ftmp1 | xargs dpkg -i --force-all >/dev/null 2>&1 &
+	else
+		echo "\n\n $aext \tFAILED "
+		exit 0;
+	fi
+done
+wait_jobs
+
+
+# find -L /root/src/php -maxdepth 1 -type f -iname "php*msgpack*deb" | \
+# 	xargs dpkg -i --force-all
+# find -L /root/src/php -maxdepth 1 -type f -iname "php*igbinary*deb" | \
+# 	xargs dpkg -i --force-all
+# find -L /root/src/php -maxdepth 1 -type f -iname "php*raph*deb" | \
+# 	xargs dpkg -i --force-all
+# find -L /root/src/php -maxdepth 1 -type f -iname "php*propro*deb" | \
+# 	xargs dpkg -i --force-all
 
 #--- build install pecl-http
 build_install_http_debs
 wait_build_jobs_php
-exit 0
+# exit 0
 
 #--- clean apt lock first
 clean_apt_lock
