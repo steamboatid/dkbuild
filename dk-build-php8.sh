@@ -218,10 +218,6 @@ build_install_http_debs(){
 		http_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*http*" | sort -n | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$http_dir"
 	fi
-
-	#-- install
-	find -L /root/src/php -maxdepth 1 -type f -iname "php*http*deb" | \
-		xargs dpkg -i --force-all
 }
 
 build_install_redis_debs(){
@@ -231,10 +227,6 @@ build_install_redis_debs(){
 		redis_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*redis*" | sort -n | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$redis_dir"
 	fi
-
-	#-- install
-	find -L /root/src/php -maxdepth 1 -type f -iname "php*redis*deb" | \
-		xargs dpkg -i --force-all
 }
 
 build_install_memcached_debs(){
@@ -244,10 +236,6 @@ build_install_memcached_debs(){
 		memcached_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*memcached*" | sort -n | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$memcached_dir"
 	fi
-
-	#-- install
-	find -L /root/src/php -maxdepth 1 -type f -iname "php*memcached*deb" | \
-		xargs dpkg -i --force-all
 }
 
 
@@ -456,10 +444,28 @@ wait_jobs
 
 
 #--- build install pecl-http
-build_install_http_debs
-build_install_redis_debs
-build_install_memcached_debs
+build_install_http_debs &
+build_install_redis_debs &
+build_install_memcached_debs &
 wait_build_jobs_php
+
+#--- install first
+exts=("http" "redis" "raph" "memcached")
+for aext in "${exts[@]}"; do
+	ftmp1=$(mktemp)
+	find -L /root/src/php -maxdepth 1 -type f -iname "php*${aext}*deb" > $ftmp1
+
+	if [[ -s $ftmp1 ]]; then
+		printf "\n\n $aext \tOK --- installing "
+		cat $ftmp1 | xargs dpkg -i --force-all >/dev/null 2>&1
+	else
+		printf "\n\n $aext \tFAILED "
+		exit 0;
+	fi
+done
+wait_jobs
+
+
 exit 0
 
 #--- clean apt lock first
