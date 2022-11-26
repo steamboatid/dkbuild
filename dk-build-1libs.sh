@@ -149,24 +149,41 @@ fix_debian_control_in(){
 	# copy if not exists
 	[[ ! -e debian/control.in ]] && cp debian/control debian/control.in
 
+	# php versions
+	phpver=$(/usr/sbin/phpquery -V | sort -nr | head -n1)
+	mulvers=$(/usr/sbin/phpquery -V | sort -nr | grep -v '5.\|7.\|8.0' | sort -n | tr "\n" ' ')
+
+
 	anum=$(cat debian/control.in | grep 'X-PHP-Versions' | wc -l)
-
 	if [[ $anum -gt 0 ]]; then
-		# fix php versions
-		phpver=$(/usr/sbin/phpquery -V | sort -nr | head -n1)
-		mulvers=$(/usr/sbin/phpquery -V | sort -nr | grep -v '5.\|7.\|8.0' | sort -n | tr "\n" ' ')
-
 		sed -i '/X-PHP-Versions/d' debian/control.in
 		sed -i '/X-PHP-Default-Version/d' debian/control.in
 
-		echo " " >> debian/control.in
-		echo " " >> debian/control.in
-		echo "X-PHP-Versions: $mulvers" >> debian/control.in
-		echo "X-PHP-Default-Version: $phpver" >> debian/control.in
+		ftmp1=$(mktemp)
+		>$ftmp1
+		echo -e "\n" >> $ftmp1
+		echo "X-PHP-Versions: $mulvers" >> $ftmp1
+		echo "X-PHP-Default-Version: $phpver" >> $ftmp1
+		echo -e "\n\n" >> $ftmp1
+		cat debian/control.in >> $ftmp1
+		mv $ftmp1 debian/control.in
 	fi
 
-	sed -i '/X-PHP-Versions/d' debian/control
-	sed -i '/X-PHP-Default-Version/d' debian/control
+
+	anum=$(cat debian/control | grep 'X-PHP-Versions' | wc -l)
+	if [[ $anum -gt 0 ]]; then
+		sed -i '/X-PHP-Versions/d' debian/control
+		sed -i '/X-PHP-Default-Version/d' debian/control
+
+		ftmp1=$(mktemp)
+		>$ftmp1
+		echo -e "\n" >> $ftmp1
+		echo "X-PHP-Versions: $mulvers" >> $ftmp1
+		echo "X-PHP-Default-Version: $phpver" >> $ftmp1
+		echo -e "\n\n" >> $ftmp1
+		cat debian/control >> $ftmp1
+		mv $ftmp1 debian/control
+	fi
 
 	cd "$odir"
 }
