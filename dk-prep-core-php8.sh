@@ -94,14 +94,20 @@ for apv in "${PHPVERS[@]}"; do
 	$apv-opcache $apv-readline $apv-soap $apv-tidy $apv-xdebug $apv-xml $apv-xsl $apv-zip \
 		2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | \
 		grep --color=auto "Depends\|$"
+
+	aptnew install -my --no-install-recommends  --allow-downgrades \
+	$apv-apcu $apv-ast $apv-imagick $apv-igbinary $apv-msgpack \
+	$apv-memcached $apv-redis $apv-xdebug \
+		2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | \
+		grep --color=auto "Depends\|$"
 done
 
+
 aptnew install -my --no-install-recommends  --allow-downgrades \
-php-memcached php-redis php-igbinary php-msgpack php-apcu php-xdebug \
-pkg-php-tools libdistro-info-perl php-all-dev \
+php-apcu php-ast php-imagick php-igbinary php-msgpack \
+php-memcached php-redis php-xdebug \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | \
 	grep --color=auto "Depends\|$"
-
 
 apt update
 aptnew install -my php-http php-raphf \
@@ -205,9 +211,21 @@ for apv in "${PHPVERS[@]}"; do
 	$apv-cli $apv-fpm $apv-common $apv-curl $apv-fpm $apv-gd \
 	$apv-bcmath $apv-bz2 $apv-gmp $apv-ldap $apv-mbstring $apv-mysql \
 	$apv-opcache $apv-readline $apv-soap $apv-tidy $apv-xdebug $apv-xml $apv-xsl $apv-zip \
-	php-memcached php-redis php-igbinary php-msgpack php-apcu php-xdebug \
-		2>&1 | grep -iv "newest\|reading \|building \|picking " | grep --color=auto "Depends\|$"
+		2>&1 | grep -iv "newest\|reading \|building \|picking " | \
+		grep --color=auto "Depends\|$"
+
+	aptold build-dep -my \
+	$apv-apcu $apv-ast $apv-imagick $apv-igbinary $apv-msgpack \
+	$apv-memcached $apv-redis $apv-xdebug \
+		2>&1 | grep -iv "newest\|reading \|building \|picking " | \
+		grep --color=auto "Depends\|$"
 done
+
+aptold build-dep -my \
+php-apcu php-ast php-imagick php-igbinary php-msgpack \
+php-memcached php-redis php-xdebug \
+	2>&1 | grep -iv "newest\|reading \|building \|picking " | \
+	grep --color=auto "Depends\|$"
 
 aptold build-dep -fy php-http php-raphf php-propro \
 	2>&1 | grep -iv "cli\|newest\|picking\|reading\|building\|skipping" | grep --color=auto "Depends\|$"
@@ -241,21 +259,29 @@ for apv in "${PHPVERS[@]}"; do
 
 	aptold -qqq source -my \
 	php-defaults \
-	$apv $apv-apcu $apv-ast $apv-bcmath $apv-bz2 $apv-cli $apv-common \
+	$apv $apv-bcmath $apv-bz2 $apv-cli $apv-common \
 	$apv-curl $apv-dba $apv-dev $apv-enchant $apv-fpm $apv-gd $apv-gmp \
-	$apv-igbinary $apv-imagick $apv-imap $apv-interbase \
-	$apv-intl $apv-ldap $apv-mbstring $apv-memcached $apv-msgpack \
+	$apv-igbinary $apv-imap $apv-interbase \
+	$apv-intl $apv-ldap $apv-mbstring $apv-msgpack \
 	$apv-mysql $apv-odbc $apv-opcache $apv-pgsql $apv-pspell \
-	$apv-raphf $apv-readline $apv-redis $apv-snmp $apv-soap \
-	$apv-sqlite3 $apv-sybase $apv-tidy $apv-xdebug $apv-xml \
+	$apv-raphf $apv-readline $apv-snmp $apv-soap \
+	$apv-sqlite3 $apv-sybase $apv-tidy $apv-xml \
 	$apv-xsl $apv-zip \
 	php-memcached php-redis php-igbinary php-msgpack php-apcu php-xdebug \
 	php-raphf
+
+	aptold -qqq source -my \
+	$apv-apcu $apv-ast $apv-imagick $apv-igbinary $apv-msgpack \
+	$apv-memcached $apv-redis $apv-xdebug
 
 	aptold -qqq source -my php-xdebug
 	aptold -qqq source -my php-pecl-http
 	aptold -qqq source -my $apv-http
 done
+
+aptold -qqq source -my \
+php-apcu php-ast php-imagick php-igbinary php-msgpack \
+php-memcached php-redis php-xdebug
 
 
 #--- errornous packages
