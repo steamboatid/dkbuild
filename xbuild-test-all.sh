@@ -78,7 +78,7 @@ build_ops(){
 }
 
 
-reset
+clear
 kill_current_scripts $$
 kill_current_scripts $$
 
