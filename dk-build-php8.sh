@@ -181,10 +181,6 @@ build_install_msgpack_debs(){
 		msgpack_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*msgpack*" | sort -n | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$msgpack_dir"
 	fi
-
-	#-- install
-	find -L /root/src/php -maxdepth 1 -type f -iname "php*msgpack*deb" | \
-		xargs dpkg -i --force-all
 }
 
 build_install_igbinary_debs(){
@@ -193,10 +189,6 @@ build_install_igbinary_debs(){
 		igbinary_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*igbinary*" | sort -n | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$igbinary_dir"
 	fi
-
-	#-- install
-	find -L /root/src/php -maxdepth 1 -type f -iname "php*igbinary*deb" | \
-		xargs dpkg -i --force-all
 }
 
 build_install_raph_debs(){
@@ -205,10 +197,6 @@ build_install_raph_debs(){
 		raph_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*raph*" | sort -n | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$raph_dir"
 	fi
-
-	#-- install
-	find -L /root/src/php -maxdepth 1 -type f -iname "php*raph*deb" | \
-		xargs dpkg -i --force-all
 }
 
 build_install_propro_debs(){
@@ -217,10 +205,6 @@ build_install_propro_debs(){
 		propro_dir=$(find -L /root/src/php -maxdepth 1 -type d -iname "php*propro*" | sort -n | head -n1)
 		/bin/bash $sdir/dk-build-full.sh -h "$alxc" -d "$propro_dir"
 	fi
-
-	#-- install
-	find -L /root/src/php -maxdepth 1 -type f -iname "php*propro*deb" | \
-		xargs dpkg -i --force-all
 }
 
 build_install_http_debs(){
@@ -424,6 +408,17 @@ build_install_raph_debs &
 build_install_propro_debs &
 wait_build_jobs_php
 
+#--- install first
+find -L /root/src/php -maxdepth 1 -type f -iname "php*msgpack*deb" | \
+	xargs dpkg -i --force-all
+find -L /root/src/php -maxdepth 1 -type f -iname "php*igbinary*deb" | \
+	xargs dpkg -i --force-all
+find -L /root/src/php -maxdepth 1 -type f -iname "php*raph*deb" | \
+	xargs dpkg -i --force-all
+find -L /root/src/php -maxdepth 1 -type f -iname "php*propro*deb" | \
+	xargs dpkg -i --force-all
+
+#--- build install pecl-http
 build_install_http_debs
 wait_build_jobs_php
 # exit 0
