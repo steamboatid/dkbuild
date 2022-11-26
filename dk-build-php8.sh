@@ -450,7 +450,7 @@ build_install_memcached_debs &
 wait_build_jobs_php
 
 #--- install first
-exts=("http" "redis" "raph" "memcached")
+exts=("http" "redis" "memcached")
 for aext in "${exts[@]}"; do
 	ftmp1=$(mktemp)
 	find -L /root/src/php -maxdepth 1 -type f -iname "php*${aext}*deb" > $ftmp1
@@ -464,9 +464,7 @@ for aext in "${exts[@]}"; do
 	fi
 done
 wait_jobs
-
-
-exit 0
+# exit 0
 
 #--- clean apt lock first
 clean_apt_lock
