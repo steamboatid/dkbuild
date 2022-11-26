@@ -366,7 +366,7 @@ mkdir -p /root/src/php
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 --exclude ".git" \
 /root/org.src/php/ /root/src/php/
-
+find -L /root/src/php -maxdepth 2 -name "php8*-8*"
 
 # delete old debs
 #-------------------------------------------
