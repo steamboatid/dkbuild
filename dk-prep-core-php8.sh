@@ -2,6 +2,7 @@
 
 
 export DEBIAN_FRONTEND="noninteractive"
+export UCF_FORCE_CONFFMISS=1
 
 export DEBFULLNAME="Dwi Kristianto"
 export DEBEMAIL="steamboatid@gmail.com"
@@ -40,8 +41,27 @@ find -L /root/org.src/php -maxdepth 2 -name "php7*-7*" | xargs rm -rf
 find -L /root/org.src/php -maxdepth 2 -name "php8*-8*" | xargs rm -rf
 
 # remove php first -- fresh install
-rm -rf /etc/php /usr/share/php; \
-apt purge -fy apache* php*
+MISS=0
+for apv in "${PHPVERS[@]}"; do
+	vnum=$(echo $apv | sed 's/php//')
+
+	# fpm conf
+	anum=$(find /etc/php/$vnum/fpm -type f -iname "*.conf" | wc -l)
+	if [[ $anum -lt 2 ]]; then MISS=$((MISS+1)); fi
+
+	# cli php.ini
+	anum=$(find /etc/php/$vnum/cli -type f -iname "php.ini" | wc -l)
+	if [[ $anum -lt 1 ]]; then MISS=$((MISS+1)); fi
+
+	# cli php.ini
+	anum=$(find /etc/php/$vnum/fpm -type f -iname "php.ini" | wc -l)
+	if [[ $anum -lt 1 ]]; then MISS=$((MISS+1)); fi
+done
+
+if [[ $MISS -gt 0 ]]; then
+	rm -rf /etc/php /usr/share/php; \
+	apt purge -fy apache* php*
+fi
 
 
 # remove libdb5
