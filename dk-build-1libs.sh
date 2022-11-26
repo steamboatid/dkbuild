@@ -146,20 +146,27 @@ fix_debian_control_in(){
 	odir=$PWD
 	cd "$bdir"
 
-	# fix php versions
-	phpver=$(/usr/sbin/phpquery -V | sort -nr | head -n1)
-	mulvers=$(/usr/sbin/phpquery -V | sort -nr | grep -v '5.\|7.\|8.0' | sort -n | tr "\n" ' ')
+	# copy if not exists
+	[[ ! -e debian/control.in ]] && cp debian/control debian/control.in
 
-	sed -i '/X-PHP-Versions/d' debian/control
-	sed -i '/X-PHP-Default-Version/d' debian/control
+	anum=$(cat debian/control.in | grep 'X-PHP-Versions' | wc -l)
 
-	sed -i '/X-PHP-Versions/d' debian/control.in
-	sed -i '/X-PHP-Default-Version/d' debian/control.in
+	if [[ $anum -gt 0 ]]; then
+		# fix php versions
+		phpver=$(/usr/sbin/phpquery -V | sort -nr | head -n1)
+		mulvers=$(/usr/sbin/phpquery -V | sort -nr | grep -v '5.\|7.\|8.0' | sort -n | tr "\n" ' ')
 
-	echo " " >> debian/control.in
-	echo " " >> debian/control.in
-	echo "X-PHP-Versions: $mulvers" >> debian/control.in
-	echo "X-PHP-Default-Version: $phpver" >> debian/control.in
+		sed -i '/X-PHP-Versions/d' debian/control
+		sed -i '/X-PHP-Default-Version/d' debian/control
+
+		sed -i '/X-PHP-Versions/d' debian/control.in
+		sed -i '/X-PHP-Default-Version/d' debian/control.in
+
+		echo " " >> debian/control.in
+		echo " " >> debian/control.in
+		echo "X-PHP-Versions: $mulvers" >> debian/control.in
+		echo "X-PHP-Default-Version: $phpver" >> debian/control.in
+	fi
 
 	cd "$odir"
 }
