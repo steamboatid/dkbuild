@@ -421,7 +421,7 @@ find -L /root/src/php -maxdepth 1 -type f -iname "php*propro*deb" | \
 #--- build install pecl-http
 build_install_http_debs
 wait_build_jobs_php
-# exit 0
+exit 0
 
 #--- clean apt lock first
 clean_apt_lock
