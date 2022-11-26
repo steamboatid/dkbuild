@@ -303,11 +303,15 @@ set_php81_as_default(){
 
 	# delete old sources
 	find -L /root/org.src/php -maxdepth 1 -type d -name "php8.0*" | xargs rm -rf
-	find -L /root/org.src/php -maxdepth 1 -type d -name "php8.*-8.*" | \
+	find -L /root/org.src/php -maxdepth 1 -type d -name "php8.1-8.1*" | \
+		sort -nr | tail -n +2 | xargs rm -rf
+	find -L /root/org.src/php -maxdepth 1 -type d -name "php8.2-8.2*" | \
 		sort -nr | tail -n +2 | xargs rm -rf
 
 	find -L /root/src/php -maxdepth 1 -type d -name "php8.0*" | xargs rm -rf
-	find -L /root/src/php -maxdepth 1 -type d -name "php8.*-8.*" | \
+	find -L /root/src/php -maxdepth 1 -type d -name "php8.1-8.1*" | \
+		sort -nr | tail -n +2 | xargs rm -rf
+	find -L /root/src/php -maxdepth 1 -type d -name "php8.2-8.2*" | \
 		sort -nr | tail -n +2 | xargs rm -rf
 
 }

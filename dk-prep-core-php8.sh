@@ -251,37 +251,45 @@ cd /root/org.src/php
 chown_apt
 
 for apv in "${PHPVERS[@]}"; do
-	printf "\n\n"
+	printf "\n\n ${cyn}"
 	printf "\n ---------------------------------"
 	printf "\n GET SOURCE: $apv"
 	printf "\n ---------------------------------"
+	printf "\n ${end}"
+	find -L /root/org.src/php -maxdepth 2 -name "$apv-8*"
 	printf "\n\n"
 
 	aptold -qqq source -my \
-	php-defaults \
-	$apv $apv-bcmath $apv-bz2 $apv-cli $apv-common \
+	$apv $apv-cli $apv-common $apv-fpm
+done
+find -L /root/org.src/php -maxdepth 2 -name "php8*-8*"
+
+for apv in "${PHPVERS[@]}"; do
+	aptold -qqq source -my \
+	$apv-bcmath $apv-bz2 \
 	$apv-curl $apv-dba $apv-dev $apv-enchant $apv-fpm $apv-gd $apv-gmp \
 	$apv-igbinary $apv-imap $apv-interbase \
-	$apv-intl $apv-ldap $apv-mbstring $apv-msgpack \
+	$apv-intl $apv-ldap $apv-mbstring \
 	$apv-mysql $apv-odbc $apv-opcache $apv-pgsql $apv-pspell \
-	$apv-raphf $apv-readline $apv-snmp $apv-soap \
+	$apv-readline $apv-snmp $apv-soap \
 	$apv-sqlite3 $apv-sybase $apv-tidy $apv-xml \
-	$apv-xsl $apv-zip \
-	php-memcached php-redis php-igbinary php-msgpack php-apcu php-xdebug \
-	php-raphf
+	$apv-xsl $apv-zip
 
-	aptold -qqq source -my \
-	$apv-apcu $apv-ast $apv-imagick $apv-igbinary $apv-msgpack \
-	$apv-memcached $apv-redis $apv-xdebug
-
-	aptold -qqq source -my php-xdebug
-	aptold -qqq source -my php-pecl-http
-	aptold -qqq source -my $apv-http
+	exts=($apv-apcu $apv-ast $apv-imagick $apv-igbinary $apv-msgpack \
+	$apv-memcached $apv-redis $apv-xdebug $apv-raphf $apv-http $apv-pecl-http)
+	for aext in "${exts[@]}"; do
+		aptold -qqq source -my $aext
+	done
 done
 
 aptold -qqq source -my \
+php-defaults \
 php-apcu php-ast php-imagick php-igbinary php-msgpack \
-php-memcached php-redis php-xdebug
+php-memcached php-redis php-xdebug \
+php-raphf
+
+aptold -qqq source -my php-pecl-http
+aptold -qqq source -my php-http
 
 
 #--- errornous packages
@@ -367,6 +375,7 @@ find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 #-------------------------------------------
 # limit_php8x_only
 set_php81_as_default
+find -L /root/org.src/php -maxdepth 2 -name "php8*-8*"
 
 
 printf "\n\n\n"
