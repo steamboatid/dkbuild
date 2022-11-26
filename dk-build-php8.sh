@@ -444,6 +444,16 @@ ls -la /tb2/build-devomd/$RELNAME-php/ | grep omd | grep 8.1 |\
 	grep -i --color "apcu\|http\|igbinary\|imagick\|memcached\|msgpack\|raphf\|redis\|propro"
 
 
+essphp=("apcu" "http" "igbinary" "imagick" "memcached" "msgpack" "raphf" "redis" "propro")
+for pkg in "${essphp[@]}"; do
+	num=$(find -L /root/src/php/ -maxdepth 2 -type f -iname "*$pkg*deb" | wc -l)
+	printf "\n --- $pkg \t-- $num"
+	[[ $num -lt 1 ]] && printf " \t--- MISS "
+done
+
 # rebuild the repo
 #-------------------------------------------
 #--- nohup ssh devomd "nohup /bin/bash /tb2/build-devomd/xrepo-rebuild.sh >/dev/null 2>&1 &" >/dev/null 2>&1 &
+
+# find ~/src/php -maxdepth 1 -type f -iname "*igbinary*deb" | xargs dpkg -i --force-all
+# find ~/src/php -maxdepth 1 -type f -iname "*msgpack*deb" | xargs dpkg -i --force-all

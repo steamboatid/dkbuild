@@ -18,7 +18,7 @@ export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
 
-source /tb2/build-devomd/dk-build-0libs.sh
+source /tb2/build-devomd/dk-build-1libs.sh
 fix_relname_relver_bookworm
 fix_apt_bookworm
 
@@ -57,13 +57,9 @@ else
 fi
 
 
-# if build php
+# if build php, fix default php versions
 if [[ $dir == *"php"* ]] && [[ ! -e debian/control.in ]]; then
-	cp debian/control debian/control.in
-	phpver=$(/usr/sbin/phpquery -V | sort -nr | head -n1)
-	echo " " >> debian/control.in
-	echo "X-PHP-Versions: $phpver" >> debian/control.in
-	echo "X-PHP-Default-Version: $phpver" >> debian/control.in
+	fix_debian_controls "$dir"
 fi
 
 

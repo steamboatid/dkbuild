@@ -29,7 +29,7 @@ fix_php_pecl_http(){
 	adir="$1"
 	cd "$adir"
 
-	cp debian/control debian/control.in
+	[[ ! -e debian/control.in ]] && cp debian/control debian/control.in
 
 	sed -i -r '0,/^php-pecl-http/{s/^php-pecl-http/php-http/}' debian/changelog
 	sed -i -r 's/pecl-http\.so/http\.so/' debian/php-http.pecl
@@ -52,7 +52,7 @@ fix_php_lz4(){
 	adir="$1"
 	cd "$adir"
 
-	cp debian/control debian/control.in
+	[[ ! -e debian/control.in ]] && cp debian/control debian/control.in
 
 	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control
 	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control.in
@@ -74,7 +74,8 @@ fix_php_ps(){
 	[[ -e ps-1.4.1 ]] && mv ps-1.4.1 old.ps-1.4.1
 	cp /tmp/ps-1.4.4 . -Rfa
 
-	cp debian/control debian/control.in
+	[[ ! -e debian/control.in ]] && cp debian/control debian/control.in
+
 	sed -i -r 's/dh-php \(>= 0.12~/dh-php \(>= 4~/' debian/control
 	sed -i -r 's/dh-php \(>= 0.12~/dh-php \(>= 4~/' debian/control.in
 	sed -i -r 's/<min>4.3.10/<min>8.1.0/' package.xml
@@ -98,7 +99,7 @@ fix_php_phalcon3(){
 	adir="$1"
 	cd "$adir"
 
-	cp debian/control debian/control.in
+	[[ ! -e debian/control.in ]] && cp debian/control debian/control.in
 
 	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control
 	sed -i -r 's/dh-php \(>= 3.1~/dh-php \(>= 4~/' debian/control.in
@@ -182,6 +183,18 @@ fix_debian_controls(){
 			sed -i -r 's/dh\-php \(>= .*\~?\)/dh\-php \(>= 4\~)/g' $afile
 		fi
 	done
+
+	# fix php versions
+	phpver=$(/usr/sbin/phpquery -V | sort -nr | head -n1)
+	mulvers=$(/usr/sbin/phpquery -V | sort -nr | grep -v '5.\|7.\|8.0' | sort -n | tr "\n" ' ')
+
+	sed -i '/X-PHP-Versions/d' debian/control.in
+	sed -i '/X-PHP-Default-Version/d' debian/control.in
+
+	echo " " >> debian/control.in
+	echo " " >> debian/control.in
+	echo "X-PHP-Versions: $mulvers" >> debian/control.in
+	echo "X-PHP-Default-Version: $phpver" >> debian/control.in
 
 	cd "$odir"
 }
