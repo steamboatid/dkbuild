@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-sdir=$(dirname $0)
+sdir=$(realpath $(dirname $0))
 export DEBIAN_FRONTEND="noninteractive"
 
 export DEBFULLNAME="Dwi Kristianto"
