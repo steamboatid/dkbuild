@@ -59,7 +59,7 @@ fi
 
 # if build php, fix default php versions
 if [[ $dir == *"php"* ]] && [[ ! -e debian/control.in ]]; then
-	fix_debian_controls "$dir"
+	fix_debian_control_in "$dir"
 fi
 
 

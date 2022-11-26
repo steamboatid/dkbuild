@@ -141,6 +141,29 @@ fix_php_pecl_package_xml(){
 	cd "$odir"
 }
 
+fix_debian_control_in(){
+	bdir="$1"
+	odir=$PWD
+	cd "$bdir"
+
+	# fix php versions
+	phpver=$(/usr/sbin/phpquery -V | sort -nr | head -n1)
+	mulvers=$(/usr/sbin/phpquery -V | sort -nr | grep -v '5.\|7.\|8.0' | sort -n | tr "\n" ' ')
+
+	sed -i '/X-PHP-Versions/d' debian/control
+	sed -i '/X-PHP-Default-Version/d' debian/control
+
+	sed -i '/X-PHP-Versions/d' debian/control.in
+	sed -i '/X-PHP-Default-Version/d' debian/control.in
+
+	echo " " >> debian/control.in
+	echo " " >> debian/control.in
+	echo "X-PHP-Versions: $mulvers" >> debian/control.in
+	echo "X-PHP-Default-Version: $phpver" >> debian/control.in
+
+	cd "$odir"
+}
+
 fix_debian_controls(){
 	bdir="$1"
 	odir=$PWD
@@ -184,20 +207,7 @@ fix_debian_controls(){
 		fi
 	done
 
-	# fix php versions
-	phpver=$(/usr/sbin/phpquery -V | sort -nr | head -n1)
-	mulvers=$(/usr/sbin/phpquery -V | sort -nr | grep -v '5.\|7.\|8.0' | sort -n | tr "\n" ' ')
-
-	sed -i '/X-PHP-Versions/d' debian/control
-	sed -i '/X-PHP-Default-Version/d' debian/control
-
-	sed -i '/X-PHP-Versions/d' debian/control.in
-	sed -i '/X-PHP-Default-Version/d' debian/control.in
-
-	echo " " >> debian/control.in
-	echo " " >> debian/control.in
-	echo "X-PHP-Versions: $mulvers" >> debian/control.in
-	echo "X-PHP-Default-Version: $phpver" >> debian/control.in
+	fix_debian_control_in "$bdir"
 
 	cd "$odir"
 }
