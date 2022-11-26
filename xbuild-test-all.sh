@@ -30,6 +30,7 @@ fix_apt_bookworm
 kill_current_scripts(){
 	PID=$1
 	printf "\n\n --- PID=$PID BASHPID=$BASHPID\n\n"
+
 	ps auxw | grep -v grep | grep "xbuild-test-all.sh" | \
 		awk '{print $2}' | grep -v "$PID" | grep -v "$BASHPID" | xargs kill -9  >/dev/null 2>&1
 	sleep 0.3

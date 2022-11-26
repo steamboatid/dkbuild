@@ -377,6 +377,7 @@ apt_source_build_dep_from_file "/tmp/php-pkgs.txt" "php"
 printf "\n-- sync to src: PHP \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 /root/org.src/php/ /root/src/php/
+find -L /root/src/php -maxdepth 2 -name "php8*-8*"
 
 
 
@@ -394,6 +395,7 @@ printf "\n-- sync to src: PHP \n"
 rsync -aHAXztr --numeric-ids --modify-window 5 --omit-dir-times --delete \
 --exclude ".git" \
 /root/org.src/php/ /root/src/php/
+find -L /root/src/php -maxdepth 2 -name "php8*-8*"
 
 
 
