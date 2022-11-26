@@ -39,6 +39,11 @@ find -L /root/org.src/php -maxdepth 2 -name "php5*-5*" | xargs rm -rf
 find -L /root/org.src/php -maxdepth 2 -name "php7*-7*" | xargs rm -rf
 find -L /root/org.src/php -maxdepth 2 -name "php8*-8*" | xargs rm -rf
 
+# remove php first -- fresh install
+rm -rf /etc/php /usr/share/php; \
+apt purge -fy apache* php*
+
+
 # remove libdb5
 apt install -fy
 apt purge -fy libdb5*dev libdb++-dev libdb-dev libdb5.3-tcl
@@ -80,6 +85,19 @@ aptnew install -fy libgd-dev libgd3 \
 
 
 aptold install -fy
+for apv in "${PHPVERS[@]}"; do
+	aptnew install $apv $apv-cli $apv-cgi $apv-fpm $apv-common -my --reinstall \
+	--install-recommends  --allow-downgrades --allow-change-held-packages \
+  -o Dpkg::Options::="--force-overwrite"
+
+	apt-cache search $apv | awk '{print $1}' | \
+	grep -iv 'dbg\|apache\|embed\|yac\|gmagick' | \
+	xargs aptnew install -my \
+	--no-install-recommends  --allow-downgrades --allow-change-held-packages \
+	-o Dpkg::Options::="--force-overwrite"
+done
+
+
 for apv in "${PHPVERS[@]}"; do
 	aptnew install -my --no-install-recommends  --allow-downgrades --allow-change-held-packages \
 	$apv $apv-bcmath $apv-bz2 $apv-cli $apv-common \
