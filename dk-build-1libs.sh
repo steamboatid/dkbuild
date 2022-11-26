@@ -188,6 +188,9 @@ fix_debian_controls(){
 	phpver=$(/usr/sbin/phpquery -V | sort -nr | head -n1)
 	mulvers=$(/usr/sbin/phpquery -V | sort -nr | grep -v '5.\|7.\|8.0' | sort -n | tr "\n" ' ')
 
+	sed -i '/X-PHP-Versions/d' debian/control
+	sed -i '/X-PHP-Default-Version/d' debian/control
+
 	sed -i '/X-PHP-Versions/d' debian/control.in
 	sed -i '/X-PHP-Default-Version/d' debian/control.in
 
