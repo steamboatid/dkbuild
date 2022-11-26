@@ -267,7 +267,7 @@ find -L /root/src -type d -iname ".git" -exec rm -rf {} \; >/dev/null 2>&1
 
 #--- mark as manual installed,
 # for nginx, php, redis, keydb, memcached
-# 5.6  7.0  7.1  7.2  7.3  7.4  8.2
+# 5.6  7.0  7.1  7.2  7.3  7.4  8.0
 #-------------------------------------------
 # limit_php8x_only
 set_php81_as_default

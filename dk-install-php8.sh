@@ -17,8 +17,8 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
-export PHPVERS=("php8.1")
-export PHPGREP="php8.1"
+export PHPVERS=("php8.1" "php8.2")
+export PHPGREP="php8.1\|php8.2"
 
 
 source /tb2/build-devomd/dk-build-0libs.sh
@@ -115,6 +115,7 @@ check_php_installs "php8.1"
 # [ -x /etc/init.d/php8.0-fpm ] && mkdir -p /run/php && /etc/init.d/php8.0-fpm restart
 [ -x /etc/init.d/php8.1-fpm ] && mkdir -p /run/php && /etc/init.d/php8.1-fpm restart
 # [ -x /etc/init.d/php8.2-fpm ] && mkdir -p /run/php && /etc/init.d/php8.2-fpm restart
+# [ -x /etc/init.d/php8.3-fpm ] && mkdir -p /run/php && /etc/init.d/php8.3-fpm restart
 
 
 # check php custom

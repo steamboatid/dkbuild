@@ -264,20 +264,20 @@ delete_bad_php_ext(){
 
 #--- mark as manual installed,
 # for nginx, php, redis, keydb, memcached
-# 5.6  7.0  7.1  7.2  7.3  7.4  8.2
+# 5.6  7.0  7.1  7.2  7.3  7.4  8.0
 #-------------------------------------------
 limit_php8x_only(){
 	rm -rf /etc/php/5.6 /etc/php/7.0 /etc/php/7.1 /etc/php/7.2 /etc/php/7.3 \
-	/etc/php/8.2 \
+	/etc/php/8.0 \
 	/usr/share/php/5.6 /usr/share/php/7.0 /usr/share/php/7.1 \
-	/usr/share/php/7.2 /usr/share/php/7.3 /usr/share/php/8.2 \
-	/usr/share/php5* /usr/share/php7* /usr/share/php8.2*
+	/usr/share/php/7.2 /usr/share/php/7.3 /usr/share/php/8.0 \
+	/usr/share/php5* /usr/share/php7*
 
 	apt-cache search php | grep "all-dev" | awk '{print $1}' | \
 	xargs apt remove -fy --allow-change-held-packages
 
 	apt remove -fy --allow-change-held-packages \
-	php5* php7.0* php7.1* php7.2* php7.3* php8.2* \
+	php5* php7.0* php7.1* php7.2* php7.3* php8.0* \
 	php-propro php-propro-dev php-all-dev php-sodium
 
 	apt-mark hold php*
@@ -294,10 +294,6 @@ limit_php8x_only(){
 }
 
 set_php81_as_default(){
-	# rm -rf /etc/php/8.2
-	# apt remove -fy php8.2* php8.2-cli php8.2-common php8.2-mbstring \
-	# 	php8.2-opcache php8.2-readline php8.2-xml >/dev/null 2>&1
-	# apt-mark hold php8.2*
 
 	update-alternatives --set php /usr/bin/php8.1
 	update-alternatives --set phar /usr/bin/phar8.1

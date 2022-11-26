@@ -18,8 +18,8 @@ export RELVER=$(LSB_OS_RELEASE="" lsb_release -a 2>&1 | grep Release | awk '{pri
 export TODAY=$(date +%Y%m%d-%H%M)
 export TODATE=$(date +%Y%m%d)
 
-export PHPVERS=("php8.1")
-export PHPGREP="php8.1"
+export PHPVERS=("php8.1" "php8.2")
+export PHPGREP="php8.1\|php8.2"
 
 
 source /tb2/build-devomd/dk-build-1libs.sh
@@ -351,10 +351,7 @@ prepare_build_flags
 # remove old dirs
 #-------------------------------------------
 rm -rf /root/src/php8 /root/org.src/php8 \
-/root/src/php8.0 /root/org.src/php8.0 \
-/root/src/php8.1 /root/org.src/php8.1 \
-/root/src/php8.2 /root/org.src/php8.2 \
-/root/src/php8.3 /root/org.src/php8.3
+/root/src/php8.0 /root/org.src/php8.0
 
 
 # prepare dirs
@@ -420,10 +417,10 @@ for aext in "${exts[@]}"; do
 	find -L /root/src/php -maxdepth 1 -type f -iname "php*msgpack*deb" > $ftmp1
 
 	if [[ -s $ftmp1 ]]; then
-		echo "\n\n $aext \tOK --- installing "
+		printf "\n\n $aext \tOK --- installing "
 		cat $ftmp1 | xargs dpkg -i --force-all >/dev/null 2>&1 &
 	else
-		echo "\n\n $aext \tFAILED "
+		printf "\n\n $aext \tFAILED "
 		exit 0;
 	fi
 done
@@ -457,6 +454,7 @@ done
 # install_propro_debs
 
 #--- rebuild if dkbuild.log not found
+wait_build_jobs_php
 for adir in $(find -L /root/src/php -mindepth 1 -maxdepth 1 -type d | sort -n); do
 	if [[ $(find $adir -maxdepth 1 -type f -iname "dkbuild.log" | wc -l) -lt 1 ]]; then
 		building_php "$adir" "$alxc"
