@@ -57,8 +57,9 @@ ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}
 ps axww | grep -v grep | grep git | grep -iv "dk-prep-gits.sh" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1
 
 # delete old php source
-find /root/org.src/php -maxdepth 2 -name "php7*-7*" | xargs rm -rf
-find /root/org.src/php -maxdepth 2 -name "php8*-8*" | xargs rm -rf
+find -L /root/org.src/php -maxdepth 2 -name "php5*-5*" | xargs rm -rf
+find -L /root/org.src/php -maxdepth 2 -name "php7*-7*" | xargs rm -rf
+find -L /root/org.src/php -maxdepth 2 -name "php8*-8*" | xargs rm -rf
 
 # prepare basic need: apt configs, sources list, etc
 #-------------------------------------------

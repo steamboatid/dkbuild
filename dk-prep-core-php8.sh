@@ -35,8 +35,9 @@ delete_phideb
 purge_pending_installs
 
 # delete old php source
-find /root/org.src/php -maxdepth 2 -name "php7*-7*" | xargs rm -rf
-find /root/org.src/php -maxdepth 2 -name "php8*-8*" | xargs rm -rf
+find -L /root/org.src/php -maxdepth 2 -name "php5*-5*" | xargs rm -rf
+find -L /root/org.src/php -maxdepth 2 -name "php7*-7*" | xargs rm -rf
+find -L /root/org.src/php -maxdepth 2 -name "php8*-8*" | xargs rm -rf
 
 # remove libdb5
 apt install -fy
@@ -232,6 +233,12 @@ cd /root/org.src/php
 chown_apt
 
 for apv in "${PHPVERS[@]}"; do
+	printf "\n\n"
+	printf "\n ---------------------------------"
+	printf "\n GET SOURCE: $apv"
+	printf "\n ---------------------------------"
+	printf "\n\n"
+
 	aptold -qqq source -my \
 	php-defaults \
 	$apv $apv-apcu $apv-ast $apv-bcmath $apv-bz2 $apv-cli $apv-common \

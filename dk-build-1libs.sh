@@ -302,12 +302,12 @@ set_php81_as_default(){
 	update-alternatives --set php-config /usr/bin/php-config8.1
 
 	# delete old sources
-	find /root/org.src/php -maxdepth 1 -type d -name "php8.0*" | xargs rm -rf
-	find /root/org.src/php -maxdepth 1 -type d -name "php8.1-8.1*" | \
+	find -L /root/org.src/php -maxdepth 1 -type d -name "php8.0*" | xargs rm -rf
+	find -L /root/org.src/php -maxdepth 1 -type d -name "php8.*-8.*" | \
 		sort -nr | tail -n +2 | xargs rm -rf
 
-	find /root/src/php -maxdepth 1 -type d -name "php8.0*" | xargs rm -rf
-	find /root/src/php -maxdepth 1 -type d -name "php8.1-8.1*" | \
+	find -L /root/src/php -maxdepth 1 -type d -name "php8.0*" | xargs rm -rf
+	find -L /root/src/php -maxdepth 1 -type d -name "php8.*-8.*" | \
 		sort -nr | tail -n +2 | xargs rm -rf
 
 }
@@ -317,7 +317,7 @@ fix_package_57_xml(){
 
 	xmlfixes=0
 
-	find /root/org.src/php/ -maxdepth 3 -type f -iname "package-7.xml" |\
+	find -L /root/org.src/php/ -maxdepth 3 -type f -iname "package-7.xml" |\
 	while read afile; do
 		pdir=$(dirname $afile)
 		p7file="$pdir/package-7.xml"
@@ -334,7 +334,7 @@ fix_package_57_xml(){
 		xmlfixes=$(( xmlfixes+1 ))
 	done
 
-	find /root/org.src/php/ -maxdepth 3 -type f -iname "package-5.xml" |\
+	find -L /root/org.src/php/ -maxdepth 3 -type f -iname "package-5.xml" |\
 	while read afile; do
 		pdir=$(dirname $afile)
 		p5file="$pdir/package-5.xml"
@@ -352,7 +352,7 @@ fix_package_57_xml(){
 	done
 
 
-	find /root/org.src/php/ -maxdepth 3 -type f -iname "package.xml" |\
+	find -L /root/org.src/php/ -maxdepth 3 -type f -iname "package.xml" |\
 	while read afile; do
 		pdir=$(dirname $afile)
 		fix_php_pecl_package_xml "$pdir"
