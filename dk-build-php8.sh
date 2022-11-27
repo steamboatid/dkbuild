@@ -474,7 +474,7 @@ wait_jobs
 clean_apt_lock
 
 #--- initial build
-for adir in $(find -L /root/src/php -maxdepth 1 -mindepth 1 -type d | \
+for adir in $(find -L /root/src/php -maxdepth 1 -mindepth 1 -type d | sort -n | \
 grep -v "git-phpredis\|libzip\|libvirt\|xcache\|tideways\|phalcon3\|lz4" | sort -nr); do
 	building_php "$adir" "$alxc"
 done

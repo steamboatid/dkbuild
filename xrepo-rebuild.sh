@@ -84,7 +84,7 @@ for afolder in "${folders[@]}"; do
 
 	mkdir -p /tb2/phideb/pool/buster/$afolder
 	mkdir -p /tb2/phideb/pool/bullseye/$afolder
-	mkdir -p /tb2/phideb/pool/bookworm/$afolder
+	# mkdir -p /tb2/phideb/pool/bookworm/$afolder
 
 	# buster
 	printf " -- buster "
@@ -96,10 +96,10 @@ for afolder in "${folders[@]}"; do
 	rsync -aHAXztr --numeric-ids --delete \
 	/tb2/build-devomd/bullseye-$afolder/ /tb2/phideb/pool/bullseye/$afolder
 
-	# bookworm
-	printf " -- bookworm "
-	rsync -aHAXztr --numeric-ids --delete \
-	/tb2/build-devomd/bookworm-$afolder/ /tb2/phideb/pool/bookworm/$afolder
+	# # bookworm
+	# printf " -- bookworm "
+	# rsync -aHAXztr --numeric-ids --delete \
+	# /tb2/build-devomd/bookworm-$afolder/ /tb2/phideb/pool/bookworm/$afolder
 
 	printf " -- done \n"
 done
@@ -112,8 +112,8 @@ apt-ftparchive --arch amd64 packages pool/buster/ > dists/buster/main/binary-amd
 cd /tb2/phideb; \
 apt-ftparchive --arch amd64 packages pool/bullseye/ > dists/bullseye/main/binary-amd64/Packages
 
-cd /tb2/phideb; \
-apt-ftparchive --arch amd64 packages pool/bookworm/ > dists/bookworm/main/binary-amd64/Packages
+# cd /tb2/phideb; \
+# apt-ftparchive --arch amd64 packages pool/bookworm/ > dists/bookworm/main/binary-amd64/Packages
 
 
 printf "\n\n create Release files at binary-amd64 folder"
@@ -157,24 +157,24 @@ Date: $(date -Ru)
 EOT
 
 
-cd /tb2/phideb/dists/bookworm/main/binary-amd64
-gzip -kf Packages
-xz -kfz Packages
+# cd /tb2/phideb/dists/bookworm/main/binary-amd64
+# gzip -kf Packages
+# xz -kfz Packages
 
-release="bookworm"
+# release="bookworm"
 
-cat << EOT >Release
-Archive: stable
-Origin: phideb
-Label: phideb
-Suite: ${release}
-Codename: ${release}
-Version: 0.3.${PKGDATEVER}
-Architectures: amd64
-Components: main
-Description: phideb custom packages for ${release}
-Date: $(date -Ru)
-EOT
+# cat << EOT >Release
+# Archive: stable
+# Origin: phideb
+# Label: phideb
+# Suite: ${release}
+# Codename: ${release}
+# Version: 0.3.${PKGDATEVER}
+# Architectures: amd64
+# Components: main
+# Description: phideb custom packages for ${release}
+# Date: $(date -Ru)
+# EOT
 
 
 printf "\n\n create Release files at distribution folder"
@@ -184,8 +184,8 @@ create_release buster > Release
 cd /tb2/phideb/dists/bullseye
 create_release bullseye > Release
 
-cd /tb2/phideb/dists/bookworm
-create_release bookworm > Release
+# cd /tb2/phideb/dists/bookworm
+# create_release bookworm > Release
 
 
 # trusted-keys

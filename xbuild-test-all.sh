@@ -90,26 +90,26 @@ mkdir -p /var/log/dkbuild
 printf "\n\n --- stop lxc \n"
 lxc-stop -kqn bus
 lxc-stop -kqn eye
-lxc-stop -kqn wor
+# lxc-stop -kqn wor
 lxc-stop -kqn tbus
 lxc-stop -kqn teye
-lxc-stop -kqn twor
+# lxc-stop -kqn twor
 sleep 1
 
 printf "\n\n --- start lxc \n"
 lxc-start -qn bus
 lxc-start -qn eye
-lxc-start -qn wor
+# lxc-start -qn wor
 lxc-start -qn tbus
 lxc-start -qn teye
-lxc-start -qn twor
+# lxc-start -qn twor
 sleep 1
 
 blog="/var/log/dkbuild/dk-prep-build-all-lxc.log"
 >$blog
 build_ops "bus"  2>&1 | tee -a $blog 2>&1 &
-build_ops "wor"  2>&1 | tee -a $blog 2>&1 &
 build_ops "eye"  2>&1 | tee -a $blog 2>&1 &
+# build_ops "wor"  2>&1 | tee -a $blog 2>&1 &
 
 printf "\n\n"
 aloop=0
@@ -169,8 +169,8 @@ lxc-attach -n tbus -- /bin/bash /tb2/build-devomd/dk-install-check.sh
 printf "\n\n\n TEYE \n"
 lxc-attach -n teye -- /bin/bash /tb2/build-devomd/dk-install-check.sh
 
-printf "\n\n\n TWOR \n"
-lxc-attach -n twor -- /bin/bash /tb2/build-devomd/dk-install-check.sh
+# printf "\n\n\n TWOR \n"
+# lxc-attach -n twor -- /bin/bash /tb2/build-devomd/dk-install-check.sh
 
 
 

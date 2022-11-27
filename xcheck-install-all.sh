@@ -33,8 +33,8 @@ lxc-attach -n tbus -- /bin/bash /tb2/build-devomd/dk-install-check.sh
 printf "\n\n\n TEYE \n"
 lxc-attach -n teye -- /bin/bash /tb2/build-devomd/dk-install-check.sh
 
-printf "\n\n\n TWOR \n"
-lxc-attach -n twor -- /bin/bash /tb2/build-devomd/dk-install-check.sh
+# printf "\n\n\n TWOR \n"
+# lxc-attach -n twor -- /bin/bash /tb2/build-devomd/dk-install-check.sh
 
 
 
